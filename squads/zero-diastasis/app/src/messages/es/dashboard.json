@@ -1,0 +1,49 @@
+{
+  "greeting": {
+    "morning": "Buenos días",
+    "afternoon": "Buenas tardes",
+    "evening": "Buenas noches"
+  },
+  "dailyCard": {
+    "title": "Tu sesión de hoy",
+    "day": "Día {day} de 28",
+    "start": "Comenzar sesión",
+    "completed": "¡Completado!",
+    "module": "Módulo {module}"
+  },
+  "progress": {
+    "title": "Tu progreso",
+    "daysCompleted": "{count} días completados",
+    "streak": "Racha: {days} días seguidos"
+  },
+  "motivation": {
+    "1": "El primer paso es el más importante. ¡Hoy comienzas tu transformación!",
+    "2": "Tu cuerpo ya está respondiendo. Confía en el proceso.",
+    "3": "Cada respiración consciente fortalece tu centro.",
+    "4": "Tres días seguidos — estás creando un hábito poderoso.",
+    "5": "Tu transverso abdominal ya está despertando.",
+    "6": "Casi completas la primera semana. ¡Increíble!",
+    "7": "¡Una semana completa! Tu cuerpo está aprendiendo a recordar.",
+    "8": "Módulo 2: es hora de ponerte de pie. ¡Vamos!",
+    "9": "Cada día tu postura se fortalece un poco más.",
+    "10": "10 días. La constancia es tu superpoder.",
+    "11": "Tu cinta invisible se está activando día a día.",
+    "12": "Estás a mitad de camino del módulo 2. ¡Sigue así!",
+    "13": "Tu cuerpo es más fuerte de lo que crees.",
+    "14": "¡Dos semanas! Ya eres otra persona.",
+    "15": "Módulo 3: técnicas avanzadas. Estás lista.",
+    "16": "La disciplina de hoy es la libertad de mañana.",
+    "17": "Tu abdomen está recordando su forma natural.",
+    "18": "18 días de dedicación. Eso es compromiso real.",
+    "19": "Cada sesión es un regalo para tu cuerpo.",
+    "20": "20 días. La mayoría no llega aquí. Tú sí.",
+    "21": "Tres semanas. El hábito ya es parte de ti.",
+    "22": "Tu cuerpo te está agradeciendo con cada sesión.",
+    "23": "Solo 5 días más. ¡La recta final!",
+    "24": "Tu transformación inspira a otras mamás.",
+    "25": "25 días de reactivación abdominal. Increíble progreso.",
+    "26": "Casi al final. Tu cuerpo es tu templo.",
+    "27": "Mañana es el último día. ¡Celebra tu logro!",
+    "28": "¡28 DÍAS! Has completado el protocolo. ¡Felicidades!"
+  }
+}

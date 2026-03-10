@@ -1,0 +1,84 @@
+# Audit Pipeline — Análise de Materiais Existentes
+# Diagnóstico paralelo + priorização de otimizações
+
+name: audit-pipeline
+description: "Auditoria completa de materiais existentes com diagnóstico e ações recomendadas"
+trigger: "*audit"
+orchestrator: commander
+version: "2.0.0"
+
+phases:
+  - id: 1-parallel-analysis
+    name: "Análise Paralela por Departamento"
+    chief: commander
+    agents: [intel-chief, copy-chief, creative-director, traffic-head, funnel-chief, mechanism-architect, ltv-architect, localization-specialist]
+    parallel: true
+    tasks:
+      - commander-audit.md
+    analysis_points:
+      - agent: intel-chief
+        analyzes: "Posicionamento vs concorrência e tese da oferta"
+      - agent: copy-chief
+        analyzes: "Qualidade persuasiva da copy e coerência de mensagem"
+      - agent: creative-director
+        analyzes: "Performance visual dos criativos e consistência de marca"
+      - agent: traffic-head
+        analyzes: "Métricas de tráfego, CPA e eficiência de spend"
+      - agent: funnel-chief
+        analyzes: "Drop-off, UX do funil e coerência quiz-LP"
+      - agent: mechanism-architect
+        analyzes: "Força do mecanismo único e diferenciação"
+      - agent: ltv-architect
+        analyzes: "Jornada LTV, backend e retenção"
+      - agent: localization-specialist
+        analyzes: "Qualidade da localização LATAM e regionalismos"
+    output: department-audits/
+    approval: false
+
+  - id: 2-financial-analysis
+    name: "Análise Financeira"
+    chief: capital-allocator
+    agents: [capital-allocator, cashflow-simulator, test-kill-operator]
+    tasks:
+      - audit-financial-health.md
+    analysis_points:
+      - agent: capital-allocator
+        analyzes: "Eficiência da alocação de capital e ROI por canal"
+      - agent: cashflow-simulator
+        analyzes: "Unit economics atual vs projetado"
+      - agent: test-kill-operator
+        analyzes: "Campanhas que deveriam ter sido cortadas/escaladas"
+    output: financial-audit.md
+    approval: false
+    depends_on: [1-parallel-analysis]
+
+  - id: 3-consolidation
+    name: "Consolidação e Priorização"
+    chief: commander
+    agents: [commander]
+    tasks:
+      - commander-audit.md
+    output: [audit-report.md, optimization-priorities.md]
+    approval: true
+    approval_message: |
+      Diagnóstico completo com análises de:
+      - 8 departamentos operacionais
+      - 3 dimensões financeiras
+      Revisar e escolher otimizações prioritárias.
+    depends_on: [2-financial-analysis]
+
+  - id: 4-optimization
+    name: "Execução de Otimizações"
+    chief: commander
+    agents: [] # Definidos dinamicamente baseado nas prioridades
+    dynamic: true
+    approval: true
+    approval_message: "Otimizações executadas. Revisar resultados."
+    depends_on: [3-consolidation]
+
+completion:
+  message: |
+    ✅ Auditoria e otimizações concluídas!
+    Revisar audit-report.md para o diagnóstico completo.
+    Departamentos auditados: Intel, Copy, Creative, Traffic, Funnel, Mechanism, LTV, Localization.
+    Análise financeira: Capital, Cashflow, Kill/Scale.

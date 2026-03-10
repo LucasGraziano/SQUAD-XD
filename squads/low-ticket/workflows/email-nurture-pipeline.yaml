@@ -1,0 +1,68 @@
+# Email Nurture Pipeline — Workflow
+# Cria sequências de email para nurture, conversão e retenção
+
+name: email-nurture-pipeline
+description: "Pipeline de criação de sequências de email: captura → nurture → conversão → retenção"
+trigger: "*email-nurture"
+orchestrator: commander
+
+phases:
+  - id: 1-strategy
+    name: "Estratégia de Email"
+    chief: copy-chief
+    agents: [copy-chief, intel-chief]
+    tasks:
+      - email-define-strategy.md
+    output: email-strategy.md
+    approval: true
+    approval_message: "Estratégia de email definida. Revisar segmentos, frequência e objetivos de cada sequência."
+    inputs:
+      - offer-thesis.md
+      - product-blueprint.md
+
+  - id: 2-sequences
+    name: "Criação das Sequências"
+    chief: copy-chief
+    agents: [copy-chief, copywriter, hook-master]
+    parallel_tasks: true
+    tasks:
+      - email-write-welcome-sequence.md
+      - email-write-nurture-sequence.md
+      - email-write-abandonment-sequence.md
+    output: [welcome-sequence.md, nurture-sequence.md, abandonment-sequence.md]
+    approval: true
+    approval_message: "Sequências de email prontas. Revisar copy, CTAs e timing."
+    depends_on: [1-strategy]
+
+  - id: 3-upsell-sequences
+    name: "Sequências de Upsell"
+    chief: copy-chief
+    agents: [copy-chief, copywriter]
+    tasks:
+      - email-write-upsell-sequence.md
+    output: [upsell-sequence.md, reactivation-sequence.md]
+    approval: true
+    approval_message: "Sequências de upsell e reativação prontas. Revisar ofertas e timing."
+    depends_on: [2-sequences]
+
+  - id: 4-review
+    name: "Review e Otimização"
+    chief: copy-chief
+    agents: [copy-chief, metrics-analyst]
+    tasks:
+      - copy-review-approve.md
+    output: email-final-package.md
+    approval: true
+    approval_message: "Pacote de emails revisado. Aprovando para implementação."
+    depends_on: [3-upsell-sequences]
+
+completion:
+  message: |
+    ✅ Sequências de email completas!
+    Artefatos gerados:
+    - Welcome sequence (D0)
+    - Nurture sequence (D1-D28)
+    - Abandonment sequences (quiz + checkout)
+    - Upsell sequences (D7, D14, D28)
+    - Reactivation sequence (D35+)
+    Próximo passo: implementar na plataforma de email.

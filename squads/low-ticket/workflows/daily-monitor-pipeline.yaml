@@ -1,0 +1,60 @@
+# Daily Monitor Pipeline — Workflow
+# Monitoramento diário de campanhas ativas
+
+name: daily-monitor-pipeline
+description: "Relatório diário automático de métricas + alertas de anomalia"
+trigger: "*daily-report"
+orchestrator: traffic-head
+
+phases:
+  - id: 1-collect
+    name: "Coleta de Métricas"
+    chief: metrics-analyst
+    agents: [metrics-analyst]
+    tasks:
+      - traffic-daily-report.md
+    output: daily-report.md
+    approval: false
+
+  - id: 2-alert
+    name: "Análise de Anomalias"
+    chief: traffic-head
+    agents: [traffic-head, metrics-analyst]
+    tasks:
+      - daily-anomaly-check.md
+    output: alerts.md
+    approval: false
+    depends_on: [1-collect]
+
+    alert_thresholds:
+      critical:
+        - "CPA > 3x target"
+        - "Spend > 2x budget diário"
+        - "ROAS < 0.5"
+        - "Account issues (reprovações, bloqueios)"
+      warning:
+        - "CPA > 1.5x target"
+        - "CTR caiu > 30% vs média 7d"
+        - "Frequência > 3.0 em qualquer ad set"
+        - "Budget não sendo gasto (delivery issues)"
+      info:
+        - "Novo winner identificado (CPA < 0.7x target)"
+        - "Ad set atingiu aprendizado"
+        - "Criativo completou 7 dias sem fatigue"
+
+  - id: 3-recommendations
+    name: "Recomendações"
+    chief: traffic-head
+    agents: [traffic-head]
+    tasks:
+      - daily-recommendations.md
+    output: daily-actions.md
+    approval: true
+    approval_message: "Relatório diário pronto. Ações recomendadas listadas."
+    depends_on: [2-alert]
+
+completion:
+  message: |
+    📊 Relatório diário gerado.
+    Alertas: {critical_count} críticos, {warning_count} avisos.
+    Ver daily-report.md e daily-actions.md.

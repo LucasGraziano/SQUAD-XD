@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "Zero Diastasis™",
+    "tagline": "Tu protocolo de recuperación abdominal en 28 días"
+  },
+  "nav": {
+    "home": "Inicio",
+    "protocol": "Protocolo",
+    "bonus": "Bonus",
+    "progress": "Evolución",
+    "profile": "Perfil"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "email": "Tu correo electrónico",
+    "sendLink": "Enviar enlace mágico",
+    "checkEmail": "Revisa tu correo",
+    "checkEmailDesc": "Te enviamos un enlace mágico a {email}. Haz clic en el enlace para acceder.",
+    "signOut": "Cerrar sesión"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "retry": "Intentar de nuevo",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "next": "Siguiente",
+    "back": "Atrás",
+    "day": "Día",
+    "of": "de"
+  }
+}

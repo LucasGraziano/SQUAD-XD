@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIOS Knowledge Feeder</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="layout">
+
+    <!-- Header -->
+    <header>
+      <div class="logo">🧠</div>
+      <div>
+        <h1>AIOS Knowledge Feeder</h1>
+        <div class="subtitle">Ingest PDFs · Images · YouTube · URLs · Text → Agent Memory</div>
+      </div>
+      <div style="margin-left:auto; display:flex; align-items:center; font-size:0.82rem; color:var(--text-dim);">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">Connecting...</span>
+      </div>
+    </header>
+
+    <!-- Left: File ingestion -->
+    <div class="card">
+      <h2>📂 Ingest Files</h2>
+
+      <div class="drop-zone" id="dropZone">
+        <div class="icon">📁</div>
+        <p><strong>Drop files here</strong> or click to browse</p>
+        <p class="hint">PDF, Images (JPG/PNG/WEBP), Text, Markdown</p>
+        <input type="file" id="fileInput" multiple accept=".pdf,.txt,.md,.jpg,.jpeg,.png,.gif,.webp,.js,.ts,.json,.yaml,.yml,.csv" style="display:none" />
+      </div>
+
+      <div class="agent-section">
+        <h3>Target Agents (leave unchecked for auto-routing)</h3>
+        <div class="agent-chips" id="fileAgentChips">
+          <label class="agent-chip"><input type="checkbox" value="dev" /> 🛠 dev</label>
+          <label class="agent-chip"><input type="checkbox" value="architect" /> 🏗 architect</label>
+          <label class="agent-chip"><input type="checkbox" value="data-engineer" /> 🗄 data-engineer</label>
+          <label class="agent-chip"><input type="checkbox" value="qa" /> 🔍 qa</label>
+          <label class="agent-chip"><input type="checkbox" value="devops" /> ⚙️ devops</label>
+          <label class="agent-chip"><input type="checkbox" value="pm" /> 📋 pm</label>
+          <label class="agent-chip"><input type="checkbox" value="po" /> 📌 po</label>
+          <label class="agent-chip"><input type="checkbox" value="analyst" /> 📊 analyst</label>
+          <label class="agent-chip"><input type="checkbox" value="ux-design-expert" /> 🎨 ux</label>
+        </div>
+        <p class="agent-hint">When checked, overrides automatic agent routing</p>
+      </div>
+    </div>
+
+    <!-- Right: URL ingestion -->
+    <div class="card">
+      <h2>🔗 Ingest URL / YouTube</h2>
+
+      <div class="url-group">
+        <input type="url" id="urlInput" placeholder="https://example.com or https://youtube.com/watch?v=..." />
+        <button class="btn btn-primary" id="urlSubmitBtn" onclick="submitUrl()">Ingest</button>
+      </div>
+
+      <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:16px;">
+        Supports: Web pages · YouTube videos (with captions) · Documentation sites
+      </p>
+
+      <div class="agent-section">
+        <h3>Target Agents (leave unchecked for auto-routing)</h3>
+        <div class="agent-chips" id="urlAgentChips">
+          <label class="agent-chip"><input type="checkbox" value="dev" /> 🛠 dev</label>
+          <label class="agent-chip"><input type="checkbox" value="architect" /> 🏗 architect</label>
+          <label class="agent-chip"><input type="checkbox" value="data-engineer" /> 🗄 data-engineer</label>
+          <label class="agent-chip"><input type="checkbox" value="qa" /> 🔍 qa</label>
+          <label class="agent-chip"><input type="checkbox" value="devops" /> ⚙️ devops</label>
+          <label class="agent-chip"><input type="checkbox" value="pm" /> 📋 pm</label>
+          <label class="agent-chip"><input type="checkbox" value="po" /> 📌 po</label>
+          <label class="agent-chip"><input type="checkbox" value="analyst" /> 📊 analyst</label>
+          <label class="agent-chip"><input type="checkbox" value="ux-design-expert" /> 🎨 ux</label>
+        </div>
+        <p class="agent-hint">When checked, overrides automatic agent routing</p>
+      </div>
+    </div>
+
+    <!-- Log Panel -->
+    <div class="card log-panel">
+      <div class="log-header">
+        <h2 style="margin:0">📋 Processing Log</h2>
+        <button class="btn btn-ghost" onclick="clearLog()" style="padding:5px 10px; font-size:0.8rem;">Clear</button>
+      </div>
+      <div class="log-body" id="logBody">
+        <span class="log-line dim">Waiting for events...</span>
+      </div>
+    </div>
+
+    <!-- History Table -->
+    <div class="card history-panel">
+      <h2>📚 Knowledge History</h2>
+      <div class="history-toolbar">
+        <input type="text" id="searchInput" placeholder="Search by title, tags, source..." oninput="debounceSearch(this.value)" />
+        <select id="agentFilter" onchange="loadHistory()" style="background:var(--bg-input); border:1px solid var(--border); border-radius:var(--radius); padding:9px 12px; color:var(--text); font-size:0.9rem; outline:none;">
+          <option value="">All Agents</option>
+          <option value="dev">dev</option>
+          <option value="architect">architect</option>
+          <option value="data-engineer">data-engineer</option>
+          <option value="qa">qa</option>
+          <option value="devops">devops</option>
+          <option value="pm">pm</option>
+          <option value="po">po</option>
+          <option value="analyst">analyst</option>
+          <option value="ux-design-expert">ux-design-expert</option>
+        </select>
+        <button class="btn btn-ghost" onclick="loadHistory()" style="padding:9px 12px; font-size:0.85rem;">↻ Refresh</button>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Agents</th>
+            <th>Tags</th>
+          </tr>
+        </thead>
+        <tbody id="historyBody">
+          <tr><td colspan="6" class="empty-state">No entries yet. Start ingesting!</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

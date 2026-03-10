@@ -1,0 +1,229 @@
+# New Offer Pipeline — Full Workflow v2.0
+# Orquestra a criação de uma oferta low-ticket LATAM do zero
+# Inclui gates de capital, mecanismo, localização, UX, LTV e deliverables
+
+name: new-offer-pipeline
+description: "Pipeline completo: do briefing à oferta pronta para tráfego (LATAM)"
+trigger: "*new-offer"
+orchestrator: commander
+orchestration_task: commander-new-offer.md
+version: "2.0.0"
+
+phases:
+  # ── GATE 0: INTAKE ────────────────────────────────────────
+  - id: 0-intake
+    name: "Intake & War Brief"
+    chief: commander
+    agents: [commander]
+    tasks:
+      - commander-intake.md
+    output: war-brief.md
+    approval: true
+    approval_message: "Brief de Guerra gerado. Revisar inputs, metas, limites e restrições."
+    template: war-brief-template.md
+
+  # ── GATE 1: CAPITAL ───────────────────────────────────────
+  - id: 1-capital
+    name: "Plano de Capital"
+    chief: capital-allocator
+    agents: [capital-allocator, cashflow-simulator]
+    tasks:
+      - capital-allocate-budget.md
+      - capital-simulate-scenarios.md
+    output: [capital-plan.md, simulation-report.md]
+    approval: true
+    approval_message: "Plano de capital pronto. CPA targets, thresholds e simulação de cenários definidos."
+    depends_on: [0-intake]
+    template: capital-plan-template.md
+
+  # ── GATE 2: INTELLIGENCE ──────────────────────────────────
+  - id: 2-intelligence
+    name: "Inteligência de Mercado"
+    chief: intel-chief
+    agents: [intel-chief, research-miner, competitor-analyst]
+    tasks:
+      - intel-mine-audience.md
+      - intel-analyze-competition.md
+      - intel-define-thesis.md
+    output: [offer-thesis.md, market-domination-dossier.md]
+    approval: true
+    approval_message: "Market Domination Dossier completo. Tese da oferta pronta. Revisar e aprovar."
+    depends_on: [1-capital]
+    template: market-domination-dossier-template.md
+
+  # ── GATE 3: MECHANISM ─────────────────────────────────────
+  - id: 3-mechanism
+    name: "Mecanismo Único & Big Idea"
+    chief: mechanism-architect
+    agents: [mechanism-architect, localization-specialist]
+    tasks:
+      - mechanism-create-unique.md
+      - mechanism-validate-spanish.md
+    output: category-creation-dossier.md
+    approval: true
+    approval_message: "Category Creation Dossier completo. Mecanismo, Big Idea e pilares definidos. Revisar."
+    depends_on: [2-intelligence]
+    template: category-creation-dossier-template.md
+
+  # ── GATE 4: PRODUCT + BACKEND ─────────────────────────────
+  - id: 4-product
+    name: "Design do Produto + Backend"
+    chief: product-architect
+    agents: [product-architect, backend-strategist, deliverables-producer]
+    tasks:
+      - product-design-structure.md
+      - backend-design-ecosystem.md
+    output: [product-blueprint.md, backend-ecosystem.md]
+    approval: true
+    approval_message: "Blueprint do produto e ecossistema backend prontos. Bump, upsells e LTV desenhados."
+    depends_on: [3-mechanism]
+
+  # ── GATE 5: COPY ──────────────────────────────────────────
+  - id: 5-copy
+    name: "Criação de Copy"
+    chief: copy-chief
+    agents: [copy-chief, copywriter, hook-master, script-writer]
+    tasks:
+      - copy-generate-hooks.md
+      - copy-write-sales-letter.md
+      - copy-write-vsl.md
+    output: [hooks.md, sales-letter.md, vsl-script.md]
+    approval: false
+    depends_on: [2-intelligence, 4-product]
+
+  - id: 5b-copy-localization
+    name: "Localização de Copy LATAM"
+    chief: localization-specialist
+    agents: [localization-specialist, copy-chief]
+    tasks:
+      - localization-neutralize-copy.md
+    output: [localized-copy/, regionalism-report.md]
+    approval: false
+    depends_on: [5-copy]
+
+  - id: 5c-copy-review
+    name: "Review de Copy"
+    chief: copy-chief
+    agents: [copy-chief]
+    tasks:
+      - copy-review-approve.md
+    output: [review-verdict.md, approved-copy/]
+    approval: true
+    approval_message: "Copy revisada e localizada em espanhol neutro. Veredicto e feedback prontos."
+    depends_on: [5b-copy-localization]
+    review_cycle:
+      max_iterations: 2
+      on_needs_revision: "Retorna para fase 5-copy com feedback"
+      on_rejected: "Reescrever do zero com novo briefing"
+
+  # ── GATE 6: CREATIVE + BRAND + UX ────────────────────────
+  - id: 6-creative
+    name: "Criativos, Visual & Brand"
+    chief: creative-director
+    agents: [creative-director, visual-designer, video-editor, brand-builder, ux-conversion-designer, cultural-adapter]
+    tasks:
+      - creative-ad-creatives.md
+      - brand-create-identity.md
+      - ux-design-pages.md
+    output: [creative-briefs/, ad-prompts/, video-specs/, brand-identity-kit.md, page-ux-specs/]
+    approval: true
+    approval_message: "Identidade visual, criativos e UX specs prontos. Revisar direção visual e consistência."
+    depends_on: [5c-copy-review]
+
+  # ── GATE 7: FUNNEL ────────────────────────────────────────
+  - id: 7-funnel
+    name: "Arquitetura do Funil"
+    chief: funnel-chief
+    agents: [funnel-chief, funnel-engineer, quiz-builder]
+    tasks:
+      - funnel-design-architecture.md
+      - funnel-build-quiz.md
+    output: [funnel-architecture.md, page-specs/, quiz-spec.md]
+    approval: true
+    approval_message: "Funil arquitetado com quiz segmentado. Revisar fluxo, coerência quiz-LP e monetização."
+    depends_on: [5c-copy-review, 6-creative]
+    template: funnel-architecture-template.md
+
+  - id: 7b-funnel-build
+    name: "Construção do Funil"
+    chief: funnel-chief
+    agents: [funnel-engineer]
+    tasks:
+      - funnel-build-pages.md
+    output: [page-implementations/, integration-docs.md, tracking-plan.md, test-report.md]
+    approval: true
+    approval_message: "Páginas do funil implementadas. Revisar funcionalidade, tracking e mobile."
+    depends_on: [7-funnel]
+
+  # ── GATE 8: DELIVERABLES ──────────────────────────────────
+  - id: 8-deliverables
+    name: "Produção de Entregáveis"
+    chief: product-architect
+    agents: [deliverables-producer, video-editor]
+    tasks:
+      - deliverables-produce-all.md
+      - deliverables-quick-win.md
+    output: [deliverables/, quick-win-48h.md]
+    approval: true
+    approval_message: "Entregáveis produzidos. PDFs, checklists e quick win 48h prontos. Revisar qualidade."
+    depends_on: [4-product, 6-creative]
+
+  # ── GATE 9: LTV JOURNEY ──────────────────────────────────
+  - id: 9-ltv-journey
+    name: "Jornada LTV"
+    chief: ltv-architect
+    agents: [ltv-architect, backend-strategist]
+    tasks:
+      - ltv-design-journey.md
+    output: [ltv-journey-map.md, touchpoint-map.md]
+    approval: true
+    approval_message: "Jornada LTV 30/60/90 dias desenhada. Touchpoints, ofertas internas e retenção definidos."
+    depends_on: [4-product, 8-deliverables]
+
+  # ── GATE 10: TRAFFIC + LAUNCH ─────────────────────────────
+  - id: 10-traffic
+    name: "Plano de Mídia & Launch"
+    chief: traffic-head
+    agents: [traffic-head, media-buyer, metrics-analyst, capital-allocator, test-kill-operator]
+    tasks:
+      - traffic-media-plan.md
+      - traffic-structure-campaigns.md
+      - capital-set-kill-rules.md
+    output: [media-plan.md, campaign-structure.md, kill-rules.md]
+    approval: true
+    approval_message: "Plano de mídia e kill rules prontos. Revisar orçamento, CPA targets e regras de corte."
+    depends_on: [7b-funnel-build, 1-capital]
+
+  # ── GATE 11: EMAIL ────────────────────────────────────────
+  - id: 11-email
+    name: "Sequências de Email"
+    chief: copy-chief
+    agents: [copy-chief, copywriter, localization-specialist]
+    tasks:
+      - email-write-welcome-sequence.md
+      - email-write-nurture-sequence.md
+      - email-write-abandonment-sequence.md
+      - email-write-upsell-sequence.md
+    output: [welcome-sequence.md, nurture-sequence.md, abandonment-sequence.md, upsell-sequence.md]
+    approval: true
+    approval_message: "Sequências de email em espanhol neutro prontas (welcome, nurture, abandono, upsell)."
+    depends_on: [5c-copy-review, 4-product, 9-ltv-journey]
+
+completion:
+  message: |
+    ✅ Oferta low-ticket LATAM completa!
+    Todos os artefatos gerados e aprovados:
+    - War Brief + Capital Plan + Simulação financeira
+    - Market Domination Dossier + Tese da oferta
+    - Category Creation Dossier + Mecanismo Único™
+    - Blueprint do produto + Ecossistema backend
+    - Copy localizada em espanhol neutro (hooks, sales letter, VSL)
+    - Identidade visual + UX specs + Criativos adaptados
+    - Funil completo (quiz segmentado + páginas + tracking)
+    - Entregáveis produzidos + Quick win 48h
+    - Jornada LTV 30/60/90 dias com touchpoints
+    - Plano de mídia + Kill rules + Campanhas estruturadas
+    - Sequências de email localizadas
+    Próximo passo: deploy e launch!
+    Use `*scale` para otimização contínua.
+    Use `*expand` para expansão multi-país LATAM.

@@ -1,0 +1,111 @@
+# Scaling Pipeline — Workflow
+# Ciclo contínuo de otimização e escala de ofertas ativas
+
+name: scaling-pipeline
+description: "Pipeline de otimização contínua: análise semanal → decisões → novas variações → deploy → medição"
+trigger: "*scale"
+orchestrator: commander
+
+config:
+  cycle_duration: "7 dias"
+  max_cycles: 12
+  auto_continue: false
+
+phases:
+  - id: 1-metrics-review
+    name: "Review de Métricas"
+    chief: traffic-head
+    agents: [traffic-head, metrics-analyst]
+    tasks:
+      - traffic-daily-report.md
+    output: weekly-metrics-report.md
+    approval: false
+    inputs:
+      - metricas/meta-ads.md
+
+  - id: 2-diagnosis
+    name: "Diagnóstico e Decisão"
+    chief: commander
+    agents: [commander, intel-chief, traffic-head, funnel-chief]
+    tasks:
+      - scaling-diagnose.md
+    output: scaling-decision.md
+    approval: true
+    approval_message: |
+      Diagnóstico semanal pronto. Decisões recomendadas:
+      - SCALE: Aumentar budget em winners
+      - CUT: Pausar losers
+      - TEST: Novas variações necessárias
+      Revisar e aprovar antes de executar.
+    depends_on: [1-metrics-review]
+
+    decision_matrix:
+      scale_criteria:
+        - "CPA < target E volume > mínimo"
+        - "ROAS > 2.0 por 3+ dias consecutivos"
+        - "CTR acima da média do nicho"
+      cut_criteria:
+        - "CPA > 2x target por 3+ dias"
+        - "CTR < 0.5% após 1000+ impressões"
+        - "ROAS < 0.8 com spend significativo"
+      test_criteria:
+        - "Winners estagnando (fatigue)"
+        - "Menos de 3 criativos ativos"
+        - "Novo ângulo/hook identificado"
+
+  - id: 3-new-variations
+    name: "Criação de Variações"
+    chief: commander
+    agents: []  # Definidos dinamicamente baseado no diagnóstico
+    dynamic: true
+    tasks_by_decision:
+      creative_fatigue:
+        agents: [creative-director, hook-master]
+        tasks: [creative-ad-creatives.md, copy-generate-hooks.md]
+      copy_underperforming:
+        agents: [copy-chief, copywriter]
+        tasks: [copy-write-sales-letter.md]
+      funnel_leaking:
+        agents: [funnel-chief, funnel-engineer]
+        tasks: [funnel-design-architecture.md]
+      audience_saturated:
+        agents: [intel-chief, research-miner]
+        tasks: [intel-mine-audience.md]
+    output: new-variations/
+    approval: true
+    approval_message: "Novas variações criadas. Revisar antes de subir."
+    depends_on: [2-diagnosis]
+
+  - id: 4-deploy
+    name: "Deploy e Estruturação"
+    chief: traffic-head
+    agents: [traffic-head, media-buyer]
+    tasks:
+      - traffic-structure-campaigns.md
+    output: campaign-update-plan.md
+    approval: true
+    approval_message: "Plano de atualização de campanhas pronto. Revisar estrutura e budgets."
+    depends_on: [3-new-variations]
+
+  - id: 5-measurement
+    name: "Período de Medição"
+    chief: metrics-analyst
+    agents: [metrics-analyst]
+    tasks:
+      - traffic-daily-report.md
+    output: cycle-results.md
+    duration: "5-7 dias"
+    approval: false
+    depends_on: [4-deploy]
+
+cycle_completion:
+  message: |
+    📊 Ciclo de otimização #{cycle_number} completo!
+    Resultados em cycle-results.md.
+    Usar `*scale continue` para iniciar próximo ciclo.
+    Usar `*scale status` para ver histórico de ciclos.
+
+completion:
+  message: |
+    ✅ Pipeline de scaling completo após {total_cycles} ciclos!
+    Revisar scaling-history.md para evolução completa.

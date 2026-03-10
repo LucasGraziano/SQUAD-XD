@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    @apply font-sans text-text bg-warm relative;
+  }
+
+  ::selection {
+    @apply bg-blush-light text-text;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center
+           bg-blush-strong text-white font-sans font-semibold
+           px-8 py-4 rounded-2xl text-body-lg
+           transition-all duration-300 ease-out
+           hover:bg-blush-dark hover:shadow-glow hover:scale-[1.02]
+           active:scale-[0.98]
+           focus:outline-none focus:ring-2 focus:ring-blush focus:ring-offset-2 focus:ring-offset-warm;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center
+           bg-transparent text-blush-strong font-sans font-semibold
+           px-8 py-4 rounded-2xl text-body-lg
+           border-2 border-blush-strong
+           transition-all duration-300 ease-out
+           hover:bg-blush-strong hover:text-white hover:shadow-glow
+           active:scale-[0.98]
+           focus:outline-none focus:ring-2 focus:ring-blush focus:ring-offset-2;
+  }
+
+  .section-padding {
+    @apply px-5 py-16 md:px-8 md:py-24 lg:py-32;
+  }
+
+  .content-width {
+    @apply max-w-content mx-auto;
+  }
+
+  .wide-width {
+    @apply max-w-wide mx-auto;
+  }
+
+  .card {
+    @apply bg-white rounded-3xl shadow-card p-6 md:p-8;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5
+           bg-nude px-4 py-1.5 rounded-full
+           text-small font-medium text-text;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-blush-strong via-blush-dark to-gold bg-clip-text text-transparent;
+    background-size: 200% auto;
+  }
+
+  .divider {
+    @apply w-16 h-0.5 bg-gradient-to-r from-blush to-gold mx-auto my-8;
+  }
+
+  /* Premium card hover lift */
+  .card-hover {
+    @apply transition-all duration-300;
+  }
+  .card-hover:hover {
+    @apply shadow-elevated -translate-y-1;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Accessibility: Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link for keyboard navigation */
+.skip-link {
+  @apply absolute -top-10 left-4 bg-blush-strong text-white px-4 py-2 rounded-b-lg
+         z-[100] transition-all duration-200
+         focus:top-0;
+}
+
+/* Focus visible for keyboard users only */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-blush-strong;
+}
+
+/* Hide focus ring for mouse users */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Smooth horizontal scroll snap for testimonials */
+.scroll-snap-x {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.scroll-snap-x > * {
+  scroll-snap-align: center;
+}
+
+/* Custom scrollbar for horizontal scroll sections */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

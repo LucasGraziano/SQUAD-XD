@@ -1,0 +1,371 @@
+1) Objetivo do Sistema
+
+Construir um squad 100% IA, white label anônimo, capaz de:
+
+Receber input (nicho, orçamento, prazo, preço opcional, país prioridade)
+
+Executar pesquisa profunda de mercado e concorrência
+
+Construir oferta com mecanismo único
+
+Construir funil completo (ads → quiz → LP → checkout com bump → upsell 1 → upsell 2)
+
+Produzir website e assets com alta qualidade (UX/UI, imagens, identidade)
+
+Produzir copy em espanhol neutro com localização cultural (LATAM inteira)
+
+Produzir entregáveis (vídeo/PDF/áudio/diagramação) prontos pra venda
+
+Desenhar estratégia de LTV e ecossistema dentro da plataforma
+
+Preparar estrutura para escalar por país (Colômbia → México → Costa Rica → resto LATAM)
+
+Premissas fixas:
+
+Produto de entrada: US$17–19
+
+Crescimento via LTV, não só ROAS
+
+Prioridade geográfica: CO > MX > CR > LATAM
+
+Operação: IA executa, você decide em checkpoints
+
+2) Verdades operacionais que governam tudo
+
+“Espanhol neutro” não é tradução. É localização cultural.
+
+LATAM não é um país. “LATAM inteira” exige padrões anti-regionalismo e adaptações de exemplos, prova, moeda e tom.
+
+Sofisticação sem controle vira overengineering. Então: sofisticação com gates.
+
+Um squad que não sabe dizer “NÃO” para nicho/orçamento vira máquina de queimar dinheiro.
+
+3) Inputs obrigatórios e opcionais (o que o Commander coleta no início)
+
+Obrigatórios:
+
+Países de lançamento
+
+Nicho (ou “me sugira 3”)
+
+Orçamento total de teste (mês 1)
+
+Prazo (dias até primeiro lançamento)
+
+Estrutura do produto (do zero vs de arquivos existentes)
+
+Opcionais:
+
+Preço exato (senão: sistema assume US$17–19)
+
+Plataforma preferida (Systeme/Kajabi/WordPress/Skool/Hotmart-like)
+
+Restrições de mídia (não posso mostrar rosto, não posso prometer X, etc.)
+
+Assets existentes (aulas, PDFs, provas, depoimentos, prints)
+
+4) Agentes existentes (base atual)
+
+Seu squad atual cobre bem:
+
+Inteligência (Sage/Scout/Vigil)
+
+Copy (Quill/Ink/Snap/Reel)
+
+Criativo (Pixel)
+
+Funil (Flow/Forge/Riddle)
+
+Tráfego (Boost/Bid/Pulse)
+
+Produto (Blueprint)
+
+Isso é excelente para criação de oferta.
+
+Mas para o que você quer (sofisticação + LATAM + LTV + “plano por orçamento”), faltam camadas específicas.
+
+5) Agentes a adicionar (o que falta para virar máquina LATAM)
+Camada Capital e Decisão
+
+Chief Capital Allocator
+
+Converte orçamento em plano: quantos testes, alocação por canal, metas de CPA/LTV, ritmo de escala.
+
+Cashflow Simulator
+
+Simula cenários (CPA, CVR, bump take rate, upsell take rate) e define thresholds.
+
+Test & Kill Operator
+
+Define regras de corte, janelas de teste, mínimos de dados e decisões sem emoção.
+
+Camada Oferta e Ecossistema
+
+Mecanismo Architect
+
+Cria mecanismo único (nome proprietário, 4 pilares, Big Idea anti-mercado, lógica).
+
+Backend Expansion Strategist
+
+Desenha ecossistema: bump/upsells/assinatura/cross-sell, sequências internas, calendário de ofertas.
+
+LTV Architect
+
+Jornada 30/60/90 dias: quando oferecer o quê, em qual canal, com qual lógica.
+
+Camada LATAM e Localização
+
+Spanish Neutral Localization Specialist
+
+Reescreve copy e produto em espanhol neutro com padrões anti-regionalismo + adaptação cultural.
+
+Cultural Creative Adapter
+
+Camada Web e Entrega
+
+UX Conversion Designer
+
+UX/UI focado em conversão mobile, velocidade, hierarquia e fricção mínima.
+
+Brand & Visual System Builder
+
+Identidade visual white label, kit de componentes, consistência entre ads/LP/checkout/membros.
+
+Deliverables Producer
+
+Diagramação + PDFs + slides + guias + assets de consumo rápido.
+
+Video Assembly Producer
+
+Roteiro → edição simples → legendas → cortes → versões para membros e anúncios (quando fizer sentido).
+
+6) Heurísticas e Decisões padrão (regras de guerra)
+Regras financeiras
+
+Oferta só escala se LTV 30 dias ≥ 2x CPA (meta agressiva)
+
+Funil só passa de “teste” para “escala” com estabilidade (não 1 dia bom)
+
+Upsell e bump não são acessórios: são motor de margem
+
+Regras de mercado
+
+Se mercado é “lotado” e todo mundo promete igual: prioridade total para mecanismo único + Big Idea anti-mercado
+
+Se ticket é em dólar: percepção tem que ser “internacional”, não “traduzido”
+
+Regras de copy LATAM
+
+Espanhol neutro com:
+
+zero gíria local (a menos que seja intencional por país)
+
+frases curtas
+
+prova e exemplos neutros
+
+termos financeiros claros (USD, e opção de moeda local quando necessário)
+
+Regras de funil (você escolheu SOPHISTICADO)
+
+Padrão base: Ads → Quiz → LP → Checkout + Bump → Upsell 1 → Upsell 2
+
+Quiz só existe para:
+
+segmentar persona/dor
+
+aumentar intenção
+
+personalizar resultado
+
+elevar taxa de LP/checkout
+
+LP tem que refletir resultado do quiz (coerência brutal)
+
+7) Workflows macro do Sistema
+
+Você terá 3 workflows principais.
+
+Workflow 1 — “New LATAM Offer” (do zero)
+
+Entrada: nicho/orçamento/país
+Saída: oferta + funil + site + entregáveis + assets + plano de tráfego + LTV map
+
+Workflow 2 — “Audit & Upgrade” (material existente)
+
+Entrada: arquivos existentes
+Saída: relatório + priorização + melhorias + relançamento
+
+Workflow 3 — “Scale & Localization Expansion”
+
+Entrada: oferta vencedora
+Saída: adaptação para um espanhol neutro para todos países latam + variações culturais + expansão de LTV
+
+8) Pipeline detalhada do “New LATAM Offer” com gates de decisão
+Gate 0 — Intake (Commander)
+
+Checklist:
+
+input completo?
+
+restrições?
+
+país e moeda definidos?
+
+prazo realista?
+
+Output:
+
+Brief de Guerra (1 página) com metas e limites
+
+Gate 1 — Capital Plan (Allocator + Simulator)
+
+Checklist:
+
+CPA alvo definido?
+
+metas de LTV definidas?
+
+número de criativos semanais?
+
+plano de testes?
+
+Output:
+
+Plano de capital + thresholds (matar/iterar/escalar)
+
+Gate 2 — Market Intel (Intel + Competitor + Gap)
+
+Checklist:
+
+10 dores com evidência
+
+10 desejos com evidência
+
+mapa de concorrência com gaps
+
+criativos dominantes do mercado
+
+promessa dominante (o que TODO mundo diz)
+
+Output:
+
+Tese aprovada (e “ângulo dominante”)
+
+Gate 3 — Offer & Mechanism (Mecanismo + Produto + Backend)
+
+Checklist:
+
+mecanismo nomeado?
+
+4 pilares claros?
+
+promessa específica?
+
+quick win 48h?
+
+bump e upsells com lógica, não aleatório?
+
+Output:
+
+Oferta completa (entrada + bump + upsell1 + upsell2)
+
+Gate 4 — Funnel Architecture (Funnel + Quiz)
+
+Checklist:
+
+quiz com segmentação real?
+
+resultado do quiz “empurra” para LP?
+
+LP e checkout consistentes?
+
+bumps/upsells com copy de transição?
+
+Output:
+
+mapa do funil + especificações de páginas
+
+Gate 5 — Copy LATAM (Copy + Localization)
+
+Checklist:
+
+espanhol neutro (sem regionalismo)
+
+headlines coerentes com quiz
+
+objeções respondidas
+
+provas encaixadas
+
+CTA sem ambiguidade
+
+Output:
+
+copy final de todas as páginas + emails essenciais
+
+Gate 6 — UX/UI + Visual System (UX + Brand + Creative)
+
+Checklist:
+
+mobile-first
+
+velocidade
+
+hierarquia visual
+
+consistência
+
+criativos prontos (formatos atuais + variações)
+
+Output:
+
+site pronto + kit visual + biblioteca de criativos
+
+Gate 7 — Deliverables Production (Deliverables + Video)
+
+Checklist:
+
+estrutura consumível
+
+PDFs/áudios/vídeos com padrão de qualidade
+
+onboarding e quick win
+
+Output:
+
+produto entregue na plataforma
+
+Gate 8 — Launch Plan (Traffic + Metrics + Kill)
+
+Checklist:
+
+campanhas estruturadas
+
+plano de otimização diário
+
+regra de corte ativa
+
+dashboard mínimo de métricas
+
+Output:
+
+lançamento
+
+9) Checklists fixos (os “padrões mínimos”)
+
+Checklist de “Não lançar sem”:
+
+mecanismo nomeado + promessa clara
+
+copy localizada (não traduzida)
+
+bump/upsells definidos com lógica
+
+quiz coerente com LP
+
+mobile speed e clareza visual
+
+entregável com quick win em 48h
+
+regras de teste e corte (kill switch)

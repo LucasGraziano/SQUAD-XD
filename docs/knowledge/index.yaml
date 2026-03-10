@@ -1,0 +1,112 @@
+entries:
+  - id: k-001
+    title: technical-preferences.md
+    source: D:\SQUAD XD\.aios-core\data\technical-preferences.md
+    type: text
+    date: '2026-02-25'
+    agents: []
+    tags: []
+    file: k-001.md
+  - id: k-002
+    title: technical-preferences.md
+    source: D:\SQUAD XD\.aios-core\data\technical-preferences.md
+    type: text
+    date: '2026-02-25'
+    agents: []
+    tags: []
+    file: k-002.md
+  - id: k-003
+    title: technical-preferences.md
+    source: D:\SQUAD XD\.aios-core\data\technical-preferences.md
+    type: text
+    date: '2026-02-25'
+    agents: []
+    tags: []
+    file: k-003.md
+  - id: k-004
+    title: technical-preferences.md
+    source: D:\SQUAD XD\.aios-core\data\technical-preferences.md
+    type: text
+    date: '2026-02-25'
+    agents: []
+    tags: []
+    file: k-004.md
+  - id: k-005
+    title: Alex Hormozi Sales Marketing Scaling Frameworks
+    source: research-compilation
+    type: text
+    date: '2026-02-27'
+    agents: []
+    tags:
+      - sales
+      - marketing
+      - scaling
+      - pricing
+      - offers
+      - lead-generation
+      - content-strategy
+    file: k-005.md
+  - id: k-006
+    title: FOUNDER PROFILE - PEDRO CABRAL
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\founders\FOUNDER-CABRAL.md
+    type: mega-brain
+    date: '2026-03-10'
+    agents:
+      - pm
+      - sm
+    tags: []
+    file: k-006.md
+  - id: k-007
+    title: FOUNDER PROFILE - LUCAS (GRAZIANO)
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\founders\FOUNDER-LUCAS.md
+    type: mega-brain
+    date: '2026-03-10'
+    agents:
+      - pm
+      - sm
+    tags: []
+    file: k-007.md
+  - id: k-008
+    title: QUIZ - ZERO DIASTASE (Funil de Vendas)
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\products\QUIZ-ZERO-DIASTASE.md
+    type: mega-brain
+    date: '2026-03-10'
+    agents:
+      - ux-design-expert
+      - dev
+      - po
+      - analyst
+    tags: []
+    file: k-008.md
+  - id: k-009
+    title: FOUNDER PROFILE - PEDRO CABRAL
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\founders\FOUNDER-CABRAL.md
+    type: mega-brain
+    date: '2026-03-10'
+    agents:
+      - pm
+      - sm
+    tags: []
+    file: k-009.md
+  - id: k-010
+    title: FOUNDER PROFILE - LUCAS (GRAZIANO)
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\founders\FOUNDER-LUCAS.md
+    type: mega-brain
+    date: '2026-03-10'
+    agents:
+      - pm
+      - sm
+    tags: []
+    file: k-010.md
+  - id: k-011
+    title: QUIZ - ZERO DIASTASE (Funil de Vendas)
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\products\QUIZ-ZERO-DIASTASE.md
+    type: mega-brain
+    date: '2026-03-10'
+    agents:
+      - ux-design-expert
+      - dev
+      - po
+      - analyst
+    tags: []
+    file: k-011.md

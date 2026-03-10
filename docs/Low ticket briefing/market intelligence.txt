@@ -1,0 +1,268 @@
+MARKET INTELLIGENCE & GAP ANALYSIS PROTOCOL
+(Manual de Mineração de Ouro LATAM)
+
+Objetivo:
+
+Eliminar suposição.
+Eliminar ego.
+Eliminar “eu acho”.
+
+Substituir por:
+
+Evidência
+
+Linguagem real do mercado
+
+Lacunas exploráveis
+
+Oportunidade monetizável
+
+PARTE 1 — FILOSOFIA DO PROTOCOLO
+
+Regra principal:
+
+Se o mercado já está pagando, existe dinheiro.
+Se está reclamando, existe oportunidade.
+Se está confuso, existe espaço para mecanismo.
+
+Nunca criar oferta antes de:
+
+Identificar dor com evidência
+
+Identificar desejo com repetição
+
+Identificar frustração com intensidade
+
+Identificar promessa dominante do mercado
+
+PARTE 2 — CAMADAS DE ANÁLISE
+
+O protocolo opera em 5 camadas.
+
+Nenhuma pode ser ignorada.
+
+CAMADA 1 — DEMANDA COMPROVADA
+
+Objetivo: saber se as pessoas já pagam.
+
+Checklist:
+
+Produtos similares vendendo?
+
+Ads ativos há mais de 30 dias?
+
+Variações do mesmo produto?
+
+Reviews (positivas e negativas)?
+
+Presença em múltiplos países LATAM?
+
+Indicadores verdes:
+
+Múltiplos anúncios ativos
+
+Produtos replicados
+
+Comentários perguntando preço
+
+Reviews com detalhes
+
+Indicadores vermelhos:
+
+Só conteúdo orgânico
+
+Poucos ads
+
+Muito engajamento e pouca venda
+
+Nicho dependente de hype
+
+Output:
+Matriz Demanda x Saturação.
+
+CAMADA 2 — LINGUAGEM REAL DO AVATAR
+
+Aqui começa o ouro.
+
+Coletar:
+
+Comentários de anúncios
+
+Reviews 1-3 estrelas
+
+Perguntas em fóruns
+
+Comentários em YouTube
+
+Reclamações
+
+Extrair:
+
+Frases literais repetidas
+
+Medos explícitos
+
+Frustrações com soluções existentes
+
+Palavras usadas para descrever dor
+
+Regra:
+
+Nunca usar linguagem corporativa.
+
+Sempre usar palavras do público.
+
+Output:
+Banco de Linguagem Visceral LATAM.
+
+CAMADA 3 — PROMESSA DOMINANTE DO MERCADO
+
+Pergunta central:
+
+“O que todo mundo está prometendo?”
+
+Exemplos:
+
+“Aprende rápido”
+
+“Ganha dinheiro fácil”
+
+“Transformação em 30 dias”
+
+“Método comprovado”
+
+Se todo mundo promete igual:
+
+→ Oportunidade de Big Idea anti-mercado.
+
+Se promessas são variadas e confusas:
+
+→ Oportunidade de clareza e simplificação.
+
+Output:
+Mapa de Promessas Dominantes.
+
+CAMADA 4 — FRUSTRAÇÃO OCULTA
+
+Aqui está o verdadeiro gap.
+
+Perguntas:
+
+O que as pessoas dizem que tentaram e não funcionou?
+
+O que elas acham complicado?
+
+Onde elas se sentem enganadas?
+
+O que elas culpam?
+
+Procurar padrões como:
+
+“Comprei e não consegui aplicar”
+
+“Muito teórico”
+
+“Não explica passo a passo”
+
+“Funciona para EUA, não para LATAM”
+
+“Muito técnico”
+
+Isso vira:
+
+Base do Mecanismo Único.
+
+Output:
+Lista de Falhas Sistêmicas do Mercado.
+
+CAMADA 5 — VIABILIDADE POR PAÍS
+
+Analisar:
+
+CPM estimado
+
+Cultura de compra digital
+
+Penetração de cartão internacional
+
+Preferência por pagamento parcelado
+
+Confiança em produtos em dólar
+
+Comparar:
+
+Colômbia
+México
+Costa Rica
+
+Output:
+Ranking de Viabilidade Inicial.
+
+PARTE 3 — MATRIZ DE OPORTUNIDADE
+
+Após análise, o sistema gera:
+
+Score final baseado em:
+
+Demanda comprovada (0–10)
+
+Saturação (0–10 invertido)
+
+Gap explorável (0–10)
+
+Poder de compra (0–10)
+
+Complexidade técnica (0–10 invertido)
+
+Se score < 30:
+→ Rejeitar nicho.
+
+Se 30–40:
+→ Teste controlado.
+
+Se > 40:
+→ Alta prioridade.
+
+Sistema pode dizer NÃO.
+
+Isso é obrigatório.
+
+PARTE 4 — OUTPUT FINAL
+
+O agente gera documento:
+
+MARKET DOMINATION DOSSIER v1.0
+
+Contém:
+
+Avatar definido
+
+Dor principal
+
+5 dores secundárias
+
+5 desejos
+
+Linguagem visceral
+
+Promessa dominante do mercado
+
+Falha estrutural do mercado
+
+Gap estratégico
+
+País prioritário
+
+Score final
+
+Sem esse dossiê aprovado, não existe mecanismo.
+
+PARTE 5 — HEURÍSTICAS AVANÇADAS
+
+Quanto mais específico o público, maior conversão.
+
+Quanto mais clara a dor, menor necessidade de prova.
+
+Quanto mais repetida a reclamação, maior oportunidade.
+
+Quanto mais homogênea a promessa do mercado, maior chance de disrupção.

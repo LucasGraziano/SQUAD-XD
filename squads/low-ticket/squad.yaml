@@ -1,0 +1,167 @@
+name: low-ticket
+version: 2.0.1
+description: "Equipe hierárquica de agentes focada em criar, testar e escalar ofertas de baixo custo (low-ticket). 18 agentes em 6 departamentos com pipeline completo do zero à escala, incluindo email marketing, otimização contínua e monitoramento diário."
+author: Graziano
+license: MIT
+slashPrefix: lt
+
+aios:
+  minVersion: "2.1.0"
+  type: squad
+
+hierarchy:
+  tier1: [commander]
+  tier2: [intel-chief, copy-chief, creative-director, funnel-chief, traffic-head, product-architect]
+  tier3: [research-miner, competitor-analyst, copywriter, hook-master, script-writer, funnel-engineer, quiz-builder, media-buyer, metrics-analyst, visual-designer, video-editor]
+
+departments:
+  command:
+    chief: commander
+    agents: [commander, product-architect]
+  intelligence:
+    chief: intel-chief
+    agents: [intel-chief, research-miner, competitor-analyst]
+  copy:
+    chief: copy-chief
+    agents: [copy-chief, copywriter, hook-master, script-writer]
+  creative:
+    chief: creative-director
+    agents: [creative-director, visual-designer, video-editor]
+  funnel:
+    chief: funnel-chief
+    agents: [funnel-chief, funnel-engineer, quiz-builder]
+  traffic:
+    chief: traffic-head
+    agents: [traffic-head, media-buyer, metrics-analyst]
+
+components:
+  agents:
+    - commander.md
+    - intel-chief.md
+    - research-miner.md
+    - competitor-analyst.md
+    - copy-chief.md
+    - copywriter.md
+    - hook-master.md
+    - script-writer.md
+    - creative-director.md
+    - visual-designer.md        # v2.0.0: Design visual, brand guidelines, prompts IA
+    - video-editor.md           # v2.0.0: Roteiros de vídeo, specs de edição, hooks visuais
+    - funnel-chief.md
+    - funnel-engineer.md
+    - quiz-builder.md
+    - traffic-head.md
+    - media-buyer.md
+    - metrics-analyst.md
+    - product-architect.md
+  tasks:
+    # Core tasks
+    - commander-new-offer.md
+    - commander-audit.md
+    - intel-define-thesis.md
+    - intel-mine-audience.md
+    - intel-analyze-competition.md
+    - copy-write-sales-letter.md
+    - copy-generate-hooks.md
+    - copy-write-vsl.md
+    - creative-ad-creatives.md
+    - funnel-design-architecture.md
+    - funnel-build-quiz.md
+    - traffic-media-plan.md
+    - traffic-structure-campaigns.md
+    - product-design-structure.md
+    # v1.1.0: Tasks para 100% agent coverage
+    - copy-review-approve.md
+    - funnel-build-pages.md
+    - traffic-daily-report.md
+    # v2.0.0: Email marketing tasks
+    - email-define-strategy.md
+    - email-write-welcome-sequence.md
+    - email-write-nurture-sequence.md
+    - email-write-abandonment-sequence.md
+    - email-write-upsell-sequence.md
+    # v2.0.0: Scaling & monitoring tasks
+    - scaling-diagnose.md
+    - daily-anomaly-check.md
+    - daily-recommendations.md
+    # v2.0.1: Creative agent tasks
+    - creative-design-brief.md
+    - creative-video-spec.md
+  workflows:
+    - new-offer-pipeline.yaml        # v1.2.0: Atualizado com review, build, email phases
+    - audit-pipeline.yaml
+    - email-nurture-pipeline.yaml     # v2.0.0: Pipeline de email marketing
+    - scaling-pipeline.yaml           # v2.0.0: Otimização contínua semanal
+    - daily-monitor-pipeline.yaml     # v2.0.0: Monitoramento diário de campanhas
+  checklists:
+    - copy-review-checklist.md
+    - campaign-launch-checklist.md
+    - funnel-launch-checklist.md
+    - offer-validation-checklist.md
+    - ab-test-checklist.md            # v2.0.0: Checklist de A/B testing
+  templates:
+    - offer-thesis-template.md
+    - hooks-template.md
+    - product-blueprint-template.md
+    - media-plan-template.md
+    - daily-report-template.md
+    - big-idea-framework-template.md   # v2.0.0: Framework Big Idea (5 elementos)
+    - quiz-architecture-template.md    # v2.0.0: Arquitetura de quiz
+    - email-sequence-template.md       # v2.0.0: Template de sequências de email
+  scripts:
+    - metrics-calculator.js            # v2.0.0: Unit economics, CPA, ROAS, A/B sample
+    - populate-briefing.js             # v2.0.0: Extrai dados de docs para briefing
+  tools: []
+
+config:
+  extends: extend
+
+dependencies:
+  node: []
+  python: []
+  squads:
+    - zero-diastasis   # v2.0.0: Cross-squad — app de entrega do produto
+
+tags:
+  - low-ticket
+  - marketing
+  - copywriting
+  - funnel
+  - traffic
+  - offer-creation
+  - hierarchical
+  - email-marketing    # v2.0.0
+  - scaling            # v2.0.0
+  - a-b-testing        # v2.0.0
+
+changelog:
+  v2.0.1:
+    date: "2026-03-04"
+    changes:
+      - "FIX H1/H2: Criadas tasks daily-anomaly-check.md e daily-recommendations.md (referenciadas no daily-monitor-pipeline)"
+      - "FIX H3: Renomeado video-editor de 'Reel' para 'Frame' (colisão com script-writer)"
+      - "FIX M1/M2: Criadas tasks creative-design-brief.md e creative-video-spec.md para visual-designer e video-editor"
+      - "FIX M3/M4: Adicionado reports_to: creative-director em visual-designer e video-editor"
+      - "FIX M5: Adicionado orchestration_task no new-offer-pipeline referenciando commander-new-offer.md"
+      - "FIX L1: Ícones únicos — visual-designer: 🖌️, video-editor: 📹"
+      - "FIX L2: Adicionado email-write-upsell-sequence.md na fase 7 do new-offer-pipeline"
+  v2.0.0:
+    date: "2026-03-03"
+    changes:
+      - "Adicionado visual-designer (Vega) e video-editor (Reel) ao departamento Creative"
+      - "Criado workflow email-nurture-pipeline para email marketing completo"
+      - "Criado workflow scaling-pipeline para otimização contínua semanal"
+      - "Criado workflow daily-monitor-pipeline para monitoramento diário"
+      - "Adicionadas 6 tasks de email marketing"
+      - "Adicionada task scaling-diagnose"
+      - "Criado template Big Idea Framework (5 elementos)"
+      - "Criado template Quiz Architecture"
+      - "Criado template Email Sequence"
+      - "Criado checklist A/B Testing"
+      - "Criados scripts metrics-calculator e populate-briefing"
+      - "Atualizado new-offer-pipeline v1.2.0 com fases de review, build e email"
+      - "Adicionada dependência cross-squad com zero-diastasis"
+      - "Preenchido briefing do projeto zero-diastase com dados reais"
+  v1.1.0:
+    changes:
+      - "Tasks adicionadas: copy-review-approve, funnel-build-pages, traffic-daily-report"

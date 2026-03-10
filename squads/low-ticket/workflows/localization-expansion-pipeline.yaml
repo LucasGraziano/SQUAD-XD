@@ -1,0 +1,132 @@
+# Localization Expansion Pipeline — Scale across LATAM
+# Adapta oferta vencedora para espanhol neutro + variações culturais + expansão de LTV
+
+name: localization-expansion-pipeline
+description: "Pipeline de expansão multi-país: adapta oferta vencedora para LATAM com localização cultural"
+trigger: "*expand"
+orchestrator: commander
+version: "1.0.0"
+
+prerequisites:
+  - "Oferta validada com métricas positivas (ROAS > 2.0 por 7+ dias)"
+  - "CPA estável abaixo do target"
+  - "Capital Plan aprovado para expansão"
+
+phases:
+  - id: 1-baseline-audit
+    name: "Auditoria da Oferta Base"
+    chief: commander
+    agents: [commander, intel-chief, metrics-analyst]
+    tasks:
+      - expansion-audit-baseline.md
+    output: expansion-baseline-report.md
+    approval: true
+    approval_message: "Auditoria da oferta base completa. Métricas, copy e funil analisados. Revisar antes de adaptar."
+
+  - id: 2-localization-copy
+    name: "Localização de Copy"
+    chief: localization-specialist
+    agents: [localization-specialist, copy-chief, copywriter]
+    tasks:
+      - localization-neutralize-copy.md
+      - localization-adapt-examples.md
+    output: [localized-copy/, regionalism-report.md]
+    approval: true
+    approval_message: "Copy localizada em espanhol neutro. Revisar regionalismos eliminados e adaptações culturais."
+    depends_on: [1-baseline-audit]
+
+  - id: 3-cultural-adaptation
+    name: "Adaptação Cultural de Criativos"
+    chief: cultural-adapter
+    agents: [cultural-adapter, creative-director, brand-builder]
+    tasks:
+      - cultural-adapt-visuals.md
+      - cultural-adapt-references.md
+    output: [cultural-creatives/, country-guidelines/]
+    approval: true
+    approval_message: "Criativos adaptados culturalmente por país. Revisar referências visuais e tom."
+    depends_on: [1-baseline-audit]
+
+  - id: 4-mechanism-validation
+    name: "Validação do Mecanismo em ES Neutro"
+    chief: mechanism-architect
+    agents: [mechanism-architect, localization-specialist]
+    tasks:
+      - mechanism-validate-spanish.md
+    output: mechanism-es-validation.md
+    approval: true
+    approval_message: "Mecanismo validado em espanhol neutro. Nome e pilares verificados para todos os países."
+    depends_on: [2-localization-copy]
+
+  - id: 5-funnel-adaptation
+    name: "Adaptação do Funil"
+    chief: funnel-chief
+    agents: [funnel-chief, funnel-engineer, quiz-builder]
+    tasks:
+      - funnel-adapt-quiz-latam.md
+      - funnel-adapt-checkout-currency.md
+    output: [adapted-funnel-specs/, currency-config.md]
+    approval: true
+    approval_message: "Funil adaptado com quiz localizado e checkout multi-moeda. Revisar fluxo."
+    depends_on: [2-localization-copy, 3-cultural-adaptation]
+
+  - id: 6-ltv-expansion
+    name: "Expansão de LTV Multi-País"
+    chief: ltv-architect
+    agents: [ltv-architect, backend-strategist]
+    tasks:
+      - ltv-design-expansion-journey.md
+    output: [ltv-expansion-map.md, country-offer-calendar.md]
+    approval: true
+    approval_message: "Jornada LTV expandida para multi-país. Calendário de ofertas por país definido."
+    depends_on: [4-mechanism-validation]
+
+  - id: 7-traffic-expansion
+    name: "Plano de Tráfego Multi-País"
+    chief: traffic-head
+    agents: [traffic-head, media-buyer, capital-allocator]
+    tasks:
+      - traffic-expansion-plan.md
+    output: [expansion-media-plan.md, country-campaign-structure.md]
+    approval: true
+    approval_message: "Plano de tráfego multi-país pronto. Budget por país e estrutura de campanhas definidos."
+    depends_on: [5-funnel-adaptation, 6-ltv-expansion]
+
+  - id: 8-launch-readiness
+    name: "Checklist de Lançamento Multi-País"
+    chief: commander
+    agents: [commander, test-kill-operator]
+    tasks:
+      - expansion-launch-checklist.md
+    output: expansion-launch-plan.md
+    approval: true
+    approval_message: "Checklist final de lançamento multi-país. Kill rules por país definidas. Aprovar para lançar."
+    depends_on: [7-traffic-expansion]
+
+country_rollout:
+  priority_order:
+    - country: CO
+      name: Colômbia
+      priority: 1
+    - country: MX
+      name: México
+      priority: 2
+    - country: CR
+      name: Costa Rica
+      priority: 3
+    - country: LATAM
+      name: Resto LATAM
+      priority: 4
+
+completion:
+  message: |
+    ✅ Pipeline de expansão LATAM completo!
+    Artefatos gerados:
+    - Copy localizada em espanhol neutro
+    - Criativos adaptados culturalmente por país
+    - Mecanismo validado em ES
+    - Funil adaptado com multi-moeda
+    - Jornada LTV expandida
+    - Plano de tráfego multi-país
+    - Kill rules por país ativas
+    Próximo: deploy por país na ordem CO → MX → CR → LATAM
