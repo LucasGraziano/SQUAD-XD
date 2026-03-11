@@ -110,3 +110,872 @@ entries:
       - analyst
     tags: []
     file: k-011.md
+  - id: k-012
+    title: 'DNA: alex-hormozi — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\alex-hormozi\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - leadership
+      - philosophy
+      - entrepreneurship
+    file: k-012.md
+  - id: k-013
+    title: 'DNA: alex-hormozi — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\alex-hormozi\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - alex-hormozi
+      - frameworks
+      - vendas
+      - marketing
+      - comercial
+    file: k-013.md
+  - id: k-014
+    title: 'DNA: alex-hormozi — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\alex-hormozi\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - ux-design-expert
+    tags:
+      - sales-heuristics
+      - marketing-strategy
+      - alex-hormozi
+    file: k-014.md
+  - id: k-015
+    title: 'DNA: alex-hormozi — METODOLOGIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\alex-hormozi\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - devops
+      - ux-design-expert
+    tags:
+      - venda
+      - crescimento
+      - negócios
+      - metodologias
+      - alexxormozi
+    file: k-015.md
+  - id: k-016
+    title: 'DNA: alex-hormozi — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\alex-hormozi\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+    tags:
+      - sales-process
+      - copywriting
+      - persuasion
+      - sales-management
+      - team-structure
+    file: k-016.md
+  - id: k-017
+    title: 'DNA: cole-gordon — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\cole-gordon\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - cole-gordon
+      - philosophy
+      - sales
+      - marketing
+      - communication
+      - trust
+      - conviction
+    file: k-017.md
+  - id: k-018
+    title: 'DNA: cole-gordon — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\cole-gordon\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+    tags:
+      - sales
+      - marketing
+      - strategy
+    file: k-018.md
+  - id: k-019
+    title: 'DNA: cole-gordon — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\cole-gordon\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - cole-gordon
+      - heuristica
+      - vendas
+      - negociação
+      - close rate
+      - sales reps
+    file: k-019.md
+  - id: k-020
+    title: 'DNA: cole-gordon — METODOLOGIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\cole-gordon\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+    tags:
+      - dna
+      - cole-gordon
+      - sales
+      - methodologies
+    file: k-020.md
+  - id: k-021
+    title: 'DNA: cole-gordon — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\cole-gordon\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - ux-design-expert
+    tags:
+      - modelos_mentais
+      - vendas
+      - comunicação
+    file: k-021.md
+  - id: k-022
+    title: 'DNA: jeremy-haynes — CONFIG'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-haynes\CONFIG.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - jeremy-haynes
+      - paid-media
+      - high-ticket
+      - paramark
+      - frameworks
+      - strategy
+    file: k-022.md
+  - id: k-023
+    title: 'DNA: jeremy-haynes — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-haynes\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - data-engineer
+      - ux-design-expert
+    tags:
+      - sales-ethics
+      - pricing
+      - volume
+      - differentiation
+      - specialization
+      - customer-behavior
+      - funnel-design
+      - competitive-intelligence
+      - business-model
+    file: k-023.md
+  - id: k-024
+    title: 'DNA: jeremy-haynes — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-haynes\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - marketing
+      - frameworks
+      - jeremy-haynes
+    file: k-024.md
+  - id: k-025
+    title: 'DNA: jeremy-haynes — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-haynes\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - estrategia-de-campanha-de-vendas
+      - melhoria-da-experiencia-do-usuario
+      - optimizacao-da-estrutura-de-vendas
+    file: k-025.md
+  - id: k-026
+    title: 'DNA: jeremy-haynes — METODOLOGIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-haynes\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - marketing-digital
+      - jeremy-haynes
+      - dna-extraction-protocol
+    file: k-026.md
+  - id: k-027
+    title: 'DNA: jeremy-haynes — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-haynes\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - marketing
+      - sales
+      - jeremy haynes
+      - dna
+      - modeles-mentais
+    file: k-027.md
+  - id: k-028
+    title: 'DNA: jeremy-miner — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-miner\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - ux-design-expert
+    tags:
+      - sales
+      - marketing
+      - psychology
+      - communication
+      - discovery
+      - objectivation
+    file: k-028.md
+  - id: k-029
+    title: 'DNA: jeremy-miner — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-miner\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+    tags:
+      - framework-jeremy-miner
+      - nepq
+      - sales-methodology
+    file: k-029.md
+  - id: k-030
+    title: 'DNA: jeremy-miner — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-miner\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - jeremy-miner
+      - heuristics
+      - vendas
+      - comercial
+      - negociação
+    file: k-030.md
+  - id: k-031
+    title: knowledge/dna/persons/JEREMY-MINER/METODOLOGIAS.yaml
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-miner\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - methodology
+      - sales
+      - customer service
+      - communication
+      - negotiation
+      - close
+      - deal
+    file: k-031.md
+  - id: k-032
+    title: 'DNA: jeremy-miner — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jeremy-miner\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - jeremy-miner
+      - sales-mental-models
+    file: k-032.md
+  - id: k-033
+    title: 'DNA: jordan-lee — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jordan-lee\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - devops
+      - pm
+      - analyst
+      - ux-design-expert
+    tags:
+      - negocios
+      - vendas
+      - eficiencia
+      - inteligencia artificial
+      - team-structure
+    file: k-033.md
+  - id: k-034
+    title: 'DNA: jordan-lee — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jordan-lee\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+    tags:
+      - people-process-management
+      - enterprise-value
+      - sales-team-structure
+      - cost-structure
+      - talent-acquisition
+      - ai-sales-coaching
+    file: k-034.md
+  - id: k-035
+    title: 'DNA: jordan-lee — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jordan-lee\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - analyst
+    tags:
+      - heuristics
+      - contratação
+      - investimento em AI
+      - gestão de pessoas-chave
+    file: k-035.md
+  - id: k-036
+    title: 'DNA: jordan-lee — METODOLOGIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jordan-lee\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - devops
+      - pm
+      - analyst
+      - ux-design-expert
+    tags:
+      - talent-acquisition
+      - ai-sales-call-analysis
+      - sales-team-structure
+    file: k-036.md
+  - id: k-037
+    title: 'DNA: jordan-lee — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\jordan-lee\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - people-process-management
+      - diagnostic
+      - sales-strategies
+      - marketing
+      - communication
+      - growth-potential
+    file: k-037.md
+  - id: k-038
+    title: 'DNA: richard-linder — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\richard-linder\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - dna
+      - richard-linder
+      - filosofias
+      - desenvolvimento-de-pessoas
+      - liderança
+      - gestao
+      - escalabilidade
+      - sistemas-robustos
+      - documentacao-de-processos
+      - frameworks-universais
+      - diagnosticos
+    file: k-038.md
+  - id: k-039
+    title: 'DNA: richard-linder — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\richard-linder\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - frameworks
+      - contratacao
+      - crescimento
+      - lideranca
+      - comunicacao
+      - estrategia
+    file: k-039.md
+  - id: k-040
+    title: 'DNA: richard-linder — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\richard-linder\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - heuristicas
+      - regras
+      - contratação
+      - candidatos
+    file: k-040.md
+  - id: k-041
+    title: 'DNA: richard-linder — METODOLOGIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\richard-linder\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - contratação
+      - metodologias
+      - recrutamento
+      - hiring
+      - processo
+    file: k-041.md
+  - id: k-042
+    title: 'DNA: richard-linder — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\richard-linder\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+    tags:
+      - model-based-hiring
+      - leadership-development
+      - talent-acquisition
+    file: k-042.md
+  - id: k-043
+    title: 'DNA: sam-oven — CONFIG'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\sam-oven\CONFIG.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - sam oven
+      - consulting
+      - negócios
+      - dwymodelo
+      - purple ocean
+    file: k-043.md
+  - id: k-044
+    title: 'DNA: sam-oven — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\sam-oven\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - sam-oven
+      - philosophy
+      - fiilosofias
+      - offer-design
+      - pricing
+      - positioning
+      - differentiation
+      - dwymodel
+      - productivity
+      - objection-handling
+    file: k-044.md
+  - id: k-045
+    title: 'DNA: sam-oven — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\sam-oven\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - analyst
+      - ux-design-expert
+    tags:
+      - sam-oven
+      - frameworks
+      - ofertas
+      - estrutura
+      - posicionamento
+      - diferenciação
+    file: k-045.md
+  - id: k-046
+    title: 'DNA: sam-oven — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\sam-oven\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+    tags:
+      - heuristic
+      - dna
+      - business
+      - kpi
+      - threshold
+    file: k-046.md
+  - id: k-047
+    title: 'DNA: sam-oven — METODOLOGIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\sam-oven\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - metodologias
+      - oferta
+      - programa
+      - consultoria
+      - marketing
+      - pricing
+      - otimização
+      - roi
+    file: k-047.md
+  - id: k-048
+    title: 'DNA: sam-oven — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\sam-oven\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - bridge-gap-analysis
+      - market-classification
+      - delivery-models
+      - pricing-strategies
+      - customer-perspective
+      - unique-selling-proposition
+    file: k-048.md
+  - id: k-049
+    title: 'DNA: the-scalable-company — FILOSOFIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\the-scalable-company\FILOSOFIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - devops
+      - pm
+      - analyst
+      - ux-design-expert
+    tags:
+      - scalable
+      - system
+      - growth
+      - transparency
+      - learning
+    file: k-049.md
+  - id: k-050
+    title: 'DNA: the-scalable-company — FRAMEWORKS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\the-scalable-company\FRAMEWORKS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - dna-companhia-escalavel
+      - frameworks
+      - estrategia
+      - lideranca
+      - organizacao
+    file: k-050.md
+  - id: k-051
+    title: 'DNA: the-scalable-company — HEURISTICAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\the-scalable-company\HEURISTICAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - scalablecompany
+      - organizationaledesign
+      - meetingrhythm
+      - productivity
+      - agility
+    file: k-051.md
+  - id: k-052
+    title: 'DNA: the-scalable-company — METODOLOGIAS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\the-scalable-company\METODOLOGIAS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - metodologias
+      - escalabilidade
+      - empresas
+      - crescimento
+      - planejamento
+      - execucao
+    file: k-052.md
+  - id: k-053
+    title: 'DNA: the-scalable-company — MODELOS-MENTAIS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dna\persons\the-scalable-company\MODELOS-MENTAIS.yaml
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - gerenciamento
+      - modelos
+      - empresas
+      - sistemas
+      - processos
+      - comunicação
+      - colaboração
+      - empregados
+      - clientes
+      - dados
+      - métricas
+      - automação
+      - mudanças
+      - tecnologia
+    file: k-053.md
+  - id: k-054
+    title: 'Dossier: [Nome do Especialista]'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dossiers\persons\DOSSIER-EXAMPLE.md
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+    tags:
+      - marketing-digital
+      - vendas
+      - análise-de-dados
+      - processamento-de-dados
+    file: k-054.md
+  - id: k-055
+    title: 'INDEX: DOSSIERS'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\dossiers\_INDEX.md
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - analyst
+      - pm
+      - architect
+    tags:
+      - dossiers
+      - phase 5.6
+      - person dossiers
+      - theme dossiers
+      - statistics
+    file: k-055.md
+  - id: k-056
+    title: 'Playbook: [Nome do Playbook]'
+    source: D:\MEGA BRAIN XD\mega-brain\knowledge\playbooks\PLAYBOOK-EXAMPLE.md
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - playbook
+      - conversion
+      - sales
+      - marketing
+    file: k-056.md
+  - id: k-057
+    title: COMPANY CONTEXT - Contexto Completo da Empresa
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\COMPANY-CONTEXT.md
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - zero diástase
+      - caixa
+      - geração de caixa
+      - estratégia de negócios
+      - empreendedorismo
+    file: k-057.md
+  - id: k-058
+    title: FOUNDER PROFILE - PEDRO CABRAL
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\founders\FOUNDER-CABRAL.md
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+    tags:
+      - pedro cabral
+      - tivist
+      - seguranca da informacao
+      - auditoria
+      - compliance
+      - iam
+    file: k-058.md
+  - id: k-059
+    title: FOUNDER PROFILE - LUCAS (GRAZIANO)
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\founders\FOUNDER-LUCAS.md
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+      - data-engineer
+      - qa
+      - devops
+      - pm
+      - po
+      - analyst
+      - ux-design-expert
+    tags:
+      - ' startup'
+      - empreendedor
+      - análise de dados
+      - estratégia
+    file: k-059.md
+  - id: k-060
+    title: QUIZ - ZERO DIASTASE (Funil de Vendas)
+    source: D:\MEGA BRAIN XD\mega-brain\agents\sua-empresa\products\QUIZ-ZERO-DIASTASE.md
+    type: mega-brain
+    date: '2026-03-11'
+    agents:
+      - dev
+      - architect
+    tags:
+      - quiz
+      - vendas
+      - distúrbios hormonais
+      - gravidez
+      - pós-parto
+    file: k-060.md
