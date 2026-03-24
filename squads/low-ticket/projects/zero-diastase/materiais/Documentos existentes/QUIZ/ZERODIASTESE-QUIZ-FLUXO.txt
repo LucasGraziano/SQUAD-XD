@@ -1,0 +1,478 @@
+
+Estrutura do QUIZ: Zero Diástase
+
+1. CHEGADA
+
+Título: DESCUBRA SE VOCÊ TEM DIÁSTASE!
+Subtítulo: Em MENOS DE 2 MINUTOS, veja o que pode estar acontecendo com o seu abdômen!
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+2. P.Simples (I)
+
+Pergunta: Quantos anos, você tem?
+
+[ ] 18-24
+
+[ ] 25-29
+
+[ ] 30-34
+
+[ ] 35-39
+
+[ ] 40+
+
+---------------------------------------------------------
+
+3. P.Simples (P)
+
+Pergunta: Qual o seu, peso?
+
+Unidade: [kg] | lb
+Valor: 70kg (Ajustável)
+
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+4. P.Simples (A)
+
+Pergunta: Qual a sua, altura?
+
+Unidade: [cm] | pol
+Valor: 180cm (Ajustável)
+
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+5. L.Intro
+
+Título: NÃO TEM RESPOSTA CERTA!
+
+Texto: O objetivo do QUIZ é diagnosticar suas dores e gerar um protocolo personalizado com base nas suas respostas!
+
+Botão: 👉 INICIAR O QUIZ
+
+---------------------------------------------------------
+
+6. P.Simples
+
+Pergunta: Quantos filhos, você tem?
+
+[ ] 1 filho/a
+
+[ ] 2+ filhos/as
+
+---------------------------------------------------------
+
+7. P.Simples
+
+Pergunta: Quando foi sua última gravidez?
+
+[ ] 0 a 6 meses
+
+[ ] 6 a 12 meses
+
+[ ] 12 a 24 meses
+
+[ ] +24 meses
+
+---------------------------------------------------------
+
+8. P.Simples
+
+Pergunta: Como foi seu último parto?
+
+[ ] Cesária
+
+[ ] Natural
+
+Nota: Cada tipo de parto pede um ritmo diferente
+
+---------------------------------------------------------
+
+9. L.FunFact
+
+Título: VOCÊ SABIA?
+
+Texto: Depois da gravidez, muitas mulheres ficam com a barriga "estufada" mesmo estando magras... porque o abdômen perde a função de sustentar a pressão interna em repouso.
+
+Aviso: POR ISSO NÃO ADIANTA: Fazer Dietas, Usar Cinta Modeladora, Fazer Prancha Tradicional.
+
+Chamada: VOCÊ PRECISA DO PROTOCOLO ZERO DIÁSTASE.
+
+Botão: 👉 QUERO SABER MAIS
+
+---------------------------------------------------------
+
+10. P.Consc
+
+Pergunta: Depois da gravidez, como sua barriga ficou?
+
+[ ] Flácida, diferente de antes.
+
+[ ] Fraca, sem sustentação.
+
+[ ] Caída, difícil de reconhecer.
+
+[ ] Todas as opções.
+
+Nota: Isso é comum após a gravidez
+
+---------------------------------------------------------
+
+11. P.Consc
+
+Pergunta: Quando você acorda, como está sua barriga?
+
+[ ] Estufada, mesmo em jejum.
+
+[ ] Rígida, desconfortável.
+
+[ ] Mole, sem firmeza nenhuma.
+
+Nota: Isso é um sinal de alerta
+
+---------------------------------------------------------
+
+12. P.Consc
+
+Pergunta: Quando você relaxa sua barriga, o que acontece?
+
+[ ] Estufada, empurra pra frente.
+
+[ ] Flácida, perde forma e cai.
+
+[ ] Fraca, falta sustentação.
+
+Nota: Se os músculos não seguram, ela cede
+
+---------------------------------------------------------
+
+13. P.Consc
+
+Pergunta: Como você se sente, após se exercitar?
+
+[ ] Enjoada, com ânsia.
+
+[ ] Estufada, muito desconfortável.
+
+[ ] Travada, toda dolorida.
+
+Nota: Os exercícios pioram a pressão interna
+
+---------------------------------------------------------
+
+14. L.Realidade
+
+Título: VOCÊ JÁ TENTOU...
+Texto: Prancha, Abdominal, Dieta, Cinta Modeladora... e mesmo assim NADA MUDA... Então o problema não é esforço... é CONTROLE.
+
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+15. P.Diagnóstico
+
+Pergunta: O que você pensa, ao se ver assim?
+
+[ ] "Meu corpo não vai voltar"
+
+[ ] "A culpa é minha"
+
+[ ] "Tenho que aceitar"
+
+Nota: Nenhuma mulher devia passar por isso
+
+---------------------------------------------------------
+
+16. P.Diagnóstico
+
+Pergunta: Há quanto tempo você sente isso?
+
+[ ] Desde a primeira gravidez.
+
+[ ] Desde a última gravidez.
+
+[ ] Já faz muito tempo.
+
+Nota: O tempo é um fator importante para virada de chave
+
+---------------------------------------------------------
+
+17. P.Diagnóstico (M)
+
+Pergunta: Além da barriga, o que mais te incomoda? (Múltipla escolha)
+
+[ ] Lombar, vive dolorida.
+
+[ ] Quadril, fica travado.
+
+[ ] Pressão, me sinto estufada.
+
+[ ] Roupas, nada veste como antes.
+
+[ ] Espelho/Fotos, eu evito ao máximo.
+
+Nota: Sem tratamento os problemas vão se acumulando
+
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+18. L.Isenção
+
+Título: O PROBLEMA NÃO É VOCÊ!
+
+Texto: Você só está PRESA no MESMO CICLO! Um ciclo que se repete toda vez que você tenta uma nova: DIETA, CINTA, EXERCÍCIOS. Se você faz isso, mas não perde a barriga... o problema não é você. E sim a falta de um Protocolo!
+
+Botão: 👉 PRECISO DESSE PROTOCOLO
+
+---------------------------------------------------------
+
+19. P.Impede
+
+Pergunta: O que te impede de começar?
+
+[ ] Falta de Tempo
+
+[ ] Sem Motivação
+
+[ ] Não tem Instrução
+
+[ ] Sente Frustração
+
+[ ] Sem espaço na Rotina
+
+Nota: Na vida de mãe, tempo é luxo
+
+---------------------------------------------------------
+
+20 a 24. GRÁFICOS (Quebra de Objeções)
+
+20 (Falta de Tempo): Precisa caber em 10 min/dia.
+
+21 (Sem Motivação): Precisa ser leve e guiado.
+
+22 (Sem Instrução): Precisa de um passo a passo claro.
+
+23 (Frustração): A primeira vitória tem que vir cedo.
+
+24 (Rotina Apertada): Precisa ser simples e previsível.
+
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+25. P.Proposta
+
+Título: PROTOCOLO DE 28 DIAS
+
+Texto: Para devolver sustentação e leveza ao seu abdômen!
+
+Checklist (Vantagens): Instrução, Calma, Clareza, Ritmo, Conforto.
+
+Pergunta: você teria interesse?
+
+Botão: 👍 SIM, TENHO INTERESSE!
+
+---------------------------------------------------------
+
+26. L.Personaliza
+
+Texto: Com base nas suas respostas vamos definir por onde você deve começar para:
+
+✅ REDUZIR PRESSÃO
+
+✅ RECUPERAR SUSTENTAÇÃO
+
+✅ EVITAR ERROS COMUNS
+
+✅ CABER NA ROTINA
+
+---------------------------------------------------------
+
+27. P.Desejo
+
+Pergunta: O que você quer sentir primeiro?
+
+[ ] Leveza, sem pressão.
+
+[ ] Alívio, sem desconforto.
+
+[ ] Conforto, sem dores.
+
+---------------------------------------------------------
+
+28. P.Desejo (M)
+
+Pergunta: O que você mais quer voltar a fazer com confiança? (Múltipla escolha)
+
+[ ] Usar Vestidos/Biquíni.
+
+[ ] Tirar Fotos de corpo inteiro.
+
+[ ] Se Relacionar sem apagar a luz.
+
+[ ] Ir pra Praia/Piscina sem ansiedade.
+
+[ ] Vida social sem evitar encontros.
+
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+29. P.Comp
+
+Título: PRONTA PARA MUDAR?
+Visual: Slider Antes/Depois.
+
+Botão: 🤝 QUERO COMEÇAR!
+
+---------------------------------------------------------
+
+30. L.PSocial
+
+Título: MILHARES DE MÃES JÁ COMEÇARAM!
+Subtítulo: Agora é sua vez de fazer parte disso!
+Conteúdo: Print de comentários do Instagram.
+
+Botão: 👉 CONTINUAR
+
+---------------------------------------------------------
+
+31 a 34. ESTRUTURA DA OFERTA
+
+31 (Oferta): Apresentação do Protocolo Zero Diastasis (Muito mais que treino).
+
+32 (Principais): Checklist de Evolução + Planner Fit de Monitoramento.
+
+33 (L.Bônus): Barra de carregamento "Novos bônus sendo liberados".
+
+34 (Bônus): 40 Receitas Detox + Shakes Anabólicos.
+
+---------------------------------------------------------
+
+35. PÁGINA DE VENDAS (CHECKOUT)
+
+TEMPO LIMITADO – 05:00
+
+SEU PLANO PERSONALIZADO ESTÁ PRONTO!
+Baseado nas suas respostas um PLANO PREMIUM foi liberado!
+
+(ZERO DIASTASIS™ + 3 BÔNUS EXCLUSIVOS)
+
+de ~~$99,90~~ por apenas
+
+$19,90
+(80% de desconto)
+
+Enquanto 99% das mulheres continuam tentando exercícios que pioram a pressão, você vai REATIVAR SEU ABDÔMEN DENTRO DE CASA!
+
+👉 [DESBLOQUEAR O PROTOCOLO!]
+
+📍 Você chegou até aqui porque o quiz revelou algo importante:
+
+35.1 QUALIFICAÇÃO E DESEJO
+
+Você quer mudar!
+A boa notícia?
+Você vai ter resultados rápidos com o PROTOCOLO ZERO DIASTASIS™
+
+Esse protocolo é ideal pra mulheres que:
+
+✅ Tá cansada de se sentir mal...
+
+✅ Sabe que não é falta de esforço...
+
+✅ Já tentou mas nada funcionou...
+
+✅ Já ouviu que "só cirurgia resolve"...
+
+✅ Quer fazer dar certo pra valer!
+
+✅ Acredita que dá pra mudar!
+
+👉 [DESBLOQUEAR O PROTOCOLO!]
+
+35.2 PROMESSA E TRANSFORMAÇÃO
+
+O Protocolo ZERO DIASTASIS™ resolve:
+
+Perda da sustentação abdominal.
+
+Sensação de desconforto e pressão.
+
+Dores no quadril e lombar.
+
+Evita a cirurgia.
+
+Depender de dietas e musculação...
+
+Ele te ajuda a:
+
+➡️ Reduzir a pressão abdominal.
+
+➡️ Reativar o Abdômen.
+
+➡️ Melhorar a postura.
+
+➡️ Evitar erros comuns.
+
+(sem exercício, sem dieta, sem mágica)
+
+👉 [DESBLOQUEAR O PROTOCOLO!]
+
+35.3 ENTREGÁVEIS E GARANTIA
+
+O que você vai receber:
+
+Qual a primeira dúvida a ser resolvida?
+
+✅ Item 01: [Seu Protocolo Principal]
+
+✅ Item 02: [Guia de Ativação]
+
+✅ Item 03: [Bônus 1]
+
+✅ Item 04: [Bônus 2]
+
+✅ Item 05: [Bônus 3]
+
+✅ Item 06: [Suporte VIP]
+
+✅ Garantia: 28 Dias.
+
+Valor Total: ~~$99,99~~
+
+HOJE PAGAMENTO ÚNICO...
+
+$19,90
+
+APROVEITE AGORA: Você NÃO vai encontrar esse preço depois.
+
+👉 [DESBLOQUEAR O PROTOCOLO!]
+
+35.4 FAQ (PERGUNTAS FREQUENTES)
+
+As pessoas costumam perguntar:
+
+Recebo na hora?
+Sim. O acesso chega direto no seu e-mail, pronto pra começar agora mesmo.
+
+O acesso é vitalício?
+Sim! Após a compra, o acesso ao conteúdo é liberado de forma vitalícia, sem prazo para expirar.
+
+Posso acessar pelo celular?
+Com certeza. Todo o conteúdo foi pensado para funcionar perfeitamente no celular, tablet ou computador. É só ter INTERNET.
+
+Tem reembolso?
+Sim, você tem: 28 dias. Entrou, viu que não é pra você? Dinheiro de volta, sem enrolação.
+
+Tem suporte?
+Sim! Você não vai estar sozinha.
+
+Copyright 2026 - Zero Diastasis™
+All rights reserved

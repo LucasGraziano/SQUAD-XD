@@ -30,3 +30,6 @@ Thumbs.db
 # AIOX Runtime (AIOX)
 .aiox-core/local/
 .aiox/
+
+# Large media files (use external storage)
+*.mp4

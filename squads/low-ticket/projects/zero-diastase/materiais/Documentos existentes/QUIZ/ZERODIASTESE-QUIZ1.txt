@@ -1,0 +1,46 @@
+
+ 1-Chegada: Essa primeira etapa precisa se conversar com o criativo, é a landing do QUIZ, algo bem simples como o que está atualmente. ~Aberto à alteração, mas não necessário.
+ 2-Pergunta Simples: Primeira Pergunta Simples deve ser algo simples assim como "Qntos anos vc tem", algo instintivo sem atrito. ~Não precisa de alteração
+ 3-Pergunta Simples: Segunda Pergunta, mesmo fluxo, a partir dessa pergunta começamos a "personalizar" o quiz, além de ser uma pergunta bem "humana" e agradável, sem ser invasiva "Qntos filhos vc tem?". ~Não precisa de alteração
+ 4-Pergunta Simples: Terceira Pergunta, mesmo fluxo, seguindo a personalização, sem ser invasivo "Qndo foi seu último parto?". ~Não precisa de alteração
+ 5-Pergunta Simples: Quarta Pergunta, mesmo fluxo, seguindo a personalização, sem ser invasivo "Como que foi seu último parto?". ~Não precisa de alteração
+ 6-Loading 1 (FunFact/Notícia): Primeiro Loading, ele precisa conversar com a etapa de "Perguntas Simples" anterior, informando algo que gere identificação para o LEAD/Prospect, para que ele pense "Tem mais gente assim/não sou o único" etc. ~Necessário Alteração (Etapa incompleta)
+
+(A primeira parte do QUIZ serve para o LEAD/Prospect entender a dinâmica do QUIZ, algo bem simples, divertido até, imagens nas respostas, quantidades diferentes de resposta, afim de evitar a monotonia e abraçar de vez o famoso "funil gameficado". Essas perguntas servem para tirar o LEAD/Prospect de qualquer "receio/barreira" por SER um QUIZ. Algo dinâmico, simples e introdutório)
+
+ 7-Pergunta Diagnóstico: Primeira Pergunta Invasiva, após a introdução ao funil iremos fazer perguntas diagnóstico para seguir com a personalização, e afim de "entender" o que o LEAD/Prospect está enfrentando, vamos avaliar os sintômas "Dps da gravidez como sua barriga ficou?". ~Não precisa de alteração
+ 8-Pergunta Diagnóstico: Segunda Pergunta Invasiva, seguindo a personalização e avaliação de sintomas."Quando você acorda, como se sente?". ~Não precisa de alteração
+ 9-Pergunta Diagnóstico: Terceira Pergunta Invasiva, seguindo a personalização e avaliação de sintomas. "Quanto você se senta/se levanta (ou algo do tipo) como se sente/o que acontece?". ~Possível Alteração(Sinto que a pergunta está redundante)/~Necessário Alteração (Respostas Incompleta)
+10-Loading 2 (Diagnóstico): Segundo loading, ele precisa conversar com a etapa de "Perguntas Diagnóstico" anterior, informando algo que gere identificação para o LEAD/Prospect, para que ele pensa "São sintomas comuns/Não sou o único" etc. ~Necessário Alteração (Etapa incompleta)
+
+(A segunda parte do QUIZ serve para o LEAD/Prospect passar por uma "personalização" na venda do produto, para que ela sinta que seja algo destinado à ela, as suas necessidades)
+
+11-Pergunta Consciência: Primeira Pergunta Consciência, após a introdução e diagnóstico iremos fazer perguntas que ativem as dores do LEAD/Prospect, o objetivo é criar consciência e trazer à tona a realidade (LEAD/Prospect você ESTÁ passando por ISSO)."Oq vc pensa ao se ver assim?".~Aberto à alteração, mas não necessário.
+12-Pergunta Consciência: Segunda Pergunta Consciência, seguindo a ativação de consciência."Há quanto tempo você se sente assim?/se sente isso?".~Não precisa de alteração
+13-Pergunta Consciência (Múltipla Escolha): Terceira Pergunta Consciência, seguindo ativação de consciência, mas adicionei a "Múltipla Escolha" afim de quebrar a monotonia das perguntas com 3/4 respostas, aqui vai ser necessário selecionar as respostas e em seguida clicar em "Continuar", isso serve para recuperar o LEAD/Prospect no caso de tédio ou TDAH."Além da barriga, o que mais te incomoda?".~Necessário alteração (Respostas Incompletas)
+14-Loading 3 (Realidade):Terceiro Loading, ele precisa conversar com a etapa de "Perguntas Consciência" anterior, informando algo que gere desconforto, quase um "terrorismo", fazendo com que o LEAD/Prospect caia na real, para que ele pense "É tão ruim ficar me sentindo assim, preciso mudar, preciso fazer alguma coisa AGORA".~Necessário Alteração (Etapa incompleta)
+
+(A terceira parte do QUIZ serve para o LEAD/Prospect cair na realidade, que ele está enfrentando uma situação e que ele precisa encarar ela, quase que com um "antes que seja tarde demais)
+
+15-Pergunta Impedimento: Primeira Pergunta Impedimento,após a introdução, diagnóstico e realidade iremos fazer perguntas afim de afastar a culpa da realidade do LEAD/Prospect, queremos colocar ele numa situação de "Você não se colocou nessa situação, mas tá nas suas mãos sair", além disso iremos trazer à tona os impedimentos que impedem ele de sair dessa situação. "Como você se sente após se exercitar". ~Necessário alteração (Respostas Incompletas)
+16-Pergunta Impedimento: Segunda Pergunta Impedimento, segue afastando a culpa do lead, questionando o que impede ele de mudar essa situação/ou como ele se sentiu tentando mudar. ~Necessário Alteração (Etapa incompleta)
+17-Pergunta Proposta: Enquanto questionamos o que impedia o LEAD/Prospect de mudar, o como ele se sentiu com as tentativas frustradas de mudança, essa etapa entra como uma quebra de expectativa/surpresa "Se tivesse um método que não precisa disso (1 e 2, exemplo Exercício e Tempo ou Exercício e Dieta), você seguiria esse método?". ~Necessário Alteração (Etapa incompleta)
+18-Loading 4 (Personalização): Quarto Loading, ele vai informar que terminou de compilar as informações fornecidas no QUIZ e que um protocólo personalizado foi "feito" para o LEAD/Prospect. O ponto é informar que o QUIZ foi útil e que com isso ele vai conseguir mudar da situação que gera dor à ele e que será dedicado/personalizado para ele. ~Necessário Alteração (Etapa incompleta)
+19-Gráfico: Aqui ele vai informar que através dos resultados obtidos através do QUIZ, a oferta vai ser MUITO EFICAZ na tratativa da situação.~Necessário Alteração (Etapa incompleta)
+
+(A quarta parte do QUIZ serve como um "primeiro CTA" um trigger, uma proposta, é aqui que plantamos a sementinha de que o temos o que ele precisa para sair dessa situação da forma que é confortável pra ele, se ele não quiser se esforçar, que seja algo rápido, personalizado, com instrução é aqui que ele vai achar. O objetivo dela é preparar o LEAD para a próxima parte, onde vamos explorar o quanrto ele quer, e como ele vai se sentir melhorando sua situação.)
+
+20-Pergunta Desejo: Primeira Pergunta Desejo, após a introdução, diagnóstico, choque de realidade e proposta, iremos fazer perguntas para atiçar o LEAD/Prospect, essas tem como objetivo desencadear a ansiedade, os sonhos, e o sentimento de "Preciso comprar isso para atingir a realidade que eu desejo/Preciso comprar isso para conseguir aquilo", por mais simples que seja a pergunta, quem vai trabalhar aqui é o próprio cérebro da pessoa se imaginando melhor. "Como você se sentiria/O que você faria depois de melhorar da diástase?".~Necessário Alteração (Etapa incompleta)
+21-Pergunta Desejo: Segunda Pergunta Desejo, mesmo fluxo, trabalhando sempre com projeção, afim de enraizar mais ainda a ideia de que esse produto VAI mudar a situação que o LEAD/Prospect se encontra.~Necessário Alteração (Etapa incompleta)
+22-Pergunta Compromisso: Enquanto questionamos o que o LEAD/Prospect faria assim que mudasse sua situação aqui vamos dar um fim nessa situação e finalmente colocá-lo contra a parede. "Você está pronto para mudar essa situação?".~Necessário Alteração (Etapa incompleta)
+23-Loading 5 (Prova Social): Quinto Loading, ele vai informar que inúmeras outras mulheres já tomaram essa decisão e que elas ficaram extremamente felizes que à tomaram. Junto dessa informação haverá um carrossel com provas socias do Instagram, Facebook e WhatsApp. ~Necessário Alteração (Etapa incompleta)
+
+(A quinta parte do QUIZ serve para acabar com qualquer hesitação ou dúvida que o LEAD/Prospect tem, é aqui que vamos cravar que esse produto vai mudar a vida deles)
+
+24- Recebíveis: Apresentação dos "Pack" mostrando os principais produtos que o LEAD/Prospect vai receber na Oferta (com imagens).~Não precisa de alteração
+25- Principais: Apresentação individual dos 3 principais produtos (com imagens).~Não precisa de alteração
+26- Loading 6: Sexto Loading, aqui vai ter uma "surpresa" onde vamos informar que de acordo com as respostas do QUIZ produtos Bônus foram liberados. ~Não precisa de alteração
+27- Bônus: Apresentação dos Bônus Individualmente (com imagens).~Não precisa de alteração
+28- Página de Vendas: Etapa do Checkout, onde estarpa listado tudo que ele vai receber na oferta e em seguida o valor com botão CTA para ser direcionado à página de pagamento.
+
+(A sexta e última parta do QUIZ serve para apresentar a Oferta e vender)

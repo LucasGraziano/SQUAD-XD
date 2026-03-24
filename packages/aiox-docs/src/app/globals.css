@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --surface-900: #0A0A0F;
+  --surface-800: #111118;
+  --surface-700: #1A1A24;
+  --surface-600: #222230;
+  --coral: #E8837C;
+  --menta: #7ECEC1;
+  --gold: #D4A574;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--surface-900);
+  color: #F0F0F5;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--surface-800);
+}
+::-webkit-scrollbar-thumb {
+  background: #333344;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #444466;
+}
+
+/* Glow effects */
+.glow-coral {
+  box-shadow: 0 0 20px rgba(232, 131, 124, 0.15), 0 0 60px rgba(232, 131, 124, 0.05);
+}
+.glow-menta {
+  box-shadow: 0 0 20px rgba(126, 206, 193, 0.15), 0 0 60px rgba(126, 206, 193, 0.05);
+}
+.glow-gold {
+  box-shadow: 0 0 20px rgba(212, 165, 116, 0.15), 0 0 60px rgba(212, 165, 116, 0.05);
+}
+
+/* Code blocks */
+code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+.code-block {
+  background: var(--surface-800);
+  border: 1px solid #222230;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #E8837C, #D4A574);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-menta {
+  background: linear-gradient(135deg, #7ECEC1, #E8837C);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Card hover */
+.card-hover {
+  transition: all 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-2px);
+  border-color: rgba(232, 131, 124, 0.3);
+}
+
+/* Status dot animation */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.status-dot {
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+/* Grid background pattern */
+.grid-bg {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 60px 60px;
+}

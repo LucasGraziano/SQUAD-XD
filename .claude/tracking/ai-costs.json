@@ -1,0 +1,54 @@
+{
+  "version": "1.0",
+  "currency": "BRL",
+  "last_updated": "2026-03-23",
+  "services": {
+    "claude": {
+      "plan": "Max",
+      "cost_monthly_usd": 100,
+      "status": "active",
+      "notes": "Claude Code CLI + Claude App (mobile/web) — primary tool"
+    },
+    "elevenlabs": {
+      "plan": "Free",
+      "cost_monthly": 0,
+      "limit": "10000 chars/month",
+      "used_this_month": 0,
+      "status": "active"
+    },
+    "veo3": {
+      "plan": "Free (Google AI Studio)",
+      "cost_monthly": 0,
+      "limit": "~50 videos/day",
+      "used_this_month": 0,
+      "status": "active"
+    },
+    "canva": {
+      "plan": "Free",
+      "cost_monthly": 0,
+      "status": "active"
+    },
+    "notion": {
+      "plan": "Free",
+      "cost_monthly": 0,
+      "status": "active"
+    },
+    "heygen": {
+      "plan": "Free trial",
+      "cost_monthly": 0,
+      "limit": "1 min",
+      "used_this_month": 0,
+      "status": "active"
+    },
+    "gemini": {
+      "plan": "Free (Google)",
+      "cost_monthly": 0,
+      "status": "active",
+      "notes": "Backup + Google Workspace integration"
+    }
+  },
+  "monthly_logs": [],
+  "total_fixed_monthly_brl": 575,
+  "exchange_rate_usd_brl": 5.75,
+  "notes": "Total fixo = Claude Max ($100 x 5.75 = R$575). Restante tudo gratuito."
+}

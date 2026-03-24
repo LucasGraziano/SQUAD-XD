@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zero Diastasis - Modulo 1: El Desbloqueo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ═══ RESET & BASE ═══ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    font-size: 11pt;
+    line-height: 1.7;
+    color: #2D2D2D;
+    background: #FFF8F5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ═══ BRAND COLORS ═══ */
+  :root {
+    --coral: #E8837C;
+    --coral-light: #F2A9A4;
+    --white-warm: #FFF8F5;
+    --verde-menta: #7ECEC1;
+    --dourado: #D4A574;
+    --rosa-palido: #F5E6E0;
+    --cinza-escuro: #2D2D2D;
+    --cinza-medio: #6B6B6B;
+    --cinza-claro: #9B9B9B;
+    --vermelho: #D94F4F;
+  }
+
+  /* ═══ PAGE STRUCTURE ═══ */
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 20mm 22mm;
+    background: var(--white-warm);
+    position: relative;
+    page-break-after: always;
+    overflow: hidden;
+  }
+
+  .page:last-child { page-break-after: auto; }
+
+  /* ═══ COVER PAGE ═══ */
+  .cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30mm 25mm;
+    background: linear-gradient(160deg, var(--white-warm) 0%, var(--rosa-palido) 50%, #FCE8E4 100%);
+  }
+
+  .cover-badge {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 9pt;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 20px;
+    margin-bottom: 20mm;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 36pt;
+    font-weight: 700;
+    color: var(--cinza-escuro);
+    line-height: 1.2;
+    margin-bottom: 8mm;
+  }
+
+  .cover-subtitle {
+    font-size: 14pt;
+    font-weight: 300;
+    color: var(--cinza-medio);
+    margin-bottom: 15mm;
+    max-width: 120mm;
+  }
+
+  .cover-divider {
+    width: 60mm;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--coral), transparent);
+    margin: 8mm auto;
+  }
+
+  .cover-author {
+    font-size: 10pt;
+    color: var(--cinza-claro);
+    letter-spacing: 1px;
+  }
+
+  .cover-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10mm;
+  }
+
+  /* ═══ DECORATIVE ELEMENTS ═══ */
+  .page-corner-top {
+    position: absolute;
+    top: 0; right: 0;
+    width: 50mm; height: 50mm;
+    background: linear-gradient(225deg, var(--rosa-palido) 0%, transparent 70%);
+    border-radius: 0 0 0 100%;
+    opacity: 0.5;
+  }
+
+  .page-corner-bottom {
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 40mm; height: 40mm;
+    background: linear-gradient(45deg, var(--rosa-palido) 0%, transparent 70%);
+    border-radius: 0 100% 0 0;
+    opacity: 0.3;
+  }
+
+  .page-number {
+    position: absolute;
+    bottom: 12mm;
+    right: 22mm;
+    font-size: 9pt;
+    color: var(--cinza-claro);
+  }
+
+  .page-footer {
+    position: absolute;
+    bottom: 12mm;
+    left: 22mm;
+    font-size: 8pt;
+    color: var(--cinza-claro);
+    letter-spacing: 0.5px;
+  }
+
+  /* ═══ TYPOGRAPHY ═══ */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26pt;
+    font-weight: 700;
+    color: var(--cinza-escuro);
+    margin-bottom: 6mm;
+    line-height: 1.25;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18pt;
+    font-weight: 700;
+    color: var(--coral);
+    margin-top: 8mm;
+    margin-bottom: 4mm;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-size: 13pt;
+    font-weight: 600;
+    color: var(--cinza-escuro);
+    margin-top: 6mm;
+    margin-bottom: 3mm;
+  }
+
+  p {
+    margin-bottom: 4mm;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  /* ═══ CHAPTER OPENER ═══ */
+  .chapter-opener {
+    padding-top: 40mm;
+    position: relative;
+  }
+
+  .chapter-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 60pt;
+    font-weight: 700;
+    color: var(--rosa-palido);
+    position: absolute;
+    top: 15mm;
+    left: -5mm;
+    line-height: 1;
+  }
+
+  .chapter-label {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 8pt;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 12px;
+    margin-bottom: 4mm;
+  }
+
+  .chapter-intro {
+    font-size: 12pt;
+    font-style: italic;
+    color: var(--cinza-medio);
+    border-left: 3px solid var(--coral);
+    padding-left: 5mm;
+    margin: 6mm 0;
+  }
+
+  /* ═══ CALLOUT BOXES ═══ */
+  .callout {
+    background: var(--rosa-palido);
+    border-radius: 8px;
+    padding: 5mm 6mm;
+    margin: 5mm 0;
+    position: relative;
+  }
+
+  .callout-icon {
+    position: absolute;
+    top: -3mm;
+    left: 5mm;
+    background: var(--coral);
+    color: white;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+  }
+
+  .callout-science {
+    background: #EBF7F5;
+    border-left: 3px solid var(--verde-menta);
+  }
+
+  .callout-science .callout-icon {
+    background: var(--verde-menta);
+  }
+
+  .callout-warning {
+    background: #FFF3E0;
+    border-left: 3px solid var(--dourado);
+  }
+
+  .callout-warning .callout-icon {
+    background: var(--dourado);
+  }
+
+  .callout-title {
+    font-weight: 600;
+    font-size: 10pt;
+    margin-bottom: 2mm;
+    padding-top: 1mm;
+  }
+
+  .callout-text {
+    font-size: 10pt;
+    color: var(--cinza-medio);
+    line-height: 1.6;
+  }
+
+  /* ═══ EVIDENCE BOX ═══ */
+  .evidence {
+    background: #F0FAF8;
+    border: 1px solid #C8E6E0;
+    border-radius: 8px;
+    padding: 4mm 5mm;
+    margin: 4mm 0;
+    font-size: 9.5pt;
+  }
+
+  .evidence-source {
+    font-size: 8.5pt;
+    color: var(--verde-menta);
+    font-weight: 600;
+    margin-bottom: 1mm;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .evidence-text {
+    color: var(--cinza-medio);
+    font-style: italic;
+  }
+
+  .evidence-cite {
+    font-size: 8pt;
+    color: var(--cinza-claro);
+    margin-top: 1.5mm;
+  }
+
+  /* ═══ PILLAR ICONS (SVG inline) ═══ */
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4mm;
+    margin: 6mm 0;
+  }
+
+  .pillar-card {
+    background: white;
+    border: 1px solid #EDE5E0;
+    border-radius: 10px;
+    padding: 5mm;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .pillar-card.active {
+    border-color: var(--coral);
+    box-shadow: 0 2px 12px rgba(232, 131, 124, 0.15);
+  }
+
+  .pillar-icon {
+    width: 36px;
+    height: 36px;
+    margin: 0 auto 3mm;
+  }
+
+  .pillar-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 11pt;
+    font-weight: 700;
+    color: var(--cinza-escuro);
+    margin-bottom: 1mm;
+  }
+
+  .pillar-desc {
+    font-size: 9pt;
+    color: var(--cinza-medio);
+  }
+
+  .pillar-days {
+    display: inline-block;
+    background: var(--coral);
+    color: white;
+    font-size: 8pt;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 2mm;
+  }
+
+  /* ═══ LISTS ═══ */
+  ul, ol {
+    margin: 3mm 0;
+    padding-left: 6mm;
+  }
+
+  li {
+    margin-bottom: 2mm;
+  }
+
+  .check-list {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .check-list li {
+    position: relative;
+    padding-left: 7mm;
+  }
+
+  .check-list li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 2px;
+    width: 14px; height: 14px;
+    border: 2px solid var(--verde-menta);
+    border-radius: 50%;
+    background: white;
+  }
+
+  .check-list li.checked::before {
+    background: var(--verde-menta);
+    border-color: var(--verde-menta);
+  }
+
+  .check-list li.checked::after {
+    content: '\2713';
+    position: absolute;
+    left: 2px; top: 0;
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
+  }
+
+  /* ═══ TABLES ═══ */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 4mm 0;
+    font-size: 10pt;
+  }
+
+  thead th {
+    background: var(--coral);
+    color: white;
+    font-weight: 600;
+    padding: 3mm 4mm;
+    text-align: left;
+    font-size: 9pt;
+    letter-spacing: 0.5px;
+  }
+
+  thead th:first-child { border-radius: 6px 0 0 0; }
+  thead th:last-child { border-radius: 0 6px 0 0; }
+
+  tbody td {
+    padding: 3mm 4mm;
+    border-bottom: 1px solid #EDE5E0;
+  }
+
+  tbody tr:nth-child(even) { background: rgba(245, 230, 224, 0.3); }
+  tbody tr:last-child td:first-child { border-radius: 0 0 0 6px; }
+  tbody tr:last-child td:last-child { border-radius: 0 0 6px 0; }
+
+  /* ═══ QUOTE ═══ */
+  blockquote {
+    border-left: 3px solid var(--dourado);
+    padding: 4mm 5mm;
+    margin: 5mm 0;
+    background: rgba(212, 165, 116, 0.08);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--cinza-medio);
+  }
+
+  blockquote .author {
+    display: block;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 9pt;
+    color: var(--dourado);
+    margin-top: 2mm;
+  }
+
+  /* ═══ PROGRESS BAR ═══ */
+  .progress-bar {
+    background: #EDE5E0;
+    border-radius: 10px;
+    height: 8px;
+    margin: 3mm 0;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--coral), var(--verde-menta));
+  }
+
+  /* ═══ TOC ═══ */
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 3mm 0;
+    border-bottom: 1px dotted #EDE5E0;
+  }
+
+  .toc-title {
+    font-weight: 500;
+  }
+
+  .toc-page {
+    font-size: 10pt;
+    color: var(--coral);
+    font-weight: 600;
+  }
+
+  .toc-chapter {
+    font-family: 'Playfair Display', serif;
+    font-size: 13pt;
+    font-weight: 700;
+    padding-top: 4mm;
+    border-bottom: none;
+  }
+
+  /* ═══ STEP BY STEP ═══ */
+  .step {
+    display: flex;
+    gap: 4mm;
+    margin: 4mm 0;
+    align-items: flex-start;
+  }
+
+  .step-number {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--coral);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12pt;
+  }
+
+  .step-content {
+    flex: 1;
+  }
+
+  .step-title {
+    font-weight: 600;
+    margin-bottom: 1mm;
+  }
+
+  /* ═══ HIGHLIGHT BOX ═══ */
+  .highlight {
+    background: linear-gradient(135deg, var(--coral) 0%, #D4706A 100%);
+    color: white;
+    border-radius: 10px;
+    padding: 6mm;
+    margin: 6mm 0;
+    text-align: center;
+  }
+
+  .highlight h3 {
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-size: 16pt;
+    margin-bottom: 3mm;
+  }
+
+  .highlight p {
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    font-size: 11pt;
+  }
+
+  /* ═══ TRACKER ═══ */
+  .tracker-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2mm;
+    margin: 4mm 0;
+  }
+
+  .tracker-day {
+    background: white;
+    border: 1px solid #EDE5E0;
+    border-radius: 6px;
+    padding: 3mm;
+    text-align: center;
+    min-height: 14mm;
+  }
+
+  .tracker-day-num {
+    font-weight: 700;
+    font-size: 12pt;
+    color: var(--coral);
+  }
+
+  .tracker-day-label {
+    font-size: 7pt;
+    color: var(--cinza-claro);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ═══ SVG ICONS ═══ */
+  .svg-icon { display: inline-block; vertical-align: middle; }
+
+  /* ═══ PRINT OPTIMIZATIONS ═══ */
+  @media print {
+    body { background: white; }
+    .page { box-shadow: none; margin: 0; }
+  }
+</style>
+</head>
+<body>
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CAPA -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div class="page-corner-top"></div>
+
+  <!-- Pillar icon: Revelacion (lamp) -->
+  <svg class="cover-icon" width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="30" cy="30" r="28" stroke="#E8837C" stroke-width="2" fill="none"/>
+    <path d="M30 14 C22 14 16 20.5 16 28 C16 33 19 37 23 39 L23 44 C23 45.1 23.9 46 25 46 L35 46 C36.1 46 37 45.1 37 44 L37 39 C41 37 44 33 44 28 C44 20.5 38 14 30 14Z" fill="#E8837C" opacity="0.15"/>
+    <path d="M30 14 C22 14 16 20.5 16 28 C16 33 19 37 23 39 L23 44 C23 45.1 23.9 46 25 46 L35 46 C36.1 46 37 45.1 37 44 L37 39 C41 37 44 33 44 28 C44 20.5 38 14 30 14Z" stroke="#E8837C" stroke-width="2" fill="none"/>
+    <line x1="25" y1="46" x2="35" y2="46" stroke="#E8837C" stroke-width="2"/>
+    <line x1="26" y1="49" x2="34" y2="49" stroke="#E8837C" stroke-width="2"/>
+    <line x1="30" y1="22" x2="30" y2="34" stroke="#E8837C" stroke-width="2"/>
+    <line x1="24" y1="28" x2="36" y2="28" stroke="#E8837C" stroke-width="2"/>
+  </svg>
+
+  <span class="cover-badge">Modulo 1 &bull; Revelacion</span>
+  <h1 class="cover-title">El Desbloqueo</h1>
+  <p class="cover-subtitle">La verdad que nadie te conto sobre tu cuerpo despues del embarazo &mdash; y por que nada ha funcionado hasta ahora.</p>
+
+  <div class="cover-divider"></div>
+
+  <p class="cover-author">Zero Diastasis&trade; &mdash; Protocolo de 28 dias</p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGINA LEGAL / DISCLAIMER -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page" style="display: flex; flex-direction: column; justify-content: flex-end;">
+  <div style="font-size: 8.5pt; color: var(--cinza-claro); line-height: 1.8;">
+    <p><strong style="color: var(--cinza-medio);">Zero Diastasis&trade;</strong></p>
+    <p>Modulo 1: El Desbloqueo &mdash; Primera edicion, 2026.</p>
+    <p style="margin-top: 4mm;"><strong>Aviso importante:</strong> Este material es educativo e informativo. No reemplaza la consulta medica profesional. Antes de iniciar cualquier programa de ejercicios, consulta con tu medico, especialmente si tienes parto reciente (menos de 6 semanas), cesarea, o condiciones medicas preexistentes.</p>
+    <p style="margin-top: 3mm;">Las tecnicas presentadas se basan en evidencia cientifica publicada en revistas medicas revisadas por pares. Las referencias se incluyen al final del documento.</p>
+    <p style="margin-top: 3mm;">Todos los derechos reservados. Queda prohibida la reproduccion total o parcial sin autorizacion.</p>
+    <p style="margin-top: 6mm; color: var(--coral); font-weight: 500;">&copy; 2026 Zero Diastasis&trade;</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SUMARIO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h1 style="margin-bottom: 8mm;">Contenido</h1>
+  <div class="cover-divider" style="margin: 0 0 8mm 0;"></div>
+
+  <div class="toc-item toc-chapter">
+    <span>Carta para ti</span>
+    <span class="toc-page">4</span>
+  </div>
+
+  <div class="toc-item toc-chapter">
+    <span>1. La verdad que nadie te conto</span>
+    <span class="toc-page">5</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-title">&nbsp;&nbsp;&nbsp;Que es la diastasis (de verdad)</span>
+    <span class="toc-page">5</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-title">&nbsp;&nbsp;&nbsp;Por que sucede &mdash; y por que no es tu culpa</span>
+    <span class="toc-page">6</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-title">&nbsp;&nbsp;&nbsp;Lo que empeora la diastasis (y no te dicen)</span>
+    <span class="toc-page">7</span>
+  </div>
+
+  <div class="toc-item toc-chapter">
+    <span>2. Tu faja invisible</span>
+    <span class="toc-page">8</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-title">&nbsp;&nbsp;&nbsp;El musculo que lo cambia todo: el TVA</span>
+    <span class="toc-page">8</span>
+  </div>
+  <div class="toc-item">
+    <span class="toc-title">&nbsp;&nbsp;&nbsp;Por que se &ldquo;apago&rdquo; y como reactivarlo</span>
+    <span class="toc-page">9</span>
+  </div>
+
+  <div class="toc-item toc-chapter">
+    <span>3. El test de 2 dedos</span>
+    <span class="toc-page">10</span>
+  </div>
+
+  <div class="toc-item toc-chapter">
+    <span>4. Las 4 fases del protocolo</span>
+    <span class="toc-page">12</span>
+  </div>
+
+  <div class="toc-item toc-chapter">
+    <span>5. Reglas del juego</span>
+    <span class="toc-page">14</span>
+  </div>
+
+  <div class="toc-item toc-chapter">
+    <span>6. Tu tracker de 28 dias</span>
+    <span class="toc-page">16</span>
+  </div>
+
+  <div class="toc-item toc-chapter">
+    <span>Referencias cientificas</span>
+    <span class="toc-page">17</span>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">3</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CARTA PERSONAL -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+  <div class="page-corner-bottom"></div>
+
+  <h1>Carta para ti</h1>
+  <div class="cover-divider" style="margin: 0 0 6mm 0;"></div>
+
+  <p>Hola, mama.</p>
+
+  <p>Si estas leyendo esto, probablemente ya intentaste de todo: abdominales, fajas, dietas, videos de YouTube. Y nada funciono de verdad. O funciono un poco, pero volvio.</p>
+
+  <p>Quiero que sepas algo importante antes de empezar: <strong>no es tu culpa.</strong></p>
+
+  <p>Tu cuerpo hizo algo extraordinario &mdash; creo vida. Y durante ese proceso, tu abdomen se adapto de la unica forma que podia: separandose para darle espacio a tu bebe. Eso no es un defecto. Es biologia.</p>
+
+  <p>El problema no es tu cuerpo. El problema es que nadie te enseno <em>como</em> ayudarlo a volver. Peor aun: te dijeron que hicieras exactamente lo que lo empeora.</p>
+
+  <blockquote>
+    Tu cuerpo no necesita fuerza. Necesita reprogramacion.
+    <span class="author">&mdash; Zero Diastasis</span>
+  </blockquote>
+
+  <p>Este modulo es tu punto de partida. Aqui vas a entender <em>que</em> le paso a tu cuerpo, <em>por que</em> nada funciono antes, y <em>que vas a hacer diferente</em> en los proximos 28 dias.</p>
+
+  <p>No necesitas equipos. No necesitas horas. Necesitas 8 minutos al dia y la tecnica correcta.</p>
+
+  <p>Empecemos.</p>
+
+  <div style="text-align: right; margin-top: 10mm; font-style: italic; color: var(--cinza-medio);">
+    Con carino,<br>
+    <strong style="color: var(--coral);">El equipo Zero Diastasis</strong>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">4</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CAPITULO 1: LA VERDAD QUE NADIE TE CONTO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page chapter-opener">
+  <div class="page-corner-top"></div>
+  <span class="chapter-number">01</span>
+  <span class="chapter-label">Capitulo 1</span>
+  <h1>La verdad que nadie te conto</h1>
+  <p class="chapter-intro">Antes de resolver un problema, necesitas entenderlo de verdad. No con terminos medicos complicados &mdash; con palabras reales.</p>
+
+  <h2>Que es la diastasis (de verdad)</h2>
+
+  <p>La diastasis de recto &mdash; o &ldquo;diastasis&rdquo; &mdash; es la separacion de los musculos rectos abdominales (los &ldquo;cuadritos&rdquo;) que ocurre cuando la linea alba, el tejido conectivo que los une, se estira mas alla de su capacidad normal.</p>
+
+  <p>No es una rotura. No es una hernia. Es un <strong>estiramiento excesivo</strong> del tejido conectivo que ocurre naturalmente durante el embarazo para darle espacio a tu bebe.</p>
+
+  <div class="callout callout-science">
+    <div class="callout-icon">&#9881;</div>
+    <p class="callout-title">Lo que dice la ciencia</p>
+    <p class="callout-text">Estudios demuestran que entre el <strong>66% y el 100%</strong> de las mujeres desarrollan diastasis durante el tercer trimestre del embarazo. Es decir: si tuviste un bebe, es casi seguro que la tuviste o la tienes.</p>
+  </div>
+
+  <div class="evidence">
+    <p class="evidence-source">Evidencia cientifica</p>
+    <p class="evidence-text">&ldquo;La prevalencia de diastasis de recto abdominal fue del 100% en el tercer trimestre, 52.4% a las 6 semanas posparto, y 39.3% a los 6 meses posparto.&rdquo;</p>
+    <p class="evidence-cite">Sperstad et al. (2016). British Journal of Sports Medicine, 50(17), 1092-1096.</p>
+  </div>
+
+  <p>La buena noticia: en la mayoria de los casos, <strong>se puede mejorar significativamente sin cirugia.</strong> Lo que necesitas es el enfoque correcto &mdash; que no son abdominales tradicionales.</p>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">5</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGINA 6: POR QUE SUCEDE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h2>Por que sucede &mdash; y por que no es tu culpa</h2>
+
+  <p>Durante el embarazo, tu cuerpo produce hormonas como la <strong>relaxina</strong> y el <strong>estrogeno</strong> que ablandan el tejido conectivo para permitir que tu utero crezca. Esto es completamente normal y necesario.</p>
+
+  <p>El problema aparece cuando, despues del parto, ese tejido no recupera su tension original. Esto puede pasar por varias razones:</p>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <p class="step-title">Factores hormonales</p>
+      <p>La relaxina puede permanecer elevada durante meses despues del parto, especialmente si estas amamantando. Esto mantiene el tejido mas &ldquo;blando&rdquo; de lo normal.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <p class="step-title">Desactivacion del core profundo</p>
+      <p>Durante el embarazo, tu cuerpo &ldquo;apaga&rdquo; ciertos musculos profundos para darle espacio al bebe. Despues del parto, estos musculos no se &ldquo;encienden&rdquo; solos &mdash; necesitan ser reactivados conscientemente.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <p class="step-title">Ejercicios incorrectos</p>
+      <p>Abdominales tipo crunch, planchas intensas y ejercicios de alto impacto <strong>aumentan la presion intraabdominal</strong>, empujando los organos hacia afuera y estirando aun mas la linea alba.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-icon">!</div>
+    <p class="callout-title">Atencion</p>
+    <p class="callout-text">Los abdominales clasicos (crunches, sit-ups) pueden <strong>empeorar</strong> la diastasis. Cuando levantas cabeza y hombros sin activar correctamente el core profundo, creas una presion que empuja la linea alba hacia afuera &mdash; exactamente lo contrario de lo que necesitas.</p>
+  </div>
+
+  <div class="evidence">
+    <p class="evidence-source">Evidencia cientifica</p>
+    <p class="evidence-text">&ldquo;Los ejercicios que aumentan la presion intraabdominal, como los crunches convencionales, pueden exacerbar la separacion de la diastasis de recto en mujeres posparto.&rdquo;</p>
+    <p class="evidence-cite">Benjamin et al. (2014). Physiotherapy Theory and Practice, 30(4), 259-268.</p>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">6</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGINA 7: LO QUE EMPEORA -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h2>Lo que empeora la diastasis (y no te dicen)</h2>
+
+  <p>Hay acciones cotidianas que, sin saberlo, pueden estar frenando tu recuperacion:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Lo que haces</th>
+        <th>Por que empeora</th>
+        <th>Que hacer en su lugar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Abdominales clasicos</strong></td>
+        <td>Aumentan presion intraabdominal, empujan la linea alba</td>
+        <td>Activacion del TVA (Modulo 2)</td>
+      </tr>
+      <tr>
+        <td><strong>Planchas intensas</strong></td>
+        <td>Presion excesiva sin control del core profundo</td>
+        <td>Planchas modificadas (Modulo 4)</td>
+      </tr>
+      <tr>
+        <td><strong>Levantarse de la cama de frente</strong></td>
+        <td>Crea presion directa sobre la linea alba</td>
+        <td>Girar de lado, usar brazos para subir</td>
+      </tr>
+      <tr>
+        <td><strong>Cargar peso sin activar core</strong></td>
+        <td>Incluye cargar a tu bebe sin preparacion</td>
+        <td>Activar TVA antes de levantar (Modulo 3)</td>
+      </tr>
+      <tr>
+        <td><strong>Estrenimiento cronico</strong></td>
+        <td>Hacer fuerza aumenta presion abdominal repetidamente</td>
+        <td>Dieta con fibra, hidratacion, postura correcta</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight">
+    <h3>La regla de oro</h3>
+    <p>Si un ejercicio hace que tu abdomen se &ldquo;asome&rdquo; hacia afuera (como una cresta o un cono en el centro), <strong>detente inmediatamente</strong>. Esa es la senal de que estas aumentando la separacion.</p>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">7</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CAPITULO 2: TU FAJA INVISIBLE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page chapter-opener">
+  <div class="page-corner-top"></div>
+  <span class="chapter-number">02</span>
+  <span class="chapter-label">Capitulo 2</span>
+  <h1>Tu faja invisible</h1>
+  <p class="chapter-intro">Dentro de ti existe un musculo que funciona como una faja natural. Se llama transverso abdominal &mdash; y es la clave de todo.</p>
+
+  <h2>El musculo que lo cambia todo: el TVA</h2>
+
+  <p>El <strong>transverso abdominal (TVA)</strong> es el musculo mas profundo de tu abdomen. Imagina una faja que envuelve tu torso de lado a lado, desde las costillas hasta la pelvis. Eso es tu TVA.</p>
+
+  <p>A diferencia del recto abdominal (los &ldquo;cuadritos&rdquo; visibles), el TVA no se ve desde afuera. Pero es <strong>el musculo mas importante para cerrar la diastasis</strong> porque:</p>
+
+  <ul>
+    <li><strong>Comprime horizontalmente.</strong> Mientras los abdominales superficiales generan presion hacia afuera, el TVA comprime hacia adentro &mdash; acercando los lados de la linea alba.</li>
+    <li><strong>Estabiliza la columna.</strong> Es el primer musculo que se activa (o deberia activarse) antes de cualquier movimiento. Cuando no funciona, otros musculos compensan &mdash; y la diastasis empeora.</li>
+    <li><strong>Trabaja con el piso pelvico.</strong> El TVA y el piso pelvico funcionan como un equipo. Cuando activas uno correctamente, el otro responde automaticamente.</li>
+  </ul>
+
+  <div class="evidence">
+    <p class="evidence-source">Evidencia cientifica</p>
+    <p class="evidence-text">&ldquo;El entrenamiento del musculo transverso abdominal demostro reduccion significativa de la distancia inter-rectos en mujeres posparto con diastasis de recto abdominal.&rdquo;</p>
+    <p class="evidence-cite">Keshwani et al. (2021). Journal of Orthopaedic & Sports Physical Therapy, 51(4), 159-167.</p>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">8</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGINA 9: POR QUE SE APAGO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h2>Por que se &ldquo;apago&rdquo; y como reactivarlo</h2>
+
+  <p>Durante el embarazo, a medida que tu utero crece, el TVA se estira al maximo. En muchos casos, el cerebro literalmente &ldquo;olvida&rdquo; como activar este musculo &mdash; es como si se desconectara la senal nerviosa.</p>
+
+  <p>Esto explica por que muchas mamas sienten que su abdomen esta &ldquo;flojo&rdquo; o &ldquo;vacio&rdquo; despues del parto, incluso meses o anos despues. <strong>No es falta de fuerza. Es falta de conexion.</strong></p>
+
+  <div class="callout">
+    <div class="callout-icon">&hearts;</div>
+    <p class="callout-title">Tu cuerpo ya sabe que hacer</p>
+    <p class="callout-text">La reconexion con el TVA no requiere fuerza bruta ni horas de entrenamiento. Requiere <strong>atencion consciente</strong> &mdash; aprender a sentir y activar un musculo que siempre estuvo ahi pero que tu cerebro &ldquo;apago&rdquo; como mecanismo de proteccion durante el embarazo.</p>
+  </div>
+
+  <h3>El proceso de reactivacion (lo que haras en los Modulos 2-4):</h3>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <p class="step-title">Reconexion (Dias 1-7)</p>
+      <p>Reaprender a sentir el TVA. Respiracion diafragmatica + primera contraccion consciente. Al dia 3, sentiras &ldquo;algo diferente&rdquo; &mdash; es la senal volviendo.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <p class="step-title">Compresion (Dias 8-14)</p>
+      <p>Intensificar la activacion. Agregar tecnicas de tight lacing (compresion lateral). Al dia 14, mediras de nuevo &mdash; y veras la diferencia.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <p class="step-title">Anclaje (Dias 15-28)</p>
+      <p>Automatizar la activacion. Tu TVA empezara a funcionar solo durante actividades cotidianas. Resultado: permanente.</p>
+    </div>
+  </div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" style="width: 0%;"></div>
+  </div>
+  <p style="text-align: center; font-size: 9pt; color: var(--cinza-claro);">Tu progreso: Dia 0 de 28 &mdash; Estas aqui</p>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">9</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CAPITULO 3: EL TEST DE 2 DEDOS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page chapter-opener">
+  <div class="page-corner-top"></div>
+  <span class="chapter-number">03</span>
+  <span class="chapter-label">Capitulo 3</span>
+  <h1>El test de 2 dedos</h1>
+  <p class="chapter-intro">Antes de empezar, necesitas saber donde estas. Este autodiagnostico simple te dira el grado de tu diastasis &mdash; y sera tu referencia para medir progreso.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-icon">!</div>
+    <p class="callout-title">Nota importante</p>
+    <p class="callout-text">Este test es una <strong>herramienta de autoevaluacion</strong>, no un diagnostico medico. Si tienes dudas o tu separacion es mayor a 3 dedos, consulta con un fisioterapeuta especializado en piso pelvico.</p>
+  </div>
+
+  <h3>Como hacer el test:</h3>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <p class="step-title">Acuestate boca arriba</p>
+      <p>Rodillas dobladas, pies apoyados en el suelo. Relajate completamente.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <p class="step-title">Coloca 2-3 dedos horizontalmente</p>
+      <p>Justo encima de tu ombligo, con las puntas de los dedos apuntando hacia abajo, perpendiculares a la linea media de tu abdomen.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <p class="step-title">Levanta la cabeza lentamente</p>
+      <p>Sin levantar los hombros &mdash; solo la cabeza, como si quisieras mirar tu ombligo. Siente con los dedos.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div class="step-content">
+      <p class="step-title">Mide la separacion</p>
+      <p>Cuantos dedos caben en el espacio entre los dos lados del musculo? Anota el numero.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <div class="step-content">
+      <p class="step-title">Repite en 3 puntos</p>
+      <p>Mide: (a) encima del ombligo, (b) en el ombligo, (c) debajo del ombligo. Anota las 3 medidas.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">10</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGINA 11: INTERPRETACION DEL TEST -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h3>Interpreta tus resultados:</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Separacion</th>
+        <th>Clasificacion</th>
+        <th>Que significa</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Menos de 2 dedos</strong></td>
+        <td style="color: var(--verde-menta); font-weight: 600;">Normal / Leve</td>
+        <td>Dentro del rango normal. El protocolo te ayudara a fortalecer y prevenir.</td>
+      </tr>
+      <tr>
+        <td><strong>2-3 dedos</strong></td>
+        <td style="color: var(--dourado); font-weight: 600;">Moderada</td>
+        <td>Diastasis presente. Excelente candidata para el protocolo. Resultados visibles en 28 dias.</td>
+      </tr>
+      <tr>
+        <td><strong>Mas de 3 dedos</strong></td>
+        <td style="color: var(--vermelho); font-weight: 600;">Significativa</td>
+        <td>Consulta medica recomendada antes de empezar. El protocolo puede ayudar, pero necesitas supervision.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-science">
+    <div class="callout-icon">&#9881;</div>
+    <p class="callout-title">No solo mide la distancia</p>
+    <p class="callout-text">Investigaciones recientes muestran que la <strong>tension de la linea alba</strong> es tan importante como la distancia de separacion. Una separacion de 2 dedos con tejido firme puede ser mejor que 1 dedo con tejido blando. El protocolo trabaja ambos: reducir distancia Y aumentar tension.</p>
+  </div>
+
+  <div class="evidence">
+    <p class="evidence-source">Evidencia cientifica</p>
+    <p class="evidence-text">&ldquo;La evaluacion de la diastasis de recto no debe basarse unicamente en la distancia inter-rectos, sino tambien en la capacidad de generar tension en la linea alba durante la contraccion abdominal.&rdquo;</p>
+    <p class="evidence-cite">Lee & Hodges (2016). Journal of Orthopaedic & Sports Physical Therapy, 46(7), 548-554.</p>
+  </div>
+
+  <h3>Anota tus medidas iniciales:</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Punto de medicion</th>
+        <th>Dia 0 (hoy)</th>
+        <th>Dia 7</th>
+        <th>Dia 14</th>
+        <th>Dia 28</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Encima del ombligo</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>En el ombligo</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Debajo del ombligo</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+      </tr>
+      <tr>
+        <td>Tension (firme/blanda)</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+        <td style="border: 1px dashed var(--cinza-claro);">&nbsp;</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size: 9pt; color: var(--cinza-claro); text-align: center; margin-top: 3mm;">Imprime esta pagina o toma una foto &mdash; la necesitaras en los Dias 7, 14 y 28.</p>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">11</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CAPITULO 4: LAS 4 FASES DEL PROTOCOLO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page chapter-opener">
+  <div class="page-corner-top"></div>
+  <span class="chapter-number">04</span>
+  <span class="chapter-label">Capitulo 4</span>
+  <h1>Las 4 fases del protocolo</h1>
+  <p class="chapter-intro">28 dias. 4 fases. Cada fase construye sobre la anterior. No saltes fases &mdash; tu cuerpo necesita esta progresion exacta.</p>
+
+  <div class="pillar-grid">
+    <div class="pillar-card active">
+      <svg class="pillar-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="#E8837C" stroke-width="1.5" fill="rgba(232,131,124,0.1)"/><path d="M18 10 L18 22 M12 16 L24 16" stroke="#E8837C" stroke-width="2" stroke-linecap="round"/></svg>
+      <p class="pillar-name">Revelacion</p>
+      <p class="pillar-desc">Entender tu cuerpo y medir tu punto de partida</p>
+      <span class="pillar-days">Dia 0 (hoy)</span>
+    </div>
+    <div class="pillar-card">
+      <svg class="pillar-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="#7ECEC1" stroke-width="1.5" fill="rgba(126,206,193,0.1)"/><path d="M12 18 C12 18 15 14 18 14 C21 14 24 18 24 18" stroke="#7ECEC1" stroke-width="2" stroke-linecap="round"/><circle cx="14" cy="20" r="2" fill="#7ECEC1"/><circle cx="22" cy="20" r="2" fill="#7ECEC1"/></svg>
+      <p class="pillar-name">Reconexion</p>
+      <p class="pillar-desc">Reactivar el TVA con respiracion y vacuum basico</p>
+      <span class="pillar-days" style="background: var(--verde-menta);">Dias 1-7</span>
+    </div>
+    <div class="pillar-card">
+      <svg class="pillar-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="#D4A574" stroke-width="1.5" fill="rgba(212,165,116,0.1)"/><path d="M12 14 L18 18 L24 14 M12 22 L18 18 L24 22" stroke="#D4A574" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <p class="pillar-name">Compresion</p>
+      <p class="pillar-desc">Intensificar con tight lacing y posiciones variadas</p>
+      <span class="pillar-days" style="background: var(--dourado);">Dias 8-14</span>
+    </div>
+    <div class="pillar-card">
+      <svg class="pillar-icon" viewBox="0 0 36 36" fill="none"><circle cx="18" cy="18" r="16" stroke="#2D2D2D" stroke-width="1.5" fill="rgba(45,45,45,0.05)"/><path d="M18 10 L18 22 M14 22 C14 22 14 26 18 26 C22 26 22 22 22 22" stroke="#2D2D2D" stroke-width="2" stroke-linecap="round"/></svg>
+      <p class="pillar-name">Anclaje</p>
+      <p class="pillar-desc">Automatizar la activacion para resultados permanentes</p>
+      <span class="pillar-days" style="background: var(--cinza-escuro);">Dias 15-28</span>
+    </div>
+  </div>
+
+  <div class="callout callout-science">
+    <div class="callout-icon">&#9881;</div>
+    <p class="callout-title">Por que 28 dias?</p>
+    <p class="callout-text">La investigacion en neuroplasticidad muestra que el cerebro necesita entre <strong>21 y 30 dias</strong> de practica consistente para crear nuevos patrones de activacion muscular. Nuestro protocolo de 28 dias esta disenado para coincidir con este periodo critico de aprendizaje motor.</p>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">12</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGINA 13: DETALLE DE CADA FASE -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h3>Lo que esperar en cada fase:</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Fase</th>
+        <th>Dias</th>
+        <th>Tiempo/dia</th>
+        <th>Lo que sentiras</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="color: var(--coral); font-weight: 600;">Revelacion</td>
+        <td>Dia 0</td>
+        <td>15-20 min lectura</td>
+        <td>&ldquo;Ahora entiendo por que nada funciono&rdquo;</td>
+      </tr>
+      <tr>
+        <td style="color: var(--verde-menta); font-weight: 600;">Reconexion</td>
+        <td>1-7</td>
+        <td>8 min</td>
+        <td>Dia 3: &ldquo;Siento algo diferente&rdquo; &mdash; primera activacion consciente del TVA</td>
+      </tr>
+      <tr>
+        <td style="color: var(--dourado); font-weight: 600;">Compresion</td>
+        <td>8-14</td>
+        <td>10 min</td>
+        <td>Dia 14: &ldquo;Mi ropa ya cierra diferente&rdquo; &mdash; primera reduccion medible</td>
+      </tr>
+      <tr>
+        <td style="font-weight: 600;">Anclaje</td>
+        <td>15-28</td>
+        <td>12 min</td>
+        <td>Dia 28: &ldquo;Ya no tengo que pensar en activarlo&rdquo; &mdash; automatizacion</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight">
+    <h3>8 minutos es todo lo que necesitas</h3>
+    <p>El protocolo empieza con 8 minutos al dia. Ocho. Menos que preparar un cafe. Si tienes tiempo para revisar tu telefono, tienes tiempo para esto.</p>
+  </div>
+
+  <h3>Progresion de intensidad:</h3>
+
+  <div style="margin: 4mm 0;">
+    <p style="font-size: 9pt; font-weight: 600; margin-bottom: 2mm;">Semana 1 (Reconexion) &mdash; 8 min/dia</p>
+    <div class="progress-bar"><div class="progress-fill" style="width: 25%; background: var(--verde-menta);"></div></div>
+
+    <p style="font-size: 9pt; font-weight: 600; margin-bottom: 2mm; margin-top: 3mm;">Semana 2 (Compresion) &mdash; 10 min/dia</p>
+    <div class="progress-bar"><div class="progress-fill" style="width: 50%; background: var(--dourado);"></div></div>
+
+    <p style="font-size: 9pt; font-weight: 600; margin-bottom: 2mm; margin-top: 3mm;">Semanas 3-4 (Anclaje) &mdash; 12 min/dia</p>
+    <div class="progress-bar"><div class="progress-fill" style="width: 100%;"></div></div>
+  </div>
+
+  <div class="evidence">
+    <p class="evidence-source">Evidencia cientifica</p>
+    <p class="evidence-text">&ldquo;Programas de ejercicio de baja intensidad y alta frecuencia (sesiones cortas diarias) mostraron mayor adherencia y resultados comparables a programas mas largos e intensos en rehabilitacion posparto.&rdquo;</p>
+    <p class="evidence-cite">Mota et al. (2015). Manual Therapy, 20(1), 200-205.</p>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">13</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CAPITULO 5: REGLAS DEL JUEGO -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page chapter-opener">
+  <div class="page-corner-top"></div>
+  <span class="chapter-number">05</span>
+  <span class="chapter-label">Capitulo 5</span>
+  <h1>Reglas del juego</h1>
+  <p class="chapter-intro">Son pocas, pero son innegociables. Sigue estas reglas y los 28 dias funcionaran.</p>
+
+  <h3>Las 6 reglas:</h3>
+
+  <div class="step">
+    <div class="step-number">1</div>
+    <div class="step-content">
+      <p class="step-title">Una sesion por dia. Todos los dias.</p>
+      <p>Consistencia mata intensidad. 8 minutos diarios superan 1 hora semanal. Tu cerebro necesita repeticion para crear el nuevo patron.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">2</div>
+    <div class="step-content">
+      <p class="step-title">Manana o noche &mdash; elige tu momento y respetalo.</p>
+      <p>Lo ideal es hacerlo siempre a la misma hora. Vincular a un habito existente funciona mejor: &ldquo;despues del cafe&rdquo; o &ldquo;antes de dormir&rdquo;.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">3</div>
+    <div class="step-content">
+      <p class="step-title">No saltes fases.</p>
+      <p>Cada fase prepara tu cuerpo para la siguiente. Si saltas a la Compresion sin dominar la Reconexion, no funcionara &mdash; y puedes frustrarte.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">4</div>
+    <div class="step-content">
+      <p class="step-title">Si sientes dolor, para.</p>
+      <p>Molestia muscular suave es normal. Dolor agudo, presion en el piso pelvico o sensacion de &ldquo;bulto&rdquo; en el abdomen no lo es. Para y consulta.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">5</div>
+    <div class="step-content">
+      <p class="step-title">Mide tu progreso los dias 7, 14 y 28.</p>
+      <p>Vuelve al Test de 2 Dedos. Anota las medidas en la tabla de la pagina 11. Ver los numeros bajar es la mejor motivacion.</p>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-number">6</div>
+    <div class="step-content">
+      <p class="step-title">Se amable contigo misma.</p>
+      <p>Si pierdes un dia, no intentes compensar con doble sesion. Simplemente retoma al dia siguiente. Progreso > perfeccion.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">14</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- PAGINA 15: CONSEJOS PRACTICOS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h2>Consejos practicos para los 28 dias</h2>
+
+  <h3>Tu checklist de inicio:</h3>
+
+  <ul class="check-list">
+    <li>Hice el Test de 2 Dedos y anote mis medidas</li>
+    <li>Elegi mi horario fijo para la sesion diaria</li>
+    <li>Tengo un espacio tranquilo (no necesita ser grande)</li>
+    <li>Descargue los audios del Modulo 2</li>
+    <li>Imprimi (o guarde) el Tracker de 28 Dias</li>
+  </ul>
+
+  <h3>Preguntas frecuentes:</h3>
+
+  <div class="callout">
+    <div class="callout-icon">?</div>
+    <p class="callout-title">Puedo hacer el protocolo si tuve cesarea?</p>
+    <p class="callout-text">Si, pero espera al menos 8 semanas posparto y la aprobacion de tu medico. La cesarea afecta capas adicionales que necesitan tiempo para sanar.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">?</div>
+    <p class="callout-title">Mi bebe tiene 3 anos &mdash; es tarde para empezar?</p>
+    <p class="callout-text">Nunca es tarde. La diastasis no se corrige sola con el tiempo, pero responde bien al entrenamiento en cualquier momento posparto. Hemos visto resultados en mujeres cuyos hijos tienen 5, 10 e incluso 15 anos.</p>
+  </div>
+
+  <div class="callout">
+    <div class="callout-icon">?</div>
+    <p class="callout-title">Necesito equipo o ir al gimnasio?</p>
+    <p class="callout-text">No. Solo necesitas una superficie plana (tu cama o una colchoneta) y 8-12 minutos. Todo se puede hacer en casa, en silencio, mientras tu bebe duerme.</p>
+  </div>
+
+  <blockquote>
+    Lo mas dificil ya lo hiciste: decidir empezar. Ahora solo tienes que seguir el plan.
+    <span class="author">&mdash; Zero Diastasis</span>
+  </blockquote>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">15</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CAPITULO 6: TRACKER DE 28 DIAS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page chapter-opener">
+  <div class="page-corner-top"></div>
+  <span class="chapter-number">06</span>
+  <span class="chapter-label">Herramienta</span>
+  <h1>Tu tracker de 28 dias</h1>
+  <p class="chapter-intro">Imprime esta pagina y marcala cada dia que completes tu sesion. Ver los dias llenarse es poderoso.</p>
+
+  <div class="tracker-grid">
+    <div class="tracker-day"><span class="tracker-day-num">1</span><br><span class="tracker-day-label">Reconex.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">2</span><br><span class="tracker-day-label">Reconex.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">3</span><br><span class="tracker-day-label">Reconex.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">4</span><br><span class="tracker-day-label">Reconex.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">5</span><br><span class="tracker-day-label">Reconex.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">6</span><br><span class="tracker-day-label">Reconex.</span></div>
+    <div class="tracker-day" style="border-color: var(--verde-menta);"><span class="tracker-day-num" style="color: var(--verde-menta);">7</span><br><span class="tracker-day-label">MEDIR</span></div>
+
+    <div class="tracker-day"><span class="tracker-day-num">8</span><br><span class="tracker-day-label">Compres.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">9</span><br><span class="tracker-day-label">Compres.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">10</span><br><span class="tracker-day-label">Compres.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">11</span><br><span class="tracker-day-label">Compres.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">12</span><br><span class="tracker-day-label">Compres.</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">13</span><br><span class="tracker-day-label">Compres.</span></div>
+    <div class="tracker-day" style="border-color: var(--dourado);"><span class="tracker-day-num" style="color: var(--dourado);">14</span><br><span class="tracker-day-label">MEDIR</span></div>
+
+    <div class="tracker-day"><span class="tracker-day-num">15</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">16</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">17</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">18</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">19</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">20</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">21</span><br><span class="tracker-day-label">Anclaje</span></div>
+
+    <div class="tracker-day"><span class="tracker-day-num">22</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">23</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">24</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">25</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">26</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day"><span class="tracker-day-num">27</span><br><span class="tracker-day-label">Anclaje</span></div>
+    <div class="tracker-day" style="border-color: var(--coral); border-width: 2px;"><span class="tracker-day-num">28</span><br><span class="tracker-day-label" style="color: var(--coral); font-weight: 700;">FINAL</span></div>
+  </div>
+
+  <p style="text-align: center; margin-top: 4mm; font-size: 10pt; color: var(--cinza-medio);">Marca cada dia con un <strong style="color: var(--verde-menta);">&check;</strong> al completar tu sesion.</p>
+
+  <div class="highlight">
+    <h3>Estas lista</h3>
+    <p>Manana empieza tu Modulo 2: Reconexion. 8 minutos que van a cambiar como sientes tu cuerpo. Nos vemos ahi.</p>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">16</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- REFERENCIAS CIENTIFICAS -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="page-corner-top"></div>
+
+  <h1>Referencias cientificas</h1>
+  <div class="cover-divider" style="margin: 0 0 6mm 0;"></div>
+
+  <p style="font-size: 9pt; color: var(--cinza-medio); margin-bottom: 5mm;">Las siguientes referencias respaldan las afirmaciones y tecnicas presentadas en este modulo. Todas son publicaciones revisadas por pares en revistas medicas internacionales.</p>
+
+  <div style="font-size: 9pt; line-height: 1.8; color: var(--cinza-medio);">
+    <p><strong>1.</strong> Sperstad, J. B., Tennfjord, M. K., Hilde, G., Ellstrom-Engh, M., & Bo, K. (2016). Diastasis recti abdominis during pregnancy and 12 months after childbirth: prevalence, risk factors and report of lumbopelvic pain. <em>British Journal of Sports Medicine</em>, 50(17), 1092-1096.</p>
+
+    <p><strong>2.</strong> Benjamin, D. R., van de Water, A. T., & Peiris, C. L. (2014). Effects of exercise on diastasis of the rectus abdominis muscle in the antenatal and postnatal periods: a systematic review. <em>Physiotherapy</em>, 100(1), 1-8.</p>
+
+    <p><strong>3.</strong> Lee, D., & Hodges, P. W. (2016). Behavior of the linea alba during a curl-up task in diastasis rectus abdominis: an observational study. <em>Journal of Orthopaedic & Sports Physical Therapy</em>, 46(7), 580-589.</p>
+
+    <p><strong>4.</strong> Keshwani, N., Mathur, S., & McLean, L. (2021). The impact of exercise therapy and abdominal binding in the management of diastasis recti abdominis in the early postpartum period. <em>Journal of Orthopaedic & Sports Physical Therapy</em>, 51(4), 159-167.</p>
+
+    <p><strong>5.</strong> Mota, P., Pascoal, A. G., Carita, A. I., & Bo, K. (2015). Prevalence and risk factors of diastasis recti abdominis from late pregnancy to 6 months postpartum, and relationship with lumbo-pelvic pain. <em>Manual Therapy</em>, 20(1), 200-205.</p>
+
+    <p><strong>6.</strong> Gluppe, S. L., Hilde, G., Tennfjord, M. K., Engh, M. E., & Bo, K. (2018). Effect of a postpartum training program on the prevalence of diastasis recti abdominis in postpartum primiparous women. <em>Journal of Orthopaedic & Sports Physical Therapy</em>, 48(4), 299-310.</p>
+
+    <p><strong>7.</strong> Hills, N. F., Graham, R. B., & McLean, L. (2018). Comparison of trunk muscle function between women with and without diastasis recti abdominis at 1 year postpartum. <em>Physical Therapy</em>, 98(10), 891-901.</p>
+
+    <p><strong>8.</strong> Michalska, A., Rokita, W., Wolder, D., Pogorzelska, J., & Kaczmarczyk, K. (2018). Diastasis recti abdominis &mdash; a review of treatment methods. <em>Ginekologia Polska</em>, 89(2), 97-101.</p>
+
+    <p><strong>9.</strong> Bo, K., Hilde, G., Tennfjord, M. K., Sperstad, J. B., & Engh, M. E. (2017). Pelvic floor muscle function, pelvic floor dysfunction and diastasis recti abdominis. <em>International Urogynecology Journal</em>, 28(6), 853-859.</p>
+  </div>
+
+  <div style="margin-top: 8mm; padding-top: 4mm; border-top: 1px solid #EDE5E0; text-align: center;">
+    <p style="font-size: 10pt; color: var(--coral); font-weight: 600;">Zero Diastasis&trade;</p>
+    <p style="font-size: 8.5pt; color: var(--cinza-claro);">Protocolo de 28 dias basado en evidencia cientifica</p>
+    <p style="font-size: 8pt; color: var(--cinza-claro); margin-top: 2mm;">&copy; 2026 &mdash; Todos los derechos reservados</p>
+  </div>
+
+  <div class="page-footer">Zero Diastasis&trade;</div>
+  <div class="page-number">17</div>
+</div>
+
+</body>
+</html>

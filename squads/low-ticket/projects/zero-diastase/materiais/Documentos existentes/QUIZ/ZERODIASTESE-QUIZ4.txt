@@ -1,0 +1,22 @@
+
+QUIZ PENDÊNCIAS
+
+------------------------------
+
+- TRADUÇÃO PARA ESPANHOL NEUTRO
+- ETAPAS 31, 32, 33 E 34 (PRODUTOS)
+
+Nessas etapas a imagem do lado representa o template/molde que está sendo utilizado.
+
+ETAPA NÚMERO X ">" MOLDE/PERSPECTIVA FUTURA DA ETAPA
+
+------------------------------
+
+DETALHES:
+
+- ETAPA 20 é variada, dependendo do Input da ETAPA 19, haverá um Output respectivo.
+
+Exemplo: Input "Sem Motivação" > ETAPA 20.1 (Sem Motivação)
+
+- ETAPA 35 está segmentada em .1; .2; até .4; porém é uma coisa só, uma única etapa.
+
