@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1080">
+<title>El Precio — Square 1080x1080</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    background: #FFF8F5;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 400px at 50% 0%, rgba(232,131,124,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 350px at 85% 100%, rgba(126,206,193,0.06) 0%, transparent 70%);
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: radial-gradient(#2D2D2D 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 32px 26px;
+  }
+
+  /* === HEADER === */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    animation: fadeSlideDown 1.2s ease-out 0.5s forwards;
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,131,124,0.1);
+    border: 1.5px solid rgba(232,131,124,0.25);
+    border-radius: 50px;
+    padding: 7px 22px;
+    margin-bottom: 14px;
+  }
+
+  .eyebrow-dot {
+    width: 9px;
+    height: 9px;
+    background: #E8837C;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .eyebrow span {
+    font-size: 20px;
+    font-weight: 700;
+    color: #E8837C;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 58px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.08;
+  }
+
+  .header h1 .coral { color: #E8837C; }
+
+  /* === COLUMNS === */
+  .columns {
+    display: flex;
+    gap: 14px;
+    flex: 1;
+    align-items: stretch;
+    margin-bottom: 18px;
+  }
+
+  .col {
+    flex: 1;
+    border-radius: 22px;
+    padding: 22px 16px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /*
+    TIMELINE — same as story:
+    0.5s    Header
+    2.0s    Cirugía
+    3.2s    Strike
+    4.0s    VS
+    4.8s    Fisio
+    6.0s    Strike
+    6.6s    VS
+    7.5s    Zero Diastasis
+    8.3s    Badge
+    8.8s    Price
+    9.4–10.6s Features
+    11.0s   CTA
+  */
+
+  .col {
+    opacity: 0;
+    transform: translateY(50px) scale(0.92);
+  }
+
+  .col:nth-child(1) {
+    animation: cascadeIn 1.0s cubic-bezier(0.34, 1.4, 0.64, 1) 2.0s forwards;
+  }
+  .col:nth-child(2) {
+    animation: cascadeIn 1.0s cubic-bezier(0.34, 1.4, 0.64, 1) 4.8s forwards;
+  }
+  .col:nth-child(3) {
+    animation: cascadeWinner 1.2s cubic-bezier(0.34, 1.4, 0.64, 1) 7.5s forwards;
+  }
+
+  @keyframes cascadeIn {
+    0% { opacity: 0; transform: translateY(50px) scale(0.92); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes cascadeWinner {
+    0% { opacity: 0; transform: translateY(60px) scale(0.85); }
+    55% { transform: translateY(-10px) scale(1.05); }
+    100% { opacity: 1; transform: translateY(0) scale(1.03); }
+  }
+
+  .col.bad {
+    background: #F5E6E0;
+    border: 1.5px solid rgba(217,79,79,0.12);
+  }
+
+  .col.good {
+    background: linear-gradient(180deg, #EEFAF6 0%, #E2F5EF 100%);
+    border: 2.5px solid rgba(126,206,193,0.5);
+    box-shadow:
+      0 10px 40px rgba(126,206,193,0.2),
+      0 4px 14px rgba(126,206,193,0.1);
+  }
+
+  .col.good::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 24px;
+    border: 2px solid rgba(126,206,193,0.3);
+    animation: glowPulse 2.5s ease-in-out infinite 9s;
+    opacity: 0;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.008); }
+  }
+
+  .badge {
+    position: absolute;
+    top: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #E8837C, #D4706A);
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 7px 20px;
+    border-radius: 0 0 12px 12px;
+    box-shadow: 0 4px 16px rgba(232,131,124,0.35);
+    white-space: nowrap;
+    opacity: 0;
+    animation: badgePop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 8.3s forwards;
+  }
+
+  @keyframes badgePop {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.5) translateY(-8px); }
+    100% { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); }
+  }
+
+  .col-emoji {
+    font-size: 42px;
+    margin-bottom: 6px;
+  }
+
+  .col.good .col-emoji {
+    margin-top: 20px;
+  }
+
+  .col-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .bad .col-name { color: #7A5050; }
+  .good .col-name { color: #3D8B7A; }
+
+  /* Prices */
+  .price-bad {
+    font-family: 'Inter', sans-serif;
+    font-size: 46px;
+    font-weight: 900;
+    color: #D94F4F;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .price-bad::after {
+    content: '';
+    position: absolute;
+    left: -8px;
+    right: -8px;
+    top: 50%;
+    height: 5px;
+    background: #D94F4F;
+    transform: rotate(-7deg);
+    border-radius: 2px;
+    transform-origin: left center;
+  }
+
+  .col:nth-child(1) .price-bad::after {
+    animation: strikeThrough 0.6s ease-out 3.2s both;
+  }
+  .col:nth-child(2) .price-bad::after {
+    animation: strikeThrough 0.6s ease-out 6.0s both;
+  }
+
+  @keyframes strikeThrough {
+    0% { transform: rotate(-7deg) scaleX(0); }
+    100% { transform: rotate(-7deg) scaleX(1); }
+  }
+
+  .price-good-wrap {
+    margin-bottom: 10px;
+    text-align: center;
+    opacity: 0;
+    animation: priceReveal 0.8s ease-out 8.8s forwards;
+  }
+
+  @keyframes priceReveal {
+    0% { opacity: 0; transform: scale(0.6); }
+    55% { transform: scale(1.12); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .price-good {
+    font-family: 'Inter', sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: #2D2D2D;
+  }
+
+  .price-good .dollar {
+    font-size: 34px;
+    vertical-align: super;
+    color: #D4A574;
+  }
+
+  .price-good .cents {
+    font-size: 34px;
+    color: #666;
+  }
+
+  .price-check {
+    display: inline-block;
+    margin-left: 6px;
+    font-size: 32px;
+  }
+
+  /* Features */
+  .feats {
+    list-style: none;
+    width: 100%;
+    flex: 1;
+  }
+
+  .feats li {
+    font-size: 24px;
+    font-weight: 700;
+    padding: 7px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .feats li:last-child { border-bottom: none; }
+
+  .bad .feats li { color: #7A5555; }
+  .good .feats li { color: #2D6B5E; }
+
+  .feat-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .bad .feat-icon {
+    background: rgba(217,79,79,0.12);
+    color: #D94F4F;
+    border: 1.5px solid rgba(217,79,79,0.2);
+  }
+
+  .good .feat-icon {
+    background: rgba(126,206,193,0.15);
+    color: #3D8B7A;
+    border: 1.5px solid rgba(126,206,193,0.3);
+  }
+
+  .col.good .feats li {
+    opacity: 0;
+    animation: featIn 0.5s ease-out forwards;
+  }
+  .col.good .feats li:nth-child(1) { animation-delay: 9.4s; }
+  .col.good .feats li:nth-child(2) { animation-delay: 9.7s; }
+  .col.good .feats li:nth-child(3) { animation-delay: 10.0s; }
+  .col.good .feats li:nth-child(4) { animation-delay: 10.3s; }
+
+  @keyframes featIn {
+    0% { opacity: 0; transform: translateX(15px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  /* VS */
+  .vs-divider {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #FFF8F5;
+    border: 2px solid rgba(0,0,0,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: #B0A0A0;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .vs-1 { right: -28px; }
+  .vs-2 { left: -28px; }
+
+  .col:nth-child(1) .vs-divider {
+    opacity: 0;
+    animation: vsPop 0.5s ease-out 4.0s forwards;
+  }
+  .col:nth-child(3) .vs-divider {
+    opacity: 0;
+    animation: vsPop 0.5s ease-out 6.6s forwards;
+  }
+
+  @keyframes vsPop {
+    0% { opacity: 0; transform: translateY(-50%) scale(0); }
+    100% { opacity: 1; transform: translateY(-50%) scale(1); }
+  }
+
+  /* === CTA === */
+  .cta-wrap {
+    width: 100%;
+    opacity: 0;
+    animation: ctaSlideUp 0.9s ease-out 11.0s forwards;
+  }
+
+  @keyframes ctaSlideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 28px 32px;
+    border-radius: 18px;
+    font-family: 'Inter', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow:
+      0 8px 30px rgba(232,131,124,0.35),
+      0 3px 10px rgba(232,131,124,0.2);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 2.5s ease-in-out 12s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arrow {
+    margin-left: 10px;
+    display: inline-block;
+    animation: nudge 1.2s ease-in-out 12s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 13px;
+    color: #C0B0B0;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dots"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span>Comparativa Real</span>
+      </div>
+      <h1>¿Cuánto cuesta <span class="coral">eliminar la diástasis</span>?</h1>
+    </div>
+
+    <div class="columns">
+      <div class="col bad">
+        <div class="col-emoji">🏥</div>
+        <div class="col-name">Cirugía</div>
+        <div class="price-bad">$8,000</div>
+        <ul class="feats">
+          <li><span class="feat-icon">✕</span> Dolor intenso</li>
+          <li><span class="feat-icon">✕</span> Cicatriz</li>
+          <li><span class="feat-icon">✕</span> Riesgo alto</li>
+          <li><span class="feat-icon">✕</span> Semanas reposo</li>
+        </ul>
+        <div class="vs-divider vs-1">vs</div>
+      </div>
+
+      <div class="col bad">
+        <div class="col-emoji">🧑‍⚕️</div>
+        <div class="col-name">Fisio</div>
+        <div class="price-bad">$1,200</div>
+        <ul class="feats">
+          <li><span class="feat-icon">✕</span> 6 meses mín.</li>
+          <li><span class="feat-icon">✕</span> Horarios fijos</li>
+          <li><span class="feat-icon">✕</span> Costoso</li>
+          <li><span class="feat-icon">✕</span> Desplazarte</li>
+        </ul>
+      </div>
+
+      <div class="col good">
+        <div class="badge">⭐ MEJOR OPCIÓN</div>
+        <div class="vs-divider vs-2">vs</div>
+        <div class="col-emoji">💚</div>
+        <div class="col-name">Zero Diastasis</div>
+        <div class="price-good-wrap">
+          <span class="price-good"><span class="dollar">$</span>19<span class="cents">.90</span></span>
+          <span class="price-check">✅</span>
+        </div>
+        <ul class="feats">
+          <li><span class="feat-icon">✓</span> Solo 28 días</li>
+          <li><span class="feat-icon">✓</span> En tu casa</li>
+          <li><span class="feat-icon">✓</span> 8 min/día</li>
+          <li><span class="feat-icon">✓</span> Sin riesgo</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <a href="#" class="cta">
+        HAZ EL TEST GRATIS <span class="arrow">→</span>
+      </a>
+      <div class="disclaimer">*Resultados pueden variar. No reemplaza consejo médico.</div>
+    </div>
+  </div>
+</body>
+</html>

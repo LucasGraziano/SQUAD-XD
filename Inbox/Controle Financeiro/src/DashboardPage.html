@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', sans-serif;
+      background: #0f0f23;
+      color: #e0e0e0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .header h1 { font-size: 22px; font-weight: 700; color: #fff; }
+    .header h1 span { color: #6c5ce7; }
+
+    .month-select {
+      background: #1a1a3e;
+      border: 1px solid #2d2d5e;
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+    }
+    .month-select:focus { outline: none; border-color: #6c5ce7; }
+
+    /* KPI Cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .kpi-card {
+      background: linear-gradient(135deg, #1a1a3e 0%, #16163a 100%);
+      border: 1px solid #2d2d5e;
+      border-radius: 12px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .kpi-card.receita::before { background: linear-gradient(90deg, #00b894, #55efc4); }
+    .kpi-card.despesa::before { background: linear-gradient(90deg, #e17055, #ff7675); }
+    .kpi-card.saldo::before { background: linear-gradient(90deg, #6c5ce7, #a29bfe); }
+    .kpi-card.aporte::before { background: linear-gradient(90deg, #0984e3, #74b9ff); }
+
+    .kpi-label { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .kpi-value { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .kpi-card.receita .kpi-value { color: #55efc4; }
+    .kpi-card.despesa .kpi-value { color: #ff7675; }
+    .kpi-card.saldo .kpi-value { color: #a29bfe; }
+    .kpi-card.aporte .kpi-value { color: #74b9ff; }
+
+    .kpi-change { font-size: 12px; display: flex; align-items: center; gap: 4px; }
+    .kpi-change.up { color: #55efc4; }
+    .kpi-change.down { color: #ff7675; }
+    .kpi-change.neutral { color: #636e72; }
+
+    /* Charts Grid */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .chart-card {
+      background: #1a1a3e;
+      border: 1px solid #2d2d5e;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .chart-card h3 {
+      font-size: 14px;
+      color: #b0b0d0;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .chart-container { position: relative; width: 100%; }
+
+    /* Budget Section */
+    .budget-section {
+      background: #1a1a3e;
+      border: 1px solid #2d2d5e;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+    .budget-section h3 {
+      font-size: 14px;
+      color: #b0b0d0;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+    .budget-row {
+      display: grid;
+      grid-template-columns: 160px 100px 100px 1fr 60px;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #2d2d5e;
+      font-size: 13px;
+    }
+    .budget-row:last-child { border-bottom: none; }
+    .budget-cat { color: #e0e0e0; font-weight: 500; }
+    .budget-orc { color: #888; }
+    .budget-gasto { font-weight: 600; }
+    .budget-bar-bg {
+      background: #2d2d5e;
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+      margin: 0 12px;
+    }
+    .budget-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.6s ease;
+    }
+    .budget-pct { text-align: right; font-weight: 600; font-size: 12px; }
+
+    /* Bottom Grid */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .info-card {
+      background: #1a1a3e;
+      border: 1px solid #2d2d5e;
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .info-card h3 {
+      font-size: 14px;
+      color: #b0b0d0;
+      margin-bottom: 16px;
+      font-weight: 600;
+    }
+
+    /* Top Gastos */
+    .top-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #2d2d5e;
+    }
+    .top-item:last-child { border-bottom: none; }
+    .top-desc { font-size: 13px; color: #e0e0e0; }
+    .top-cat { font-size: 11px; color: #888; }
+    .top-valor { font-size: 14px; font-weight: 600; color: #ff7675; }
+    .top-data { font-size: 11px; color: #636e72; }
+
+    /* Status Pills */
+    .status-grid { display: flex; gap: 12px; flex-wrap: wrap; }
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #16163a;
+      border-radius: 8px;
+      padding: 12px 16px;
+      flex: 1;
+      min-width: 120px;
+    }
+    .status-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .status-dot.green { background: #55efc4; }
+    .status-dot.yellow { background: #ffeaa7; }
+    .status-dot.red { background: #ff7675; }
+    .status-count { font-size: 20px; font-weight: 700; }
+    .status-label { font-size: 11px; color: #888; }
+
+    /* Savings Rate */
+    .savings-rate {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .savings-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 700;
+      border: 4px solid;
+    }
+
+    /* Loading */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      font-size: 16px;
+      color: #888;
+    }
+    .loading .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid #2d2d5e;
+      border-top-color: #6c5ce7;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 12px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Empty state */
+    .empty { text-align: center; padding: 60px; color: #636e72; }
+    .empty .icon { font-size: 48px; margin-bottom: 12px; }
+  </style>
+</head>
+<body>
+
+  <div id="loading" class="loading">
+    <div class="spinner"></div>
+    Carregando dados...
+  </div>
+
+  <div id="dashboard" style="display:none">
+    <!-- Header -->
+    <div class="header">
+      <h1>📊 Dashboard <span>Financeiro</span></h1>
+      <select class="month-select" id="mesSelect" onchange="trocarMes()"></select>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-grid">
+      <div class="kpi-card receita">
+        <div class="kpi-label">Receita</div>
+        <div class="kpi-value" id="kReceita">—</div>
+        <div class="kpi-change neutral" id="kReceitaChange">—</div>
+      </div>
+      <div class="kpi-card despesa">
+        <div class="kpi-label">Despesas</div>
+        <div class="kpi-value" id="kDespesa">—</div>
+        <div class="kpi-change neutral" id="kDespesaChange">—</div>
+      </div>
+      <div class="kpi-card saldo">
+        <div class="kpi-label">Saldo do Mês</div>
+        <div class="kpi-value" id="kSaldo">—</div>
+        <div class="kpi-change neutral" id="kSaldoSub">—</div>
+      </div>
+      <div class="kpi-card aporte">
+        <div class="kpi-label">Aportes</div>
+        <div class="kpi-value" id="kAporte">—</div>
+        <div class="kpi-change neutral" id="kAporteChange">—</div>
+      </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Gastos por Categoria</h3>
+        <div class="chart-container">
+          <canvas id="chartDonut"></canvas>
+        </div>
+      </div>
+      <div class="chart-card">
+        <h3>Tendência — Últimos 6 Meses</h3>
+        <div class="chart-container">
+          <canvas id="chartTrend"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Budget -->
+    <div class="budget-section">
+      <h3>Orçamento vs Gasto</h3>
+      <div id="budgetRows"></div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="bottom-grid">
+      <div class="info-card">
+        <h3>Top 5 Maiores Gastos</h3>
+        <div id="topGastos"></div>
+      </div>
+      <div class="info-card">
+        <h3>Status das Transações</h3>
+        <div class="status-grid" id="statusGrid"></div>
+        <div class="savings-rate" id="savingsRate"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    var chartDonut = null;
+    var chartTrend = null;
+    var currentData = null;
+
+    // Cores para categorias
+    var CORES = [
+      '#6c5ce7', '#00b894', '#e17055', '#0984e3', '#fdcb6e',
+      '#e84393', '#00cec9', '#ff7675', '#a29bfe', '#55efc4',
+      '#fab1a0', '#81ecec', '#ffeaa7', '#dfe6e9'
+    ];
+
+    function fmt(v) {
+      return 'R$ ' + v.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, '.').replace(/\.(\d{2})$/, ',$1');
+    }
+
+    function pctChange(atual, anterior) {
+      if (!anterior || anterior === 0) return { text: '—', cls: 'neutral' };
+      var pct = ((atual - anterior) / Math.abs(anterior) * 100);
+      var seta = pct >= 0 ? '▲' : '▼';
+      return {
+        text: seta + ' ' + Math.abs(pct).toFixed(1) + '% vs mês anterior',
+        cls: pct >= 0 ? 'up' : 'down'
+      };
+    }
+
+    // Carregar dados
+    function carregarDados(mes) {
+      google.script.run
+        .withSuccessHandler(renderDashboard)
+        .withFailureHandler(function(e) { alert('Erro: ' + e.message); })
+        .getDashboardData(mes || null);
+    }
+
+    function trocarMes() {
+      var mes = document.getElementById('mesSelect').value;
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loading').style.display = 'flex';
+      carregarDados(mes);
+    }
+
+    function renderDashboard(data) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+
+      if (data.vazio) {
+        document.getElementById('dashboard').innerHTML =
+          '<div class="empty"><div class="icon">📭</div><p>Nenhuma transação encontrada.<br>Importe um extrato primeiro.</p></div>';
+        return;
+      }
+
+      currentData = data;
+
+      // Populate month selector
+      var sel = document.getElementById('mesSelect');
+      sel.innerHTML = '';
+      data.meses.forEach(function(m) {
+        var opt = document.createElement('option');
+        opt.value = m;
+        opt.textContent = m;
+        if (m === data.mesAtual) opt.selected = true;
+        sel.appendChild(opt);
+      });
+
+      var k = data.kpis;
+      var ka = data.kpisAnterior;
+
+      // KPIs
+      document.getElementById('kReceita').textContent = fmt(k.receita);
+      document.getElementById('kDespesa').textContent = fmt(k.despesa);
+      var saldo = k.receita - k.despesa;
+      document.getElementById('kSaldo').textContent = fmt(saldo);
+      document.getElementById('kAporte').textContent = fmt(k.aportes);
+
+      // Saldo subtitle
+      var taxaPoup = k.receita > 0 ? (k.aportes / k.receita * 100) : 0;
+      document.getElementById('kSaldoSub').textContent = k.total + ' transações';
+      document.getElementById('kSaldoSub').className = 'kpi-change neutral';
+
+      // Changes
+      var rc = pctChange(k.receita, ka.receita);
+      document.getElementById('kReceitaChange').textContent = rc.text;
+      document.getElementById('kReceitaChange').className = 'kpi-change ' + rc.cls;
+
+      var dc = pctChange(k.despesa, ka.despesa);
+      // Inverter cor para despesa (gastar menos = bom)
+      if (dc.cls === 'up') dc.cls = 'down';
+      else if (dc.cls === 'down') dc.cls = 'up';
+      document.getElementById('kDespesaChange').textContent = dc.text;
+      document.getElementById('kDespesaChange').className = 'kpi-change ' + dc.cls;
+
+      var ac = pctChange(k.aportes, ka.aportes);
+      document.getElementById('kAporteChange').textContent = ac.text;
+      document.getElementById('kAporteChange').className = 'kpi-change ' + ac.cls;
+
+      // Donut chart
+      renderDonut(data.gastosPorCategoria);
+
+      // Trend chart
+      renderTrend(data.tendencia);
+
+      // Budget
+      renderBudget(data.budget);
+
+      // Top gastos
+      renderTopGastos(data.topGastos);
+
+      // Status
+      renderStatus(k, taxaPoup);
+    }
+
+    function renderDonut(gastos) {
+      var cats = Object.keys(gastos);
+      var vals = cats.map(function(c) { return gastos[c]; });
+
+      if (chartDonut) chartDonut.destroy();
+
+      var ctx = document.getElementById('chartDonut').getContext('2d');
+      chartDonut = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: cats,
+          datasets: [{
+            data: vals,
+            backgroundColor: CORES.slice(0, cats.length),
+            borderWidth: 0,
+            hoverOffset: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          cutout: '65%',
+          plugins: {
+            legend: {
+              position: 'right',
+              labels: { color: '#b0b0d0', padding: 12, font: { size: 12 } }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.label + ': ' + fmt(ctx.raw);
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderTrend(tendencia) {
+      var labels = tendencia.map(function(t) { return t.mes; });
+      var receitas = tendencia.map(function(t) { return t.receita; });
+      var despesas = tendencia.map(function(t) { return t.despesa; });
+      var aportes = tendencia.map(function(t) { return t.aportes; });
+
+      if (chartTrend) chartTrend.destroy();
+
+      var ctx = document.getElementById('chartTrend').getContext('2d');
+      chartTrend = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Receita',
+              data: receitas,
+              backgroundColor: 'rgba(85, 239, 196, 0.8)',
+              borderRadius: 4
+            },
+            {
+              label: 'Despesa',
+              data: despesas,
+              backgroundColor: 'rgba(255, 118, 117, 0.8)',
+              borderRadius: 4
+            },
+            {
+              label: 'Aportes',
+              data: aportes,
+              backgroundColor: 'rgba(116, 185, 255, 0.8)',
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              ticks: { color: '#888' },
+              grid: { color: '#2d2d5e' }
+            },
+            y: {
+              ticks: {
+                color: '#888',
+                callback: function(v) { return 'R$ ' + (v/1000).toFixed(0) + 'k'; }
+              },
+              grid: { color: '#2d2d5e' }
+            }
+          },
+          plugins: {
+            legend: {
+              labels: { color: '#b0b0d0', padding: 16, font: { size: 12 } }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.dataset.label + ': ' + fmt(ctx.raw);
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderBudget(budget) {
+      var container = document.getElementById('budgetRows');
+      container.innerHTML = '';
+
+      budget.forEach(function(b) {
+        if (b.orcamento === 0 && b.gasto === 0) return;
+
+        var pct = b.orcamento > 0 ? (b.gasto / b.orcamento * 100) : 0;
+        var cor = pct <= 70 ? '#55efc4' : pct <= 90 ? '#ffeaa7' : '#ff7675';
+        var corTexto = pct <= 70 ? '#55efc4' : pct <= 90 ? '#ffeaa7' : '#ff7675';
+        var width = Math.min(pct, 100);
+
+        var row = document.createElement('div');
+        row.className = 'budget-row';
+        row.innerHTML =
+          '<span class="budget-cat">' + b.categoria + '</span>' +
+          '<span class="budget-orc">' + fmt(b.orcamento) + '</span>' +
+          '<span class="budget-gasto" style="color:' + cor + '">' + fmt(b.gasto) + '</span>' +
+          '<div class="budget-bar-bg"><div class="budget-bar-fill" style="width:' + width + '%;background:' + cor + '"></div></div>' +
+          '<span class="budget-pct" style="color:' + corTexto + '">' + pct.toFixed(0) + '%</span>';
+
+        container.appendChild(row);
+      });
+    }
+
+    function renderTopGastos(top) {
+      var container = document.getElementById('topGastos');
+      container.innerHTML = '';
+
+      if (top.length === 0) {
+        container.innerHTML = '<p style="color:#636e72;text-align:center;padding:20px">Nenhuma despesa no período</p>';
+        return;
+      }
+
+      top.forEach(function(t) {
+        var item = document.createElement('div');
+        item.className = 'top-item';
+        item.innerHTML =
+          '<div>' +
+            '<div class="top-desc">' + t.desc + '</div>' +
+            '<div class="top-cat">' + (t.cat || '—') + ' · ' + t.data + '</div>' +
+          '</div>' +
+          '<div class="top-valor">-' + fmt(t.valor) + '</div>';
+        container.appendChild(item);
+      });
+    }
+
+    function renderStatus(k, taxaPoup) {
+      var grid = document.getElementById('statusGrid');
+      grid.innerHTML =
+        '<div class="status-pill">' +
+          '<div class="status-dot green"></div>' +
+          '<div><div class="status-count">' + k.verdes + '</div><div class="status-label">Classificadas</div></div>' +
+        '</div>' +
+        '<div class="status-pill">' +
+          '<div class="status-dot yellow"></div>' +
+          '<div><div class="status-count">' + k.amarelas + '</div><div class="status-label">Para revisar</div></div>' +
+        '</div>' +
+        '<div class="status-pill">' +
+          '<div class="status-dot red"></div>' +
+          '<div><div class="status-count">' + k.vermelhas + '</div><div class="status-label">Manual</div></div>' +
+        '</div>';
+
+      var sr = document.getElementById('savingsRate');
+      var corPoup = taxaPoup >= 20 ? '#55efc4' : taxaPoup >= 10 ? '#ffeaa7' : '#ff7675';
+      sr.innerHTML =
+        '<div class="savings-circle" style="color:' + corPoup + ';border-color:' + corPoup + '">' +
+          taxaPoup.toFixed(0) + '%' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:14px;font-weight:600;color:#e0e0e0">Taxa de Poupança</div>' +
+          '<div style="font-size:12px;color:#888;margin-top:4px">Aportes / Receita do mês</div>' +
+        '</div>';
+    }
+
+    // Iniciar
+    carregarDados();
+  </script>
+
+</body>
+</html>

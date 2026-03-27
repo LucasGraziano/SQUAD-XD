@@ -54,6 +54,18 @@ export const slashCommands: Command[] = [
     usage: ['/video-tools concat', '/video-tools add-audio', '/video-tools trim', '/video-tools export', '/video-tools thumbnail'],
     category: 'tools',
   },
+  {
+    name: '/checkpoint',
+    description: 'Cria snapshot do contexto da conversa atual. Salva o que fizemos, decisões, próximos passos — tudo em .claude/checkpoints/ para retomar depois.',
+    usage: ['/checkpoint', '/checkpoint "Titulo custom"', '/checkpoint --tag feature,ui'],
+    category: 'productivity',
+  },
+  {
+    name: '/recall',
+    description: 'Retoma contexto de sessões anteriores. Lista, busca e carrega checkpoints salvos — permite continuar qualquer conversa em outro ambiente.',
+    usage: ['/recall', '/recall --last', '/recall --search "landing page"', '/recall 3'],
+    category: 'productivity',
+  },
 ]
 
 export const agentCommands = [

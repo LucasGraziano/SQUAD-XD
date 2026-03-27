@@ -1,11 +1,11 @@
 {
   "version": "1.0",
   "currency": "BRL",
-  "last_updated": "2026-03-23",
+  "last_updated": "2026-03-24",
   "services": {
     "claude": {
-      "plan": "Max",
-      "cost_monthly_usd": 100,
+      "plan": "Pro",
+      "cost_monthly_usd": 20,
       "status": "active",
       "notes": "Claude Code CLI + Claude App (mobile/web) — primary tool"
     },
@@ -48,7 +48,7 @@
     }
   },
   "monthly_logs": [],
-  "total_fixed_monthly_brl": 575,
-  "exchange_rate_usd_brl": 5.75,
+  "total_fixed_monthly_brl": 104.65,
+  "exchange_rate_usd_brl": 5.2323,
   "notes": "Total fixo = Claude Max ($100 x 5.75 = R$575). Restante tudo gratuito."
 }

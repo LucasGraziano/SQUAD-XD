@@ -29,6 +29,14 @@ const nav = [
     label: 'Knowledge',
     items: [
       { href: '/mega-brain/', label: 'Mega Brain', icon: '🧠' },
+      { href: '/memory/', label: 'Memory System', icon: '💾' },
+      { href: '/bridge/', label: 'AIOX + MB Bridge', icon: '🔗' },
+    ],
+  },
+  {
+    label: 'Tooling',
+    items: [
+      { href: '/checkpoints/', label: 'Checkpoint & Recall', icon: '🔄' },
     ],
   },
   {

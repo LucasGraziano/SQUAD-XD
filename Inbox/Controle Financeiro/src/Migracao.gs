@@ -1,0 +1,347 @@
+/**
+ * Migração: 263 transações do Excel para o Google Sheets
+ * Execute uma vez e depois pode apagar este arquivo
+ */
+
+function migrarDadosExcel() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = ss.getSheetByName("Transações");
+  if (!sheet) {
+    SpreadsheetApp.getUi().alert("Aba Transações não encontrada. Execute setupCompleto() primeiro.");
+    return;
+  }
+
+  // Verificar se já tem dados (evitar duplicar)
+  if (sheet.getLastRow() > 1) {
+    var resp = SpreadsheetApp.getUi().alert(
+      "Atenção",
+      "Já existem " + (sheet.getLastRow() - 1) + " transações. Deseja adicionar as 263 do Excel mesmo assim?",
+      SpreadsheetApp.getUi().ButtonSet.YES_NO
+    );
+    if (resp !== SpreadsheetApp.getUi().Button.YES) return;
+  }
+
+  var dados = getDadosMigracao_();
+  var hashesExistentes = {};
+
+  if (sheet.getLastRow() > 1) {
+    var hashes = sheet.getRange(2, 11, sheet.getLastRow() - 1, 1).getValues();
+    hashes.forEach(function(h) { if (h[0]) hashesExistentes[h[0]] = true; });
+  }
+
+  var importadas = 0;
+  var puladas = 0;
+  var verdes = 0;
+  var rows = [];
+
+  dados.forEach(function(t) {
+    var descLimpa = t.descricao.toLowerCase()
+      .normalize("NFD").replace(/[̀-ͯ]/g, "")
+      .replace(/\s+/g, " ").trim();
+    var hash = gerarHash_(t.data, descLimpa, t.valor.toString());
+
+    if (hashesExistentes[hash]) { puladas++; return; }
+    hashesExistentes[hash] = true;
+
+    var nextRow = sheet.getLastRow() + 1 + rows.length;
+    var id = nextRow - 1;
+
+    rows.push([
+      id,
+      "🟢",
+      new Date(t.data + "T12:00:00"),
+      t.descricao,
+      descLimpa,
+      t.tipo,
+      t.categoria,
+      t.valor,
+      100,
+      "EXCEL",
+      hash
+    ]);
+
+    importadas++;
+    verdes++;
+  });
+
+  // Batch write (muito mais rápido)
+  if (rows.length > 0) {
+    var startRow = sheet.getLastRow() + 1;
+    sheet.getRange(startRow, 1, rows.length, 11).setValues(rows);
+  }
+
+  SpreadsheetApp.getUi().alert(
+    '✅ Migração concluída!\n\n' +
+    '• Importadas: ' + importadas + '\n' +
+    '• Puladas (duplicatas): ' + puladas + '\n' +
+    '• Todas classificadas como 🟢 (dados do Excel já categorizado)'
+  );
+}
+
+function getDadosMigracao_() {
+  return [
+    {data:"2025-08-22",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:95.89},
+    {data:"2025-08-23",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:131.98},
+    {data:"2025-08-24",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:172.98},
+    {data:"2025-08-28",tipo:"Receita",categoria:"Salário",descricao:"Salário",valor:4320.23},
+    {data:"2025-08-28",tipo:"Aporte",categoria:"Previdência",descricao:"Previdência Privada",valor:238.46},
+    {data:"2025-08-28",tipo:"Despesa",categoria:"Transporte",descricao:"Manutenção do carro",valor:600.0},
+    {data:"2025-08-28",tipo:"Despesa",categoria:"Desenvolvimento",descricao:"Cursos",valor:500.0},
+    {data:"2025-08-28",tipo:"Despesa",categoria:"Lazer",descricao:"Pix",valor:123.0},
+    {data:"2025-08-29",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:32.0},
+    {data:"2025-08-30",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:16.92},
+    {data:"2025-08-30",tipo:"Despesa",categoria:"Alimentação",descricao:"Feira",valor:34.0},
+    {data:"2025-08-30",tipo:"Despesa",categoria:"Alimentação",descricao:"Feira",valor:22.0},
+    {data:"2025-08-30",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:58.94},
+    {data:"2025-08-30",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:15.0},
+    {data:"2025-08-31",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:68.97},
+    {data:"2025-08-31",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:280.0},
+    {data:"2025-09-01",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:70.0},
+    {data:"2025-09-01",tipo:"Despesa",categoria:"Lazer",descricao:"Banca",valor:10.0},
+    {data:"2025-09-01",tipo:"Despesa",categoria:"Cartão",descricao:"Seguro",valor:9.99},
+    {data:"2025-09-03",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:22.79},
+    {data:"2025-09-06",tipo:"Despesa",categoria:"Lazer",descricao:"Cinema",valor:86.0},
+    {data:"2025-09-06",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:170.0},
+    {data:"2025-09-09",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:21.0},
+    {data:"2025-09-10",tipo:"Despesa",categoria:"Cuidados Pessoais",descricao:"Barbearia",valor:105.0},
+    {data:"2025-09-13",tipo:"Despesa",categoria:"Lazer",descricao:"Show",valor:10.0},
+    {data:"2025-09-13",tipo:"Despesa",categoria:"Lazer",descricao:"Show",valor:90.0},
+    {data:"2025-09-13",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:76.42},
+    {data:"2025-09-13",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:84.0},
+    {data:"2025-09-13",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:17.83},
+    {data:"2025-09-14",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:24.27},
+    {data:"2025-09-14",tipo:"Despesa",categoria:"Alimentação",descricao:"mercado",valor:10.99},
+    {data:"2025-09-17",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:17.99},
+    {data:"2025-09-18",tipo:"Despesa",categoria:"Cartão",descricao:"Seguro",valor:9.99},
+    {data:"2025-09-18",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:6.0},
+    {data:"2025-09-19",tipo:"Receita",categoria:"Outros",descricao:"PLR",valor:3771.76},
+    {data:"2025-09-20",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:47.7},
+    {data:"2025-09-20",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:56.1},
+    {data:"2025-09-20",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:24.9},
+    {data:"2025-09-26",tipo:"Aporte",categoria:"Moradia",descricao:"Parcela apto",valor:1429.23},
+    {data:"2025-09-26",tipo:"Despesa",categoria:"Saúde",descricao:"Farmácia",valor:62.28},
+    {data:"2025-09-27",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:14.0},
+    {data:"2025-09-27",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:57.0},
+    {data:"2025-09-29",tipo:"Receita",categoria:"Salário",descricao:"Salário",valor:5005.1},
+    {data:"2025-09-29",tipo:"Aporte",categoria:"Previdência",descricao:"Previdência Privada",valor:252.0},
+    {data:"2025-09-29",tipo:"Aporte",categoria:"Previdência",descricao:"Renda Fixa",valor:4.13},
+    {data:"2025-09-29",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:12.0},
+    {data:"2025-09-30",tipo:"Despesa",categoria:"Saúde",descricao:"Dentista",valor:245.0},
+    {data:"2025-10-03",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:70.0},
+    {data:"2025-10-04",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:49.7},
+    {data:"2025-10-05",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:79.61},
+    {data:"2025-10-10",tipo:"Despesa",categoria:"Cartão",descricao:"-",valor:124.89},
+    {data:"2025-10-10",tipo:"Aporte",categoria:"Moradia",descricao:"Parcela apto",valor:1399.8},
+    {data:"2025-10-10",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:235.28},
+    {data:"2025-10-11",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:30.92},
+    {data:"2025-10-11",tipo:"Despesa",categoria:"Lazer",descricao:"Banca",valor:140.0},
+    {data:"2025-10-12",tipo:"Despesa",categoria:"Saúde",descricao:"Farmácia",valor:27.74},
+    {data:"2025-10-12",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:159.38},
+    {data:"2025-10-13",tipo:"Despesa",categoria:"Lazer",descricao:"Pix",valor:55.0},
+    {data:"2025-10-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:66.0},
+    {data:"2025-10-17",tipo:"Despesa",categoria:"Cuidados Pessoais",descricao:"Barbearia",valor:115.0},
+    {data:"2025-10-17",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:38.58},
+    {data:"2025-10-18",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:59.4},
+    {data:"2025-10-19",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:75.97},
+    {data:"2025-10-20",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:50.0},
+    {data:"2025-10-21",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:30.0},
+    {data:"2025-10-21",tipo:"Despesa",categoria:"Cartão",descricao:"Seguro",valor:9.99},
+    {data:"2025-10-24",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:24.98},
+    {data:"2025-10-26",tipo:"Despesa",categoria:"Transporte",descricao:"Estacionamento",valor:20.0},
+    {data:"2025-10-27",tipo:"Aporte",categoria:"Previdência",descricao:"Renda Fixa",valor:7.11},
+    {data:"2025-10-29",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:12.0},
+    {data:"2025-10-30",tipo:"Receita",categoria:"Salário",descricao:"Salário",valor:5162.0},
+    {data:"2025-10-30",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:18.99},
+    {data:"2025-10-30",tipo:"Aporte",categoria:"Previdência",descricao:"Previdência Privada",valor:252.0},
+    {data:"2025-10-31",tipo:"Despesa",categoria:"Lazer",descricao:"Banca",valor:170.0},
+    {data:"2025-10-31",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:85.96},
+    {data:"2025-10-31",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:234.8},
+    {data:"2025-10-31",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:85.0},
+    {data:"2025-11-02",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:79.2},
+    {data:"2025-11-03",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:176.1},
+    {data:"2025-11-03",tipo:"Despesa",categoria:"Assinatura",descricao:"Rateio",valor:80.0},
+    {data:"2025-11-05",tipo:"Despesa",categoria:"Relacionamento",descricao:"Nati",valor:114.64},
+    {data:"2025-11-05",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:12.0},
+    {data:"2025-11-06",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:65.45},
+    {data:"2025-11-07",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:51.96},
+    {data:"2025-11-08",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:481.0},
+    {data:"2025-11-09",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:25.13},
+    {data:"2025-11-10",tipo:"Aporte",categoria:"Moradia",descricao:"Parcela apto",valor:1402.18},
+    {data:"2025-11-10",tipo:"Aporte",categoria:"Moradia",descricao:"Parcela apto",valor:124.89},
+    {data:"2025-11-11",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:66.5},
+    {data:"2025-11-11",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:169.9},
+    {data:"2025-11-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:159.63},
+    {data:"2025-11-15",tipo:"Despesa",categoria:"Lazer",descricao:"Banca",valor:110.0},
+    {data:"2025-11-15",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:209.4},
+    {data:"2025-11-15",tipo:"Despesa",categoria:"Vestuário",descricao:"Roupas",valor:126.01},
+    {data:"2025-11-15",tipo:"Despesa",categoria:"Cartão",descricao:"Seguro",valor:9.99},
+    {data:"2025-11-15",tipo:"Despesa",categoria:"Vestuário",descricao:"Roupas",valor:296.58},
+    {data:"2025-11-17",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:42.0},
+    {data:"2025-11-19",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:221.74},
+    {data:"2025-11-19",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:511.64},
+    {data:"2025-11-22",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:50.0},
+    {data:"2025-11-22",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:40.0},
+    {data:"2025-11-24",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:425.04},
+    {data:"2025-11-25",tipo:"Despesa",categoria:"Cuidados Pessoais",descricao:"Barbearia",valor:90.0},
+    {data:"2025-11-26",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:420.0},
+    {data:"2025-11-26",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:5.0},
+    {data:"2025-11-27",tipo:"Receita",categoria:"Salário",descricao:"Salário",valor:5262.43},
+    {data:"2025-11-27",tipo:"Receita",categoria:"Outros",descricao:"13o",valor:1312.51},
+    {data:"2025-11-27",tipo:"Aporte",categoria:"Previdência",descricao:"Previdência Privada",valor:252.0},
+    {data:"2025-11-28",tipo:"Receita",categoria:"Outros",descricao:"Renda Fixa",valor:8.99},
+    {data:"2025-11-28",tipo:"Despesa",categoria:"Relacionamento",descricao:"Nati",valor:244.68},
+    {data:"2025-11-28",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:70.95},
+    {data:"2025-11-29",tipo:"Despesa",categoria:"Transporte",descricao:"Gasolina",valor:59.0},
+    {data:"2025-11-29",tipo:"Despesa",categoria:"Saúde",descricao:"Farmácia",valor:26.4},
+    {data:"2025-11-29",tipo:"Despesa",categoria:"Transporte",descricao:"Gasolina",valor:253.03},
+    {data:"2025-11-29",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:102.99},
+    {data:"2025-11-29",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:55.0},
+    {data:"2025-12-01",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:51.0},
+    {data:"2025-12-01",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:12.0},
+    {data:"2025-12-01",tipo:"Aporte",categoria:"Previdência",descricao:"Renda Fixa",valor:3500.0},
+    {data:"2025-12-01",tipo:"Aporte",categoria:"Previdência",descricao:"FII",valor:752.82},
+    {data:"2025-12-01",tipo:"Aporte",categoria:"Previdência",descricao:"FII",valor:711.54},
+    {data:"2025-12-01",tipo:"Despesa",categoria:"Assinatura",descricao:"Serviço",valor:147.0},
+    {data:"2025-12-01",tipo:"Despesa",categoria:"Lazer",descricao:"Pix",valor:20.0},
+    {data:"2025-12-03",tipo:"Despesa",categoria:"Assinatura",descricao:"Rateio",valor:80.0},
+    {data:"2025-12-03",tipo:"Aporte",categoria:"Previdência",descricao:"FII",valor:1464.32},
+    {data:"2025-12-04",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:28.98},
+    {data:"2025-12-05",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:126.89},
+    {data:"2025-12-06",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:26.51},
+    {data:"2025-12-06",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:112.06},
+    {data:"2025-12-06",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:40.95},
+    {data:"2025-12-06",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:322.32},
+    {data:"2025-12-06",tipo:"Despesa",categoria:"Lazer",descricao:"Balada",valor:45.2},
+    {data:"2025-12-07",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:46.07},
+    {data:"2025-12-07",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:169.28},
+    {data:"2025-12-08",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:80.58},
+    {data:"2025-12-09",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:57.89},
+    {data:"2025-12-10",tipo:"Aporte",categoria:"Moradia",descricao:"Parcela apto",valor:1613.74},
+    {data:"2025-12-12",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:53.39},
+    {data:"2025-12-12",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:32.83},
+    {data:"2025-12-14",tipo:"Despesa",categoria:"Saúde",descricao:"Farmácia",valor:85.89},
+    {data:"2025-12-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:159.63},
+    {data:"2025-12-15",tipo:"Despesa",categoria:"Vestuário",descricao:"Roupas",valor:126.01},
+    {data:"2025-12-15",tipo:"Despesa",categoria:"Vestuário",descricao:"Roupas",valor:296.58},
+    {data:"2025-12-15",tipo:"Aporte",categoria:"Previdência",descricao:"Renda variável",valor:2060.86},
+    {data:"2025-12-15",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:10.03},
+    {data:"2025-12-17",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:6.0},
+    {data:"2025-12-18",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:37.9},
+    {data:"2025-12-18",tipo:"Despesa",categoria:"Cartão",descricao:"Seguro",valor:9.99},
+    {data:"2025-12-18",tipo:"Despesa",categoria:"Lazer",descricao:"Pix",valor:200.0},
+    {data:"2025-12-19",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:42.0},
+    {data:"2025-12-19",tipo:"Receita",categoria:"Outros",descricao:"13o",valor:1099.02},
+    {data:"2025-12-19",tipo:"Aporte",categoria:"Previdência",descricao:"Previdência Privada",valor:252.0},
+    {data:"2025-12-20",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:200.0},
+    {data:"2025-12-21",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:50.0},
+    {data:"2025-12-21",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:35.58},
+    {data:"2025-12-21",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:110.51},
+    {data:"2025-12-22",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:20.0},
+    {data:"2025-12-23",tipo:"Despesa",categoria:"Cuidados Pessoais",descricao:"Barbearia",valor:105.0},
+    {data:"2025-12-23",tipo:"Aporte",categoria:"Previdência",descricao:"Renda Fixa",valor:6.91},
+    {data:"2025-12-25",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:166.17},
+    {data:"2025-12-26",tipo:"Despesa",categoria:"Lazer",descricao:"Videogames",valor:9.99},
+    {data:"2025-12-27",tipo:"Despesa",categoria:"Transporte",descricao:"Estacionamento",valor:30.0},
+    {data:"2025-12-28",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:21.01},
+    {data:"2025-12-28",tipo:"Despesa",categoria:"Vestuário",descricao:"Roupas",valor:59.9},
+    {data:"2025-12-30",tipo:"Receita",categoria:"Salário",descricao:"Salário",valor:5087.81},
+    {data:"2025-12-30",tipo:"Aporte",categoria:"Previdência",descricao:"Previdência Privada",valor:252.0},
+    {data:"2026-01-02",tipo:"Despesa",categoria:"Assinatura",descricao:"IA",valor:99.9},
+    {data:"2026-01-02",tipo:"Despesa",categoria:"Cartão",descricao:"IOF",valor:3.5},
+    {data:"2026-01-03",tipo:"Despesa",categoria:"Assinatura",descricao:"Rateio",valor:80.0},
+    {data:"2026-01-03",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:148.25},
+    {data:"2026-01-03",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:53.96},
+    {data:"2026-01-04",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:38.57},
+    {data:"2026-01-04",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:24.9},
+    {data:"2026-01-05",tipo:"Receita",categoria:"Outros",descricao:"VA",valor:1500.0},
+    {data:"2026-01-05",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:300.0},
+    {data:"2026-01-09",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:40.24},
+    {data:"2026-01-09",tipo:"Despesa",categoria:"Lazer",descricao:"Banca",valor:120.0},
+    {data:"2026-01-10",tipo:"Despesa",categoria:"Lazer",descricao:"Balada",valor:54.0},
+    {data:"2026-01-10",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:19.99},
+    {data:"2026-01-10",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:199.99},
+    {data:"2026-01-10",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:43.9},
+    {data:"2026-01-10",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:31.45},
+    {data:"2026-01-12",tipo:"Receita",categoria:"Outros",descricao:"Reembolso",valor:135.28},
+    {data:"2026-01-12",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:100.0},
+    {data:"2026-01-12",tipo:"Aporte",categoria:"Moradia",descricao:"Parcela apto",valor:2350.3},
+    {data:"2026-01-12",tipo:"Despesa",categoria:"Cartão",descricao:"-",valor:89.99},
+    {data:"2026-01-13",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:37.4},
+    {data:"2026-01-13",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:55.79},
+    {data:"2026-01-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:159.63},
+    {data:"2026-01-15",tipo:"Despesa",categoria:"Vestuário",descricao:"Roupas",valor:296.58},
+    {data:"2026-01-15",tipo:"Despesa",categoria:"Vestuário",descricao:"Roupas",valor:126.01},
+    {data:"2026-01-16",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:77.96},
+    {data:"2026-01-16",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:11.09},
+    {data:"2026-01-16",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:50.0},
+    {data:"2026-01-17",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:127.58},
+    {data:"2026-01-17",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:14.3},
+    {data:"2026-01-17",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:69.3},
+    {data:"2026-01-18",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:101.5},
+    {data:"2026-01-18",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:81.94},
+    {data:"2026-01-18",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:59.89},
+    {data:"2026-01-19",tipo:"Despesa",categoria:"Desenvolvimento",descricao:"Cursos",valor:120.0},
+    {data:"2026-01-19",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:0.02},
+    {data:"2026-01-20",tipo:"Despesa",categoria:"Cartão",descricao:"Seguro",valor:9.99},
+    {data:"2026-01-22",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:170.58},
+    {data:"2026-01-23",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:6.44},
+    {data:"2026-01-24",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:95.7},
+    {data:"2026-01-24",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:501.74},
+    {data:"2026-01-26",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:71.67},
+    {data:"2026-01-26",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:72.0},
+    {data:"2026-01-26",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:71.67},
+    {data:"2026-01-26",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:71.67},
+    {data:"2026-01-29",tipo:"Receita",categoria:"Salário",descricao:"Salário",valor:5208.15},
+    {data:"2026-01-29",tipo:"Aporte",categoria:"Previdência",descricao:"Previdência Privada",valor:252.0},
+    {data:"2026-01-29",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:7.5},
+    {data:"2026-01-30",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:10.0},
+    {data:"2026-01-30",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:318.49},
+    {data:"2026-02-02",tipo:"Despesa",categoria:"Assinatura",descricao:"IA",valor:99.9},
+    {data:"2026-02-02",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:0.55},
+    {data:"2026-02-03",tipo:"Despesa",categoria:"Assinatura",descricao:"Rateio",valor:80.0},
+    {data:"2026-02-03",tipo:"Despesa",categoria:"Cartão",descricao:"IOF",valor:3.5},
+    {data:"2026-02-03",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:0.01},
+    {data:"2026-02-03",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:710.0},
+    {data:"2026-02-04",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:370.0},
+    {data:"2026-02-04",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:370.0},
+    {data:"2026-02-05",tipo:"Despesa",categoria:"Cuidados Pessoais",descricao:"Barbearia",valor:19.99},
+    {data:"2026-02-05",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercadinho",valor:100.0},
+    {data:"2026-02-06",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:4.05},
+    {data:"2026-02-06",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:0.01},
+    {data:"2026-02-06",tipo:"Despesa",categoria:"Lazer",descricao:"Show",valor:250.0},
+    {data:"2026-02-06",tipo:"Despesa",categoria:"Lazer",descricao:"Pix",valor:60.0},
+    {data:"2026-02-07",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:277.34},
+    {data:"2026-02-07",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:74.94},
+    {data:"2026-02-09",tipo:"Receita",categoria:"Outros",descricao:"VA",valor:924.0},
+    {data:"2026-02-09",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:59.3},
+    {data:"2026-02-10",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:0.17},
+    {data:"2026-02-10",tipo:"Aporte",categoria:"Moradia",descricao:"Parcela apto",valor:2355.24},
+    {data:"2026-02-10",tipo:"Despesa",categoria:"Cartão",descricao:"-",valor:89.99},
+    {data:"2026-02-11",tipo:"Aporte",categoria:"Previdência",descricao:"Rendimentos/Dividendos",valor:0.01},
+    {data:"2026-02-11",tipo:"Aporte",categoria:"Previdência",descricao:"Renda Fixa",valor:500.0},
+    {data:"2026-02-12",tipo:"Despesa",categoria:"Lazer",descricao:"Acessórios Diversos",valor:31.5},
+    {data:"2026-02-12",tipo:"Despesa",categoria:"Vestuário",descricao:"Acessórios",valor:19.99},
+    {data:"2026-02-13",tipo:"Despesa",categoria:"Cartão",descricao:"Seguro",valor:9.99},
+    {data:"2026-02-14",tipo:"Despesa",categoria:"Lazer",descricao:"Balada",valor:144.92},
+    {data:"2026-02-14",tipo:"Despesa",categoria:"Lazer",descricao:"Bar",valor:123.2},
+    {data:"2026-02-14",tipo:"Despesa",categoria:"Alimentação",descricao:"Restaurante",valor:87.8},
+    {data:"2026-02-14",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:65.93},
+    {data:"2026-02-14",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:43.07},
+    {data:"2026-02-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:46.0},
+    {data:"2026-02-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:12.0},
+    {data:"2026-02-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:50.0},
+    {data:"2026-02-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:16.97},
+    {data:"2026-02-15",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:78.0},
+    {data:"2026-02-15",tipo:"Despesa",categoria:"Transporte",descricao:"Uber/táxi",valor:76.93},
+    {data:"2026-02-16",tipo:"Despesa",categoria:"Alimentação",descricao:"Mercado",valor:482.2},
+    {data:"2026-02-16",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:159.64},
+    {data:"2026-02-17",tipo:"Despesa",categoria:"Alimentação",descricao:"Delivery",valor:59.93},
+    {data:"2026-02-18",tipo:"Receita",categoria:"Outros",descricao:"Pix",valor:95.0},
+    {data:"2026-02-18",tipo:"Receita",categoria:"Outros",descricao:"Pix",valor:95.0},
+    {data:"2026-02-18",tipo:"Receita",categoria:"Outros",descricao:"Pix",valor:644.1},
+    {data:"2026-02-18",tipo:"Receita",categoria:"Outros",descricao:"Role",valor:975.0},
+    {data:"2026-02-18",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:925.49},
+    {data:"2026-02-18",tipo:"Despesa",categoria:"Lazer",descricao:"Role",valor:273.0},
+    {data:"2026-02-18",tipo:"Despesa",categoria:"Lazer",descricao:"Pix",valor:40.0}
+  ];
+}

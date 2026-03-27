@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"Stop\",\"additionalContext\":\"REVIEW REMINDER: Antes de encerrar, pergunte ao usuario se quer rodar /review-day para fechar a sessao e registrar o progresso no Notion.\"}}'",
+            "command": "echo '{\"systemMessage\":\"REVIEW REMINDER: Antes de encerrar, pergunte ao usuario se quer rodar /review-day para fechar a sessao e registrar o progresso no Notion.\"}'",
             "statusMessage": "Verificando fechamento de sessao..."
           }
         ]
@@ -29,7 +29,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '.tool_input.file_path // .tool_response.filePath // empty' | { read -r f; case \"$f\" in *.json) node -e \"try{JSON.parse(require('fs').readFileSync('$f','utf8'));console.log('{\\\"suppressOutput\\\":true}')}catch(e){console.log('{\\\"systemMessage\\\":\\\"JSON invalido em '+f+': '+e.message+'\\\"}')}\";; *) echo '{\"suppressOutput\":true}';; esac; } 2>/dev/null || echo '{\"suppressOutput\":true}'",
+            "command": "node -e \"let b='';process.stdin.on('data',c=>b+=c);process.stdin.on('end',()=>{try{const d=JSON.parse(b);const f=d.tool_input?.file_path||d.tool_response?.filePath||'';if(f.endsWith('.json')){try{JSON.parse(require('fs').readFileSync(f,'utf8'));console.log(JSON.stringify({suppressOutput:true}))}catch(e){console.log(JSON.stringify({systemMessage:'JSON invalido em '+f+': '+e.message}))}}else{console.log(JSON.stringify({suppressOutput:true}))}}catch(e){console.log(JSON.stringify({suppressOutput:true}))}})\"",
             "statusMessage": "Validando arquivo..."
           }
         ]
