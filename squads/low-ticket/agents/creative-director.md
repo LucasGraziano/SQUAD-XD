@@ -78,6 +78,17 @@ commands:
     visibility: [full, quick, key]
     description: 'Sair do modo creative-director'
 
+knowledge_context:
+  domains: [traffic-ads, psychology-influence, copy-persuasion]
+  dossiers: [traffic-acquisition, copywriting-persuasion]
+  playbooks: []
+  auto_load: "Consultar dossier traffic-acquisition para scroll-stop patterns e copywriting-persuasion para gatilhos visuais"
+  experts_preferidos: [jeremy-haynes, blair-warren]
+  uso: |
+    - *knowledge traffic-ads → criativos, testing, scaling rules
+    - *knowledge psychology-influence → gatilhos emocionais para visuais
+    - *knowledge dossier:traffic-acquisition → convergencias visuais de performance
+
 outputs:
   primary: [creative-briefs/, ad-prompts/, visual-identity.md]
 

@@ -553,6 +553,41 @@ await story.save();
 ```
 <!-- AIOX-MANAGED-END: aiox-patterns -->
 
+<!-- AIOX-MANAGED-START: knowledge-conclave-memory -->
+## Knowledge Layer 2.0, Conclave v2 & Memory 2.0
+
+### Knowledge Layer 2.0 (sob demanda)
+Sistema de inteligência cognitiva em `.aiox-core/knowledge/`.
+- 7 domínios: copy-persuasion, offers-pricing, sales-closing, traffic-ads, funnels-value-ladder, systems-ops, psychology-influence
+- 14+ experts com DNA v2 (5 camadas: Filosofias, Modelos Mentais, Heurísticas, Frameworks, Metodologias)
+- 6 dossiers cross-source (convergências entre experts, ~1000 tokens cada)
+- 4 playbooks operacionais (frameworks acionáveis, ~800 tokens cada)
+- Carregamento: Registry (~150 tokens) → Domain Index (~50 tokens) → Expert/DNA/Dossier/Playbook
+- Token budgets: index 50, expert 500, DNA 700, dossier 1000, playbook 800, max/sessão 5000
+- Ingestão: `/ingest` extrai DNA cognitivo de vídeos/transcrições (5 camadas, `--mode simple` para 3 campos)
+- Dossiers: `/dossier {tema}` ou `/dossier --auto {domain}` para convergências cross-source
+- Playbooks: `/playbook {nome}` ou `/playbook --generate {tema}` para frameworks operacionais
+- Consulta em agentes: `*knowledge {domínio|expert|dossier:X|playbook:X}`
+- Agentes do Low-Ticket Squad têm `knowledge_context` com dossiers/playbooks auto-load
+
+### Conclave v2 (deliberação multi-agente)
+Multi-agente debate para decisões complexas via `/conclave`.
+- Engine: `.aiox-core/core/conclave/conclave-engine.js`
+- 8 agentes especializados com expertise mapeada
+- Tamanhos: small (3), medium (4), large (6)
+- v2: CRITIC (5 critérios, score 0-100) + DEVIL'S ADVOCATE (stress test) + SYNTHESIZER (GO/NO-GO/CONDITIONAL)
+- Flag `--v1` para backward compatibility
+- Deliberações salvas em `.aiox/conclaves/`
+
+### Memory 2.0 (memória persistente por agente)
+Memória entre sessões via `*remember` / `*recall` / `*forget`.
+- Store: `.aiox-core/core/memory/memory-store.js`
+- 4 tipos: decision (90d), preference (permanente), context (30d), lesson (permanente)
+- Auto-load na ativação de agente (decision + preference + lesson)
+- Token budget: máximo 2000 tokens por ativação
+- Diretório: `.aiox/memory/{agent-id}/`
+<!-- AIOX-MANAGED-END: knowledge-conclave-memory -->
+
 <!-- AIOX-MANAGED-START: common-commands -->
 ## Common Commands
 

@@ -85,6 +85,17 @@ subordinates:
     name: Riddle
     role: "Especialista em quiz funnels"
 
+knowledge_context:
+  domains: [funnels-value-ladder, offers-pricing]
+  dossiers: [funnels-value-ladder]
+  playbooks: []
+  auto_load: "Ao ser ativado, consultar dossier funnels-value-ladder para arquitetura de funis"
+  experts_preferidos: [russell-brunson, jeremy-haynes, sam-oven]
+  uso: |
+    - *knowledge funnels-value-ladder → index do dominio
+    - *knowledge dossier:funnels-value-ladder → convergencias de 3 experts de funil
+    - *knowledge russell-brunson → value ladder, bump/upsell strategies
+
 outputs:
   primary: [funnel-architecture.md, conversion-map.md, page-specs/]
 

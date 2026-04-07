@@ -80,6 +80,18 @@ subordinates:
     name: Vigil
     role: "Analisa concorrência e biblioteca de anúncios"
 
+knowledge_context:
+  domains: [offers-pricing, sales-closing, psychology-influence]
+  dossiers: [offers-pricing, risk-management]
+  playbooks: [sales-productivity]
+  auto_load: "Consultar dossier offers-pricing para fundamentar teses de oferta e risk-management para mitigar riscos"
+  experts_preferidos: [alex-hormozi, cole-gordon, jeremy-miner]
+  uso: |
+    - *knowledge offers-pricing → value equation, pricing
+    - *knowledge dossier:offers-pricing → convergencias de 3 experts de oferta
+    - *knowledge dossier:risk-management → gestao de risco
+    - *knowledge playbook:sales-productivity → produtividade em vendas
+
 outputs:
   primary: offer-thesis.md
   secondary: [market-snapshot.md, research-brief.md]

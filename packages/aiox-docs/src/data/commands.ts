@@ -2,7 +2,7 @@ export interface Command {
   name: string
   description: string
   usage: string[]
-  category: 'productivity' | 'content' | 'tools'
+  category: 'productivity' | 'content' | 'tools' | 'knowledge'
 }
 
 export const slashCommands: Command[] = [
@@ -65,6 +65,30 @@ export const slashCommands: Command[] = [
     description: 'Retoma contexto de sessões anteriores. Lista, busca e carrega checkpoints salvos — permite continuar qualquer conversa em outro ambiente.',
     usage: ['/recall', '/recall --last', '/recall --search "landing page"', '/recall 3'],
     category: 'productivity',
+  },
+  {
+    name: '/ingest',
+    description: 'Extrai DNA cognitivo de experts a partir de vídeos, transcrições ou texto. Comprime em 5 camadas (Filosofias, Modelos Mentais, Heurísticas, Frameworks, Metodologias) com max ~700 tokens.',
+    usage: ['/ingest', '/ingest --mode simple', '/ingest --merge'],
+    category: 'knowledge',
+  },
+  {
+    name: '/dossier',
+    description: 'Gera dossiers cross-source com convergências e divergências entre múltiplos experts. ~1000 tokens cada.',
+    usage: ['/dossier {tema}', '/dossier --auto {domain}', '/dossier --list'],
+    category: 'knowledge',
+  },
+  {
+    name: '/playbook',
+    description: 'Consulta ou gera playbooks operacionais a partir de dossiers. Frameworks acionáveis com ~800 tokens cada.',
+    usage: ['/playbook {nome}', '/playbook --generate {tema} --from {dossier}', '/playbook --list'],
+    category: 'knowledge',
+  },
+  {
+    name: '/conclave',
+    description: 'Deliberação multi-agente v2 com CRITIC (scoring 0-100), DEVIL\'S ADVOCATE (stress test) e SYNTHESIZER (GO/NO-GO/CONDITIONAL).',
+    usage: ['/conclave {pergunta}', '/conclave --v1 {pergunta}'],
+    category: 'knowledge',
   },
 ]
 

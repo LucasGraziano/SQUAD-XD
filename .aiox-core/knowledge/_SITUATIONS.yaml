@@ -1,0 +1,282 @@
+# _SITUATIONS.yaml — Router Situacional Global v1.0
+# Uso: agente recebe situacao → consulta este arquivo → carrega apenas o expert necessario
+# Permite routing sem carregar nenhum DNA completo
+# ~400 tokens — carregamento seguro como segunda camada apos _REGISTRY.yaml
+
+version: "1.0.0"
+last_updated: "2026-04-07"
+
+# ─────────────────────────────────────────────
+# BLOCO: CRIACAO DE CONTEUDO
+# ─────────────────────────────────────────────
+situations:
+
+  content_creation:
+
+    - id: SC-001
+      trigger: "Criar post/story/conteudo novo para Instagram (organico)"
+      primary_expert: doug
+      primary_domain: copy-persuasion
+      framework: "Sistema T.A.D. + Primeira Linha 3 Fases + PMN"
+      load_file: "domains/copy-persuasion/doug.md"
+      token_cost: 700
+      warning: "Verificar PMN antes de T.A.D. — sem PMN, a direcao do conteudo e arbitraria"
+      tension_with: null
+
+    - id: SC-002
+      trigger: "Criar volume alto de criativos para trafego pago"
+      primary_expert: diogo-kobata
+      primary_domain: copy-persuasion
+      framework: "Ed 100x + Lateralizacao"
+      load_file: "domains/copy-persuasion/diogo-kobata.md"
+      token_cost: 350
+      warning: "Validar mensagem com 20+ exposicoes antes de escalar. Doug prega proporcao T.A.D.; Kobata prega volume — usar Kobata so com oferta validada"
+      tension_with:
+        expert: doug
+        issue: "Doug: crescimento cirurgico, proporcao T.A.D. | Kobata: 50+ criativos/semana, volume e tudo. Criterio: narrativa nova → Doug. Oferta validada para escalar → Kobata"
+
+    - id: SC-003
+      trigger: "Escrever copy longa (pagina de vendas, email, VSL)"
+      primary_expert: jim-edwards
+      primary_domain: copy-persuasion
+      framework: "PAS / PASTOR / QUESTS"
+      load_file: "domains/copy-persuasion/jim-edwards.md"
+      token_cost: 500
+      warning: null
+      tension_with:
+        expert: doug
+        issue: "Doug fecha em GDoc simples (exclusividade). Edwards usa estrutura formal. Criterio: DM/Instagram → Doug. Pagina de vendas dedicada → Edwards"
+
+    - id: SC-004
+      trigger: "Definir Big Idea / mensagem central do negocio"
+      primary_expert: agora-inc
+      primary_domain: copy-persuasion
+      framework: "Big Idea Research + 4Ps"
+      load_file: "domains/copy-persuasion/agora-inc.md"
+      token_cost: 400
+      warning: "Big Idea requer 1h+ de pesquisa e 5+ ideias antes de escolher. Testar com stories 40min antes de consolidar"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: OFERTAS E PRECIFICACAO
+# ─────────────────────────────────────────────
+
+  offer_design:
+
+    - id: SO-001
+      trigger: "Estruturar oferta high-ticket (R$3k+) para venda via DM/Instagram"
+      primary_expert: doug
+      primary_domain: offers-pricing
+      framework: "Teia de Ofertas + Doc do Dominio 9 Etapas + Niveis de Acesso"
+      load_file: "domains/offers-pricing/doug.md"
+      token_cost: 700
+      warning: "Narrativa deve estar dominante antes de estruturar Teia — sem narrativa, as 8 rotas nao convertem"
+      tension_with: null
+
+    - id: SO-002
+      trigger: "Precificar oferta / definir pricing / criar escada de valor"
+      primary_expert: alex-hormozi
+      primary_domain: offers-pricing
+      framework: "Value Equation + Offer Stacking"
+      load_file: "domains/offers-pricing/alex-hormozi.md"
+      token_cost: 500
+      warning: null
+      tension_with:
+        expert: doug
+        issue: "Hormozi: preco pelo valor percebido da oferta (equacao matematica). Doug: preco pelo nivel de acesso e velocidade de resultado (niveis 1-4). Criterio: produto novo → Hormozi para calcular valor. Escalar produto existente → Doug para nivelamento"
+
+    - id: SO-003
+      trigger: "Criar oferta de entrada / micro-produto"
+      primary_expert: doug
+      primary_domain: offers-pricing
+      framework: "Pipeline de Ascensao + Micro-produto como Porta de Entrada"
+      load_file: "domains/offers-pricing/doug.md"
+      token_cost: 700
+      warning: "Micro-produto deve ser consumivel em menos de 1h — consumo rapido = janela de upsell imediata (24-72h)"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: TRAFEGO E AQUISICAO
+# ─────────────────────────────────────────────
+
+  traffic_acquisition:
+
+    - id: ST-001
+      trigger: "Crescer audiencia qualificada no Instagram (organico)"
+      primary_expert: doug
+      primary_domain: traffic-ads
+      framework: "Money Brand + Sistema Z4 + StoryAds"
+      load_file: "domains/traffic-ads/doug.md"
+      token_cost: 700
+      warning: "Crescimento cirurgico (Doug) vs. escala rapida: Doug filtra na entrada. Diagnostico de audiencia atual antes de mudar narrativa"
+      tension_with:
+        expert: richard-linder
+        issue: "Linder: escala agressiva de ads para volume rapido. Doug: crescimento cirurgico, filtrar na entrada. Criterio: audiencia existente desqualificada → Doug (mudar narrativa). Audiencia = zero → Linder para aquisicao inicial"
+
+    - id: ST-002
+      trigger: "Criar e testar anuncios pagos (Meta Ads / Facebook Ads)"
+      primary_expert: jeremy-haynes
+      primary_domain: traffic-ads
+      framework: "DSL + Hammer Strategy + Show Rate Optimization"
+      load_file: "domains/traffic-ads/jeremy-haynes.md"
+      token_cost: 500
+      warning: null
+      tension_with: null
+
+    - id: ST-003
+      trigger: "Diagnosticar por que a audiencia nao converte"
+      primary_expert: doug
+      primary_domain: traffic-ads
+      framework: "Diagnostico Trafego vs. Oferta + Analise Qualitativa de Audiencia"
+      load_file: "domains/traffic-ads/doug.md"
+      token_cost: 700
+      warning: "Nunca mudar oferta antes de 20+ pessoas expostas. Diagnosticar TRAFEGO antes de OFERTA se ambos falham"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: FECHAMENTO E VENDAS
+# ─────────────────────────────────────────────
+
+  sales_closing:
+
+    - id: SS-001
+      trigger: "Vender via DM no Instagram (mentoria, consultoria)"
+      primary_expert: doug
+      primary_domain: sales-closing
+      framework: "Sequencia DM 8 Mensagens + Fechamento Invisivel + Levantada de Mao"
+      load_file: "domains/sales-closing/doug.md"
+      token_cost: 700
+      warning: "Maximo 3 follow-ups. Apos 3 sem resposta: desconectar e oferecer micro-produto. Nunca call de vendas — conteudo + posicionamento devem convencer antes da DM"
+      tension_with: null
+
+    - id: SS-002
+      trigger: "Estruturar call de vendas / script de fechamento por telefone ou video"
+      primary_expert: jeremy-miner
+      primary_domain: sales-closing
+      framework: "NEPQ (Neuro-Emotional Persuasion Questioning)"
+      load_file: "domains/sales-closing/jeremy-miner.md"
+      token_cost: 500
+      warning: null
+      tension_with:
+        expert: doug
+        issue: "Doug fecha via DM sem call. Miner fecha via call com NEPQ. Criterio: ticket < R$5k → DM Doug. Ticket > R$10k → call NEPQ Miner. Entre R$5-10k → DM + Loom personalizado (Doug)"
+
+    - id: SS-003
+      trigger: "Estruturar ascensao de cliente low-ticket para high-ticket"
+      primary_expert: doug
+      primary_domain: sales-closing
+      framework: "Ascensao 4 Estrategias + Suborno Legalizado + Reuniao Over-Delivery"
+      load_file: "domains/sales-closing/doug.md"
+      token_cost: 700
+      warning: "Janela de upsell: 24-72h apos compra do micro-produto. Quem consumiu tudo em 24h = melhor candidato"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: FUNIS E VALUE LADDER
+# ─────────────────────────────────────────────
+
+  funnel_design:
+
+    - id: SF-001
+      trigger: "Estruturar value ladder / arquitetura de monetizacao omnidirecional"
+      primary_expert: doug
+      primary_domain: funnels-value-ladder
+      framework: "Teia de Ofertas 8 Rotas + Escada de Valor por Niveis de Acesso + Loop de Compras"
+      load_file: "domains/funnels-value-ladder/doug.md"
+      token_cost: 700
+      warning: "Doug: Teia omnidirecional substitui funil linear. Se Brunson ja carregado (funil sequencial), ha conflito de modelo mental — explicitar qual usar"
+      tension_with:
+        expert: russell-brunson
+        issue: "Brunson: funil linear com etapas sequenciais obrigatorias. Doug: Teia omnidirecional — pessoa entra por qualquer ponto. Criterio: negocio novo sem audiencia → Brunson (estrutura clara de sequencia). Negocio com audiencia estabelecida → Doug (multiplas rotas)"
+
+    - id: SF-002
+      trigger: "Estruturar funil de aquisicao pago (VSL, quiz, webinar)"
+      primary_expert: russell-brunson
+      primary_domain: funnels-value-ladder
+      framework: "22 Funnel Types + Hook-Story-Offer + Funnel Stacking"
+      load_file: "domains/funnels-value-ladder/russell-brunson.md"
+      token_cost: 500
+      warning: null
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: SISTEMAS E OPERACOES
+# ─────────────────────────────────────────────
+
+  systems_ops:
+
+    - id: SY-001
+      trigger: "Construir agente de IA / treinar agente neural"
+      primary_expert: doug
+      primary_domain: systems-ops
+      framework: "3 Componentes do Agente Neural + CMFR + Construcao de Base de Conhecimento"
+      load_file: "domains/systems-ops/doug.md"
+      token_cost: 700
+      warning: "Claude para base de conhecimento (contextos grandes). ChatGPT para motor neural e personalidade. Testar com/sem base para medir diferenca"
+      tension_with: null
+
+    - id: SY-002
+      trigger: "Estruturar processos, reunioes, cadencia operacional de equipe"
+      primary_expert: the-scalable-company
+      primary_domain: systems-ops
+      framework: "ScalableOS + 12Q Planning + Meeting Rhythm QSP→MBR→Weekly"
+      load_file: "domains/systems-ops/the-scalable-company.md"
+      token_cost: 500
+      warning: null
+      tension_with: null
+
+    - id: SY-003
+      trigger: "Escalar negocio solo com IA (modelo sem equipe grande)"
+      primary_expert: doug
+      primary_domain: systems-ops
+      framework: "Modelo R$1MM/mes Solo + PromptBook 5 Categorias + Ciclo Semanal"
+      load_file: "domains/systems-ops/doug.md"
+      token_cost: 700
+      warning: "Nao escalar com IA antes de validar oferta — automacao amplifica falha. Setup Completo DOUG.EXE primeiro"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: PSICOLOGIA E INFLUENCIA
+# ─────────────────────────────────────────────
+
+  psychology:
+
+    - id: SP-001
+      trigger: "Criar copy de alta persuasao / instalar percepcao no prospecto"
+      primary_expert: doug
+      primary_domain: psychology-influence
+      framework: "Dissecacao Neural 8 Territorios + Tensao-Alivio Loop + 7 Alavancas Valor Percebido"
+      load_file: "domains/psychology-influence/doug.md"
+      token_cost: 700
+      warning: "Dissecacao Neural exige dados reais do publico (50+ comentarios/reviews) — nao usar com avatar generico"
+      tension_with: null
+
+    - id: SP-002
+      trigger: "Aplicar gatilhos psicologicos estruturados em copy ou vendas"
+      primary_expert: blair-warren
+      primary_domain: psychology-influence
+      framework: "5 Drivers + One Sentence Persuasion"
+      load_file: "domains/psychology-influence/blair-warren.md"
+      token_cost: 400
+      warning: "Warren exige contexto para funcionar — copy muito curta dilui os 5 Drivers"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: CROSS-DOMAIN
+# ─────────────────────────────────────────────
+
+cross_domain:
+
+  - id: CD-001
+    trigger: "Estrategia completa de crescimento no Instagram (negocio solo)"
+    load_files:
+      - "dossiers/cross-domain/doug-system.md"
+    token_cost: 1000
+    description: "Doug integrado: copy + trafego + funil + oferta + psicologia + vendas + sistema — os 7 dominios como um unico fluxo"
+
+  - id: CD-002
+    trigger: "Diagnostico de negocio — onde esta o gargalo?"
+    load_files:
+      - "dossiers/cross-domain/doug-system.md"
+    token_cost: 1000
+    description: "Arvore de diagnostico cross-domain do Doug — identifica em qual dominio esta o gargalo antes de carregar expert especifico"

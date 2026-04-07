@@ -73,6 +73,17 @@ subordinates:
     name: Reel
     role: "Cria roteiros para VSL, reels, criativos"
 
+knowledge_context:
+  domains: [copy-persuasion, psychology-influence]
+  dossiers: [copywriting-persuasion]
+  playbooks: []
+  auto_load: "Ao ser ativado, consultar dossier copywriting-persuasion para fundamentar decisoes de copy"
+  experts_preferidos: [agora-inc, blair-warren, russell-brunson]
+  uso: |
+    - *knowledge copy-persuasion → carregar index do dominio
+    - *knowledge dossier:copywriting-persuasion → convergencias de 5 experts
+    - *knowledge {expert} → expert especifico para fundamentar decisao
+
 outputs:
   primary: [copy-approved/, voice-guide.md]
 

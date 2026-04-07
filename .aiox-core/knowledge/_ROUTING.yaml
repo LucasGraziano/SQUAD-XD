@@ -1,0 +1,125 @@
+# Knowledge Routing Map v3.0
+# Define QUAIS dominios, dossiers, playbooks, decision-maps, anti-patterns e situations cada agente carrega.
+# v3: adiciona decision_maps, anti_patterns, situations_filter, cross_domain_dossiers por agente.
+
+version: "3.0.0"
+
+# Formato: agent_id → dominios + dossiers + playbooks + v3 extensions
+routing:
+  copy-chief:
+    primary: [copy-persuasion]
+    secondary: [psychology-influence, offers-pricing]
+    dossiers: [copywriting-persuasion]
+    playbooks: []
+    cross_domain_dossiers: []
+    decision_maps: [copy-persuasion, psychology-influence]
+    anti_patterns: [copy-persuasion, psychology-influence]
+    situations_filter: [SC-001, SC-002, SC-003, SC-004, SC-005]
+    load_on_activation: false
+
+  traffic-head:
+    primary: [traffic-ads]
+    secondary: [funnels-value-ladder]
+    dossiers: [traffic-acquisition]
+    playbooks: []
+    cross_domain_dossiers: []
+    decision_maps: [traffic-ads, funnels-value-ladder]
+    anti_patterns: [traffic-ads, funnels-value-ladder]
+    situations_filter: [SC-010, SC-011, SC-012, SC-013]
+    load_on_activation: false
+
+  creative-director:
+    primary: [traffic-ads, psychology-influence]
+    secondary: [copy-persuasion]
+    dossiers: [traffic-acquisition, copywriting-persuasion]
+    playbooks: []
+    cross_domain_dossiers: []
+    decision_maps: [traffic-ads, psychology-influence, copy-persuasion]
+    anti_patterns: [traffic-ads, psychology-influence]
+    situations_filter: [SC-001, SC-002, SC-010, SC-011, SC-012]
+    load_on_activation: false
+
+  funnel-chief:
+    primary: [funnels-value-ladder]
+    secondary: [offers-pricing, traffic-ads]
+    dossiers: [funnels-value-ladder]
+    playbooks: []
+    cross_domain_dossiers: [doug-system]
+    decision_maps: [funnels-value-ladder, offers-pricing]
+    anti_patterns: [funnels-value-ladder, offers-pricing]
+    situations_filter: [SC-006, SC-007, SC-008, SC-013, SC-014]
+    load_on_activation: false
+
+  analyst:
+    primary: [offers-pricing, sales-closing]
+    secondary: [psychology-influence, systems-ops]
+    dossiers: [offers-pricing, risk-management]
+    playbooks: [sales-productivity]
+    cross_domain_dossiers: [doug-system]
+    decision_maps: [offers-pricing, sales-closing, psychology-influence]
+    anti_patterns: [offers-pricing, sales-closing]
+    situations_filter: [SC-006, SC-007, SC-008, SC-009, SC-015]
+    load_on_activation: false
+
+  pm:
+    primary: [offers-pricing, systems-ops]
+    secondary: [funnels-value-ladder]
+    dossiers: [offers-pricing, process-improvement]
+    playbooks: [operating-system, meeting-rhythm]
+    cross_domain_dossiers: [doug-system]
+    decision_maps: [offers-pricing, systems-ops, funnels-value-ladder]
+    anti_patterns: [offers-pricing, systems-ops]
+    situations_filter: [SC-006, SC-007, SC-015, SC-016]
+    load_on_activation: false
+
+  commander:
+    primary: [offers-pricing]
+    secondary: [systems-ops, traffic-ads]
+    dossiers: [offers-pricing]
+    playbooks: [operating-system]
+    cross_domain_dossiers: [doug-system]
+    decision_maps: [offers-pricing, systems-ops, traffic-ads]
+    anti_patterns: [offers-pricing, systems-ops]
+    situations_filter: [SC-006, SC-007, SC-008, SC-010, SC-015, SC-016]
+    load_on_activation: false
+
+  sm:
+    primary: [systems-ops]
+    secondary: []
+    dossiers: [process-improvement]
+    playbooks: [operating-system, meeting-rhythm]
+    cross_domain_dossiers: []
+    decision_maps: [systems-ops]
+    anti_patterns: [systems-ops]
+    situations_filter: [SC-015, SC-016]
+    load_on_activation: false
+
+  architect:
+    primary: [systems-ops]
+    secondary: [funnels-value-ladder]
+    dossiers: [process-improvement]
+    playbooks: [operating-system]
+    cross_domain_dossiers: []
+    decision_maps: [systems-ops, funnels-value-ladder]
+    anti_patterns: [systems-ops]
+    situations_filter: [SC-015, SC-016]
+    load_on_activation: false
+
+# Token budget por nivel de carregamento:
+token_budget:
+  index_only: 50          # _index.md de 1 dominio
+  single_expert: 500      # 1 expert comprimido (v2)
+  single_dna_v2: 700      # 1 expert DNA v2 (5 camadas)
+  single_dna_v3: 900      # 1 expert DNA v3 (5 camadas + Anti-Patterns + Situation Map)
+  single_dossier: 1000    # 1 dossier cross-source
+  single_playbook: 800    # 1 playbook operacional
+  single_decision_map: 200  # 1 _decision-map.md
+  single_anti_patterns: 300 # 1 _anti-patterns.md
+  full_domain: 2500       # Todos experts de 1 dominio
+  max_per_session: 5000   # Limite total de knowledge tokens
+
+# Notas de carregamento v3:
+# - decision_maps e anti_patterns sao carregados sob demanda com *knowledge decision-map:{dominio}
+# - situations_filter define quais IDs do _SITUATIONS.yaml sao relevantes para o agente
+# - cross_domain_dossiers sao os dossiers que cobrem o expert em multiplos dominios simultaneamente
+# - Ordem de prioridade: _SITUATIONS.yaml (router) → domain index → DNA → dossier/decision-map/anti-patterns

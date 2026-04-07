@@ -81,6 +81,17 @@ subordinates:
     name: Pulse
     role: "Analisa KPIs, identifica winners/losers"
 
+knowledge_context:
+  domains: [traffic-ads, funnels-value-ladder]
+  dossiers: [traffic-acquisition]
+  playbooks: []
+  auto_load: "Ao ser ativado, consultar dossier traffic-acquisition para fundamentar estrategia de midia"
+  experts_preferidos: [jeremy-haynes, richard-linder, jordan-lee]
+  uso: |
+    - *knowledge traffic-ads → carregar index do dominio
+    - *knowledge dossier:traffic-acquisition → convergencias de 3 experts de trafego
+    - *knowledge {expert} → expert especifico (ex: jeremy-haynes para scaling rules)
+
 outputs:
   primary: [media-plan.md, budget-allocation.yaml, cpa-targets.md]
 

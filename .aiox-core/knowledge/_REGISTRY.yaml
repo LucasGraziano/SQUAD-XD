@@ -1,0 +1,157 @@
+# AIOX Knowledge Registry v2.0
+# INDICE MESTRE de todo conhecimento: experts, dossiers, playbooks.
+# ~200 tokens - seguro para carregar sempre.
+# Ultima sync: 2026-04-04
+
+version: "3.0.0"
+source: "mega-brain-migration + knowledge-2.0 + knowledge-3.0-upgrade"
+schema_changelog: "v2→v3: _SITUATIONS.yaml (router situacional), cross-domain dossiers, _decision-map.md e _anti-patterns.md por dominio, DNA v3 (USE/FAIL/VS em L4)"
+total_experts: 16
+total_domains: 7
+total_dossiers: 6
+total_cross_domain_dossiers: 1
+total_playbooks: 4
+total_decision_maps: 7
+total_anti_patterns: 7
+
+# Novo: situation router
+situation_router:
+  file: "_SITUATIONS.yaml"
+  total_situations: 16
+  domains_covered: 7
+  cross_domain: 2
+
+# Status de upgrade DNA v3 (USE/FAIL/VS + Anti-Patterns + Situation Map)
+dna_v3_status:
+  # Doug — todos os 7 dominios
+  copy-persuasion/doug: complete
+  psychology-influence/doug: complete
+  offers-pricing/doug: complete
+  sales-closing/doug: complete
+  traffic-ads/doug: complete
+  funnels-value-ladder/doug: complete
+  systems-ops/doug: complete
+  # copy-persuasion experts
+  copy-persuasion/jim-edwards: complete
+  copy-persuasion/agora-inc: complete
+  copy-persuasion/diogo-kobata: complete
+  copy-persuasion/blair-warren: complete
+  copy-persuasion/russell-brunson: complete
+  # offers-pricing experts
+  offers-pricing/alex-hormozi: complete
+  offers-pricing/jeremy-haynes: complete
+  offers-pricing/russell-brunson: complete
+  # sales-closing experts
+  sales-closing/jeremy-miner: complete
+  sales-closing/cole-gordon: complete
+  # traffic-ads experts
+  traffic-ads/jeremy-haynes: complete
+  traffic-ads/richard-linder: complete
+  traffic-ads/jordan-lee: complete
+  # funnels-value-ladder experts
+  funnels-value-ladder/russell-brunson: complete
+  # psychology-influence experts
+  psychology-influence/blair-warren: complete
+  # systems-ops experts
+  systems-ops/the-scalable-company: complete
+  systems-ops/sam-oven: complete
+  # pending — hard-copy (v2→v3) e outros experts menores
+  copy-persuasion/hard-copy: pending_v2_to_v3
+
+domains:
+  copy-persuasion:
+    experts: [agora-inc, blair-warren, jim-edwards, russell-brunson, diogo-kobata, hard-copy, doug]
+    agents: [copy-chief, analyst]
+    description: "Headlines, hooks, emotional triggers, awareness levels, long-form copy"
+
+  offers-pricing:
+    experts: [alex-hormozi, russell-brunson, jeremy-haynes, doug]
+    agents: [pm, analyst, commander]
+    description: "Offer creation, value equation, pricing, stacking, guarantees"
+
+  sales-closing:
+    experts: [jeremy-miner, cole-gordon, alex-hormozi, doug]
+    agents: [analyst, copy-chief]
+    description: "Discovery, objection handling, closing, NEPQ, call funnels"
+
+  traffic-ads:
+    experts: [jeremy-haynes, richard-linder, jordan-lee, hard-copy, doug]
+    agents: [traffic-head, creative-director]
+    description: "Meta Ads, creative testing, scaling, audiences, kill rules, StoryAds, Money Brand"
+
+  funnels-value-ladder:
+    experts: [russell-brunson, jeremy-haynes, sam-oven, hard-copy, doug]
+    agents: [funnel-chief, pm, architect]
+    description: "Quiz funnels, VSL, value ladders, bump/upsell, conversion, Teia de Ofertas"
+
+  systems-ops:
+    experts: [the-scalable-company, sam-oven, david-allen, ken-schwaber, doug]
+    agents: [pm, sm, architect]
+    description: "Business OS, team structure, processes, GTD, Scrum"
+
+  psychology-influence:
+    experts: [blair-warren, jeremy-miner, alex-hormozi, hard-copy, doug]
+    agents: [copy-chief, analyst, creative-director]
+    description: "Persuasion principles, cognitive biases, emotional triggers"
+
+# Cross-domain dossiers — sistemas integrados por expert
+cross_domain_dossiers:
+  doug-system:
+    expert: doug
+    domains: [copy-persuasion, offers-pricing, sales-closing, traffic-ads, funnels-value-ladder, systems-ops, psychology-influence]
+    agents: [commander, pm, funnel-chief, analyst]
+    description: "Sistema integrado Doug — 7 dominios como um unico fluxo operacional com arvore de diagnostico"
+
+# Cross-source dossiers — convergencias entre multiplos experts
+dossiers:
+  copywriting-persuasion:
+    sources: [agora-inc, blair-warren, jim-edwards, russell-brunson, diogo-kobata]
+    agents: [copy-chief, creative-director]
+    description: "Convergencias de persuasao e copy entre 5 experts"
+
+  traffic-acquisition:
+    sources: [jeremy-haynes, richard-linder, jordan-lee]
+    agents: [traffic-head, creative-director]
+    description: "Convergencias de aquisicao de trafego entre 3 experts"
+
+  funnels-value-ladder:
+    sources: [russell-brunson, jeremy-haynes, sam-oven]
+    agents: [funnel-chief, pm]
+    description: "Convergencias de funis e value ladder entre 3 experts"
+
+  offers-pricing:
+    sources: [alex-hormozi, russell-brunson, jeremy-haynes]
+    agents: [pm, analyst, commander]
+    description: "Convergencias de ofertas e pricing entre 3 experts"
+
+  risk-management:
+    sources: [alex-hormozi, cole-gordon, jeremy-miner]
+    agents: [analyst, pm, commander]
+    description: "Convergencias de gestao de risco entre 3 experts"
+
+  process-improvement:
+    sources: [the-scalable-company, sam-oven, david-allen, ken-schwaber]
+    agents: [pm, sm, architect]
+    description: "Convergencias de melhoria de processos entre 4 experts"
+
+# Operational playbooks — frameworks accionaveis gerados de dossiers
+playbooks:
+  operating-system:
+    source_dossier: process-improvement
+    agents: [pm, commander, sm]
+    description: "Business OS (ScalableOS + GTD + Scrum) — cadencia operacional"
+
+  meeting-rhythm:
+    source_dossier: process-improvement
+    agents: [pm, commander]
+    description: "Cadencia QSP → MBR → Weekly → 1:1"
+
+  referral-system:
+    source_dossier: risk-management
+    agents: [analyst, pm]
+    description: "6 microcommitments → 10 nomes — sistema de referral"
+
+  sales-productivity:
+    source_dossier: offers-pricing
+    agents: [analyst, pm]
+    description: "PTB + time blocking + batching — produtividade em vendas"

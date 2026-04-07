@@ -28,6 +28,7 @@ const nav = [
   {
     label: 'Knowledge',
     items: [
+      { href: '/knowledge/', label: 'Knowledge Layer', icon: '🧬' },
       { href: '/mega-brain/', label: 'Mega Brain', icon: '🧠' },
       { href: '/memory/', label: 'Memory System', icon: '💾' },
       { href: '/bridge/', label: 'AIOX + MB Bridge', icon: '🔗' },

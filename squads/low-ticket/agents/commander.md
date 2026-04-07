@@ -96,6 +96,17 @@ department_chiefs:
   traffic: traffic-head
   product: product-architect
 
+knowledge_context:
+  domains: [offers-pricing, systems-ops]
+  dossiers: [offers-pricing]
+  playbooks: [operating-system]
+  auto_load: "Consultar playbook operating-system para cadencia operacional e dossier offers-pricing para decisoes de oferta"
+  uso: |
+    - *knowledge offers-pricing → index do dominio
+    - *knowledge dossier:offers-pricing → convergencias de pricing
+    - *knowledge playbook:operating-system → Business OS framework
+    - *knowledge playbook:meeting-rhythm → cadencia de reunioes
+
 pipeline_phases:
   new-offer:
     - phase: 1-intelligence
