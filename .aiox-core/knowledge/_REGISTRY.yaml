@@ -1,7 +1,7 @@
 # AIOX Knowledge Registry v2.0
 # INDICE MESTRE de todo conhecimento: experts, dossiers, playbooks.
 # ~200 tokens - seguro para carregar sempre.
-# Ultima sync: 2026-04-04
+# Ultima sync: 2026-04-07
 
 version: "3.0.0"
 source: "mega-brain-migration + knowledge-2.0 + knowledge-3.0-upgrade"
@@ -55,8 +55,11 @@ dna_v3_status:
   # systems-ops experts
   systems-ops/the-scalable-company: complete
   systems-ops/sam-oven: complete
-  # pending — hard-copy (v2→v3) e outros experts menores
-  copy-persuasion/hard-copy: pending_v2_to_v3
+  # hard-copy (Kleiver) — 4 dominios
+  copy-persuasion/hard-copy: complete
+  traffic-ads/hard-copy: complete
+  funnels-value-ladder/hard-copy: complete
+  psychology-influence/hard-copy: complete
 
 domains:
   copy-persuasion:
