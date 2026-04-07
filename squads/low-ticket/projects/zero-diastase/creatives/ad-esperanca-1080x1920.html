@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Ad — Esperanza 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #FFF8F5;
+    position: relative;
+  }
+
+  /* === IMAGE TOP 58% === */
+  .hero-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 58%;
+    object-fit: cover;
+    object-position: center 30%;
+    opacity: 0;
+    animation: imgFadeIn 1.2s ease-out 0.3s forwards;
+  }
+
+  @keyframes imgFadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* Fade bottom of image */
+  .img-bottom-fade {
+    position: absolute;
+    top: 45%;
+    left: 0;
+    right: 0;
+    height: 18%;
+    background: linear-gradient(0deg, #FFF8F5 10%, transparent 100%);
+    z-index: 2;
+  }
+
+  /* === FLOATING BADGE ON IMAGE === */
+  .floating-badge {
+    position: absolute;
+    top: 32px;
+    left: 32px;
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    border-radius: 50px;
+    padding: 10px 22px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    opacity: 0;
+    animation: badgeIn 0.7s ease-out 2.0s forwards;
+  }
+
+  @keyframes badgeIn {
+    0% { opacity: 0; transform: translateY(-10px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .badge-dot {
+    width: 10px;
+    height: 10px;
+    background: #7ECEC1;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.3); opacity: 0.5; }
+  }
+
+  .badge-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #3D8B7A;
+    letter-spacing: 1px;
+  }
+
+  /* === FLOATING TIME BADGE === */
+  .time-badge {
+    position: absolute;
+    top: 32px;
+    right: 32px;
+    z-index: 5;
+    background: rgba(232,131,124,0.95);
+    color: white;
+    font-size: 24px;
+    font-weight: 800;
+    padding: 10px 20px;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(232,131,124,0.3);
+    opacity: 0;
+    animation: badgeIn 0.7s ease-out 3.0s forwards;
+  }
+
+  /* === BOTTOM CARD === */
+  .card {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    background: #FFF8F5;
+    padding: 20px 48px 48px;
+  }
+
+  .card-headline {
+    font-family: 'Poppins', sans-serif;
+    font-size: 62px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.08;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeSlideUp 1.0s ease-out 5.0s forwards;
+  }
+
+  .card-headline .coral { color: #E8837C; }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-sub {
+    font-size: 32px;
+    font-weight: 500;
+    color: #777;
+    line-height: 1.4;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease-out 7.0s forwards;
+  }
+
+  .card-sub strong { color: #2D2D2D; font-weight: 800; }
+
+  /* === FEATURE PILLS === */
+  .pills {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease-out 9.0s forwards;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: linear-gradient(135deg, #EEFAF6, #E2F5EF);
+    border: 1.5px solid rgba(126,206,193,0.3);
+    border-radius: 50px;
+    padding: 12px 22px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #3D8B7A;
+  }
+
+  .pill-icon {
+    font-size: 18px;
+  }
+
+  /* === PRICE + CTA ROW === */
+  .action-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease-out 12.0s forwards;
+  }
+
+  .price-block {
+    text-align: center;
+    padding: 12px 24px;
+  }
+
+  .price-old {
+    font-size: 22px;
+    font-weight: 700;
+    color: #CCC;
+    text-decoration: line-through;
+  }
+
+  .price-new {
+    font-size: 58px;
+    font-weight: 900;
+    color: #2D2D2D;
+  }
+
+  .price-new .dollar { font-size: 30px; color: #D4A574; vertical-align: super; }
+  .price-new .cents { font-size: 30px; color: #888; }
+
+  .cta {
+    flex: 1;
+    display: block;
+    text-align: center;
+    padding: 28px;
+    border-radius: 16px;
+    font-size: 40px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow: 0 8px 30px rgba(232,131,124,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4s ease-in-out 14s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arrow {
+    margin-left: 10px;
+    display: inline-block;
+    animation: nudge 3s ease-in-out 14s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+</style>
+</head>
+<body>
+  <img class="hero-img" src="img-sofia-esperanca.png" alt="Sofia haciendo ejercicios">
+  <div class="img-bottom-fade"></div>
+
+  <div class="floating-badge">
+    <div class="badge-dot"></div>
+    <span class="badge-text">Protocolo Zero Diastasis</span>
+  </div>
+
+  <div class="time-badge">Solo 8 min/día</div>
+
+  <div class="card">
+    <div class="card-headline">Reprograma tu cuerpo<br>en <span class="coral">28 días</span></div>
+    <div class="card-sub">El único protocolo que <strong>reconecta tu sostén natural</strong> sin cirugía, sin fajas, desde tu sala.</div>
+
+    <div class="pills">
+      <div class="pill"><span class="pill-icon">🏠</span> Desde casa</div>
+      <div class="pill"><span class="pill-icon">⏱️</span> 8 min/día</div>
+      <div class="pill"><span class="pill-icon">🔒</span> Garantía 28 días</div>
+      <div class="pill"><span class="pill-icon">📱</span> Desde tu celular</div>
+    </div>
+
+    <div class="action-row">
+      <div class="price-block">
+        <div class="price-old">$99.90</div>
+        <div class="price-new"><span class="dollar">$</span>19<span class="cents">.90</span></div>
+      </div>
+      <a href="#" class="cta">HAZ EL TEST GRATIS <span class="arrow">→</span></a>
+    </div>
+  </div>
+</body>
+</html>

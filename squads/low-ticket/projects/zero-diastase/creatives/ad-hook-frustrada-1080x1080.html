@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1080">
+<title>Ad — Hook Frustrada 1080x1080</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #0A0A0A;
+    position: relative;
+  }
+
+  /* === FULL IMAGE WITH ZOOM === */
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    filter: brightness(0.55) saturate(0.85);
+    opacity: 0;
+    animation: slowZoom 15s ease-out 0.3s forwards;
+  }
+
+  @keyframes slowZoom {
+    0% { opacity: 0; transform: scale(1.1); }
+    8% { opacity: 1; }
+    100% { opacity: 1; transform: scale(1.02); }
+  }
+
+  /* === VIGNETTE === */
+  .vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.6) 100%);
+    z-index: 2;
+  }
+
+  /* === TOP HOOK TEXT === */
+  .hook-top {
+    position: absolute;
+    top: 48px;
+    left: 48px;
+    right: 48px;
+    z-index: 5;
+    opacity: 0;
+    animation: fadeSlideDown 1.0s ease-out 2.0s forwards;
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hook-question {
+    font-family: 'Poppins', sans-serif;
+    font-size: 76px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.05;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.7);
+  }
+
+  .hook-question .coral { color: #E8837C; }
+
+  /* === MIDDLE — EMOTIONAL TEXT === */
+  .mid-text {
+    position: absolute;
+    top: 50%;
+    left: 48px;
+    right: 48px;
+    transform: translateY(-50%);
+    z-index: 5;
+    opacity: 0;
+    animation: fadeIn 1.0s ease-out 6.0s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .quote {
+    font-size: 40px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.9);
+    font-style: italic;
+    line-height: 1.4;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.8);
+    border-left: 4px solid #E8837C;
+    padding-left: 24px;
+  }
+
+  /* === BOTTOM CONTENT === */
+  .bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    padding: 0 48px 44px;
+    background: linear-gradient(0deg, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
+    padding-top: 120px;
+  }
+
+  .solution-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease-out 10.0s forwards;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .solution-badge {
+    background: linear-gradient(135deg, #7ECEC1, #5DB8AA);
+    color: white;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 8px 20px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  .solution-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    color: #FFFFFF;
+  }
+
+  .features {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease-out 12.0s forwards;
+  }
+
+  .feat {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 28px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.85);
+  }
+
+  .feat-check {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(126,206,193,0.2);
+    border: 1.5px solid rgba(126,206,193,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: #7ECEC1;
+  }
+
+  .cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 26px 32px;
+    border-radius: 16px;
+    font-size: 38px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow: 0 8px 30px rgba(232,131,124,0.4);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeSlideUp 0.8s ease-out 14.0s forwards;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4s ease-in-out 16s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arrow {
+    margin-left: 10px;
+    display: inline-block;
+    animation: nudge 3s ease-in-out 16s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <img class="hero-img" src="img-sofia-frustrada.png" alt="Sofia">
+  <div class="vignette"></div>
+
+  <div class="hook-top">
+    <div class="hook-question">No es tu<br><span class="coral">culpa.</span></div>
+  </div>
+
+  <div class="mid-text">
+    <div class="quote">"Probé fajas, gym, dietas...<br>nada cerraba la separación."</div>
+  </div>
+
+  <div class="bottom">
+    <div class="solution-row">
+      <div class="solution-badge">✨ Solución</div>
+      <div class="solution-text">Zero Diastasis — $19.90</div>
+    </div>
+
+    <div class="features">
+      <div class="feat"><span class="feat-check">✓</span> 28 días</div>
+      <div class="feat"><span class="feat-check">✓</span> 8 min/día</div>
+      <div class="feat"><span class="feat-check">✓</span> En tu casa</div>
+      <div class="feat"><span class="feat-check">✓</span> Garantía</div>
+    </div>
+
+    <a href="#" class="cta">DESCUBRE TU NIVEL <span class="arrow">→</span></a>
+    <div class="disclaimer">*Resultados pueden variar. No reemplaza consejo médico.</div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Ad — Chat Screenshot 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #ECE5DD;
+    position: relative;
+  }
+
+  .wa-header {
+    background: #075E54;
+    padding: 20px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeIn 0.4s ease-out 0.1s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .wa-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7ECEC1, #5DB8AA);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    color: white;
+    font-weight: 800;
+  }
+
+  .wa-name {
+    font-size: 26px;
+    font-weight: 700;
+    color: white;
+  }
+
+  .wa-status {
+    font-size: 18px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .chat {
+    padding: 36px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .msg {
+    max-width: 75%;
+    padding: 20px 26px;
+    border-radius: 18px;
+    font-size: 32px;
+    line-height: 1.4;
+    position: relative;
+    opacity: 0;
+  }
+
+  .msg .time {
+    font-size: 16px;
+    color: rgba(0,0,0,0.35);
+    text-align: right;
+    margin-top: 8px;
+  }
+
+  .msg.in {
+    background: white;
+    border-top-left-radius: 4px;
+    align-self: flex-start;
+    color: #303030;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .msg.out {
+    background: #DCF8C6;
+    border-top-right-radius: 4px;
+    align-self: flex-end;
+    color: #303030;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  }
+
+  .msg.out .time {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 4px;
+  }
+
+  .msg.out .time::after {
+    content: '✓✓';
+    color: #53BDEB;
+    font-size: 14px;
+  }
+
+  .msg:nth-child(1) { animation: msgIn 0.4s ease-out 0.3s forwards; }
+  .msg:nth-child(2) { animation: msgIn 0.4s ease-out 1.2s forwards; }
+  .msg:nth-child(3) { animation: msgIn 0.4s ease-out 2.4s forwards; }
+  .msg:nth-child(4) { animation: msgIn 0.4s ease-out 3.6s forwards; }
+  .msg:nth-child(5) { animation: msgIn 0.4s ease-out 4.8s forwards; }
+  .msg:nth-child(6) { animation: msgIn 0.4s ease-out 5.8s forwards; }
+  .msg:nth-child(7) { animation: msgIn 0.4s ease-out 7.0s forwards; }
+  .msg:nth-child(8) { animation: msgIn 0.4s ease-out 8.2s forwards; }
+
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg strong { color: #075E54; }
+  .msg .coral { color: #E8837C; font-weight: 700; }
+
+  .cta-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 32px 36px 60px;
+    background: linear-gradient(0deg, rgba(236,229,221,1) 60%, transparent 100%);
+    opacity: 0;
+    animation: fadeSlideUp 0.6s ease-out 9.5s forwards;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta-card {
+    background: white;
+    border-radius: 24px;
+    padding: 28px 32px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .cta-info {
+    text-align: center;
+  }
+
+  .cta-title {
+    font-size: 32px;
+    font-weight: 800;
+    color: #2D2D2D;
+  }
+
+  .cta-sub {
+    font-size: 22px;
+    color: #888;
+    font-weight: 500;
+  }
+
+  .cta-sub .green { color: #3D8B7A; font-weight: 700; }
+
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #E8837C, #D4706A);
+    color: white;
+    font-size: 32px;
+    font-weight: 800;
+    padding: 22px 48px;
+    border-radius: 16px;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(232,131,124,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4s ease-in-out 11s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta-btn .arrow {
+    display: inline-block;
+    animation: nudge 3s ease-in-out 11s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+  }
+</style>
+</head>
+<body>
+  <div class="wa-header">
+    <div class="wa-avatar">C</div>
+    <div>
+      <div class="wa-name">Carolina 💕</div>
+      <div class="wa-status">en línea</div>
+    </div>
+  </div>
+
+  <div class="chat">
+    <div class="msg in">
+      Amiga, tengo que contarte algo 🙈
+      <div class="time">10:32</div>
+    </div>
+
+    <div class="msg out">
+      Quéee? Cuéntame!
+      <div class="time">10:33</div>
+    </div>
+
+    <div class="msg in">
+      ¿Te acuerdas que mi barriga seguía como de <span class="coral">embarazada</span>? Llevaba 2 años así...
+      <div class="time">10:33</div>
+    </div>
+
+    <div class="msg in">
+      Encontré un protocolo de <strong>8 minutos al día</strong>. Lo hice mientras los niños veían tele. En <strong>28 días</strong> mi abdomen cambió COMPLETAMENTE 😭
+      <div class="time">10:34</div>
+    </div>
+
+    <div class="msg out">
+      Noooo 😱 ¿En serio? Yo llevo con lo mismo desde que nació Lucas
+      <div class="time">10:35</div>
+    </div>
+
+    <div class="msg in">
+      Sí amiga!! Se llama <strong>Zero Diastasis</strong>. Y cuesta solo $19.90. Yo pagué $800 en fisio y no me sirvió de nada 🤦‍♀️
+      <div class="time">10:35</div>
+    </div>
+
+    <div class="msg out">
+      Ok ok necesito ese link YA 😂
+      <div class="time">10:36</div>
+    </div>
+
+    <div class="msg in">
+      Toma, tienen un test gratis para ver tu nivel 👇
+      <div class="time">10:36</div>
+    </div>
+  </div>
+
+  <div class="cta-bar">
+    <div class="cta-card">
+      <div class="cta-info">
+        <div class="cta-title">Zero Diastasis</div>
+        <div class="cta-sub"><span class="green">28 días</span> · 8 min/día · $19.90</div>
+      </div>
+      <a href="#" class="cta-btn">VER SI CALIFICO <span class="arrow">→</span></a>
+    </div>
+  </div>
+</body>
+</html>

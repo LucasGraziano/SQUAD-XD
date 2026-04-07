@@ -54,8 +54,8 @@ class BacktestEngine:
         ohlcv_data: lista de {date, open, high, low, close, volume}
         signals: lista opcional de {date, signal, confidence} do modelo ML
         """
-        if len(ohlcv_data) < 50:
-            return {"error": "Dados insuficientes (minimo 50 candles)"}
+        if len(ohlcv_data) < 20:
+            return {"error": "Dados insuficientes (minimo 20 candles)"}
 
         strategy_fn = {
             "ml_signal": self._strategy_ml_signal,
@@ -474,23 +474,37 @@ class BacktestEngine:
         return max_dd
 
     def _compute_rsi(self, closes: list, window: int = 14) -> list:
+        """RSI com Wilder's Smoothing (EMA) — padrao da industria."""
         rsi = [50.0] * window
-        gains, losses = [], []
-        for i in range(1, len(closes)):
-            diff = closes[i] - closes[i-1]
-            gains.append(max(diff, 0))
-            losses.append(max(-diff, 0))
+        if len(closes) < window + 1:
+            return rsi + [50.0] * (len(closes) - window)
 
-            if i >= window:
-                avg_gain = np.mean(gains[-window:])
-                avg_loss = np.mean(losses[-window:])
-                if avg_loss == 0:
-                    rsi.append(100.0)
-                else:
-                    rs = avg_gain / avg_loss
-                    rsi.append(100 - (100 / (1 + rs)))
+        # Calcular ganhos e perdas
+        deltas = [closes[i] - closes[i-1] for i in range(1, len(closes))]
+        gains = [max(d, 0) for d in deltas]
+        losses_list = [max(-d, 0) for d in deltas]
+
+        # Primeira media (SMA)
+        avg_gain = sum(gains[:window]) / window
+        avg_loss = sum(losses_list[:window]) / window
+
+        if avg_loss == 0:
+            rsi.append(100.0)
+        else:
+            rs = avg_gain / avg_loss
+            rsi.append(100 - (100 / (1 + rs)))
+
+        # Wilder's smoothing (EMA com alpha = 1/window)
+        for i in range(window, len(deltas)):
+            avg_gain = (avg_gain * (window - 1) + gains[i]) / window
+            avg_loss = (avg_loss * (window - 1) + losses_list[i]) / window
+
+            if avg_loss == 0:
+                rsi.append(100.0)
             else:
-                rsi.append(50.0)
+                rs = avg_gain / avg_loss
+                rsi.append(100 - (100 / (1 + rs)))
+
         return rsi
 
     def _compute_ema(self, closes: list, window: int) -> list:

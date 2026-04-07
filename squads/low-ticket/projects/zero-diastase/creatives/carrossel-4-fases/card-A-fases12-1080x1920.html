@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080">
+<title>Card A - Fases 1 & 2 - Story</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    font-family: 'Poppins', sans-serif;
+    background: #FFF8F5;
+    background-image:
+      radial-gradient(ellipse at 30% 20%, rgba(232,131,124,0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 70% 80%, rgba(212,165,116,0.06) 0%, transparent 60%),
+      radial-gradient(circle at 50% 50%, rgba(255,248,245,1) 0%, rgba(252,242,237,1) 100%);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px;
+  }
+
+  body::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 80px;
+  }
+
+  .eyebrow {
+    display: inline-block;
+    background: linear-gradient(135deg, #E8837C, #e0706a);
+    color: white;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    padding: 14px 44px;
+    border-radius: 50px;
+    text-transform: uppercase;
+  }
+
+  .phases-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .phase-section {
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    padding: 60px 30px;
+  }
+
+  .phase-circle {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .phase-circle.coral {
+    background: linear-gradient(135deg, #E8837C, #d4635c);
+    box-shadow: 0 12px 40px rgba(232,131,124,0.3);
+  }
+
+  .phase-circle.gold {
+    background: linear-gradient(135deg, #D4A574, #c08e5e);
+    box-shadow: 0 12px 40px rgba(212,165,116,0.3);
+  }
+
+  .phase-number {
+    font-size: 52px;
+    font-weight: 900;
+    color: white;
+    line-height: 1;
+  }
+
+  .phase-emoji {
+    font-size: 32px;
+    margin-top: 4px;
+  }
+
+  .phase-info {
+    flex: 1;
+  }
+
+  .phase-name {
+    font-size: 48px;
+    font-weight: 800;
+    color: #2D2D2D;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .phase-desc {
+    font-size: 30px;
+    font-weight: 400;
+    color: #5A5A5A;
+    line-height: 1.4;
+    margin-bottom: 12px;
+  }
+
+  .phase-days {
+    font-size: 24px;
+    font-weight: 600;
+    color: #999;
+    letter-spacing: 0.5px;
+  }
+
+  .phase-days.coral { color: #E8837C; }
+  .phase-days.gold { color: #D4A574; }
+
+  .divider {
+    width: 85%;
+    height: 2px;
+    margin: 0 auto;
+    background: linear-gradient(90deg, #E8837C, #D4A574);
+    opacity: 0.3;
+    border-radius: 2px;
+  }
+
+  .bottom-section {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 20px;
+  }
+
+  .progress-container {
+    width: 100%;
+  }
+
+  .progress-bar-bg {
+    width: 100%;
+    height: 14px;
+    background: #EDE8E5;
+    border-radius: 14px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, #E8837C, #D4A574, #ccc);
+    border-radius: 14px;
+  }
+
+  .progress-label {
+    font-size: 22px;
+    font-weight: 600;
+    color: #999;
+    text-align: center;
+    margin-top: 12px;
+  }
+
+  .swipe-hint {
+    font-size: 20px;
+    font-weight: 500;
+    color: #bbb;
+    text-align: right;
+    letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="eyebrow">Semana 1-2</div>
+
+    <div class="phases-container">
+      <div class="phase-section">
+        <div class="phase-circle coral">
+          <span class="phase-number">1</span>
+          <span class="phase-emoji">🔍</span>
+        </div>
+        <div class="phase-info">
+          <div class="phase-name">Revelación</div>
+          <div class="phase-desc">Identifica tu nivel real de separación</div>
+          <div class="phase-days coral">Día 1-7</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="phase-section">
+        <div class="phase-circle gold">
+          <span class="phase-number">2</span>
+          <span class="phase-emoji">🔗</span>
+        </div>
+        <div class="phase-info">
+          <div class="phase-name">Reconexión</div>
+          <div class="phase-desc">Activa los músculos profundos dormidos</div>
+          <div class="phase-days gold">Día 8-14</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bottom-section">
+      <div class="progress-container">
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill"></div>
+        </div>
+        <div class="progress-label">Fase 1-2 de 4</div>
+      </div>
+      <div class="swipe-hint">Desliza →</div>
+    </div>
+  </div>
+</body>
+</html>

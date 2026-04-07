@@ -13,7 +13,8 @@
         <div class="header-left">
             <h1>CryptoBot</h1>
             <span class="badge badge-testnet">TESTNET</span>
-            <span class="badge badge-version">v3.0</span>
+            <span class="badge badge-version">v4.0</span>
+            <span id="services-status" class="badge" style="margin-left:8px; background:#30363d; font-size:11px;">...</span>
         </div>
         <div class="header-right">
             <select id="pair-select" class="select-pair">
@@ -33,6 +34,7 @@
     <!-- Tab Navigation -->
     <nav class="tabs">
         <button class="tab active" data-tab="dashboard">Dashboard</button>
+        <button class="tab" data-tab="performance">Performance</button>
         <button class="tab" data-tab="backtest">Backtesting</button>
         <button class="tab" data-tab="risk">Gestao de Risco</button>
     </nav>
@@ -130,10 +132,23 @@
                             <button id="btn-sell" class="btn-trade btn-sell">VENDER</button>
                         </div>
                         <div class="trade-divider"></div>
-                        <button id="btn-auto" class="btn-trade btn-auto">AUTO TRADE (ML + Sentimento + Risco)</button>
+                        <button id="btn-auto" class="btn-trade btn-auto">AUTO TRADE (1x)</button>
+                        <div class="auto-mode-row">
+                            <button id="btn-auto-mode" class="btn-trade btn-auto-mode">MODO AUTOMATICO: OFF</button>
+                            <select id="auto-interval">
+                                <option value="60">1 min</option>
+                                <option value="300" selected>5 min</option>
+                                <option value="900">15 min</option>
+                                <option value="3600">1 hora</option>
+                            </select>
+                        </div>
                         <button id="btn-check-positions" class="btn-trade btn-check">VERIFICAR POSICOES (SL/TP)</button>
                     </div>
                     <div id="trade-result" class="trade-result hidden"></div>
+                    <div id="decision-log" class="decision-log">
+                        <div class="decision-log-header">Decisoes Recentes</div>
+                        <div id="decision-entries"></div>
+                    </div>
                 </div>
             </section>
 
@@ -161,6 +176,55 @@
                     </table>
                 </div>
             </section>
+        </div>
+    </main>
+
+    <!-- ===== TAB: Performance ===== -->
+    <main id="tab-performance" class="tab-content">
+        <section class="kpi-row">
+            <div class="kpi-card">
+                <span class="kpi-label">Win Rate</span>
+                <span id="perf-winrate" class="kpi-value">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Profit Factor</span>
+                <span id="perf-pf" class="kpi-value">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">P&L Total (fechado)</span>
+                <span id="perf-pnl" class="kpi-value">--</span>
+            </div>
+            <div class="kpi-card">
+                <span class="kpi-label">Risk/Reward Real</span>
+                <span id="perf-rr" class="kpi-value">--</span>
+            </div>
+        </section>
+
+        <div class="main-content">
+            <section class="panel" style="flex:1">
+                <div class="panel-header">
+                    <h3>Metricas Detalhadas</h3>
+                    <button id="btn-refresh-perf" class="btn-action btn-sm">Atualizar</button>
+                </div>
+                <div id="perf-details" class="bt-details">
+                    <p class="empty-state">Clique Atualizar para carregar metricas</p>
+                </div>
+            </section>
+
+            <aside class="sidebar">
+                <div class="panel">
+                    <div class="panel-header"><h3>Modelos ML</h3></div>
+                    <div id="ml-models-status" class="bt-details">
+                        <p class="empty-state">Carregando...</p>
+                    </div>
+                </div>
+                <div class="panel">
+                    <div class="panel-header"><h3>Servicos</h3></div>
+                    <div id="services-detail" class="bt-details">
+                        <p class="empty-state">Carregando...</p>
+                    </div>
+                </div>
+            </aside>
         </div>
     </main>
 

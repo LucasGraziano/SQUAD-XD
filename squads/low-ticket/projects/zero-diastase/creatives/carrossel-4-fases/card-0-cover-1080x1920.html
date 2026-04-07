@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Card 0 Cover — Story 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #FFF8F5;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 500px at 50% 20%, rgba(126,206,193,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 400px at 50% 80%, rgba(232,131,124,0.06) 0%, transparent 70%);
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: radial-gradient(#2D2D2D 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 60px 60px;
+    text-align: center;
+  }
+
+  /* === EYEBROW BADGE === */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(126,206,193,0.1);
+    border: 1.5px solid rgba(126,206,193,0.25);
+    border-radius: 50px;
+    padding: 14px 36px;
+    margin-bottom: 60px;
+  }
+
+  .eyebrow-dot {
+    width: 12px;
+    height: 12px;
+    background: #7ECEC1;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .eyebrow span {
+    font-size: 24px;
+    font-weight: 700;
+    color: #7ECEC1;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* === HEADLINE === */
+  .headline {
+    font-size: 82px;
+    font-weight: 800;
+    color: #2D2D2D;
+    line-height: 1.15;
+    margin-bottom: 40px;
+    max-width: 920px;
+  }
+
+  .headline .coral {
+    color: #E8837C;
+  }
+
+  /* === SUBHEADLINE === */
+  .subheadline {
+    font-size: 36px;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 80px;
+    letter-spacing: 0.3px;
+  }
+
+  /* === PHASE CIRCLES === */
+  .phases-row {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 80px;
+  }
+
+  .phase-circle {
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 700;
+    color: white;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  }
+
+  .phase-circle:nth-child(1) { background: #E8837C; }
+  .phase-circle:nth-child(2) { background: #E8B44C; }
+  .phase-circle:nth-child(3) { background: #5B9BD5; }
+  .phase-circle:nth-child(4) { background: #7ECEC1; }
+
+  .phase-connector {
+    width: 36px;
+    height: 3px;
+    background: rgba(45,45,45,0.1);
+    border-radius: 2px;
+  }
+
+  /* === BOTTOM CTA === */
+  .swipe-hint {
+    font-size: 24px;
+    font-weight: 500;
+    color: #AAAAAA;
+    letter-spacing: 0.5px;
+  }
+
+  .swipe-hint .arrow {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 26px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dots"></div>
+
+  <div class="container">
+    <div class="eyebrow">
+      <div class="eyebrow-dot"></div>
+      <span>Protocolo Cient&iacute;fico</span>
+    </div>
+
+    <h1 class="headline">
+      Las <span class="coral">4 fases</span> que<br>cierran tu di&aacute;stasis
+    </h1>
+
+    <p class="subheadline">Sin cirug&iacute;a. Sin fajas. Desde tu casa.</p>
+
+    <div class="phases-row">
+      <div class="phase-circle">1</div>
+      <div class="phase-connector"></div>
+      <div class="phase-circle">2</div>
+      <div class="phase-connector"></div>
+      <div class="phase-circle">3</div>
+      <div class="phase-connector"></div>
+      <div class="phase-circle">4</div>
+    </div>
+
+    <p class="swipe-hint">Desliza para ver <span class="arrow">&rarr;</span></p>
+  </div>
+</body>
+</html>

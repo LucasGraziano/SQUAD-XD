@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1080">
+<title>Ad — Sin Cirugía 1080x1080</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #FFFAF5;
+    position: relative;
+  }
+
+  /* === SPLIT LAYOUT — TOP HALF === */
+  .top-section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 52%;
+    overflow: hidden;
+  }
+
+  .hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+    opacity: 0;
+    animation: imgReveal 1.2s ease-out 0.2s forwards;
+  }
+
+  @keyframes imgReveal {
+    0% { opacity: 0; transform: scale(1.05); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .img-fade {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(0deg, #FFFAF5 10%, transparent 100%);
+    z-index: 2;
+  }
+
+  /* === CROSSED-OUT BADGE === */
+  .fear-badge {
+    position: absolute;
+    top: 36px;
+    right: 36px;
+    z-index: 5;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(10px);
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 800;
+    padding: 12px 24px;
+    border-radius: 14px;
+    opacity: 0;
+    animation: badgeIn 0.7s ease-out 1.5s forwards;
+    position: relative;
+  }
+
+  .fear-badge::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 8px;
+    right: 8px;
+    height: 3px;
+    background: #E8837C;
+    transform: translateY(-50%) rotate(-8deg);
+    border-radius: 2px;
+    opacity: 0;
+    animation: strikeIn 0.4s ease-out 3.0s forwards;
+  }
+
+  @keyframes badgeIn {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  @keyframes strikeIn {
+    0% { opacity: 0; width: 0; }
+    100% { opacity: 1; width: auto; }
+  }
+
+  /* === COMPARISON ITEMS === */
+  .comparison {
+    position: absolute;
+    top: 36px;
+    left: 36px;
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeIn 0.7s ease-out 2.0s forwards;
+  }
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .comp-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(10px);
+    padding: 8px 18px;
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  .comp-x {
+    font-size: 18px;
+    font-weight: 900;
+    color: #E8837C;
+  }
+
+  .comp-check {
+    font-size: 18px;
+    font-weight: 900;
+    color: #3D8B7A;
+  }
+
+  .comp-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2D2D2D;
+  }
+
+  .comp-text.muted {
+    color: #AAA;
+    text-decoration: line-through;
+  }
+
+  /* === BOTTOM CONTENT === */
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    padding: 0 48px 40px;
+  }
+
+  .headline {
+    font-size: 52px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.08;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: slideUp 0.9s ease-out 2.5s forwards;
+  }
+
+  .headline .coral { color: #E8837C; }
+
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(25px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .subheadline {
+    font-size: 26px;
+    font-weight: 500;
+    color: #777;
+    line-height: 1.35;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 4.0s forwards;
+  }
+
+  .subheadline strong { color: #3D8B7A; font-weight: 700; }
+
+  /* === PILLS === */
+  .pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 5.5s forwards;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #EEFAF6, #E2F5EF);
+    border: 1.5px solid rgba(126,206,193,0.3);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #3D8B7A;
+  }
+
+  /* === CTA ROW === */
+  .action-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 7.0s forwards;
+  }
+
+  .price-block { text-align: center; padding: 8px 20px; }
+
+  .price-old {
+    font-size: 18px;
+    font-weight: 700;
+    color: #CCC;
+    text-decoration: line-through;
+  }
+
+  .price-new {
+    font-size: 48px;
+    font-weight: 900;
+    color: #2D2D2D;
+  }
+
+  .price-new .dollar { font-size: 24px; color: #D4A574; vertical-align: super; }
+  .price-new .cents { font-size: 24px; color: #888; }
+
+  .cta {
+    flex: 1;
+    display: block;
+    text-align: center;
+    padding: 22px;
+    border-radius: 16px;
+    font-size: 32px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow: 0 8px 30px rgba(232,131,124,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4s ease-in-out 9s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arrow {
+    margin-left: 8px;
+    display: inline-block;
+    animation: nudge 3s ease-in-out 9s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+  }
+</style>
+</head>
+<body>
+  <div class="top-section">
+    <img class="hero-img" src="img-sin-cirugia.png" alt="Mujer pensativa sobre cirugía">
+    <div class="img-fade"></div>
+  </div>
+
+  <div class="comparison">
+    <div class="comp-item"><span class="comp-x">&times;</span><span class="comp-text muted">Cirugía $5,000+</span></div>
+    <div class="comp-item"><span class="comp-x">&times;</span><span class="comp-text muted">Fajas incómodas</span></div>
+    <div class="comp-item"><span class="comp-check">&check;</span><span class="comp-text">Protocolo natural</span></div>
+  </div>
+
+  <div class="fear-badge">CIRUGÍA</div>
+
+  <div class="content">
+    <div class="headline"><span class="coral">¿Pensaste en cirugía?</span><br>Hay algo antes.</div>
+    <div class="subheadline">Un protocolo de <strong>8 min/día</strong> que reconecta tu músculo natural.<br>Sin bisturí. Sin faja. Sin dolor.</div>
+
+    <div class="pills">
+      <div class="pill">0% invasivo</div>
+      <div class="pill">28 días</div>
+      <div class="pill">Desde casa</div>
+    </div>
+
+    <div class="action-row">
+      <div class="price-block">
+        <div class="price-old">$99.90</div>
+        <div class="price-new"><span class="dollar">$</span>19<span class="cents">.90</span></div>
+      </div>
+      <a href="#" class="cta">HAZ EL TEST GRATIS <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</body>
+</html>

@@ -8,12 +8,25 @@ import logging
 logger = logging.getLogger(__name__)
 
 def get_binance_client():
+    """Client para trading/precos (Testnet se configurado)."""
     api_key = os.getenv("BINANCE_API_KEY", "")
     secret_key = os.getenv("BINANCE_SECRET_KEY", "")
     testnet = os.getenv("BINANCE_TESTNET", "true").lower() == "true"
 
     client = Client(api_key, secret_key, testnet=testnet)
+    # Sincronizar relogio com servidor Binance (evita erro -1021)
+    import time
+    try:
+        server_time = client.get_server_time()['serverTime']
+        client.timestamp_offset = server_time - int(time.time() * 1000)
+    except Exception:
+        pass
     return client
+
+
+def get_binance_data_client():
+    """Client para dados historicos — SEMPRE usa Binance real (API publica)."""
+    return Client("", "", testnet=False)
 
 def add_crypto_pair(db: Session, symbol: str):
     """Adiciona um par e busca todo o histórico da Binance."""
@@ -23,11 +36,11 @@ def add_crypto_pair(db: Session, symbol: str):
     if existing:
         raise ValueError(f"Par {symbol} já existe")
 
-    client = get_binance_client()
+    data_client = get_binance_data_client()
 
-    # Validar que o par existe na Binance
+    # Validar que o par existe na Binance (API publica)
     try:
-        info = client.get_symbol_info(symbol)
+        info = data_client.get_symbol_info(symbol)
         if not info:
             raise ValueError(f"Par {symbol} não encontrado na Binance")
     except Exception as e:
@@ -38,15 +51,15 @@ def add_crypto_pair(db: Session, symbol: str):
 
     pair = crud.create_pair(db, symbol, base_asset, quote_asset)
 
-    # Buscar histórico (últimos 2 anos de klines diárias)
+    # Buscar histórico (últimos 2 anos de klines diárias) da Binance REAL
     count = fetch_historical_klines(db, pair, symbol, "2 years ago UTC")
 
     logger.info(f"Par {symbol} adicionado com {count} registros")
     return pair, count
 
 def fetch_historical_klines(db: Session, pair, symbol: str, start_str: str):
-    """Busca klines históricas da Binance e salva no DB."""
-    client = get_binance_client()
+    """Busca klines históricas da Binance REAL (dados publicos)."""
+    client = get_binance_data_client()
 
     klines = client.get_historical_klines(
         symbol, Client.KLINE_INTERVAL_1DAY, start_str
@@ -69,9 +82,9 @@ def fetch_historical_klines(db: Session, pair, symbol: str, start_str: str):
     return count
 
 def update_all_pairs(db: Session):
-    """Atualiza dados diários de todos os pares ativos."""
+    """Atualiza dados diários de todos os pares ativos (Binance real)."""
     pairs = crud.get_all_pairs(db)
-    client = get_binance_client()
+    client = get_binance_data_client()
     total = 0
 
     for pair in pairs:

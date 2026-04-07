@@ -31,6 +31,7 @@ function initTabs() {
             document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
 
             if (tab.dataset.tab === 'risk') loadRiskStatus();
+            if (tab.dataset.tab === 'performance') { loadPerformance(); loadMLStatus(); loadServicesHealth(); }
         });
     });
 }
@@ -58,7 +59,9 @@ function initEventListeners() {
     document.getElementById('btn-buy').addEventListener('click', () => executeTrade('BUY'));
     document.getElementById('btn-sell').addEventListener('click', () => executeTrade('SELL'));
     document.getElementById('btn-auto').addEventListener('click', executeAutoTrade);
+    document.getElementById('btn-auto-mode').addEventListener('click', toggleAutoMode);
     document.getElementById('btn-check-positions').addEventListener('click', checkPositions);
+    loadAutoModeStatus();
 
     // Backtest
     document.getElementById('btn-run-backtest').addEventListener('click', runBacktest);
@@ -66,6 +69,11 @@ function initEventListeners() {
     // Risk
     document.getElementById('btn-save-risk').addEventListener('click', saveRiskConfig);
     document.getElementById('btn-refresh-risk').addEventListener('click', loadRiskStatus);
+
+    // Performance
+    document.getElementById('btn-refresh-perf').addEventListener('click', () => {
+        loadPerformance(); loadMLStatus(); loadServicesHealth();
+    });
 }
 
 function startAutoRefresh() {
@@ -84,6 +92,7 @@ function loadAll() {
     loadMLPrediction();
     loadSentiment();
     loadHistory();
+    loadServicesHealth();
 }
 
 // === API Helper ===
@@ -231,24 +240,29 @@ async function loadSentiment() {
 
     try {
         const data = await api(`/sentiment/analyze/?symbol=${currentSymbol}`);
-        const score = data.overall_score || data.score || 0;
-        const sentiment = data.overall_sentiment || data.sentiment || 'NEUTRAL';
+        const score = data.average_score || 0;
+        const sentiment = data.overall_sentiment || 'NEUTRAL';
+        const dist = data.distribution || {};
 
-        const emojiMap = { 'BULLISH': '🟢', 'VERY_BULLISH': '🟢', 'BEARISH': '🔴', 'VERY_BEARISH': '🔴', 'NEUTRAL': '🟡' };
+        const emojiMap = { 'BULLISH': '🟢', 'BEARISH': '🔴', 'NEUTRAL': '🟡' };
         document.getElementById('sentiment-emoji').textContent = emojiMap[sentiment] || '🟡';
-        document.getElementById('sentiment-label').textContent = sentiment;
+        document.getElementById('sentiment-label').textContent = `${sentiment} (${data.articles_count || 0} artigos)`;
 
         const scoreEl = document.getElementById('sentiment-score');
-        scoreEl.textContent = score.toFixed(3);
+        scoreEl.textContent = score.toFixed(4);
         scoreEl.style.color = score > 0.05 ? '#3fb950' : score < -0.05 ? '#f85149' : '#8b949e';
 
         const articlesEl = document.getElementById('sentiment-articles');
         const articles = data.articles || [];
         articlesEl.innerHTML = articles.length === 0
             ? '<div class="article-item neutral">Nenhum artigo encontrado</div>'
-            : articles.slice(0, 5).map(a => {
-                const cls = a.sentiment === 'Positive' ? 'positive' : a.sentiment === 'Negative' ? 'negative' : 'neutral';
-                return `<div class="article-item ${cls}">${a.title || a.headline || 'Artigo'}</div>`;
+            : `<div class="article-item neutral" style="font-size:0.8rem;margin-bottom:6px">📊 ${dist.bullish||0} bullish · ${dist.bearish||0} bearish · ${dist.neutral||0} neutros</div>` +
+              articles.slice(0, 8).map(a => {
+                const s = a.sentiment || {};
+                const label = s.label || 'NEUTRAL';
+                const cls = label === 'BULLISH' ? 'positive' : label === 'BEARISH' ? 'negative' : 'neutral';
+                const icon = label === 'BULLISH' ? '🟢' : label === 'BEARISH' ? '🔴' : '⚪';
+                return `<div class="article-item ${cls}">${icon} ${a.title} <small style="color:#8b949e">[${a.source}] ${s.compound >= 0 ? '+' : ''}${s.compound.toFixed(2)}</small></div>`;
             }).join('');
 
     } catch (err) {
@@ -298,6 +312,27 @@ async function executeTrade(side) {
     }
 }
 
+function logDecision(data) {
+    const entries = document.getElementById('decision-entries');
+    const time = new Date().toLocaleTimeString('pt-BR');
+    const decision = data.decision || 'HOLD';
+    const cls = decision === 'BUY' ? 'buy' : decision === 'SELL' ? 'sell' : decision === 'BLOCKED' ? 'blocked' : 'hold';
+    const icon = decision === 'BUY' ? '🟢' : decision === 'SELL' ? '🔴' : decision === 'BLOCKED' ? '🟡' : '⚪';
+
+    const confidence = data.ml_confidence ? ` (${Number(data.ml_confidence).toFixed(1)}%)` : '';
+    const traded = data.trade_executed ? ' ✅ EXECUTADO' : '';
+    const reason = data.reasoning ? data.reasoning[0] : '';
+
+    const entry = document.createElement('div');
+    entry.className = `decision-entry ${cls}`;
+    entry.innerHTML = `<span class="time">${time}</span> ${icon} <strong>${decision}</strong> — ML: ${data.ml_signal || '?'}${confidence} | Sent: ${data.sentiment || '?'} (${Number(data.sentiment_score || 0).toFixed(2)})${traded} <br><small>${reason}</small>`;
+
+    entries.insertBefore(entry, entries.firstChild);
+
+    // Manter max 20 entradas
+    while (entries.children.length > 20) entries.removeChild(entries.lastChild);
+}
+
 async function executeAutoTrade() {
     const btn = document.getElementById('btn-auto');
     btn.innerHTML = '<span class="loading"></span> Analisando...';
@@ -305,6 +340,8 @@ async function executeAutoTrade() {
 
     try {
         const data = await api(`/trading/auto/?symbol=${currentSymbol}`, { method: 'POST' });
+
+        logDecision(data);
 
         let html = `<strong>Decisao: ${data.decision}</strong><br>`;
         html += `ML: ${data.ml_signal} (${data.ml_confidence}%) | Sentimento: ${data.sentiment} (${data.sentiment_score})<br>`;
@@ -329,8 +366,66 @@ async function executeAutoTrade() {
     } catch (err) {
         showToast('Erro: ' + err.message, 'error');
     } finally {
-        btn.textContent = 'AUTO TRADE (ML + Sentimento + Risco)';
+        btn.textContent = 'AUTO TRADE (1x)';
         disableTradeButtons(false);
+    }
+}
+
+let _autoModeEnabled = false;
+let _decisionPollTimer = null;
+let _lastDecisionCount = 0;
+
+async function loadAutoModeStatus() {
+    try {
+        const data = await api('/trading/auto-mode/');
+        _autoModeEnabled = data.enabled;
+        updateAutoModeButton();
+
+        // Carregar decisoes recentes do backend
+        const decisions = data.recent_decisions || [];
+        if (decisions.length > _lastDecisionCount) {
+            decisions.slice(0, decisions.length - _lastDecisionCount).reverse().forEach(d => logDecision(d));
+            _lastDecisionCount = decisions.length;
+        }
+
+        // Iniciar/parar polling
+        if (_autoModeEnabled && !_decisionPollTimer) {
+            _decisionPollTimer = setInterval(loadAutoModeStatus, 30000);
+        } else if (!_autoModeEnabled && _decisionPollTimer) {
+            clearInterval(_decisionPollTimer);
+            _decisionPollTimer = null;
+        }
+    } catch (e) { /* ignore */ }
+}
+
+function updateAutoModeButton() {
+    const btn = document.getElementById('btn-auto-mode');
+    if (_autoModeEnabled) {
+        btn.textContent = 'MODO AUTOMATICO: ON';
+        btn.style.background = 'linear-gradient(135deg, #238636, #2ea043)';
+        btn.style.animation = 'pulse 2s infinite';
+    } else {
+        btn.textContent = 'MODO AUTOMATICO: OFF';
+        btn.style.background = '';
+        btn.style.animation = '';
+    }
+}
+
+async function toggleAutoMode() {
+    const btn = document.getElementById('btn-auto-mode');
+    const interval = document.getElementById('auto-interval').value;
+    const newState = !_autoModeEnabled;
+
+    btn.innerHTML = '<span class="loading"></span> ' + (newState ? 'Ativando...' : 'Desativando...');
+
+    try {
+        const data = await api(`/trading/auto-mode/?enabled=${newState}&interval=${interval}&symbols=${currentSymbol}`, { method: 'POST' });
+        _autoModeEnabled = data.auto_trading;
+        updateAutoModeButton();
+        showToast(data.message, newState ? 'success' : 'info');
+    } catch (err) {
+        showToast('Erro: ' + err.message, 'error');
+        updateAutoModeButton();
     }
 }
 
@@ -631,4 +726,123 @@ function showToast(message, type = 'info') {
     toast.textContent = message;
     container.appendChild(toast);
     setTimeout(() => toast.remove(), 4000);
+}
+
+// === Performance ===
+
+async function loadPerformance() {
+    try {
+        const data = await api('/trading/performance/');
+
+        if (data.message) {
+            document.getElementById('perf-details').innerHTML = `<p class="empty-state">${data.message}</p>`;
+            return;
+        }
+
+        const wr = data.win_rate || 0;
+        const wrEl = document.getElementById('perf-winrate');
+        wrEl.textContent = wr + '%';
+        wrEl.className = 'kpi-value ' + (wr > 50 ? 'positive' : wr > 0 ? 'negative' : 'neutral');
+
+        const pf = data.profit_factor || 0;
+        const pfEl = document.getElementById('perf-pf');
+        pfEl.textContent = pf === Infinity ? 'INF' : pf;
+        pfEl.className = 'kpi-value ' + (pf > 1.5 ? 'positive' : pf > 1 ? 'neutral' : 'negative');
+
+        const pnl = data.total_pnl_closed || 0;
+        const pnlEl = document.getElementById('perf-pnl');
+        pnlEl.textContent = (pnl >= 0 ? '+' : '') + '$' + pnl.toFixed(2);
+        pnlEl.className = 'kpi-value ' + (pnl > 0 ? 'positive' : pnl < 0 ? 'negative' : 'neutral');
+
+        const rr = data.risk_reward_real || 0;
+        document.getElementById('perf-rr').textContent = rr > 0 ? '1:' + rr.toFixed(1) : '--';
+
+        const metrics = [
+            ['Total Trades', data.total_trades || 0],
+            ['Posicoes Fechadas', data.closed_positions || 0],
+            ['Vitorias', data.wins || 0],
+            ['Derrotas', data.losses || 0],
+            ['Media Ganho', '$' + (data.avg_win || 0).toFixed(2)],
+            ['Media Perda', '$' + (data.avg_loss || 0).toFixed(2)],
+            ['P&L Diario', '$' + (data.daily_pnl || 0).toFixed(2)],
+            ['Trades Hoje', data.daily_trades || 0],
+        ];
+        document.getElementById('perf-details').innerHTML = metrics.map(([label, value]) =>
+            `<div class="bt-detail-item"><span class="bt-detail-label">${label}</span><span class="bt-detail-value">${value}</span></div>`
+        ).join('');
+
+    } catch (err) {
+        document.getElementById('perf-details').innerHTML = '<p class="empty-state">Erro ao carregar performance</p>';
+    }
+}
+
+async function loadMLStatus() {
+    try {
+        const data = await api('/ml/status/');
+        const el = document.getElementById('ml-models-status');
+
+        if (!data.models || data.total_cached === 0) {
+            el.innerHTML = '<p class="empty-state">Nenhum modelo treinado ainda</p>';
+            return;
+        }
+
+        let html = '';
+        for (const [symbol, info] of Object.entries(data.models)) {
+            const m = info.metrics || {};
+            html += `
+                <div class="bt-detail-item"><span class="bt-detail-label">${symbol}</span><span class="bt-detail-value" style="color:#3fb950">Ativo</span></div>
+                <div class="bt-detail-item"><span class="bt-detail-label">  Treinado em</span><span class="bt-detail-value">${(info.trained_at || '--').slice(0,19)}</span></div>
+                <div class="bt-detail-item"><span class="bt-detail-label">  Test RMSE</span><span class="bt-detail-value">${m.test_rmse || '--'}</span></div>
+                <div class="bt-detail-item"><span class="bt-detail-label">  Overfit</span><span class="bt-detail-value" style="color:${(m.overfit_ratio || 0) > 3 ? '#f85149' : '#8b949e'}">${m.overfit_ratio || '--'}x</span></div>
+            `;
+        }
+
+        if (data.next_retrain) {
+            html += `<div class="bt-detail-item"><span class="bt-detail-label">Proximo retrain</span><span class="bt-detail-value">${data.next_retrain.slice(0,19)}</span></div>`;
+        }
+
+        el.innerHTML = html;
+    } catch {
+        document.getElementById('ml-models-status').innerHTML = '<p class="empty-state">ML indisponivel</p>';
+    }
+}
+
+async function loadServicesHealth() {
+    try {
+        // Health endpoint fica fora do /api/ prefix
+        const res = await fetch(`${API_BASE.replace('/api', '')}/health`);
+        const data = await res.json();
+        const el = document.getElementById('services-detail');
+        const badge = document.getElementById('services-status');
+
+        if (!data.services) {
+            el.innerHTML = '<p class="empty-state">Sem dados</p>';
+            return;
+        }
+
+        let allOk = true;
+        let html = '';
+        for (const [name, info] of Object.entries(data.services)) {
+            const ok = info.status === 'ok';
+            if (!ok) allOk = false;
+            const color = ok ? '#3fb950' : '#f85149';
+            const icon = ok ? 'OK' : 'DOWN';
+            html += `<div class="bt-detail-item"><span class="bt-detail-label">${name}</span><span class="bt-detail-value" style="color:${color}">${icon}</span></div>`;
+        }
+
+        el.innerHTML = html;
+
+        // Atualizar badge no header
+        if (badge) {
+            badge.textContent = allOk ? 'Services OK' : 'Service DOWN';
+            badge.style.background = allOk ? '#238636' : '#da3633';
+        }
+
+    } catch {
+        const badge = document.getElementById('services-status');
+        if (badge) {
+            badge.textContent = 'Offline';
+            badge.style.background = '#da3633';
+        }
+    }
 }

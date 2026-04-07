@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Card 3 Compresi&oacute;n — Story 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #FFF8F5;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 500px at 50% 20%, rgba(107,163,214,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 400px at 50% 80%, rgba(107,163,214,0.05) 0%, transparent 70%);
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: radial-gradient(#2D2D2D 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 60px 60px;
+  }
+
+  /* === TOP ROW === */
+  .top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 60px;
+  }
+
+  .phase-number {
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6BA3D6, #5B9BD5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 44px;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 8px 28px rgba(107,163,214,0.35);
+  }
+
+  .day-pill {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(107,163,214,0.1);
+    border: 1.5px solid rgba(107,163,214,0.25);
+    border-radius: 50px;
+    padding: 14px 34px;
+    font-size: 24px;
+    font-weight: 600;
+    color: #6BA3D6;
+    letter-spacing: 0.5px;
+  }
+
+  /* === CENTER CONTENT === */
+  .center-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .emoji-icon {
+    font-size: 110px;
+    margin-bottom: 36px;
+    line-height: 1;
+  }
+
+  .phase-name {
+    font-size: 72px;
+    font-weight: 800;
+    color: #2D2D2D;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+
+  .phase-description {
+    font-size: 32px;
+    font-weight: 500;
+    color: #777;
+    margin-bottom: 60px;
+    max-width: 800px;
+    line-height: 1.4;
+  }
+
+  /* === BULLET BOX === */
+  .bullet-box {
+    width: 100%;
+    max-width: 900px;
+    background: rgba(107,163,214,0.04);
+    border: 2px solid rgba(107,163,214,0.18);
+    border-radius: 28px;
+    padding: 40px 50px;
+    margin: 0 auto;
+  }
+
+  .bullet-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 18px 0;
+    font-size: 30px;
+    font-weight: 500;
+    color: #444;
+    letter-spacing: 0.2px;
+  }
+
+  .bullet-item:not(:last-child) {
+    border-bottom: 1px solid rgba(107,163,214,0.1);
+  }
+
+  .bullet-emoji {
+    font-size: 34px;
+    flex-shrink: 0;
+  }
+
+  /* === PROGRESS DOTS === */
+  .progress-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 60px;
+    padding-bottom: 20px;
+  }
+
+  .progress-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #E8837C;
+    box-shadow: 0 2px 8px rgba(232,131,124,0.3);
+  }
+
+  .progress-dot.empty {
+    background: rgba(45,45,45,0.12);
+    box-shadow: none;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dots"></div>
+
+  <div class="container">
+    <div class="top-row">
+      <div class="phase-number">3</div>
+      <div class="day-pill">D&iacute;a 15-21</div>
+    </div>
+
+    <div class="center-content">
+      <div class="emoji-icon">&#x1F512;</div>
+      <h1 class="phase-name">Compresi&oacute;n</h1>
+      <p class="phase-description">Cierra la separaci&oacute;n abdominal progresivamente</p>
+
+      <div class="bullet-box">
+        <div class="bullet-item">
+          <span class="bullet-emoji">&#x1F4D0;</span>
+          <span>Ejercicios de cierre progresivo</span>
+        </div>
+        <div class="bullet-item">
+          <span class="bullet-emoji">&#x1F504;</span>
+          <span>Rutinas de 8 minutos</span>
+        </div>
+        <div class="bullet-item">
+          <span class="bullet-emoji">&#x1F4C9;</span>
+          <span>Medici&oacute;n semanal de avance</span>
+        </div>
+      </div>
+
+      <div class="progress-row">
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot"></div>
+        <div class="progress-dot empty"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

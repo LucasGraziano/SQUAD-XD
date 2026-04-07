@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Ad — Tu Momento 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #F5EDE6;
+    position: relative;
+  }
+
+  /* === FULL IMAGE === */
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.88) saturate(0.9);
+    opacity: 0;
+    animation: imgReveal 1.5s ease-out 0.2s forwards;
+  }
+
+  @keyframes imgReveal { 0% { opacity: 0; } 100% { opacity: 1; } }
+
+  .warm-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(245,237,230,0.05) 0%, rgba(245,237,230,0.4) 45%, rgba(245,237,230,0.95) 65%);
+    z-index: 2;
+  }
+
+  /* === TIME BADGE === */
+  .time-badge {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 5;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    border-radius: 60px;
+    padding: 16px 32px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.08);
+    opacity: 0;
+    animation: dropIn 0.7s cubic-bezier(0.34,1.4,0.64,1) 1.5s forwards;
+  }
+
+  @keyframes dropIn {
+    0% { opacity: 0; transform: translateX(-50%) translateY(-20px) scale(0.9); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+  }
+
+  .time-icon { font-size: 36px; }
+  .time-text { font-size: 30px; font-weight: 800; color: #E8837C; }
+  .time-sep { width: 2px; height: 28px; background: rgba(0,0,0,0.1); border-radius: 1px; }
+  .time-detail { font-size: 24px; font-weight: 600; color: #777; }
+
+  /* === CONTENT === */
+  .content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+    padding: 0 56px 100px;
+  }
+
+  .eyebrow {
+    font-size: 20px;
+    font-weight: 800;
+    color: #D4A574;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0;
+    animation: slideUp 0.7s ease-out 3.0s forwards;
+  }
+
+  .headline {
+    font-size: 64px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.06;
+    margin-bottom: 16px;
+    opacity: 0;
+    animation: slideUp 0.9s ease-out 3.5s forwards;
+  }
+
+  .headline .coral { color: #E8837C; }
+
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(25px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .subheadline {
+    font-size: 30px;
+    font-weight: 500;
+    color: #777;
+    line-height: 1.35;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 5.0s forwards;
+  }
+
+  .subheadline strong { color: #2D2D2D; font-weight: 800; }
+
+  .features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 6.5s forwards;
+  }
+
+  .feat {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .feat-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #EEFAF6, #E2F5EF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+
+  .feat-text { font-size: 22px; font-weight: 700; color: #3D8B7A; }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    opacity: 0;
+    animation: slideUp 0.8s ease-out 8.0s forwards;
+  }
+
+  .price-block { text-align: center; padding: 4px 20px; }
+  .price-old { font-size: 18px; font-weight: 700; color: #CCC; text-decoration: line-through; }
+  .price-new { font-size: 52px; font-weight: 900; color: #2D2D2D; }
+  .price-new .dollar { font-size: 26px; color: #D4A574; vertical-align: super; }
+  .price-new .cents { font-size: 26px; color: #888; }
+
+  .cta {
+    flex: 1;
+    display: block;
+    text-align: center;
+    padding: 26px;
+    border-radius: 18px;
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow: 0 8px 30px rgba(232,131,124,0.35);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4s ease-in-out 10s infinite;
+  }
+
+  @keyframes shine { 0% { left: -100%; } 40%, 100% { left: 150%; } }
+
+  .cta .arrow {
+    margin-left: 8px;
+    display: inline-block;
+    animation: nudge 3s ease-in-out 10s infinite;
+  }
+
+  @keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(6px); } }
+</style>
+</head>
+<body>
+  <img class="hero-img" src="img-tu-momento.png" alt="Mujer relajada haciendo ejercicio en casa">
+  <div class="warm-overlay"></div>
+
+  <div class="time-badge">
+    <span class="time-icon">&#9201;</span>
+    <span class="time-text">8 min/día</span>
+    <span class="time-sep"></span>
+    <span class="time-detail">Acostada en tu cama</span>
+  </div>
+
+  <div class="content">
+    <div class="eyebrow">Tu momento</div>
+    <div class="headline">8 minutos.<br><span class="coral">Cero excusas.</span></div>
+    <div class="subheadline">Mientras tus hijos duermen, <strong>tu cuerpo se reprograma.</strong> Sin salir de casa. Sin equipo. Sin sudar.</div>
+
+    <div class="features">
+      <div class="feat">
+        <div class="feat-icon">&#127968;</div>
+        <span class="feat-text">Desde casa</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">&#128244;</div>
+        <span class="feat-text">Sin equipo</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">&#128274;</div>
+        <span class="feat-text">Garantía 28d</span>
+      </div>
+      <div class="feat">
+        <div class="feat-icon">&#128241;</div>
+        <span class="feat-text">Desde tu cel</span>
+      </div>
+    </div>
+
+    <div class="cta-row">
+      <div class="price-block">
+        <div class="price-old">$99.90</div>
+        <div class="price-new"><span class="dollar">$</span>19<span class="cents">.90</span></div>
+      </div>
+      <a href="#" class="cta">HAZ EL TEST GRATIS <span class="arrow">&rarr;</span></a>
+    </div>
+  </div>
+</body>
+</html>

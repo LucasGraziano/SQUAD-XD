@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Ad — Texto Abdominales 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #0A0A0A;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+    position: relative;
+  }
+
+  .badge {
+    position: absolute;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(217,79,79,0.15);
+    border: 1.5px solid rgba(217,79,79,0.35);
+    border-radius: 50px;
+    padding: 12px 28px;
+    opacity: 0;
+    animation: fadeIn 0.5s ease-out 0.2s forwards;
+  }
+
+  .badge-icon { font-size: 20px; }
+
+  .badge span {
+    font-size: 20px;
+    font-weight: 700;
+    color: #D94F4F;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .main-text {
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out 0.1s forwards;
+  }
+
+  .line {
+    font-size: 84px;
+    font-weight: 800;
+    color: #FFFFFF;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .line.red { color: #D94F4F; }
+
+  .line.dim {
+    font-size: 52px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.45);
+    margin-top: 28px;
+  }
+
+  .strikethrough {
+    text-decoration: line-through;
+    text-decoration-color: #D94F4F;
+    text-decoration-thickness: 5px;
+  }
+
+  .solution {
+    position: absolute;
+    bottom: 220px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 32px;
+    background: rgba(126,206,193,0.08);
+    border: 1.5px solid rgba(126,206,193,0.25);
+    border-radius: 18px;
+    opacity: 0;
+    animation: fadeSlideUp 0.6s ease-out 0.6s forwards;
+  }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .solution-check {
+    font-size: 26px;
+    color: #7ECEC1;
+  }
+
+  .solution-text {
+    font-size: 32px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.8);
+  }
+
+  .solution-text strong { color: #7ECEC1; }
+
+  .bottom {
+    position: absolute;
+    bottom: 80px;
+    left: 80px;
+    right: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeSlideUp 0.6s ease-out 0.9s forwards;
+  }
+
+  .brand {
+    font-size: 28px;
+    font-weight: 800;
+    color: #7ECEC1;
+  }
+
+  .cta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #E8837C, #D4706A);
+    color: white;
+    font-size: 34px;
+    font-weight: 800;
+    padding: 24px 48px;
+    border-radius: 50px;
+    box-shadow: 0 6px 24px rgba(232,131,124,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-pill::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4s ease-in-out 3s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta-pill .arrow {
+    display: inline-block;
+    animation: nudge 3s ease-in-out 3s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+  }
+</style>
+</head>
+<body>
+  <div class="badge">
+    <span class="badge-icon">⚠️</span>
+    <span>Cuidado</span>
+  </div>
+
+  <div class="main-text">
+    <div class="line">Los <span class="strikethrough">abdominales</span></div>
+    <div class="line red">EMPEORAN</div>
+    <div class="line">tu diástasis.</div>
+    <div class="line dim">Y nadie te lo dice.</div>
+  </div>
+
+  <div class="solution">
+    <span class="solution-check">✓</span>
+    <span class="solution-text">Existe un protocolo de <strong>8 min/día</strong> que SÍ funciona</span>
+  </div>
+
+  <div class="bottom">
+    <div class="brand">Zero Diastasis · $19.90</div>
+    <div class="cta-pill">EMPIEZA HOY <span class="arrow">→</span></div>
+  </div>
+</body>
+</html>

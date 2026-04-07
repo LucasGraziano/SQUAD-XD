@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1080">
+<title>Los Números — Square 1080x1080</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #FFF8F5;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 800px 400px at 30% 0%, rgba(232,131,124,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 400px at 70% 100%, rgba(126,206,193,0.08) 0%, transparent 70%);
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: radial-gradient(#2D2D2D 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 44px 44px 36px;
+  }
+
+  /* === HEADER === */
+  .header {
+    text-align: center;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: fadeSlideDown 1.0s ease-out 0.3s forwards;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,131,124,0.1);
+    border: 1.5px solid rgba(232,131,124,0.25);
+    border-radius: 50px;
+    padding: 7px 22px;
+    margin-bottom: 14px;
+  }
+
+  .eyebrow-dot {
+    width: 9px;
+    height: 9px;
+    background: #E8837C;
+    border-radius: 50%;
+    animation: blink 2s ease-in-out infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .eyebrow span {
+    font-size: 18px;
+    font-weight: 700;
+    color: #E8837C;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.08;
+  }
+
+  .header h1 .coral { color: #E8837C; }
+  .header h1 .mint { color: #3D8B7A; }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-25px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === STAT GRID === */
+  .stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+    max-width: 920px;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+
+  .stat {
+    border-radius: 22px;
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat:nth-child(1) {
+    background: linear-gradient(135deg, #FFF0ED, #FFE4DF);
+    border: 1.5px solid rgba(232,131,124,0.2);
+    animation: statIn 0.8s cubic-bezier(0.34,1.4,0.64,1) 1.5s forwards;
+  }
+
+  .stat:nth-child(2) {
+    background: linear-gradient(135deg, #EEFAF6, #E2F5EF);
+    border: 1.5px solid rgba(126,206,193,0.25);
+    animation: statIn 0.8s cubic-bezier(0.34,1.4,0.64,1) 2.2s forwards;
+  }
+
+  .stat:nth-child(3) {
+    background: linear-gradient(135deg, #FFF8ED, #FFF0D8);
+    border: 1.5px solid rgba(212,165,116,0.25);
+    animation: statIn 0.8s cubic-bezier(0.34,1.4,0.64,1) 2.9s forwards;
+  }
+
+  .stat:nth-child(4) {
+    background: linear-gradient(135deg, #F0F0FF, #E8E8FF);
+    border: 1.5px solid rgba(130,130,200,0.2);
+    animation: statIn 0.8s cubic-bezier(0.34,1.4,0.64,1) 3.6s forwards;
+  }
+
+  @keyframes statIn {
+    0% { opacity: 0; transform: scale(0.7) translateY(20px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .stat-number {
+    font-family: 'Poppins', sans-serif;
+    font-size: 72px;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat:nth-child(1) .stat-number { color: #E8837C; }
+  .stat:nth-child(2) .stat-number { color: #3D8B7A; }
+  .stat:nth-child(3) .stat-number { color: #D4A574; }
+  .stat:nth-child(4) .stat-number { color: #7070B8; }
+
+  .stat-label {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2D2D2D;
+    margin-bottom: 4px;
+  }
+
+  .stat-desc {
+    font-size: 18px;
+    font-weight: 500;
+    color: #999;
+    line-height: 1.3;
+  }
+
+  /* Counter animation for numbers */
+  .stat-number .count {
+    display: inline-block;
+  }
+
+  /* === BOTTOM OFFER === */
+  .offer {
+    width: 100%;
+    max-width: 920px;
+    background: linear-gradient(135deg, #EEFAF6, #E2F5EF);
+    border: 2.5px solid rgba(126,206,193,0.4);
+    border-radius: 22px;
+    padding: 24px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    opacity: 0;
+    animation: offerReveal 0.9s ease-out 4.8s forwards;
+    box-shadow: 0 8px 30px rgba(126,206,193,0.12);
+  }
+
+  @keyframes offerReveal {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .offer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .offer-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: #2D6B5E;
+  }
+
+  .offer-features {
+    display: flex;
+    gap: 18px;
+  }
+
+  .offer-feat {
+    font-size: 19px;
+    font-weight: 600;
+    color: #3D8B7A;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .offer-price {
+    text-align: center;
+  }
+
+  .offer-price-old {
+    font-size: 22px;
+    font-weight: 700;
+    color: #BBB;
+    text-decoration: line-through;
+  }
+
+  .offer-price-new {
+    font-size: 52px;
+    font-weight: 900;
+    color: #2D2D2D;
+  }
+
+  .offer-price-new .dollar { font-size: 30px; color: #D4A574; vertical-align: super; }
+  .offer-price-new .cents { font-size: 30px; color: #888; }
+
+  /* === CTA === */
+  .cta-wrap {
+    width: 100%;
+    max-width: 920px;
+    opacity: 0;
+    animation: ctaSlideUp 0.9s ease-out 6.0s forwards;
+  }
+
+  @keyframes ctaSlideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 28px 32px;
+    border-radius: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow:
+      0 8px 30px rgba(232,131,124,0.35),
+      0 3px 10px rgba(232,131,124,0.2);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 2.5s ease-in-out 7s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arrow {
+    margin-left: 10px;
+    display: inline-block;
+    animation: nudge 1.2s ease-in-out 7s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 13px;
+    color: #C0B0B0;
+    margin-top: 8px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dots"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="eyebrow">
+        <div class="eyebrow-dot"></div>
+        <span>Los Números Hablan</span>
+      </div>
+      <h1>¿Por qué <span class="coral">miles de mamás</span><br>eligen <span class="mint">Zero Diastasis</span>?</h1>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">60%</div>
+        <div class="stat-label">De mamás afectadas</div>
+        <div class="stat-desc">La diástasis es más<br>común de lo que crees</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">28</div>
+        <div class="stat-label">Días de protocolo</div>
+        <div class="stat-desc">Resultados visibles<br>en menos de 1 mes</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">8 min</div>
+        <div class="stat-label">Al día es suficiente</div>
+        <div class="stat-desc">Mientras los niños<br>juegan o duermen</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Desde tu casa</div>
+        <div class="stat-desc">Sin equipos, sin<br>desplazarte</div>
+      </div>
+    </div>
+
+    <div class="offer">
+      <div class="offer-left">
+        <div class="offer-title">Zero Diastasis</div>
+        <div class="offer-features">
+          <div class="offer-feat">✅ 28 días</div>
+          <div class="offer-feat">✅ En casa</div>
+          <div class="offer-feat">✅ Garantía</div>
+        </div>
+      </div>
+      <div class="offer-price">
+        <div class="offer-price-old">$99.90</div>
+        <div class="offer-price-new"><span class="dollar">$</span>19<span class="cents">.90</span></div>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <a href="#" class="cta">
+        HAZ EL TEST GRATIS <span class="arrow">→</span>
+      </a>
+      <div class="disclaimer">*Resultados pueden variar. No reemplaza consejo médico.</div>
+    </div>
+  </div>
+</body>
+</html>

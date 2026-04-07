@@ -1,4 +1,4 @@
-from fastapi import FastAPI, HTTPException, Depends, Query
+from fastapi import FastAPI, HTTPException, Depends, Query, WebSocket, WebSocketDisconnect
 from sqlalchemy.orm import Session
 from typing import List, Optional
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -8,11 +8,15 @@ from app.data import models, schemas, database, crud
 from app.services import (
     add_crypto_pair, update_all_pairs, get_current_price, get_available_pairs
 )
+from app.ws_manager import price_manager
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='{"time":"%(asctime)s","level":"%(levelname)s","module":"%(name)s","msg":"%(message)s"}'
+)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="Crypto Fetcher Service", version="2.0")
+app = FastAPI(title="Crypto Fetcher Service", version="3.0")
 
 # Criar tabelas
 models.Base.metadata.create_all(bind=database.engine)
@@ -118,3 +122,41 @@ def available_pairs():
 def force_update(db: Session = Depends(database.get_db)):
     count = update_all_pairs(db)
     return {"updated_records": count}
+
+
+# ── WEBSOCKET — Precos real-time ──
+
+@app.websocket("/ws/prices")
+async def websocket_prices(websocket: WebSocket):
+    await websocket.accept()
+    price_manager.clients.append(websocket)
+    logger.info(f"WS client conectado (total: {len(price_manager.clients)})")
+
+    # Iniciar stream se ainda nao esta rodando
+    if not price_manager._running:
+        default_symbols = ["BTCUSDT", "ETHUSDT", "BNBUSDT", "SOLUSDT"]
+        import asyncio
+        asyncio.create_task(price_manager.start_stream(default_symbols))
+
+    try:
+        while True:
+            # Receber mensagens do cliente (ex: subscribe a novos pares)
+            data = await websocket.receive_text()
+            try:
+                msg = __import__('json').loads(data)
+                if msg.get("action") == "subscribe" and msg.get("symbols"):
+                    await price_manager.start_stream(msg["symbols"])
+            except Exception:
+                pass
+    except WebSocketDisconnect:
+        price_manager.clients.remove(websocket)
+        logger.info(f"WS client desconectado (restam: {len(price_manager.clients)})")
+
+
+@app.get("/crypto/prices/live/")
+def get_live_prices():
+    """Precos em cache do stream real-time."""
+    prices = price_manager.get_all_prices()
+    if not prices:
+        return {"message": "Stream nao iniciado. Conecte via WebSocket /ws/prices"}
+    return prices

@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1080">
+<title>La Verdad — Square 1080x1080</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #1A1A1A;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 700px 500px at 50% 30%, rgba(232,131,124,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 300px at 80% 90%, rgba(126,206,193,0.06) 0%, transparent 70%);
+  }
+
+  .grain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: radial-gradient(#FFFFFF 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 48px 36px;
+  }
+
+  /* === WARNING BADGE === */
+  .warning-badge {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 10px;
+    background: rgba(232,131,124,0.15);
+    border: 1.5px solid rgba(232,131,124,0.35);
+    border-radius: 50px;
+    padding: 10px 24px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeSlideDown 0.8s ease-out 0.3s forwards;
+  }
+
+  .warning-icon {
+    font-size: 22px;
+  }
+
+  .warning-badge span {
+    font-size: 18px;
+    font-weight: 800;
+    color: #E8837C;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === HEADLINE === */
+  .headline {
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeSlideUp 1.0s ease-out 1.0s forwards;
+  }
+
+  .headline h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: #FFFFFF;
+    line-height: 1.08;
+  }
+
+  .headline h1 .coral { color: #E8837C; }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === VISUAL DIAGRAM === */
+  .diagram {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .diagram-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+  }
+
+  .diagram-row:nth-child(1) { animation: rowSlide 0.8s ease-out 2.2s forwards; }
+  .diagram-row:nth-child(2) { animation: rowSlide 0.8s ease-out 3.0s forwards; }
+  .diagram-row:nth-child(3) { animation: rowSlide 0.8s ease-out 3.8s forwards; }
+
+  @keyframes rowSlide {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .diagram-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+
+  .diagram-icon.bad {
+    background: rgba(217,79,79,0.15);
+    border: 2px solid rgba(217,79,79,0.3);
+  }
+
+  .diagram-icon.good {
+    background: rgba(126,206,193,0.15);
+    border: 2px solid rgba(126,206,193,0.3);
+  }
+
+  .diagram-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .diagram-label {
+    font-size: 28px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .diagram-desc {
+    font-size: 22px;
+    font-weight: 500;
+    color: #999;
+    line-height: 1.3;
+  }
+
+  .diagram-desc .red { color: #D94F4F; font-weight: 700; }
+  .diagram-desc .green { color: #7ECEC1; font-weight: 700; }
+
+  /* === ARROW === */
+  .arrow-connector {
+    font-size: 36px;
+    color: #E8837C;
+    opacity: 0;
+    margin: -4px 0;
+  }
+
+  .arrow-connector:nth-of-type(1) { animation: fadeIn 0.5s ease-out 2.8s forwards; }
+  .arrow-connector:nth-of-type(2) { animation: fadeIn 0.5s ease-out 3.6s forwards; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* === REVEAL BOX === */
+  .reveal-box {
+    background: linear-gradient(135deg, rgba(126,206,193,0.12), rgba(126,206,193,0.05));
+    border: 2px solid rgba(126,206,193,0.3);
+    border-radius: 22px;
+    padding: 28px 32px;
+    text-align: center;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: revealPop 0.9s cubic-bezier(0.34,1.4,0.64,1) 5.0s forwards;
+  }
+
+  @keyframes revealPop {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  .reveal-text {
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #7ECEC1;
+    line-height: 1.3;
+  }
+
+  .reveal-sub {
+    font-size: 22px;
+    font-weight: 500;
+    color: #999;
+    margin-top: 8px;
+  }
+
+  .reveal-sub strong {
+    color: #FFFFFF;
+    font-weight: 800;
+  }
+
+  /* === CTA === */
+  .cta-wrap {
+    width: 100%;
+    opacity: 0;
+    animation: ctaSlideUp 0.9s ease-out 6.5s forwards;
+  }
+
+  @keyframes ctaSlideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 28px 32px;
+    border-radius: 18px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow:
+      0 8px 30px rgba(232,131,124,0.35),
+      0 3px 10px rgba(232,131,124,0.2);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 2.5s ease-in-out 7.5s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arr {
+    margin-left: 10px;
+    display: inline-block;
+    animation: nudge 1.2s ease-in-out 7.5s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(8px); }
+  }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 13px;
+    color: #666;
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="grain"></div>
+
+  <div class="container">
+    <div class="warning-badge">
+      <span class="warning-icon">⚠️</span>
+      <span>Alerta Importante</span>
+    </div>
+
+    <div class="headline">
+      <h1>Los abdominales<br><span class="coral">empeoran</span><br>tu diástasis</h1>
+    </div>
+
+    <div class="diagram">
+      <div class="diagram-row">
+        <div class="diagram-icon bad">💪</div>
+        <div class="diagram-text">
+          <div class="diagram-label">Abdominales</div>
+          <div class="diagram-desc"><span class="red">↑ Presión interna</span> = más separación</div>
+        </div>
+      </div>
+
+      <div class="arrow-connector">↓</div>
+
+      <div class="diagram-row">
+        <div class="diagram-icon bad">❌</div>
+        <div class="diagram-text">
+          <div class="diagram-label">Fajas y Dietas</div>
+          <div class="diagram-desc">Esconden el problema, <span class="red">no lo resuelven</span></div>
+        </div>
+      </div>
+
+      <div class="arrow-connector">↓</div>
+
+      <div class="diagram-row">
+        <div class="diagram-icon good">✨</div>
+        <div class="diagram-text">
+          <div class="diagram-label">Reprogramación</div>
+          <div class="diagram-desc"><span class="green">Reconecta el sostén natural</span> desde adentro</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal-box">
+      <div class="reveal-text">Reprogramación > Fuerza</div>
+      <div class="reveal-sub"><strong>28 días · 8 min/día · $19.90</strong></div>
+    </div>
+
+    <div class="cta-wrap">
+      <a href="#" class="cta">
+        HAZ EL TEST GRATIS <span class="arr">→</span>
+      </a>
+      <div class="disclaimer">*Resultados pueden variar. No reemplaza consejo médico.</div>
+    </div>
+  </div>
+</body>
+</html>

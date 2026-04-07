@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>Ad — Mamá Real 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #F5F0EB;
+    position: relative;
+  }
+
+  /* === FULL IMAGE === */
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: brightness(0.85) saturate(0.95);
+    opacity: 0;
+    animation: imgReveal 1.2s ease-out 0.2s forwards;
+  }
+
+  @keyframes imgReveal {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* === INSTAGRAM-STYLE MESSAGE BUBBLES === */
+  .bubbles {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+  }
+
+  .bubble {
+    position: absolute;
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 24px;
+    padding: 22px 28px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    max-width: 500px;
+    opacity: 0;
+  }
+
+  .bubble::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 4px;
+    transform: rotate(45deg);
+  }
+
+  /* Bubble 1 — Top right */
+  .bubble-1 {
+    top: 40px;
+    right: 36px;
+    animation: bubbleIn 0.7s cubic-bezier(0.34,1.4,0.64,1) 3.0s forwards;
+  }
+
+  .bubble-1::after {
+    bottom: -7px;
+    right: 32px;
+  }
+
+  /* Bubble 2 — 40% from top, left */
+  .bubble-2 {
+    top: 40%;
+    left: 36px;
+    transform: translateY(-50%);
+    animation: bubble2In 0.7s cubic-bezier(0.34,1.4,0.64,1) 7.0s forwards;
+  }
+
+  .bubble-2::after {
+    top: 24px;
+    right: -7px;
+  }
+
+  @keyframes bubbleIn {
+    0% { opacity: 0; transform: scale(0.7) translateY(10px); }
+    100% { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  @keyframes bubble2In {
+    0% { opacity: 0; transform: translateY(-50%) scale(0.7); }
+    100% { opacity: 1; transform: translateY(-50%) scale(1); }
+  }
+
+  .bubble-emoji {
+    font-size: 32px;
+    margin-bottom: 8px;
+  }
+
+  .bubble-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+
+  .bubble-title .coral { color: #E8837C; }
+
+  .bubble-text {
+    font-size: 28px;
+    font-weight: 500;
+    color: #777;
+    line-height: 1.35;
+  }
+
+  .bubble-text strong { color: #3D8B7A; font-weight: 700; }
+
+  /* === BOTTOM CARD === */
+  .bottom-card {
+    position: absolute;
+    bottom: 40px;
+    left: 32px;
+    right: 32px;
+    z-index: 10;
+    background: rgba(255,255,255,0.97);
+    backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 36px 40px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    opacity: 0;
+    animation: cardSlideUp 0.9s cubic-bezier(0.34,1.2,0.64,1) 12.0s forwards;
+  }
+
+  @keyframes cardSlideUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .card-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 24px;
+  }
+
+  .card-logo {
+    font-family: 'Poppins', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: #2D2D2D;
+    white-space: nowrap;
+  }
+
+  .card-divider {
+    width: 2px;
+    height: 36px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 1px;
+  }
+
+  .card-stats {
+    display: flex;
+    gap: 18px;
+    flex: 1;
+  }
+
+  .card-stat {
+    font-size: 28px;
+    font-weight: 700;
+    color: #3D8B7A;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .card-stat-check {
+    color: #7ECEC1;
+  }
+
+  .card-price {
+    text-align: right;
+  }
+
+  .card-price-old {
+    font-size: 18px;
+    color: #CCC;
+    text-decoration: line-through;
+  }
+
+  .card-price-new {
+    font-size: 48px;
+    font-weight: 900;
+    color: #2D2D2D;
+  }
+
+  .card-price-new .dollar { font-size: 24px; color: #D4A574; vertical-align: super; }
+  .card-price-new .cents { font-size: 24px; color: #888; }
+
+  .cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 24px;
+    border-radius: 14px;
+    font-size: 38px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow: 0 6px 24px rgba(232,131,124,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 4s ease-in-out 14s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arrow {
+    margin-left: 8px;
+    display: inline-block;
+    animation: nudge 3s ease-in-out 14s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(6px); }
+  }
+</style>
+</head>
+<body>
+  <img class="hero-img" src="img-mama-real.png" alt="Mamá real">
+
+  <div class="bubbles">
+    <div class="bubble bubble-1">
+      <div class="bubble-emoji">💬</div>
+      <div class="bubble-title">Ser mamá es <span class="coral">hermoso</span>...</div>
+      <div class="bubble-text">Pero nadie te prepara para lo que<br>le pasa a tu cuerpo después.</div>
+    </div>
+
+    <div class="bubble bubble-2">
+      <div class="bubble-emoji">✨</div>
+      <div class="bubble-title">La solución existe.</div>
+      <div class="bubble-text"><strong>8 minutos al día</strong>, mientras ellos<br>juegan. Sin salir de casa.</div>
+    </div>
+  </div>
+
+  <div class="bottom-card">
+    <div class="card-row">
+      <div class="card-logo">Zero Diastasis</div>
+      <div class="card-divider"></div>
+      <div class="card-stats">
+        <div class="card-stat"><span class="card-stat-check">✓</span> 28 días</div>
+        <div class="card-stat"><span class="card-stat-check">✓</span> 8 min/día</div>
+        <div class="card-stat"><span class="card-stat-check">✓</span> Garantía</div>
+      </div>
+      <div class="card-price">
+        <div class="card-price-old">$99.90</div>
+        <div class="card-price-new"><span class="dollar">$</span>19<span class="cents">.90</span></div>
+      </div>
+    </div>
+    <a href="#" class="cta">HAZ EL TEST GRATIS <span class="arrow">→</span></a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1080">
+<title>Fase 2: Reconexion — Square 1080x1080</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1080px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #FFF8F5;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 700px 400px at 50% 0%, rgba(212,165,116,0.07) 0%, transparent 70%),
+      radial-gradient(ellipse 500px 350px at 50% 100%, rgba(212,165,116,0.04) 0%, transparent 70%);
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: radial-gradient(#2D2D2D 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 50px 50px 44px;
+  }
+
+  /* === TOP ROW === */
+  .top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .phase-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #D4A574, #C89460);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: white;
+    box-shadow: 0 6px 24px rgba(212,165,116,0.3);
+  }
+
+  .day-pill {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(212,165,116,0.08);
+    border: 1.5px solid rgba(212,165,116,0.2);
+    border-radius: 50px;
+    padding: 10px 26px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #B08A5C;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  /* === CENTER CONTENT === */
+  .center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+
+  .emoji {
+    font-size: 80px;
+    margin-bottom: 10px;
+  }
+
+  .phase-label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: #D4A574;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 4px;
+  }
+
+  .phase-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+
+  .phase-desc {
+    font-family: 'Poppins', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #888;
+    line-height: 1.4;
+    max-width: 700px;
+  }
+
+  /* === BOTTOM CARD === */
+  .info-card {
+    background: white;
+    border-radius: 22px;
+    border: 2px solid rgba(126,206,193,0.3);
+    padding: 30px 36px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+  }
+
+  .info-card .bullet {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #444;
+  }
+
+  .info-card .bullet + .bullet {
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .bullet-emoji {
+    font-size: 26px;
+    flex-shrink: 0;
+  }
+
+  /* === PROGRESS === */
+  .progress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .progress-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #E0D8D5;
+  }
+
+  .progress-dot.active {
+    background: #E8837C;
+    box-shadow: 0 2px 8px rgba(232,131,124,0.4);
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dots"></div>
+
+  <div class="container">
+    <div class="top-row">
+      <div class="phase-circle">2</div>
+      <div class="day-pill">Dia 8-14</div>
+    </div>
+
+    <div class="center">
+      <div class="emoji">&#x1F517;</div>
+      <div class="phase-label">Fase 2</div>
+      <div class="phase-name">Reconexion</div>
+      <div class="phase-desc">Activa los musculos profundos que el parto desconecto</div>
+    </div>
+
+    <div class="info-card">
+      <div class="bullet">
+        <span class="bullet-emoji">&#x1F9E0;</span>
+        <span>Reconexion mente-musculo</span>
+      </div>
+      <div class="bullet">
+        <span class="bullet-emoji">&#x1F4AA;</span>
+        <span>Activacion del transverso</span>
+      </div>
+      <div class="bullet">
+        <span class="bullet-emoji">&#x1F30A;</span>
+        <span>Respiracion hipopresiva</span>
+      </div>
+    </div>
+
+    <div class="progress">
+      <div class="progress-dot active"></div>
+      <div class="progress-dot active"></div>
+      <div class="progress-dot"></div>
+      <div class="progress-dot"></div>
+    </div>
+  </div>
+</body>
+</html>

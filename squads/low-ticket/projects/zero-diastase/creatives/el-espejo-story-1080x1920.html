@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1080, height=1920">
+<title>El Espejo — Story 1080x1920</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #FFF8F5;
+    position: relative;
+  }
+
+  .bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 900px 700px at 50% 15%, rgba(232,131,124,0.09) 0%, transparent 70%),
+      radial-gradient(ellipse 600px 400px at 20% 95%, rgba(126,206,193,0.07) 0%, transparent 70%);
+  }
+
+  .dots {
+    position: absolute;
+    inset: 0;
+    opacity: 0.02;
+    background-image: radial-gradient(#2D2D2D 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  .container {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 48px 44px;
+  }
+
+  /* === HOOK QUESTION === */
+  .hook {
+    text-align: center;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeSlideDown 1.2s ease-out 0.5s forwards;
+  }
+
+  .hook h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 88px;
+    font-weight: 900;
+    color: #2D2D2D;
+    line-height: 1.06;
+  }
+
+  .hook h1 .coral { color: #E8837C; }
+
+  @keyframes fadeSlideDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hook-sub {
+    font-size: 36px;
+    font-weight: 500;
+    color: #888;
+    margin-top: 18px;
+    opacity: 0;
+    animation: fadeIn 0.8s ease-out 2.0s forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* === DIVIDER LINE === */
+  .divider {
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(232,131,124,0.3), transparent);
+    border-radius: 2px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out 2.5s forwards;
+  }
+
+  /* === FAILED ATTEMPTS — 2x2 GRID === */
+  .attempts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 920px;
+    margin-bottom: 44px;
+  }
+
+  .attempt {
+    background: #F5E6E0;
+    border: 1.5px solid rgba(217,79,79,0.12);
+    border-radius: 24px;
+    padding: 36px 24px 32px;
+    text-align: center;
+    opacity: 0;
+    position: relative;
+  }
+
+  .attempt:nth-child(1) { animation: attemptIn 0.7s ease-out 3.0s forwards; }
+  .attempt:nth-child(2) { animation: attemptIn 0.7s ease-out 3.4s forwards; }
+  .attempt:nth-child(3) { animation: attemptIn 0.7s ease-out 3.8s forwards; }
+  .attempt:nth-child(4) { animation: attemptIn 0.7s ease-out 4.2s forwards; }
+
+  @keyframes attemptIn {
+    0% { opacity: 0; transform: translateY(30px) scale(0.9); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .attempt-emoji {
+    font-size: 56px;
+    margin-bottom: 14px;
+  }
+
+  .attempt-name {
+    font-size: 30px;
+    font-weight: 700;
+    color: #7A5050;
+  }
+
+  .attempt-x {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(217,79,79,0.12);
+    border: 1.5px solid rgba(217,79,79,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: 900;
+    color: #D94F4F;
+    opacity: 0;
+  }
+
+  .attempt:nth-child(1) .attempt-x { animation: xPop 0.4s ease-out 5.2s forwards; }
+  .attempt:nth-child(2) .attempt-x { animation: xPop 0.4s ease-out 5.4s forwards; }
+  .attempt:nth-child(3) .attempt-x { animation: xPop 0.4s ease-out 5.6s forwards; }
+  .attempt:nth-child(4) .attempt-x { animation: xPop 0.4s ease-out 5.8s forwards; }
+
+  @keyframes xPop {
+    0% { opacity: 0; transform: scale(0); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* === NADA FUNCIONO TEXT === */
+  .nada {
+    font-family: 'Poppins', sans-serif;
+    font-size: 64px;
+    font-weight: 900;
+    color: #D94F4F;
+    text-align: center;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: nadaReveal 0.8s ease-out 6.4s forwards;
+  }
+
+  @keyframes nadaReveal {
+    0% { opacity: 0; transform: scale(0.7); }
+    60% { transform: scale(1.08); }
+    100% { opacity: 1; transform: scale(1); }
+  }
+
+  /* === SOLUTION === */
+  .solution {
+    background: linear-gradient(180deg, #EEFAF6 0%, #E2F5EF 100%);
+    border: 2.5px solid rgba(126,206,193,0.5);
+    border-radius: 28px;
+    padding: 48px 44px 40px;
+    text-align: center;
+    width: 100%;
+    max-width: 920px;
+    margin-bottom: 44px;
+    box-shadow:
+      0 12px 48px rgba(126,206,193,0.18),
+      0 4px 16px rgba(126,206,193,0.1);
+    opacity: 0;
+    animation: solutionPop 1.0s cubic-bezier(0.34,1.4,0.64,1) 7.5s forwards;
+    position: relative;
+  }
+
+  .solution::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 30px;
+    border: 2px solid rgba(126,206,193,0.3);
+    animation: glowPulse 2.5s ease-in-out infinite 9.5s;
+    opacity: 0;
+  }
+
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.005); }
+  }
+
+  @keyframes solutionPop {
+    0% { opacity: 0; transform: translateY(40px) scale(0.85); }
+    60% { transform: translateY(-5px) scale(1.02); }
+    100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .solution-badge {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #7ECEC1, #5DB8AA);
+    color: white;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    border-radius: 50px;
+    box-shadow: 0 4px 16px rgba(126,206,193,0.4);
+    white-space: nowrap;
+  }
+
+  .solution h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: #2D6B5E;
+    margin-top: 16px;
+    margin-bottom: 20px;
+  }
+
+  .solution-features {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+
+  .solution-feat {
+    font-size: 32px;
+    font-weight: 700;
+    color: #3D8B7A;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+  }
+
+  .solution-feat:nth-child(1) { animation: featIn 0.5s ease-out 8.6s forwards; }
+  .solution-feat:nth-child(2) { animation: featIn 0.5s ease-out 8.9s forwards; }
+  .solution-feat:nth-child(3) { animation: featIn 0.5s ease-out 9.2s forwards; }
+
+  @keyframes featIn {
+    0% { opacity: 0; transform: translateX(20px); }
+    100% { opacity: 1; transform: translateX(0); }
+  }
+
+  .check-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(126,206,193,0.2);
+    border: 1.5px solid rgba(126,206,193,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #3D8B7A;
+    flex-shrink: 0;
+  }
+
+  /* === CTA === */
+  .cta-wrap {
+    width: 100%;
+    max-width: 920px;
+    opacity: 0;
+    animation: ctaSlideUp 0.9s ease-out 10.0s forwards;
+  }
+
+  @keyframes ctaSlideUp {
+    0% { opacity: 0; transform: translateY(40px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 36px 40px;
+    border-radius: 22px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 44px;
+    font-weight: 800;
+    color: #FFFFFF;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #E8837C 0%, #D4706A 100%);
+    box-shadow:
+      0 10px 36px rgba(232,131,124,0.35),
+      0 3px 10px rgba(232,131,124,0.2);
+  }
+
+  .cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+    transform: skewX(-20deg);
+    animation: shine 2.5s ease-in-out 11s infinite;
+  }
+
+  @keyframes shine {
+    0% { left: -100%; }
+    40%, 100% { left: 150%; }
+  }
+
+  .cta .arrow {
+    margin-left: 12px;
+    display: inline-block;
+    animation: nudge 1.2s ease-in-out 11s infinite;
+  }
+
+  @keyframes nudge {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(10px); }
+  }
+
+  .disclaimer {
+    text-align: center;
+    font-size: 16px;
+    color: #C0B0B0;
+    margin-top: 14px;
+    font-weight: 400;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="dots"></div>
+
+  <div class="container">
+    <div class="hook">
+      <h1>¿Sigues pareciendo<br><span class="coral">embarazada</span>?</h1>
+      <div class="hook-sub">Ya intentaste de todo...</div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="attempts">
+      <div class="attempt">
+        <div class="attempt-x">&#10005;</div>
+        <div class="attempt-emoji">&#x1FA71;</div>
+        <div class="attempt-name">Fajas</div>
+      </div>
+      <div class="attempt">
+        <div class="attempt-x">&#10005;</div>
+        <div class="attempt-emoji">&#x1F4AA;</div>
+        <div class="attempt-name">Gym</div>
+      </div>
+      <div class="attempt">
+        <div class="attempt-x">&#10005;</div>
+        <div class="attempt-emoji">&#x1F957;</div>
+        <div class="attempt-name">Dietas</div>
+      </div>
+      <div class="attempt">
+        <div class="attempt-x">&#10005;</div>
+        <div class="attempt-emoji">&#x1F48A;</div>
+        <div class="attempt-name">Pastillas</div>
+      </div>
+    </div>
+
+    <div class="nada">Nada funcion&oacute;.</div>
+
+    <div class="solution">
+      <div class="solution-badge">&#10024; Hasta Ahora</div>
+      <h2>Zero Diastasis</h2>
+      <div class="solution-features">
+        <div class="solution-feat"><span class="check-icon">&#10003;</span> 28 d&iacute;as</div>
+        <div class="solution-feat"><span class="check-icon">&#10003;</span> 8 min/d&iacute;a</div>
+        <div class="solution-feat"><span class="check-icon">&#10003;</span> $19.90</div>
+      </div>
+    </div>
+
+    <div class="cta-wrap">
+      <a href="#" class="cta">
+        HAZ EL TEST GRATIS <span class="arrow">&rarr;</span>
+      </a>
+      <div class="disclaimer">*Resultados pueden variar. No reemplaza consejo m&eacute;dico.</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -2,3 +2,5 @@ fastapi
 uvicorn
 python-binance
 httpx
+numpy
+apscheduler

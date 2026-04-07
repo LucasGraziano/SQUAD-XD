@@ -4,3 +4,5 @@ httpx
 pandas
 scikit-learn
 numpy
+joblib
+apscheduler

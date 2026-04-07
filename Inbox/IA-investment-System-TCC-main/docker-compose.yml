@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   crypto-db:
     image: postgres:13
@@ -40,6 +38,9 @@ services:
       - "8002:8000"
     environment:
       - CRYPTO_FETCHER_URL=http://crypto-fetcher-service:8000
+      - MODEL_DIR=/data/models
+    volumes:
+      - ml_models:/data/models
 
   sentiment-analysis-service:
     build:
@@ -60,6 +61,11 @@ services:
       - ML_SERVICE_URL=http://ml-prediction-service:8000
       - CRYPTO_FETCHER_URL=http://crypto-fetcher-service:8000
       - SENTIMENT_URL=http://sentiment-analysis-service:8000
+      - STATE_DIR=/data/state
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID}
+    volumes:
+      - trading_state:/data/state
 
   api-gateway:
     build:
@@ -87,3 +93,5 @@ services:
 
 volumes:
   crypto_data:
+  ml_models:
+  trading_state:

@@ -76,8 +76,38 @@ async function recordCreative(htmlFile, width, height, durationSec = 6, fps = 30
 
 async function main() {
   const creatives = [
-    { file: path.join(__dirname, 'el-precio-story-1080x1920.html'), w: 1080, h: 1920 },
-    { file: path.join(__dirname, 'el-precio-square-1080x1080.html'), w: 1080, h: 1080 },
+    { file: path.join(__dirname, 'el-precio-story-1080x1920.html'), w: 1080, h: 1920, dur: 14 },
+    { file: path.join(__dirname, 'el-precio-square-1080x1080.html'), w: 1080, h: 1080, dur: 14 },
+    { file: path.join(__dirname, 'no-es-tu-culpa-square-1080x1080.html'), w: 1080, h: 1080, dur: 12 },
+    { file: path.join(__dirname, 'la-verdad-square-1080x1080.html'), w: 1080, h: 1080, dur: 10 },
+    { file: path.join(__dirname, 'el-espejo-square-1080x1080.html'), w: 1080, h: 1080, dur: 12 },
+    { file: path.join(__dirname, 'las-4-fases-square-1080x1080.html'), w: 1080, h: 1080, dur: 10 },
+    { file: path.join(__dirname, 'la-garantia-square-1080x1080.html'), w: 1080, h: 1080, dur: 10 },
+    { file: path.join(__dirname, 'los-numeros-square-1080x1080.html'), w: 1080, h: 1080, dur: 9 },
+    { file: path.join(__dirname, 'las-4-fases-story-1080x1920.html'), w: 1080, h: 1920, dur: 10 },
+    { file: path.join(__dirname, 'la-garantia-story-1080x1920.html'), w: 1080, h: 1920, dur: 10 },
+    { file: path.join(__dirname, 'la-verdad-story-1080x1920.html'), w: 1080, h: 1920, dur: 10 },
+    { file: path.join(__dirname, 'los-numeros-story-1080x1920.html'), w: 1080, h: 1920, dur: 9 },
+    { file: path.join(__dirname, 'no-es-tu-culpa-story-1080x1920.html'), w: 1080, h: 1920, dur: 12 },
+    { file: path.join(__dirname, 'el-espejo-story-1080x1920.html'), w: 1080, h: 1920, dur: 12 },
+    { file: path.join(__dirname, 'la-verdad-35s-1080x1080.html'), w: 1080, h: 1080, dur: 35 },
+    { file: path.join(__dirname, 'la-verdad-35s-1080x1920.html'), w: 1080, h: 1920, dur: 35 },
+    { file: path.join(__dirname, 'ad-antes-depois-1080x1080.html'), w: 1080, h: 1080, dur: 20 },
+    { file: path.join(__dirname, 'ad-hook-frustrada-1080x1080.html'), w: 1080, h: 1080, dur: 20 },
+    { file: path.join(__dirname, 'ad-espejo-1080x1080.html'), w: 1080, h: 1080, dur: 20 },
+    { file: path.join(__dirname, 'ad-esperanca-1080x1080.html'), w: 1080, h: 1080, dur: 20 },
+    { file: path.join(__dirname, 'ad-mama-real-1080x1080.html'), w: 1080, h: 1080, dur: 20 },
+    { file: path.join(__dirname, 'ad-antes-depois-1080x1920.html'), w: 1080, h: 1920, dur: 20 },
+    { file: path.join(__dirname, 'ad-hook-frustrada-1080x1920.html'), w: 1080, h: 1920, dur: 20 },
+    { file: path.join(__dirname, 'ad-espejo-1080x1920.html'), w: 1080, h: 1920, dur: 20 },
+    { file: path.join(__dirname, 'ad-esperanca-1080x1920.html'), w: 1080, h: 1920, dur: 20 },
+    { file: path.join(__dirname, 'ad-mama-real-1080x1920.html'), w: 1080, h: 1920, dur: 20 },
+    { file: path.join(__dirname, 'ad-texto-bold-1080x1080.html'), w: 1080, h: 1080, dur: 10 },
+    { file: path.join(__dirname, 'ad-texto-bold-1080x1920.html'), w: 1080, h: 1920, dur: 10 },
+    { file: path.join(__dirname, 'ad-texto-abdominales-1080x1080.html'), w: 1080, h: 1080, dur: 10 },
+    { file: path.join(__dirname, 'ad-texto-abdominales-1080x1920.html'), w: 1080, h: 1920, dur: 10 },
+    { file: path.join(__dirname, 'ad-chat-screenshot-1080x1080.html'), w: 1080, h: 1080, dur: 15 },
+    { file: path.join(__dirname, 'ad-chat-screenshot-1080x1920.html'), w: 1080, h: 1920, dur: 15 },
   ];
 
   // Allow selecting specific creative via CLI arg
@@ -92,8 +122,8 @@ async function main() {
     return;
   }
 
-  for (const { file, w, h } of filtered) {
-    await recordCreative(file, w, h, 14, 30);
+  for (const { file, w, h, dur } of filtered) {
+    await recordCreative(file, w, h, dur || 14, 30);
   }
 
   console.log('✅ All done!');
