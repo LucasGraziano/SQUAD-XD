@@ -3,7 +3,7 @@ expert: Doug (Doug DeMarco)
 domain: copy-persuasion
 source: doug-all-courses
 format: dna-v3
-elements: 58
+elements: 63
 ---
 
 ## L1 Filosofias
@@ -33,6 +33,8 @@ elements: 58
 - **SHIFT_TENSION**: modo de copy para tensao silenciosa + conversao emocional — frases curtas, verdades cruas, desconforto interno sem confronto aberto, ritmo cortante
 - **RESET_TENSION**: modo de copy para impacto direto + ruptura agressiva — ataque frontal, confronto sem filtros, destruicao de desculpas, pressao imediata
 - **Arma e Balas**: a Big Idea e a arma; cada story/post/DM e uma bala disparada que reforca um marco diferente da mensagem central
+- **Sequencia dos Dominantes**: inversao deliberada da logica convencional de autoridade — os invisiveis seguem Conhecimento → Credibilidade → Autoridade → Vendas; os que dominam invertem para Percepcao de Valor → Pressao Mental → Desejo → Conversao. Mercado nao paga quem sabe mais, paga quem faz ele sentir que precisa do que voce tem
+- **Ima de Dinheiro (Campo Gravitacional Omnidirecional)**: diferente de influenciador ou produtor de conteudo — constroi Teia de Ofertas onde qualquer caminho que a pessoa seguir acaba no seu PIX. Cada story, post, DM e uma armadilha aberta: "planta minas explosivas por todo o terreno; quem pisar, compra"
 
 ## L3 Heuristicas
 - Hook Dominante (mini-manifesto) converte 3-5x mais que hook educacional generico
@@ -49,6 +51,8 @@ elements: 58
 - Formula PMN aplicada: "Eu ajudo [PESSOA] que [MOMENTO] a [NUCLEO]" — elimina ambiguidade de posicionamento
 - Texto com camadas: camada visivel (insight) + camada oculta (venda no subtexto) — compradores high-ticket captam as camadas profundas
 - Quanto mais inseguro o copywriter, mais palavras usa — e menos vende
+- **Medidas de Direcao > Medidas de Resultado**: fature no processo, nao no numero. Medidas de resultado (faturamento, seguidores, conversao) estao FORA do controle — so refletem o que ja foi feito. Medidas de direcao (publicou conteudo hoje? respondeu todas as mensagens? fez pelo menos 1 oferta?) estao 100% no controle. Quem domina as direcoes, o resultado e inevitavel
+- **Teia de Ofertas vs Funil Unico**: funil unico = 1 caminho, 1 chance, 3% conversao, 97% perdidos para sempre. Teia de Ofertas = 10 caminhos, infinitas chances, 23% conversao, 77% recuperaveis — cada ponto de contato (story, post, DM, destaque, bio, link) e uma nova entrada no sistema
 
 ## L4 Frameworks
 - **3 Pilares do Codigo do Dominio**: (1) Narrativa (Dissecacao Neural + Primeira Linha) → (2) Presenca (Sistema T.A.D. + Stories) → (3) Monetizacao (Teia de Ofertas)
@@ -80,6 +84,10 @@ elements: 58
 - **PromptBook 5 Categorias**: Big Idea & Narrativa (10 prompts) + Conteudo Feed/Stories (10) + Ofertas (10) + Auditoria (10) + Caixa Rapido (10)
   - `USE:` para producao em lote de conteudo com DOUG.EXE — cada categoria tem funcao especifica no pipeline
   - `FAIL:` usando categoria errada para o contexto (ex: Cat 3 Ofertas para conteudo de feed educacional) — output desalinhado com objetivo da peca
+- **VEX™ 8.0 W.A.P.S** (Winter Architectural Prompt System): interface neural para Doug.EXE 3.0. Arquitetura tripartite de prompt: Inversao + Subversao + Novo Contexto. Personalidade dual — com usuario: direto, seco, zero redundancia; com Doug: visceral, confrontacional, tensao psicologica aplicada. Entrega invariavel: formato fixo "Doug, eu quero que voce [CONTEUDO DO PROMPT]". Gatilhos automaticos para palavras-chave (Doug, prompt, carrossel, email) disparam arquitetura especifica imediatamente
+  - `USE:` quando precisar transformar briefings vagos em prompts cirurgicos para Doug.EXE; na preparacao de qualquer ativacao do agente; para escalar producao de copy sem perder a tensao visceral
+  - `FAIL:` ao usar tom educacional/polido na instrucao ao Doug — o agente responde a tensao, nao a educacao; instrucoes suaves geram output generico; sem especificidade de objetivo, o VEX entrega "armas" sem alvo
+  - `VS:` Doug padrao sem VEX gera output bom mas generico; VEX otimiza a arquitetura do input para maximizar o output visceral do agente — e a diferenca entre pedir uma resposta e instalar um comando
 - **20 Prompts Neuro-Copy**: (1) Gatilhos Neurais Invisiveis → (2) Diagnostico Irrefutavel → (3) Narrativa Transformacional → (4) Reestruturar Hierarquia de Valores → (5) Demolir Objecoes Antecipadamente → (6) Urgencia Neurologica → (7) Sonhos Aspiracionais → (8) Pertencimento Exclusivo → (9) Transformacao Identitaria → (10) Revelacao Epica → [11-20: Profecias Autorrealizaveis, Desejo Primordial, Escolha Ilusoria, Ritual de Conversao, Drama de Redencao, Prova Social Irresistivel, Dissonancia Identitaria, Repriorizar Obstaculos, Verdade Inegavel, Ultimato Existencial]
   - `USE:` quando copy precisa de profundidade psicologica avancada para ofertas high-ticket (R$5k+) com dados de Dissecacao Neural prontos
   - `FAIL:` sem dados reais do publico — avatar generico produz copy que parece profunda mas nao ressoa com nenhuma dor especifica real
@@ -110,3 +118,6 @@ elements: 58
 | Audiencia qualificada mas ciclo de compra lento (high-ticket) | 7 Alavancas da Caixa em sequencia de 21 dias | Aplicar todas alavancas ao mesmo tempo neutraliza o efeito de cada uma |
 | Conteudo de volume para campanha semanal com budget definido | PromptBook 5 Categorias + Pipeline SHIFT/RESET Tension | Misturar categorias de prompt (Oferta com Feed) gera output desalinhado — separar por objetivo |
 | Validacao rapida de mensagem nova antes de campanha | PMN Formula + Inimigo Comum 3 Posicionamentos | Testar nos stories por 40 min (termometro) antes de escalar para feed — sinal de resposta DM valida angulo |
+| Copy ja escrita mas sem tensao suficiente — precisa de output visceral do Doug.EXE | VEX™ 8.0 W.A.P.S | Se usar tom polido ao ativar o agente, output vai ser suavizado; VEX e o "tradutor" para linguagem que Doug responde com maquina de guerra |
+| Perfil com audiencia existente mas vendas plateadas — estrutura de funil unico | Teia de Ofertas + Sequencia dos Dominantes | Se tentar apenas melhorar o funil existente sem mudar a estrutura, teto de conversao permanece em 3%; reconstruir como Teia (10 pontos de entrada) |
+| Executor foca em resultados (faturamento, seguidores) e desmotiva quando nao ve crescimento | Medidas de Direcao vs Resultado | Reorientar KPI diario para acoes controlaveis: publicou? respondeu? fez oferta? — resultado e inevitavel se direcao for mantida |

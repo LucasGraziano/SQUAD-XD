@@ -5,13 +5,201 @@ Convoca multiplos agentes AIOX para deliberar sobre uma decisao e produzir uma r
 ## Uso
 
 ```
-/conclave {pergunta}                    # Auto-seleciona agentes relevantes (v2 com deliberation roles)
-/conclave --agents copy-chief,analyst {pergunta}  # Agentes especificos
+/conclave {pergunta}                              # Auto-seleciona agentes operacionais (v2)
+/conclave --agents copy-chief,analyst {pergunta}  # Agentes operacionais especificos
 /conclave --size small|medium|large {pergunta}    # Controla tamanho do painel
 /conclave --v1 {pergunta}                         # Modo legado v1 (sem CRITIC/ADVOCATE/SYNTHESIZER)
+/conclave --experts {pergunta}                    # Experts do knowledge debatem (auto-selecao)
+/conclave --experts hormozi,brunson,hard-copy {pergunta}  # Experts especificos pelo ID
 ```
 
-## Execucao
+## MODO --experts (Expert Knowledge Debate)
+
+Quando a flag `--experts` estiver presente, o modo de operacao muda completamente:
+- Em vez de agentes operacionais (commander, analyst, pm...), os **experts reais do knowledge system** debatem
+- Cada expert fala com a voz e os frameworks DELE — Hormozi soa como Hormozi, Brunson soa como Brunson
+- Os experts discordam entre si quando seus frameworks conflitam — isso e o objetivo
+- Ao final, o Commander operacional sintetiza o debate aplicando ao CONTEXTO REAL do usuario (budget, tempo, habilidades)
+
+### Experts disponíveis
+
+| Expert ID | Nome | Dominios Primarios | Tom / Estilo |
+|-----------|------|--------------------|--------------|
+| `hormozi` | Alex Hormozi | offers-pricing | Direto, matematico, Value Equation acima de tudo |
+| `brunson` | Russell Brunson | funnels, copy | Entusiasta, Value Ladder, Hook-Story-Offer |
+| `hard-copy` | Hard Copy (Kleiver) | copy, traffic, funnels | Cinematico, Kinshu, MPV, executa rapido |
+| `doug` | Doug | psychology, copy, systems | Sistemico, Dissecacao Neural, 8 territorios |
+| `jim-edwards` | Jim Edwards | copy | Modular, templates, FRED, PAS/PASTOR |
+| `kobata` | Diogo Kobata | copy, traffic | Volumetrico, Ed 100x, lateralizacao de angulos |
+| `jeremy-miner` | Jeremy Miner | sales | NEPQ, perguntas, tonalidade, CDD |
+| `cole-gordon` | Cole Gordon | sales | 7 Crenças, processo de call, scorecard |
+| `blair-warren` | Blair Warren | psychology | 5 Drivers, permissao, self-verification |
+| `agora-inc` | Agora Inc | copy | Big Idea, 4Ps, Copy Length Matrix |
+| `jeremy-haynes` | Jeremy Haynes | traffic, funnels | Tornado Creative, Hammer, escala agressiva |
+| `scalable` | The Scalable Company | systems | ScalableOS, cadencia, estrutura de time |
+| `sam-oven` | Sam Oven | systems, funnels | Purple Ocean, Bridge Framework, nicho unico |
+
+### Auto-selecao de experts (sem nomes especificados)
+
+Se `--experts` sem IDs, selecionar 3-4 experts baseado nas palavras-chave da pergunta:
+
+| Palavras-chave | Experts sugeridos |
+|----------------|-------------------|
+| oferta, preco, valor, promessa | hormozi, brunson, hard-copy |
+| copy, hook, headline, texto | hard-copy, jim-edwards, agora-inc, kobata |
+| funil, VSL, checkout, conversao | brunson, hard-copy, sam-oven |
+| ads, trafego, criativo, escala | kobata, jeremy-haynes, hard-copy |
+| vendas, call, fechamento, objecao | jeremy-miner, cole-gordon, hormozi |
+| estrategia, plano, modelo de negocio | hormozi, brunson, sam-oven, scalable |
+| psicologia, persuasao, emocao | blair-warren, doug, hard-copy |
+| sistema, processo, time, operacao | scalable, sam-oven, doug |
+
+### Execucao do modo --experts
+
+#### Passo E1: Carregar perfil dos experts selecionados
+
+Para cada expert, ler o arquivo de knowledge correspondente em `.aiox-core/knowledge/domains/`.
+Extrair: L1 Filosofias, L2 Modelos Mentais, L4 Frameworks (especialmente campos VS: que revelam tensoes com outros experts).
+
+#### Passo E2: Gerar perspectiva autêntica de cada expert
+
+Cada perspectiva DEVE:
+- Usar a terminologia e os nomes de framework do expert (ex: Hormozi diz "Grand Slam Offer", nao "boa oferta")
+- Referenciar pelo menos 1 framework especifico do expert com seu nome proprio
+- Revelar a TENSAO com pelo menos 1 outro expert no painel quando existir conflito real (usar os campos VS: do DNA v3)
+- Soar como SE o expert estivesse falando — primeira pessoa, estilo direto do expert
+
+Formato de perspectiva:
+
+```markdown
+### {Nome do Expert} — "{frase que resume a posição deles em 1 linha}"
+
+**{Nome do Framework Principal que ele usaria aqui}**
+
+{2-3 paragrafos na voz do expert, usando a terminologia dele, aplicando o framework ao problema especifico}
+
+**Onde discordo de {outro expert no painel}:**
+{tensao real entre os frameworks — baseada no campo VS: do DNA v3}
+
+**O que eu faria agora:**
+{recomendacao concreta e especifica, no estilo do expert}
+```
+
+#### Passo E3: Debate cruzado (round de replicas)
+
+Apos todas as perspectivas, gerar 2-3 replicas cruzadas curtas onde experts respondem diretamente uns aos outros:
+
+```markdown
+## Debate
+
+**{Expert A} para {Expert B}:**
+"{replica direta, em 3-5 linhas, no estilo do Expert A}"
+
+**{Expert B} para {Expert A}:**
+"{replica de volta}"
+```
+
+Isso deve refletir conflitos REAIS entre os frameworks (ex: Hard Copy empurra MPV rapido, Hormozi diria que voce precisa de Grand Slam antes de gastar R$1 em ads).
+
+#### Passo E4: CRITIC Score (igual v2 padrao)
+
+Avaliar cada perspectiva de expert nos 5 criterios (evidence, logic, completeness, actionability, risk).
+
+#### Passo E5: Stress Test (igual v2 padrao)
+
+Atacar o consenso emergente entre os experts.
+
+#### Passo E6: Sintese do Commander (CONTEXTUALIZACAO)
+
+O Commander operacional fecha o debate aplicando ao contexto REAL do usuario.
+
+**IMPORTANTE:** O Commander deve carregar as memorias do usuario antes de sintetizar:
+- Ler `C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\user_lucas_profile.md`
+- Ler `C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\project_company_context.md`
+
+O Commander nao repete os frameworks dos experts — ele traduz o debate para decisao aplicada:
+- "Dado que voce tem R$800/mes de sobra e 2h/dia..."
+- "Considerando que o Cabral e o arquiteto de oferta e voce e o operador..."
+- "Com reserva de R$6K e CLT como runway..."
+
+Formato da sintese do Commander:
+
+```markdown
+## Sintese do Commander — Aplicado ao Seu Contexto
+
+**O que os experts concordam (independente do framework):**
+{consenso real entre eles}
+
+**A tensao que mais importa para voce:**
+{o conflito mais relevante dado o contexto do usuario}
+
+**Traducao para sua realidade:**
+{como o debate se aplica especificamente ao budget, tempo, skills e momento do usuario}
+
+**Veredicto:** {GO / NO-GO / CONDITIONAL}
+**Confianca:** {0-100}%
+
+**Plano de acao (sua realidade, nao a teoria dos experts):**
+1. {acao}
+2. {acao}
+3. {acao}
+
+**Contingencias:**
+- Se {condicao}: {plano B}
+```
+
+### Formato de saida completo (--experts)
+
+```
+========================================================
+  CONCLAVE EXPERTS — {N} Experts Convocados
+========================================================
+
+## Pergunta
+{pergunta original}
+
+## Painel de Experts
+{lista com nome + expertise em 1 linha cada}
+
+---
+
+## Perspectivas
+
+{perspectiva de cada expert no formato E2}
+
+---
+
+## Debate
+
+{replicas cruzadas do passo E3}
+
+---
+
+## CRITIC Score
+
+{tabela padrao v2}
+
+---
+
+## Stress Test
+
+{formato padrao v2}
+
+---
+
+## Sintese do Commander
+
+{contextualizacao ao usuario real — passo E6}
+
+========================================================
+— Conclave Experts encerrado.
+  Os experts falam de frameworks universais.
+  O Commander fala da sua realidade especifica.
+  A decisao e sua.
+========================================================
+```
+
+## Execucao (modo padrao — sem --experts)
 
 ### 1. Parsear input
 
@@ -302,3 +490,4 @@ confidence: {ALTA/MEDIA/BAIXA}
 - **v2 (default):** Inclui 3 deliberation roles (CRITIC, DEVIL'S ADVOCATE, SYNTHESIZER) apos as perspectivas
 - **--v1 (backward compat):** Pula etapas 3b/3c/3d, usa apenas sintese simples como na versao original
 - v2 produz um Veredicto Final com GO/NO-GO/CONDITIONAL e score de confianca 0-100%
+- **--experts (v3):** Substitui agentes operacionais pelos experts reais do knowledge system — cada expert fala com seus frameworks proprios, tensoes mapeadas via campos VS: do DNA v3, Commander sintetiza ao contexto real do usuario. Use quando quiser ouvir "o que Hormozi diria vs. o que Brunson diria" em vez de perspectivas por papel operacional

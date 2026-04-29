@@ -6,15 +6,19 @@ import { DailyCard } from '@/components/dashboard/daily-card';
 import { ProgressRing } from '@/components/dashboard/progress-ring';
 import { Motivation } from '@/components/dashboard/motivation';
 import { Disclaimer } from '@/components/ui/disclaimer';
-import { redirect } from 'next/navigation';
+import { LandingPage } from '@/components/landing/landing-page';
+import { WelcomeWrapper } from '@/components/dashboard/welcome-wrapper';
 import { isDemoMode, DEMO_PROFILE, DEMO_PURCHASES, DEMO_PROGRESS } from '@/lib/demo';
+import { StreakBadge } from '@/components/dashboard/streak-badge';
+import { MilestoneCard } from '@/components/dashboard/milestone-card';
+import { calculateStreak, getMilestone } from '@/lib/streak';
 import type { Profile, Purchase, DayProgress } from '@/types/database';
 
 export default async function HomePage() {
   const user = await getUser();
 
   if (!user) {
-    redirect('/auth/login');
+    return <LandingPage />;
   }
 
   let profile: Profile | null;
@@ -44,13 +48,29 @@ export default async function HomePage() {
   const currentDay = getProtocolDay(purchaseDate);
   const isTodayCompleted = completedDays.includes(currentDay);
 
+  const streak = calculateStreak(completedDays, currentDay);
+  const milestone = getMilestone(completedDays.length);
+
   return (
-    <main className="px-5 pt-8 pb-24 max-w-lg mx-auto">
+    <main className="px-5 pt-8 pb-24 max-w-lg mx-auto lg:max-w-2xl">
+      <WelcomeWrapper />
       <Greeting name={profile?.full_name} />
-      <DailyCard currentDay={currentDay} isCompleted={isTodayCompleted} />
-      <ProgressRing completedDays={completedDays.length} />
-      <Motivation currentDay={currentDay} />
-      <Disclaimer />
+      {milestone && (
+        <MilestoneCard emoji={milestone.emoji} message={milestone.message} completedDays={completedDays.length} />
+      )}
+      <StreakBadge streak={streak} completedDays={completedDays.length} />
+      <div className="animate-slide-up">
+        <DailyCard currentDay={currentDay} isCompleted={isTodayCompleted} />
+      </div>
+      <div className="animate-slide-up-delay-1">
+        <ProgressRing completedDays={completedDays.length} />
+      </div>
+      <div className="animate-slide-up-delay-2">
+        <Motivation currentDay={currentDay} />
+      </div>
+      <div className="animate-slide-up-delay-3">
+        <Disclaimer />
+      </div>
     </main>
   );
 }

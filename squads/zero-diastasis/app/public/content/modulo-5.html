@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Módulo 5: Cierre Total · Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --coral:   #F28C7A;
+      --green:   #7BC6A4;
+      --bg:      #F5F3F1;
+      --text:    #2B2B2B;
+      --white:   #FFFFFF;
+      --muted:   #6B6B6B;
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+      --shadow:  0 4px 24px rgba(0,0,0,0.07);
+      --radius:  16px;
+    }
+    body { font-family: var(--sans); background: #E8E5E2; color: var(--text); line-height: 1.7; }
+    .page { width: 210mm; min-height: 297mm; background: var(--bg); margin: 12px auto; padding: 13mm 15mm; position: relative; overflow: hidden; }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; page-break-after: always; page-break-inside: avoid; box-shadow: none; width: 100%; min-height: 100vh; }
+      @page { size: A4; margin: 0; }
+    }
+    h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+    h2 { font-family: var(--serif); font-size: 1.7rem; font-weight: 700; line-height: 1.2; }
+    p  { font-size: 0.92rem; line-height: 1.75; color: var(--text); }
+    .coral { color: var(--coral); } .green { color: var(--green); } .muted { color: var(--muted); } .small { font-size: 0.8rem; }
+    .section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 5px; }
+    .divider { width: 44px; height: 3px; background: var(--coral); border-radius: 2px; margin: 10px 0 16px; }
+    .highlight { background: linear-gradient(135deg, #FFF0ED 0%, #FFF8F7 100%); border: 1.5px solid #F5C4BB; border-radius: var(--radius); padding: 14px 18px; margin: 20px 0; }
+    .info-box { background: #E8F7F1; border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 14px 18px; margin: 12px 0; }
+    .page-footer { position: absolute; bottom: 10mm; left: 15mm; right: 15mm; display: flex; justify-content: space-between; align-items: center; }
+    .page-num { font-size: 0.7rem; color: var(--muted); }
+    .page-brand { font-size: 0.7rem; font-weight: 600; color: var(--coral); }
+    .cover-bg { position: absolute; inset: 0; background: linear-gradient(155deg, #0D1A10 0%, #1A1A1A 100%); }
+    .cover-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 8mm 0 10mm; }
+    .day-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .day-badge { width: 44px; height: 44px; min-width: 44px; border-radius: 12px; background: var(--coral); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 700; line-height: 1; }
+    .day-badge .day-num { font-size: 1.1rem; } .day-badge .day-word { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85; }
+    .day-focus { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .day-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .day-meta { display: flex; gap: 8px; margin-top: 4px; flex-wrap: wrap; }
+    .day-pill { background: #F5F3F1; border-radius: 100px; padding: 3px 10px; font-size: 0.7rem; font-weight: 600; color: var(--muted); }
+    .exercise { background: var(--white); border-radius: 14px; box-shadow: var(--shadow); padding: 20px 22px; margin-bottom: 14px; }
+    .exercise-header { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #F0EDE9; }
+    .exercise-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; background: #FFF0ED; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .exercise-name { font-weight: 700; font-size: 0.9rem; }
+    .exercise-dur { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+    .exercise-position { background: #F9F6F3; border-radius: 10px; padding: 10px 14px; font-size: 0.78rem; color: var(--muted); margin-bottom: 14px; display: flex; gap: 6px; align-items: center; }
+    .steps { display: flex; flex-direction: column; gap: 10px; }
+    .step { display: flex; gap: 9px; align-items: flex-start; }
+    .step-num { width: 20px; height: 20px; min-width: 20px; border-radius: 6px; background: var(--coral); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 700; margin-top: 1px; }
+    .step p { font-size: 0.82rem; line-height: 1.6; }
+    .exercise-tags { display: flex; flex-direction: column; gap: 9px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #F0EDE9; }
+    .tag-row { display: flex; gap: 7px; align-items: flex-start; }
+    .tag-icon { font-size: 0.78rem; min-width: 16px; margin-top: 1px; }
+    .tag-label { font-size: 0.72rem; font-weight: 700; min-width: 48px; }
+    .tag-text { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+    .tag-feel .tag-label { color: var(--green); } .tag-avoid .tag-label { color: #D94F3D; } .tag-tip .tag-label { color: var(--coral); }
+    .prog-bar { background: #E8E5E2; border-radius: 100px; height: 6px; margin: 6px 0; }
+    .prog-fill { background: var(--coral); border-radius: 100px; height: 6px; }
+    .completion { background: linear-gradient(135deg, #E8F7F1 0%, #F0FBF7 100%); border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 16px 20px; }
+    .phase-tag { display: inline-flex; align-items: center; gap: 5px; background: rgba(123,198,164,0.15); border: 1px solid rgba(123,198,164,0.4); border-radius: 100px; padding: 3px 10px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #2E8B68; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+
+<!-- PÁGINA 1 — PORTADA -->
+<div class="page" style="padding:0;background:#1A1A1A;">
+  <div class="cover-bg"></div>
+  <div style="position:absolute;top:-50px;right:-50px;width:240px;height:240px;border-radius:50%;background:rgba(123,198,164,0.1);"></div>
+  <div style="position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(123,198,164,0.07);"></div>
+
+  <div class="cover-content" style="padding:10mm 15mm 10mm;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 14px;font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:0.07em;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--green);"></span>
+        Módulo 5 de 5 · Días 22-28
+      </div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);">⏱ 10-12 min/día</div>
+    </div>
+
+    <div style="padding-top:16px;">
+      <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Guía de ejercicios</div>
+      <h1 style="color:#fff;font-size:3rem;margin-bottom:10px;">Cierre<br>Total</h1>
+      <p style="color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.65;max-width:80%;margin-bottom:22px;">Los últimos 7 días anclan los patrones en tu sistema nervioso y establecen la rutina de mantenimiento de por vida. El Día 28 es el final del protocolo.</p>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">🔀 Variación avanzada</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">🌱 Mantenimiento de por vida</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">✓ Módulo final</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">🏆 Día 28</span>
+      </div>
+
+      <!-- 7-day tracker -->
+      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:14px 16px;">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:10px;">Días de este módulo</div>
+        <div style="display:flex;gap:4px;">
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 2px;"><div style="font-size:0.58rem;color:rgba(255,255,255,0.4);margin-bottom:1px;">DÍA</div><div style="font-size:0.82rem;font-weight:700;color:#fff;">22</div></div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 2px;"><div style="font-size:0.58rem;color:rgba(255,255,255,0.4);margin-bottom:1px;">DÍA</div><div style="font-size:0.82rem;font-weight:700;color:#fff;">23</div></div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 2px;"><div style="font-size:0.58rem;color:rgba(255,255,255,0.4);margin-bottom:1px;">DÍA</div><div style="font-size:0.82rem;font-weight:700;color:#fff;">24</div></div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 2px;"><div style="font-size:0.58rem;color:rgba(255,255,255,0.4);margin-bottom:1px;">DÍA</div><div style="font-size:0.82rem;font-weight:700;color:#fff;">25</div></div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 2px;"><div style="font-size:0.58rem;color:rgba(255,255,255,0.4);margin-bottom:1px;">DÍA</div><div style="font-size:0.82rem;font-weight:700;color:#fff;">26</div></div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:8px;padding:6px 2px;"><div style="font-size:0.58rem;color:rgba(255,255,255,0.4);margin-bottom:1px;">DÍA</div><div style="font-size:0.82rem;font-weight:700;color:#fff;">27</div></div>
+          <div style="flex:1;text-align:center;background:rgba(123,198,164,0.25);border-radius:8px;padding:6px 2px;border:1px solid rgba(123,198,164,0.5);"><div style="font-size:0.58rem;color:rgba(255,255,255,0.6);margin-bottom:1px;">DÍA</div><div style="font-size:0.82rem;font-weight:700;color:var(--green);">28</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(255,255,255,0.1);">
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:500;">ZERO DIASTASIS™ · zerodiastasis.com</div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);">Protocolo de Reactivación del TVA</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 2 — INTRO AL MÓDULO -->
+<div class="page">
+  <div class="section-label">Módulo 5 · Cierre Total</div>
+  <h2>7 días para anclar<br>para <span class="coral">siempre</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">El Módulo 5 cierra el protocolo. Primero completás la variación avanzada en todos los contextos de tu vida. Después establecés la rutina de mantenimiento que el cuerpo va a pedir solo.</p>
+
+  <!-- 2 sub-phases -->
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+    <div style="background:var(--white);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:#7BA8C6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;">I</div>
+        <div><div style="font-weight:700;font-size:0.85rem;">Variación Avanzada · Días 22-24</div><div style="font-size:0.72rem;color:var(--muted);">Integrar las técnicas en todos los contextos y situaciones</div></div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="background:#EDF4FA;border-radius:6px;padding:2px 8px;font-size:0.68rem;font-weight:600;color:#4A7A9B;">Uso diario</span>
+        <span style="background:#EDF4FA;border-radius:6px;padding:2px 8px;font-size:0.68rem;font-weight:600;color:#4A7A9B;">Rutina express 6 min</span>
+        <span style="background:#EDF4FA;border-radius:6px;padding:2px 8px;font-size:0.68rem;font-weight:600;color:#4A7A9B;">Secuencia avanzada</span>
+      </div>
+    </div>
+    <div style="background:var(--white);border-radius:12px;padding:12px 15px;box-shadow:var(--shadow);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;">II</div>
+        <div><div style="font-weight:700;font-size:0.85rem;">Anclaje · Días 25-28</div><div style="font-size:0.72rem;color:var(--muted);">Fijar la rutina de mantenimiento y celebrar el cierre</div></div>
+      </div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="background:#E8F7F1;border-radius:6px;padding:2px 8px;font-size:0.68rem;font-weight:600;color:#2E8B68;">Rutina permanente</span>
+        <span style="background:#E8F7F1;border-radius:6px;padding:2px 8px;font-size:0.68rem;font-weight:600;color:#2E8B68;">Revisión final</span>
+        <span style="background:#E8F7F1;border-radius:6px;padding:2px 8px;font-size:0.68rem;font-weight:600;color:#2E8B68;">Medición final</span>
+        <span style="background:#E8F7F1;border-radius:6px;padding:2px 8px;font-size:0.68rem;font-weight:600;color:#2E8B68;">Celebración Día 28</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <p class="small"><strong>Posición base de este módulo:</strong> Múltiple. Cada día especifica. Vas a usar de pie y sentada principalmente. Para los Días 25 y 27 solo necesitás una silla o espacio de pie libre.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">2</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 3 — DÍA 22 -->
+<div class="page">
+  <div class="phase-tag">Variación Avanzada · Uso diario</div>
+  <div class="day-header">
+    <div class="day-badge"><span class="day-num">22</span><span class="day-word">día</span></div>
+    <div>
+      <div class="day-focus">Módulo 5 · Cierre Total</div>
+      <div class="day-title">Activaciones durante el día</div>
+      <div class="day-meta"><span class="day-pill">⏱ 12 min distribuidos</span><span class="day-pill">🏠 Vida diaria</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy no hay una sesión concentrada. Las técnicas se distribuyen a lo largo del día, en el contexto real donde el cuerpo las va a usar para siempre. Este día prueba que ya no necesitás un espacio especial para ejercitarte.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🏠</div>
+      <div>
+        <div class="exercise-name">3 rondas distribuidas en el día</div>
+        <div class="exercise-dur">⏱ 4 min × 3 rondas · a lo largo del día</div>
+      </div>
+    </div>
+    <div class="exercise-position">🧍 <span><strong>Posición:</strong> De pie en cualquier lugar de tu casa o rutina diaria.</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p><strong>Ronda mañana:</strong> 3 hipopresivos + 3 vacuums × 8s. Mientras preparás el desayuno.</p></div>
+      <div class="step"><div class="step-num">2</div><p><strong>Ronda mediodía:</strong> 3 hipopresivos + 3 vacuums × 8s. En la cola, lavando los platos.</p></div>
+      <div class="step"><div class="step-num">3</div><p><strong>Ronda noche:</strong> 3 hipopresivos × 8s + 3 vacuums × 8s. Antes de dormir.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Las técnicas son automáticas. El cuerpo las ejecuta sin entrar en modo ejercicio.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Dejar las 3 rondas para el final del día. Distribuidas anclan mejor el patrón.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Poné 3 alarmas en el teléfono. Con el tiempo, el cuerpo las pedirá solo.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 22:</strong> Las activaciones ya viajan con vos. Funcionan en la cola del súper, lavando los platos, en cualquier parte.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">3</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 4 — DÍA 23 -->
+<div class="page">
+  <div class="phase-tag">Variación Avanzada · Secuencia express</div>
+  <div class="day-header">
+    <div class="day-badge"><span class="day-num">23</span><span class="day-word">día</span></div>
+    <div>
+      <div class="day-focus">Módulo 5 · Cierre Total</div>
+      <div class="day-title">Rutina express de 6 minutos</div>
+      <div class="day-meta"><span class="day-pill">⏱ 6 min</span><span class="day-pill">⚡ Para días con poco tiempo</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Los días que el tiempo falta, 6 minutos bien hechos valen una sesión completa. Esta secuencia se convierte en tu mínimo de mantenimiento para después del Día 28.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">⚡</div>
+      <div>
+        <div class="exercise-name">Secuencia express compacta</div>
+        <div class="exercise-dur">⏱ 6 minutos exactos · 1 sola pasada</div>
+      </div>
+    </div>
+    <div class="exercise-position">🧍 <span><strong>Posición:</strong> De pie. Sin cambiar de lugar ni de posición. Todo de pie.</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p><strong>Calentamiento:</strong> 3 respiraciones TVA. 30 segundos.</p></div>
+      <div class="step"><div class="step-num">2</div><p><strong>3 hipopresivos × 8s</strong> con 2 respiraciones entre cada uno. 2 minutos.</p></div>
+      <div class="step"><div class="step-num">3</div><p><strong>3 vacuums × 8s</strong> con 2 respiraciones entre cada uno. 2 minutos.</p></div>
+      <div class="step"><div class="step-num">4</div><p><strong>1 ciclo combinado:</strong> hipopresivo + vacuum sin pausa. 1 minuto.</p></div>
+      <div class="step"><div class="step-num">5</div><p><strong>Cierre:</strong> 3 respiraciones abdominales. 30 segundos.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">6 minutos activan el TVA tanto como una sesión completa si la técnica es precisa.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Usar la express para reemplazar las sesiones completas. Es para emergencias.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Esta pasa a ser tu rutina mínima de mantenimiento después del Día 28. Guardala.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 23:</strong> 6 minutos que valen una sesión completa. Esta es tu herramienta para los días difíciles. Guardala.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">4</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 5 — DÍA 24 -->
+<div class="page">
+  <div class="phase-tag">Variación Avanzada · Cierre</div>
+  <div class="day-header">
+    <div class="day-badge"><span class="day-num">24</span><span class="day-word">día</span></div>
+    <div>
+      <div class="day-focus">Módulo 5 · Cierre Total</div>
+      <div class="day-title">Secuencia avanzada completa</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 12 min</span>
+        <span class="day-pill">🔥 Intensidad máxima</span>
+        <span class="day-pill">✓ Cierre de variación</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">El día más intenso de todo el protocolo. Cada técnica al máximo tiempo de apnea. Sin concesiones. Si el Día 1 fue tu punto de partida, este es la medida de hasta dónde llegaste.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🔥</div>
+      <div>
+        <div class="exercise-name">Hipopresivos avanzados en serie</div>
+        <div class="exercise-dur">⏱ 6 minutos · 5 repeticiones · 15s de apnea</div>
+      </div>
+    </div>
+    <div class="exercise-position">🧍 <span><strong>Posición:</strong> De pie. Postura hipopresiva base con brazos elevados.</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Hipopresivo completo: exhala, apnea, costillas + TVA. 15 segundos.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Soltá. 3 respiraciones. Repetí. Sin bajar el tiempo entre repeticiones.</p></div>
+      <div class="step"><div class="step-num">3</div><p>5 repeticiones seguidas. Al terminar la quinta, descansá 1 minuto completo.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Cada repetición se construye sobre la anterior. La quinta debe sentirse igual.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Bajar a 10s en las últimas repeticiones. Hoy es el día de la consistencia máxima.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Si llegás a la quinta con técnica limpia, tu apnea se duplicó desde el Día 8.</span></div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">💥</div>
+      <div>
+        <div class="exercise-name">Vacuum avanzado + flow de cierre</div>
+        <div class="exercise-dur">⏱ 5 minutos · 4 ciclos</div>
+      </div>
+    </div>
+    <div class="exercise-position">🔀 <span><strong>Posición:</strong> Manos en rodillas (vacuum), de pie (sentadilla + TVA). Alternás rápido.</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p><strong>Vacuum isométrico:</strong> manos en rodillas, 15s + 5 pulsos al final. Soltá.</p></div>
+      <div class="step"><div class="step-num">2</div><p><strong>Sentadilla + TVA:</strong> 8 repeticiones con TVA activo. Sin pausa desde el vacuum.</p></div>
+      <div class="step"><div class="step-num">3</div><p>2 respiraciones. Ese es 1 ciclo. Repetí 4 veces.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Lo estático (vacuum) más lo dinámico (sentadilla). El TVA se activa en ambos.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Saltarte el vacuum antes de las sentadillas. La secuencia importa.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Este es el nivel que vas a mantener en la fase de anclaje. Ya estás lista.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 24:</strong> El día más intenso del protocolo. Si llegaste hasta acá con técnica limpia, los resultados ya están.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">5</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 6 — DÍA 25 -->
+<div class="page">
+  <div class="phase-tag">Anclaje · Mantenimiento</div>
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--green);"><span class="day-num">25</span><span class="day-word">día</span></div>
+    <div>
+      <div class="day-focus">Módulo 5 · Tu rutina permanente</div>
+      <div class="day-title">La sesión que usarás de por vida</div>
+      <div class="day-meta"><span class="day-pill">⏱ 10 min</span><span class="day-pill">🌱 Mantenimiento</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy no se aprende nada nuevo. Hoy se instala la rutina que va a quedar para siempre. 10 minutos, 3 veces por semana, es todo lo que el cuerpo necesita para mantener lo conseguido.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🌱</div>
+      <div>
+        <div class="exercise-name">Rutina de mantenimiento base</div>
+        <div class="exercise-dur">⏱ 10 minutos · 3 veces por semana de por vida</div>
+      </div>
+    </div>
+    <div class="exercise-position">🧍 <span><strong>Posición:</strong> De pie. Esta es la versión estándar. Podés hacerla en cualquier lugar.</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p><strong>3 hipopresivos × 10s</strong> con 3 respiraciones entre cada uno. 3 minutos.</p></div>
+      <div class="step"><div class="step-num">2</div><p><strong>3 vacuums × 10s</strong> con 3 respiraciones entre cada uno. 3 minutos.</p></div>
+      <div class="step"><div class="step-num">3</div><p><strong>1 ciclo combinado:</strong> hipopresivo + vacuum. 2 minutos.</p></div>
+      <div class="step"><div class="step-num">4</div><p><strong>Cierre:</strong> 3 respiraciones abdominales conscientes. 2 minutos.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Esta es tu nueva normalidad: una práctica de por vida, no solo 28 días.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">10 min, 3 veces por semana. Todo lo que necesitás para mantener los resultados.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 25:</strong> Esta es la rutina que te acompaña para siempre. 3 veces por semana, 10 minutos, todo lo que necesitás.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">6</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 7 — DÍA 26 -->
+<div class="page">
+  <div class="phase-tag">Anclaje · Revisión final</div>
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--green);"><span class="day-num">26</span><span class="day-word">día</span></div>
+    <div>
+      <div class="day-focus">Módulo 5 · Revisión final</div>
+      <div class="day-title">Secuencia completa + auto-medición</div>
+      <div class="day-meta"><span class="day-pill">⏱ 12 min</span><span class="day-pill">📏 Medición</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Antes del último día, tomás tus medidas y registrás el progreso real. Los números cuentan solo una parte de la historia — el cuerpo que sentís ahora cuenta el resto.</p>
+
+  <div style="background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:14px;">
+    <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Auto-medición del Día 26</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;min-width:16px;margin-top:2px;">📏</span><p style="font-size:0.82rem;"><strong>Medida de cintura:</strong> ___ cm</p></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;min-width:16px;margin-top:2px;">📏</span><p style="font-size:0.82rem;"><strong>Medida a nivel del ombligo:</strong> ___ cm</p></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;min-width:16px;margin-top:2px;">✋</span><p style="font-size:0.82rem;"><strong>Auto-test diástasis:</strong> ¿Cuántos dedos? ___</p></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;min-width:16px;margin-top:2px;">💬</span><p style="font-size:0.82rem;"><strong>¿Sentís el vacuum de pie más profundo que en el Día 10?</strong> Sí / No</p></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;min-width:16px;margin-top:2px;">💬</span><p style="font-size:0.82rem;"><strong>¿Podés mantener el TVA activo mientras caminás?</strong> Sí / A veces / No</p></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 26:</strong> Medí, anotá, compará con el Día 1. Los números cuentan parte de la historia. El cuerpo que sentís cuenta el resto.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">7</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 8 — DÍA 27 -->
+<div class="page">
+  <div class="phase-tag">Anclaje · Mantenimiento alternativo</div>
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--green);"><span class="day-num">27</span><span class="day-word">día</span></div>
+    <div>
+      <div class="day-focus">Módulo 5 · Mantenimiento versión 2</div>
+      <div class="day-title">Rutina alternativa (para variar)</div>
+      <div class="day-meta"><span class="day-pill">⏱ 10 min</span><span class="day-pill">🔄 Variante sentada</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Para no aburrirte con la misma rutina, tenés dos versiones de mantenimiento. Alternás semana a semana y el TVA trabaja en todos los contextos posturales.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🔄</div>
+      <div>
+        <div class="exercise-name">Rutina de mantenimiento versión sentada</div>
+        <div class="exercise-dur">⏱ 10 minutos · Alternativa al Día 25</div>
+      </div>
+    </div>
+    <div class="exercise-position">🪑 <span><strong>Posición:</strong> Sentada al borde de la silla. Alternala con la versión de pie del Día 25.</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p><strong>3 hipopresivos sentada × 10s.</strong> 3 respiraciones entre cada uno. 3 minutos.</p></div>
+      <div class="step"><div class="step-num">2</div><p><strong>3 vacuums sentada × 10s.</strong> 3 respiraciones entre cada uno. 3 minutos.</p></div>
+      <div class="step"><div class="step-num">3</div><p><strong>6 sentadillas suaves + TVA.</strong> 2 minutos.</p></div>
+      <div class="step"><div class="step-num">4</div><p><strong>Cierre:</strong> manos en abdomen, 4 respiraciones conscientes. 2 minutos.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Alternando las dos versiones, trabajás el TVA en todos los contextos posturales.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Semana 1: Día 25 (lunes), express Día 23 (miércoles), Día 27 (viernes).</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 27:</strong> Dos versiones para no aburrirte. De pie, sentada. Alternás semana a semana y el TVA trabaja en todos los contextos.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">8</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 9 — DÍA 28 -->
+<div class="page">
+  <div class="phase-tag">Anclaje · Cierre del Protocolo</div>
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--green);"><span class="day-num">28</span><span class="day-word">día</span></div>
+    <div>
+      <div class="day-focus">Módulo 5 · Día final</div>
+      <div class="day-title">¡Lo lograste!</div>
+      <div class="day-meta"><span class="day-pill">🎉 Celebración</span><span class="day-pill">📏 Medición final</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:16px;">Hace 28 días empezaste con dudas. Hoy tenés una Faja Invisible activada. Tu abdomen ya sabe sostenerse desde adentro.</p>
+
+  <div style="background:linear-gradient(135deg,#1A2A1A 0%,#1A1A1A 100%);border-radius:var(--radius);padding:20px;position:relative;overflow:hidden;margin-bottom:14px;">
+    <div style="position:absolute;top:-20px;right:-20px;width:100px;height:100px;border-radius:50%;background:rgba(123,198,164,0.15);"></div>
+    <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:14px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;color:var(--green);">✓</span><p style="font-size:0.82rem;color:rgba(255,255,255,0.8);"><strong style="color:#fff;">Tomá tus medidas finales</strong> y comparalas con el Día 1. Anotá todo en tu Tracker.</p></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;color:var(--green);">✓</span><p style="font-size:0.82rem;color:rgba(255,255,255,0.8);"><strong style="color:#fff;">Hacé el auto-test de diástasis</strong> por última vez. ¿Cuántos dedos ahora?</p></div>
+      <div style="display:flex;gap:8px;align-items:flex-start;"><span style="font-size:0.8rem;color:var(--green);">✓</span><p style="font-size:0.82rem;color:rgba(255,255,255,0.8);"><strong style="color:#fff;">Compartí tu resultado</strong> con otra mamá. Tu historia puede cambiar la de alguien más.</p></div>
+    </div>
+    <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(123,198,164,0.3);border-radius:10px;padding:10px 14px;">
+      <p style="font-size:0.78rem;color:rgba(255,255,255,0.6);font-style:italic;">"Tu Faja Invisible está activada. Lo que aprendiste en 28 días se queda para siempre si lo mantenés 3 veces por semana."</p>
+    </div>
+  </div>
+
+  <div class="completion">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px;">
+      <span style="font-size:1.4rem;">🏆</span>
+      <div>
+        <div style="font-family:var(--sans);font-size:1rem;font-weight:700;color:#2E8B68;margin-bottom:2px;">Protocolo completado</div>
+        <div style="font-size:0.78rem;color:var(--muted);">28 días. 5 módulos. Una Faja Invisible activada para siempre.</div>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" style="width:100%;background:var(--green);"></div></div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">28 de 28 días completados · Mantenimiento: 3 veces por semana</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">9</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 10 — REFERENCIA RÁPIDA -->
+<div class="page">
+  <div class="section-label">Módulo 5 · Referencia rápida</div>
+  <h2>Los 7 días de un<br><span class="coral">vistazo</span></h2>
+  <div class="divider"></div>
+
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px;">
+
+    <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#4A7A9B;margin-top:4px;margin-bottom:2px;">Variación Avanzada</div>
+    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;background:var(--white);border-radius:10px;padding:9px 12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;border-radius:8px;background:#7BA8C6;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;">22</div>
+      <div><div style="font-weight:600;font-size:0.82rem;">Activaciones diarias</div><div style="font-size:0.68rem;color:var(--muted);">3 rondas distribuidas en el día</div></div>
+      <div style="font-size:0.68rem;color:var(--muted);">12 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;background:var(--white);border-radius:10px;padding:9px 12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;border-radius:8px;background:#7BA8C6;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;">23</div>
+      <div><div style="font-weight:600;font-size:0.82rem;">Secuencia express</div><div style="font-size:0.68rem;color:var(--muted);">6 min · para días con poco tiempo</div></div>
+      <div style="font-size:0.68rem;color:var(--muted);">6 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;background:var(--white);border-radius:10px;padding:9px 12px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;border-radius:8px;background:#7BA8C6;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;">24</div>
+      <div><div style="font-weight:600;font-size:0.82rem;">Secuencia avanzada completa</div><div style="font-size:0.68rem;color:var(--muted);">Hipopresivos 15s + vacuum 15s + sentadilla</div></div>
+      <div style="font-size:0.68rem;color:var(--muted);">12 min</div>
+    </div>
+
+    <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#2E8B68;margin-top:6px;margin-bottom:2px;">Anclaje · Rutina permanente</div>
+    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;background:#E8F7F1;border-radius:10px;padding:9px 12px;border:1px solid #A8DFC8;">
+      <div style="width:28px;height:28px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;">25</div>
+      <div><div style="font-weight:600;font-size:0.82rem;color:#2E8B68;">Rutina de mantenimiento</div><div style="font-size:0.68rem;color:var(--muted);">La sesión de por vida · 3×/semana</div></div>
+      <div style="font-size:0.68rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;background:#E8F7F1;border-radius:10px;padding:9px 12px;border:1px solid #A8DFC8;">
+      <div style="width:28px;height:28px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;">26</div>
+      <div><div style="font-weight:600;font-size:0.82rem;color:#2E8B68;">Revisión final + medición</div><div style="font-size:0.68rem;color:var(--muted);">Secuencia + auto-medición pre-final</div></div>
+      <div style="font-size:0.68rem;color:var(--muted);">12 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;background:#E8F7F1;border-radius:10px;padding:9px 12px;border:1px solid #A8DFC8;">
+      <div style="width:28px;height:28px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;">27</div>
+      <div><div style="font-weight:600;font-size:0.82rem;color:#2E8B68;">Mantenimiento versión sentada</div><div style="font-size:0.68rem;color:var(--muted);">Alternativa al Día 25 · en silla</div></div>
+      <div style="font-size:0.68rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:36px 1fr auto;gap:8px;align-items:center;background:linear-gradient(135deg,#1A2A1A,#1A1A1A);border-radius:10px;padding:9px 12px;">
+      <div style="width:28px;height:28px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.75rem;">28</div>
+      <div><div style="font-weight:600;font-size:0.82rem;color:var(--green);">¡Lo lograste! Celebración</div><div style="font-size:0.68rem;color:rgba(255,255,255,0.4);">Medición final + compartir resultado</div></div>
+      <div style="font-size:0.68rem;color:rgba(255,255,255,0.4);">🏆</div>
+    </div>
+
+  </div>
+
+  <div class="info-box">
+    <p class="small"><strong>Después del Día 28:</strong> Rutina de mantenimiento 3 veces por semana. Alternás Día 25 (de pie), express Día 23 (días cortos) y Día 27 (sentada). Con eso alcanza.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">10</div>
+  </div>
+</div>
+
+
+</body>
+</html>

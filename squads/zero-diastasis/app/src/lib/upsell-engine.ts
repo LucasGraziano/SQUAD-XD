@@ -1,5 +1,16 @@
 import type { Product } from '@/types/product';
 
+// Checkout URLs loaded from environment variables — set these in .env.local
+// Falls back to '#' (disabled) when not configured
+const CHECKOUT_URLS: Record<string, string> = {
+  'pack-receitas': process.env.NEXT_PUBLIC_CHECKOUT_URL_PACK_RECEITAS || '#',
+  aceleracion: process.env.NEXT_PUBLIC_CHECKOUT_URL_ACELERACION || '#',
+  'reset-postural': process.env.NEXT_PUBLIC_CHECKOUT_URL_RESET_POSTURAL || '#',
+  mantenimiento: process.env.NEXT_PUBLIC_CHECKOUT_URL_MANTENIMIENTO || '#',
+  comunidad: process.env.NEXT_PUBLIC_CHECKOUT_URL_COMUNIDAD || '#',
+  'consulta-individual': process.env.NEXT_PUBLIC_CHECKOUT_URL_CONSULTA || '#',
+};
+
 // Per briefing value ladder
 const PRODUCTS: Product[] = [
   {
@@ -8,7 +19,7 @@ const PRODUCTS: Product[] = [
     descriptionKey: '15-20 recetas simples que reducen la inflamación abdominal',
     priceCents: 400,
     currency: 'USD',
-    checkoutUrl: '#',
+    checkoutUrl: CHECKOUT_URLS['pack-receitas'],
   },
   {
     id: 'aceleracion',
@@ -16,7 +27,7 @@ const PRODUCTS: Product[] = [
     descriptionKey: 'Módulos extras para acelerar tus resultados — versión intensiva del protocolo',
     priceCents: 900,
     currency: 'USD',
-    checkoutUrl: '#',
+    checkoutUrl: CHECKOUT_URLS.aceleracion,
   },
   {
     id: 'reset-postural',
@@ -24,7 +35,7 @@ const PRODUCTS: Product[] = [
     descriptionKey: 'Programa complementario de postura + cadera + lumbar para resultados completos',
     priceCents: 2900,
     currency: 'USD',
-    checkoutUrl: '#',
+    checkoutUrl: CHECKOUT_URLS['reset-postural'],
   },
   {
     id: 'mantenimiento',
@@ -32,7 +43,23 @@ const PRODUCTS: Product[] = [
     descriptionKey: 'Mantén tus resultados con sesiones semanales guiadas',
     priceCents: 990,
     currency: 'USD',
-    checkoutUrl: '#',
+    checkoutUrl: CHECKOUT_URLS.mantenimiento,
+  },
+  {
+    id: 'comunidad',
+    name: 'Comunidad Zero Diastasis',
+    descriptionKey: 'Acceso al grupo privado — apoyo de otras mamás + sesiones en vivo mensuales',
+    priceCents: 1500,
+    currency: 'USD',
+    checkoutUrl: process.env.NEXT_PUBLIC_CHECKOUT_URL_COMUNIDAD || '#',
+  },
+  {
+    id: 'consulta-individual',
+    name: 'Consulta Individual',
+    descriptionKey: 'Sesión 1:1 de 45 minutos con especialista para revisar tu progreso y ajustar el protocolo',
+    priceCents: 4900,
+    currency: 'USD',
+    checkoutUrl: process.env.NEXT_PUBLIC_CHECKOUT_URL_CONSULTA || '#',
   },
 ];
 
@@ -43,9 +70,17 @@ type ContextualUpsell = {
 
 // Per briefing: contextual upsells on specific milestone days
 const CONTEXTUAL_UPSELLS: Record<number, { productId: string; message: string }> = {
+  3: {
+    productId: 'comunidad',
+    message: '¡3 días seguidos! Únete a nuestra comunidad para apoyo y motivación extra.',
+  },
   7: {
     productId: 'aceleracion',
     message: '¡Completaste la primera semana! ¿Quieres acelerar tus resultados?',
+  },
+  10: {
+    productId: 'pack-receitas',
+    message: '10 días de protocolo. Potencia tus resultados con recetas anti-inflamatorias.',
   },
   14: {
     productId: 'reset-postural',

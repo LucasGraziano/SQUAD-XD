@@ -1,8 +1,8 @@
 # CAMPAIGN STRUCTURE — Zero Diastasis™
 
 > Gerado por: @media-buyer + @traffic-head + @metrics-analyst
-> Data: 2026-03-19
-> Status: DRAFT
+> Data: 2026-03-19 | **Atualizado: 2026-04-07** (6 criativos finais + Wave 1/Wave 2)
+> Status: PRONTO PARA IMPLEMENTAR (aguardando funil fechado)
 > Plataforma: Meta Ads
 
 ---
@@ -12,18 +12,24 @@
 ```
 CONTA DE ANÚNCIOS (Pixel Novo — Zero Diastasis)
 │
-├── [CBO] ZD — Launch — Broad LATAM
+├── [CBO] ZD_Launch_BroadLATAM_[data]   ← Budget: R$60-70/dia
 │   │
-│   ├── [Adset] Broad — Mujeres 25-45 — LATAM
-│   │   ├── [Ad] IMG — No Es Tu Culpa (Script 3)
-│   │   ├── [Ad] VID — La Verdad 35s (Script 1)
-│   │   ├── [Ad] IMG — El Precio (Script 5)
-│   │   └── [Ad] VID — El Espejo 30s (Script 2)     ← P2, adicionar D3-D5
+│   ├── [Adset] Broad_Mujeres2545_LATAM_[data]
+│   │   │
+│   │   ├── ── WAVE 1 (subir primeiro — R$300 total) ──
+│   │   ├── [Ad 1] IMG  — No_Es_Tu_Culpa_v1        ← Tier 1 🥇
+│   │   ├── [Ad 2] VID  — La_Verdad_35s_v1          ← Tier 1 🥇 (compliance fixado)
+│   │   ├── [Ad 3] IMG  — Ad_Hook_Frustrada_v1      ← Tier 1 🥇
+│   │   │
+│   │   ├── ── WAVE 2 (subir após wave 1 — R$300 total) ──
+│   │   ├── [Ad 4] VID  — El_Espejo_Story_v1        ← Tier 2 🥈
+│   │   ├── [Ad 5] VID  — AD1_Finale_v1             ← Benchmark
+│   │   └── [Ad 6] IMG  — AD2_Baseline_v1           ← Baseline validada
 │   │
-│   └── (Adsets futuros quando escalar)
+│   └── (Adsets futuros quando escalar — lookalike 1% purchasers)
 │
-└── [CBO] ZD — Retargeting (FUTURO — quando pixel tiver dados)
-    └── (Após 500+ quiz completions)
+└── [CBO] ZD — Retargeting (FUTURO — após 500+ quiz completions)
+    └── (Quiz abandoners / TSL viewers / Checkout abandoners)
 ```
 
 ---
@@ -38,7 +44,7 @@ CONTA DE ANÚNCIOS (Pixel Novo — Zero Diastasis)
 | **Objetivo** | Conversions | Otimizar para ação real |
 | **Evento de conversão** | Lead (QuizComplete) → migrar para Purchase | Learning phase viável |
 | **Tipo de orçamento** | CBO (Campaign Budget Optimization) | Meta distribui entre adsets |
-| **Budget diário** | $4.20/dia (≈ R$23/dia) | Seed R$700/mês ÷ 30 dias |
+| **Budget diário** | R$60-70/dia | Wave 1: R$300 total (5 dias) → Wave 2: R$300 total |
 | **Otimização de entrega** | Lowest cost | Sem bid cap (budget muito baixo) |
 | **Attribution** | 7-day click, 1-day view | Padrão para low-ticket |
 
@@ -60,12 +66,21 @@ CONTA DE ANÚNCIOS (Pixel Novo — Zero Diastasis)
 
 ### Nível: Ads
 
-| Ad | Nome | Formato | Asset | Primary Text | Headline | CTA |
-|----|------|---------|-------|-------------|----------|-----|
-| 1 | `IMG_NoEsTuCulpa_v1` | Imagem 1080x1080 | Remix.png + design | Copy Script 3 (150 chars) | "Tu cuerpo no necesita fuerza" | "Hacer Test Gratis" |
-| 2 | `VID_LaVerdad_35s_v1` | Vídeo 35s 9:16+1:1 | Sofia talking head | Copy Script 1 (200 chars) | "Descubre por qué empeoran" | "Hacer Test Gratis" |
-| 3 | `IMG_ElPrecio_v1` | Imagem 1080x1080 | Comparativo 3 cols | Copy Script 5 (180 chars) | "$19.90 — Sin cirugía, sin gym" | "Hacer Test Gratis" |
-| 4 | `VID_ElEspejo_30s_v1` | Vídeo 30s 9:16+1:1 | Sofia UGC selfie | Copy Script 2 (180 chars) | "¿Sigues pareciendo embarazada?" | "Hacer Test Gratis" |
+#### Wave 1 — Subir no dia do lançamento
+
+| Ad | Nome no Ads Manager | Formato | Arquivo | Headline | CTA | Wave |
+|----|---------------------|---------|---------|----------|-----|------|
+| 1 | `IMG_NoEsTuCulpa_v1` | Imagem 1:1 1080x1080 | `no-es-tu-culpa-square-1080x1080.html` (exportar PNG) | "No es falta de voluntad" | "Hacer Test Gratis" | 1 |
+| 2 | `VID_LaVerdad_35s_v1` | Vídeo 9:16 35s | `la-verdad-35s-1080x1920.html` (exportar MP4) | "Los abdominales empeoran tu diástasis" | "Hacer Test Gratis" | 1 |
+| 3 | `IMG_HookFrustrada_v1` | Imagem 9:16 1080x1920 | `ad-hook-frustrada-1080x1920.html` (exportar PNG) | Hook cinematic Sofia frustrada | "Hacer Test Gratis" | 1 |
+
+#### Wave 2 — Subir após resultados da Wave 1
+
+| Ad | Nome no Ads Manager | Formato | Arquivo | Headline | CTA | Wave |
+|----|---------------------|---------|---------|----------|-----|------|
+| 4 | `VID_ElEspejo_v1` | Vídeo 9:16 30s | `el-espejo-story-1080x1920.html` (exportar MP4) | "¿Sigues pareciendo embarazada?" | "Hacer Test Gratis" | 2 |
+| 5 | `VID_AD1_Finale_v1` | Vídeo (benchmark) | `materiais/.../ADS/AD 1 - FINALE.mp4` | A definir | "Hacer Test Gratis" | 2 |
+| 6 | `IMG_AD2_Baseline_v1` | Imagem (baseline) | `materiais/.../ADS/AD2.png` | A definir | "Hacer Test Gratis" | 2 |
 
 ---
 

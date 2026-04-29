@@ -128,6 +128,73 @@ export default function AioxPage() {
         </div>
       </section>
 
+      {/* When to Use Each Agent */}
+      <section className="px-12 py-10 border-t border-surface-600">
+        <h2 className="text-xl font-bold mb-2 text-text-primary">Quando Usar Cada Agente</h2>
+        <p className="text-sm text-text-secondary mb-6 max-w-2xl">
+          Guia rápido de decisão. Escolha o agente certo para cada situação — evita ativar o agente errado e violar o Agent Authority (Artigo II).
+        </p>
+
+        {/* Decision table */}
+        <div className="rounded-xl bg-surface-800 border border-surface-600 overflow-hidden mb-8">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-surface-700">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider w-1/3">Situação</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider w-1/6">Agente</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-text-muted uppercase tracking-wider">Comando</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-surface-700">
+              {[
+                { situation: 'Ideia de produto, preciso de pesquisa de mercado', agent: '@analyst', cmd: '*perform-market-research' },
+                { situation: 'Tenho um brief, preciso criar o PRD', agent: '@pm', cmd: '*create-prd' },
+                { situation: 'Tenho o PRD, preciso definir a arquitetura', agent: '@architect', cmd: '*create-full-stack-architecture' },
+                { situation: 'Arquitetura definida, preciso criar o schema do banco', agent: '@data-engineer', cmd: '*create-schema' },
+                { situation: 'Preciso criar uma story a partir de epic/PRD', agent: '@sm', cmd: '*draft' },
+                { situation: 'Story criada, preciso validar antes de dev', agent: '@po', cmd: '*validate-story-draft' },
+                { situation: 'Story validada (Ready), preciso implementar', agent: '@dev', cmd: '*develop' },
+                { situation: 'Implementação concluída, preciso revisar qualidade', agent: '@qa', cmd: '*gate' },
+                { situation: 'QA passou, preciso fazer push e criar PR', agent: '@devops', cmd: '*push + *create-pr' },
+                { situation: 'Preciso criar/modificar agents ou tasks do framework', agent: '@aiox-master', cmd: '*create ou *modify' },
+                { situation: 'QA encontrou problemas, preciso iterar', agent: '@qa + @dev', cmd: '*qa-loop' },
+                { situation: 'Projeto existente, preciso mapear dívida técnica', agent: '@architect', cmd: '*analyze-brownfield' },
+                { situation: 'UI existente com inconsistências visuais', agent: '@ux-design-expert', cmd: '*shock-report' },
+                { situation: 'Preciso adicionar ou configurar um MCP server', agent: '@devops', cmd: '*add-mcp' },
+              ].map((row) => (
+                <tr key={row.situation} className="hover:bg-surface-750">
+                  <td className="px-5 py-3 text-xs text-text-secondary">{row.situation}</td>
+                  <td className="px-5 py-3"><code className="text-xs font-mono text-coral font-bold">{row.agent}</code></td>
+                  <td className="px-5 py-3"><code className="text-xs font-mono text-menta">{row.cmd}</code></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* whenToUse per agent */}
+        <h3 className="text-sm font-bold text-text-primary uppercase tracking-wider mb-4">Use-Cases por Agente</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+          {sorted.filter(a => a.whenToUse && a.whenToUse.length > 0).map((agent) => (
+            <div key={agent.id} className="rounded-lg bg-surface-800 border border-surface-700 p-4">
+              <div className="flex items-center gap-2 mb-3">
+                <span className="text-xl">{agent.icon}</span>
+                <code className="text-sm font-mono text-coral font-bold">@{agent.id}</code>
+                <span className="text-xs text-text-muted">— {agent.title}</span>
+              </div>
+              <ul className="space-y-1">
+                {agent.whenToUse!.map((use, i) => (
+                  <li key={i} className={`text-xs flex gap-2 ${use.startsWith('NÃO') ? 'text-red-400/70' : 'text-text-secondary'}`}>
+                    <span className={`shrink-0 mt-0.5 ${use.startsWith('NÃO') ? 'text-red-400' : 'text-menta'}`}>{use.startsWith('NÃO') ? '✕' : '→'}</span>
+                    {use}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Delegation Matrix */}
       <section className="px-12 py-10 border-t border-surface-600 pb-20">
         <h2 className="text-xl font-bold mb-6 text-text-primary">Delegation Matrix</h2>

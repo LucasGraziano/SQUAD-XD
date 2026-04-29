@@ -38,25 +38,34 @@ export function SymptomDiary() {
   const [notes, setNotes] = useState('');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
+    setError(null);
 
-    await fetch('/api/progress/symptoms', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        energy_level: energy,
-        pain_level: pain,
-        bloating,
-        notes: notes || null,
-      }),
-    });
+    try {
+      const res = await fetch('/api/progress/symptoms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          energy_level: energy,
+          pain_level: pain,
+          bloating,
+          notes: notes || null,
+        }),
+      });
 
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+      if (!res.ok) throw new Error('Error al guardar');
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch {
+      setError('No se pudo guardar. Intenta de nuevo.');
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -84,6 +93,9 @@ export function SymptomDiary() {
             />
           </div>
 
+          {error && (
+            <p className="text-sm text-red-500 text-center mb-2">{error}</p>
+          )}
           <Button type="submit" className="w-full" disabled={saving}>
             {saved ? '¡Guardado!' : saving ? 'Guardando...' : 'Registrar síntomas'}
           </Button>

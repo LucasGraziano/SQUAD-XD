@@ -12,24 +12,33 @@ export function MeasurementForm() {
   const [weight, setWeight] = useState('');
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setSaving(true);
+    setError(null);
 
-    await fetch('/api/progress/measurements', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        waist_cm: waist ? parseFloat(waist) : null,
-        diastasis_fingers: fingers ? parseFloat(fingers) : null,
-        weight_kg: weight ? parseFloat(weight) : null,
-      }),
-    });
+    try {
+      const res = await fetch('/api/progress/measurements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          waist_cm: waist ? parseFloat(waist) : null,
+          diastasis_fingers: fingers ? parseFloat(fingers) : null,
+          weight_kg: weight ? parseFloat(weight) : null,
+        }),
+      });
 
-    setSaving(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+      if (!res.ok) throw new Error('Error al guardar');
+
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    } catch {
+      setError('No se pudo guardar. Intenta de nuevo.');
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
@@ -67,6 +76,9 @@ export function MeasurementForm() {
             value={weight}
             onChange={(e) => setWeight(e.target.value)}
           />
+          {error && (
+            <p className="text-sm text-red-500 text-center">{error}</p>
+          )}
           <Button type="submit" className="w-full" disabled={saving}>
             {saved ? '¡Guardado!' : saving ? 'Guardando...' : 'Guardar medidas'}
           </Button>

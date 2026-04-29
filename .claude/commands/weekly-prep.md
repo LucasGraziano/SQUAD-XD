@@ -13,8 +13,11 @@ Gera automaticamente a pauta da weekly de segunda-feira (20-21h) baseada nas tas
 ### 1. Carregar contexto
 
 ```
-C:\Users\Graziano\.claude\projects\D--SQUAD-XD\memory\project_launch_zero_diastase.md
-C:\Users\Graziano\.claude\projects\D--SQUAD-XD\memory\user_lucas_profile.md
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\user_lucas_profile.md
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\project_company_context.md
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\project_launch_zero_diastase.md
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\project_conclave_strategic_decision.md
+squads/low-ticket/projects/zero-diastase/sprint-status.md
 ```
 
 ### 2. Puxar tasks do Notion

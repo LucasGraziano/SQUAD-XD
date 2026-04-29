@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Google Fonts ─────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600;700&display=swap');
+
+/* ── CSS Variables (shadcn/ui + Vínculo) ─────────────── */
+@layer base {
+  :root {
+    --background:          250 250 248; /* off-white */
+    --foreground:          31 41 55;    /* charcoal */
+    --card:                255 255 255;
+    --card-foreground:     31 41 55;
+    --primary:             26 74 90;    /* brand-teal */
+    --primary-foreground:  255 255 255;
+    --secondary:           242 232 220; /* brand-sand */
+    --secondary-foreground: 31 41 55;
+    --muted:               244 244 242; /* neutral-mist */
+    --muted-foreground:    107 114 128; /* neutral-secondary */
+    --accent:              242 232 220;
+    --accent-foreground:   26 74 90;
+    --destructive:         192 57 43;   /* semantic-danger */
+    --destructive-foreground: 255 255 255;
+    --border:              226 226 222; /* neutral-border */
+    --input:               226 226 222;
+    --ring:                26 74 90;    /* brand-teal */
+    --radius:              0.5rem;
+  }
+}
+
+/* ── Base Styles ─────────────────────────────────────── */
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-neutral-off-white text-neutral-charcoal font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+
+  /* Números tabulares para dados financeiros */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum';
+  }
+
+  /* Headings usam serif */
+  h1, h2 {
+    @apply font-serif;
+  }
+
+  /* Focus ring Vínculo */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-brand-teal ring-offset-2;
+  }
+
+  /* Scrollbar sutil */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-neutral-mist;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-neutral-border rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-secondary;
+  }
+}
+
+/* ── Smooth scroll ───────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── Utilitários Vínculo ─────────────────────────────── */
+@layer utilities {
+  /* Card padrão */
+  .card-vinculo {
+    @apply bg-white rounded-card shadow-card border border-neutral-border/60;
+  }
+
+  /* Badge de risco */
+  .risk-badge-critical { @apply bg-semantic-danger-bg text-semantic-danger border border-semantic-danger/20; }
+  .risk-badge-high     { @apply bg-orange-50 text-orange-700 border border-orange-200; }
+  .risk-badge-medium   { @apply bg-semantic-warning-bg text-semantic-warning border border-amber-200; }
+  .risk-badge-low      { @apply bg-semantic-success-bg text-semantic-success border border-green-200; }
+
+  /* Gradiente do hero (landing) */
+  .hero-gradient {
+    background: linear-gradient(135deg, #1A4A5A 0%, #245E74 50%, #1A4A5A 100%);
+  }
+
+  /* Linha de tempo do prontuário */
+  .timeline-line {
+    @apply absolute left-4 top-8 bottom-0 w-px bg-neutral-border;
+  }
+
+  /* Shimmer text — gradient animado no hero */
+  .text-shimmer {
+    background: linear-gradient(
+      90deg,
+      #B8955A 0%,
+      #F2E8DC 40%,
+      #B8955A 60%,
+      #CDB07A 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Glass card */
+  .card-glass {
+    @apply bg-white/60 backdrop-blur-sm border border-white/80 shadow-card;
+  }
+
+  /* Glow brand-teal */
+  .glow-teal {
+    box-shadow: 0 0 24px rgba(26, 74, 90, 0.20);
+  }
+}

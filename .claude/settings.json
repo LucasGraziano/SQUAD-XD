@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"ATLAS AUTO-BRIEFING: Este e o inicio de uma nova sessao. Antes de responder a mensagem do usuario, execute rapidamente o /atlas-briefing --compact para mostrar o status do dia. Se o usuario ja pediu algo especifico, responda normalmente e inclua o briefing no final.\"}}'",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"DICA DE INICIO DE SESSAO: O usuario pode rodar /atlas-briefing (status operacional), /recall (retomar contexto) ou seguir com o pedido. NAO execute comandos automaticamente. Se o usuario invocou um agente especifico (@aios-master, @dev, @qa, etc.), respeite a persona convocada — nao assine como Atlas se o agente ativo for outro.\"}}'",
             "once": true
           }
         ]
@@ -19,6 +19,18 @@
             "type": "command",
             "command": "echo '{\"systemMessage\":\"REVIEW REMINDER: Antes de encerrar, pergunte ao usuario se quer rodar /review-day para fechar a sessao e registrar o progresso no Notion.\"}'",
             "statusMessage": "Verificando fechamento de sessao..."
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \".aiox-core/core/hooks/check-design-md.js\"",
+            "statusMessage": "Verificando DESIGN.md..."
           }
         ]
       }

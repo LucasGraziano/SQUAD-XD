@@ -8,6 +8,7 @@ export interface Agent {
   system: 'aiox' | 'low-ticket'
   zodiac?: string
   archetype?: string
+  whenToUse?: string[]
   commands?: { cmd: string; desc: string }[]
   exclusive?: string[]
   collaborates?: string[]
@@ -51,6 +52,13 @@ export const aioxAgents: Agent[] = [
     ],
     exclusive: ['Framework governance', 'Override agent boundaries', 'IDS registry management', 'Execute ANY task directly', 'Constitutional enforcement'],
     keyPrinciple: 'Can execute any task, but prefers delegation. Security-first with audit logging.',
+    whenToUse: [
+      'Criar/modificar componentes do framework (agents, tasks, workflows)',
+      'Orquestrar workflows multi-agente complexos',
+      'Resolver conflitos entre agentes ou violações constitucionais',
+      'Executar tasks de qualquer agente sem mudar de persona',
+      'Gerenciar IDS registry e sincronizar code intelligence',
+    ],
   },
   {
     id: 'dev',
@@ -81,6 +89,13 @@ export const aioxAgents: Agent[] = [
     coderabbit: 'Light mode: max 2 iterations, CRITICAL auto-fix only',
     keyPrinciple: 'Story has ALL info you need. Read story ONLY, update checkboxes/Dev Agent Record ONLY.',
     storyPermissions: ['Update checkboxes [ ] → [x]', 'Update Dev Agent Record section', 'Update File List section'],
+    whenToUse: [
+      'Implementar stories aprovadas pelo @po',
+      'Aplicar correções do QA gate (*apply-qa-fixes)',
+      'Refatorar código existente com story definida',
+      'Qualquer tarefa de codificação, TypeScript, React, API',
+      'NÃO usar para: git push, criar PRs, alterar AC de stories',
+    ],
   },
   {
     id: 'qa',
@@ -113,6 +128,14 @@ export const aioxAgents: Agent[] = [
     coderabbit: 'Full self-healing: max 3 iterations, CRITICAL+HIGH auto-fix',
     keyPrinciple: 'ONLY update QA Results section in stories. NEVER modify Status/AC/scope.',
     storyPermissions: ['Update QA Results section only'],
+    whenToUse: [
+      'Após @dev completar implementação (QA Gate obrigatório)',
+      'Revisar qualidade de código antes de push',
+      'Criar test suites para features novas',
+      'Spec critique no Spec Pipeline (fase 5)',
+      'Security check e OWASP validation',
+      'Iniciar QA Loop quando há problemas recorrentes',
+    ],
   },
   {
     id: 'architect',
@@ -140,6 +163,14 @@ export const aioxAgents: Agent[] = [
     collaborates: ['@data-engineer', '@dev'],
     coderabbit: 'Architectural patterns, security, anti-patterns, cross-stack consistency',
     keyPrinciple: 'Holistic system thinking, progressive complexity, cross-stack performance, security at every layer.',
+    whenToUse: [
+      'Início de projeto (Greenfield): definir stack, arquitetura, API design',
+      'Decisão de tecnologia: qual banco, qual framework, qual pattern',
+      'Assessment de projeto existente (Brownfield): mapear dívida técnica',
+      'Complexidade assessment no Spec Pipeline (fase 2)',
+      'Análise de impacto antes de mudanças estruturais',
+      'NÃO usar para: implementar DDL — delegar a @data-engineer',
+    ],
   },
   {
     id: 'pm',
@@ -166,6 +197,13 @@ export const aioxAgents: Agent[] = [
     exclusive: ['Epic orchestration', 'PRD creation', 'Spec writing', 'Requirements gathering'],
     collaborates: ['@analyst', '@po', '@sm'],
     keyPrinciple: 'Epic execution wave-based com state tracking em .aiox/epic-{epicId}-state.yaml.',
+    whenToUse: [
+      'Criar PRD a partir de ideia de produto ou brief',
+      'Transformar requisitos informais em spec executável (Spec Pipeline)',
+      'Criar e executar epics (wave-based development)',
+      'Coletar requirements de stakeholders',
+      'Orchestrar workflow Greenfield Full-Stack (fase de PRD)',
+    ],
   },
   {
     id: 'po',
@@ -194,6 +232,13 @@ export const aioxAgents: Agent[] = [
     collaborates: ['@sm', '@pm'],
     keyPrinciple: 'CAN edit QA Results, MUST update Status. CANNOT modify AC/scope/title/dev notes.',
     storyPermissions: ['Update QA Results', 'Transition Draft → Ready', 'Update Status field'],
+    whenToUse: [
+      'Validar story draft criada pelo @sm (10-point checklist)',
+      'Mover story de Draft → Ready (gate obrigatório)',
+      'Gerenciar e priorizar backlog',
+      'Fechar stories como Done após QA pass',
+      'Sincronizar stories com ClickUp/ferramentas externas',
+    ],
   },
   {
     id: 'sm',
@@ -220,6 +265,13 @@ export const aioxAgents: Agent[] = [
     collaborates: ['@po', '@pm'],
     blockedOps: ['git push', 'delete remote branches', 'gh pr create'],
     keyPrinciple: 'Prepare crystal-clear stories for dumb AI agents to implement without confusion.',
+    whenToUse: [
+      'Criar stories a partir de epics ou PRD (*draft)',
+      'Refinar stories existentes com mais detalhes',
+      'Planejar sprint com stories priorizadas',
+      'Usar no início de cada ciclo SDC (Story Development Cycle)',
+      'SEMPRE antes de @dev começar a implementar',
+    ],
   },
   {
     id: 'analyst',
@@ -245,6 +297,13 @@ export const aioxAgents: Agent[] = [
     exclusive: ['Market research', 'Brainstorming facilitation', 'Requirements gathering via elicitation'],
     collaborates: ['@pm', '@po'],
     keyPrinciple: 'Numbered options protocol. Curiosity-driven, evidence-based, facilitate clarity.',
+    whenToUse: [
+      'Pesquisa de mercado e análise competitiva',
+      'Brainstorming estruturado para ideia de produto',
+      'Elicitação de requisitos com stakeholders',
+      'Research de dependências externas (Spec Pipeline fase 3)',
+      'Antes de escrever PRD para validar hipóteses de mercado',
+    ],
   },
   {
     id: 'data-engineer',
@@ -276,6 +335,14 @@ export const aioxAgents: Agent[] = [
     collaborates: ['@architect'],
     coderabbit: 'SQL injection, RLS bypass, missing indexes, schema safety',
     keyPrinciple: 'Correctness before speed. Everything versioned & reversible. Security by default. Idempotency everywhere.',
+    whenToUse: [
+      'Criar schema de banco após @architect definir tecnologia',
+      'Implementar RLS policies (Supabase/PostgreSQL)',
+      'Otimizar queries lentas (EXPLAIN, índices)',
+      'Criar migrations e seeds de dados',
+      'Audit de banco em projetos Brownfield',
+      'NÃO usar para: decisão de qual banco usar — isso é @architect',
+    ],
   },
   {
     id: 'ux-design-expert',
@@ -306,6 +373,14 @@ export const aioxAgents: Agent[] = [
     exclusive: ['Design system ownership', 'UX research', 'Wireframes', 'WCAG compliance', 'Design tokens'],
     collaborates: ['@dev', '@architect'],
     keyPrinciple: 'Atomic Design: Atoms → Molecules → Organisms → Templates → Pages. ROI metrics always.',
+    whenToUse: [
+      'Setup de design system do zero (Greenfield UI)',
+      'Audit de UI existente e shock report (Brownfield UI)',
+      'Extração de design tokens de design file ou especificação',
+      'Verificação de acessibilidade WCAG antes de QA gate',
+      'Criar wireframes para features complexas',
+      'NÃO usar para: implementar componentes em código — isso é @dev',
+    ],
   },
   {
     id: 'devops',
@@ -338,6 +413,14 @@ export const aioxAgents: Agent[] = [
     collaborates: ['@dev', '@qa'],
     coderabbit: 'Pre-push validation, blocks on CRITICAL',
     keyPrinciple: 'EXCLUSIVE for all remote operations. Pre-push gate is NON-NEGOTIABLE.',
+    whenToUse: [
+      'SEMPRE que precisar fazer git push (qualquer outro agente é BLOQUEADO)',
+      'Criar Pull Request no GitHub',
+      'Gerenciar releases e tags de versão',
+      'Adicionar/remover/configurar MCP servers',
+      'Setup de CI/CD pipeline e ambiente de infra',
+      'Health check de infraestrutura',
+    ],
   },
   {
     id: 'squad-creator',

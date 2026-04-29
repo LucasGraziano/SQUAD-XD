@@ -280,3 +280,161 @@ cross_domain:
       - "dossiers/cross-domain/doug-system.md"
     token_cost: 1000
     description: "Arvore de diagnostico cross-domain do Doug — identifica em qual dominio esta o gargalo antes de carregar expert especifico"
+
+# ─────────────────────────────────────────────
+# BLOCO: AI-NATIVE BUILD (v2.0 — 2026-04-29)
+# ─────────────────────────────────────────────
+
+  ai_native_build:
+
+    - id: AI-001
+      trigger: "Configurar Claude Code para novo projeto / estruturar CLAUDE.md"
+      primary_expert: mateus-dias
+      primary_domain: ai-native-build
+      framework: "Sistema de Agentes em 8 Squads + CLAUDE.md como Contrato"
+      load_file: "domains/ai-native-build/mateus-dias-dna.md"
+      token_cost: 600
+      warning: "CLAUDE.md deve ter contexto especifico do projeto — CLAUDE.md generico = agente generico"
+      tension_with: null
+
+    - id: AI-002
+      trigger: "Criar skills para Claude Code / configurar auto-trigger por contexto"
+      primary_expert: chase
+      primary_domain: ai-native-build
+      framework: "CLI + Skill + Hook = Sistema"
+      load_file: "domains/ai-native-build/chase-dna.md"
+      token_cost: 600
+      warning: "Skill description deve ter keywords de trigger. Sem keywords precisas, skill nunca ativa automaticamente"
+      tension_with: null
+
+    - id: AI-003
+      trigger: "Reduzir gasto de tokens / otimizar custo de sessoes Claude Code"
+      primary_expert: chase
+      primary_domain: ai-native-build
+      framework: "Hierarquia Opus/Sonnet/Haiku + Context Hygiene + Offloading"
+      load_file: "domains/ai-native-build/chase-dna.md"
+      token_cost: 600
+      warning: "88% de economia possivel com roteamento correto. Context hygiene (/clear) e mais barato que compactacao"
+      tension_with: null
+
+    - id: AI-004
+      trigger: "Criar DESIGN.md para projeto / evitar AI slop em UI"
+      primary_expert: alon
+      primary_domain: ai-native-build
+      framework: "DESIGN.md Tokens + npx getdesign + design library 70 brands"
+      load_file: "domains/ai-native-build/alon-dna.md"
+      token_cost: 400
+      warning: "DESIGN.md deve ter hex exatos, nao nomes de cores. Sem hex, IA interpreta cores de forma inconsistente"
+      tension_with: null
+
+    - id: AI-005
+      trigger: "Configurar hooks Claude Code / automatizar comportamentos determinísticos"
+      primary_expert: chase
+      primary_domain: ai-native-build
+      framework: "4 Tipos de Hooks: UserPromptSubmit, PreToolUse, PostToolUse, Stop"
+      load_file: "domains/ai-native-build/chase-dna.md"
+      token_cost: 600
+      warning: "Hook nao usa decisao do LLM — determinístico. Skill usa decisao semantica — nao determinístico. Escolher tipo certo para cada automacao"
+      tension_with: null
+
+    - id: AI-006
+      trigger: "Estruturar sistema de agentes IA para empresa / time de agentes"
+      primary_expert: mateus-dias
+      primary_domain: ai-native-build
+      framework: "22 Agentes em 8 Squads + Agente = Sistema nao Ferramenta"
+      load_file: "domains/ai-native-build/mateus-dias-dna.md"
+      token_cost: 600
+      warning: "Cada agente = departamento com responsabilidade clara. Agente sem scope definido = agente ineficiente"
+      tension_with: null
+
+    - id: AI-007
+      trigger: "Usar Plan Mode / planejar antes de executar no Claude Code"
+      primary_expert: mateus-dias
+      primary_domain: ai-native-build
+      framework: "Plan Mode 90% + Shift+Tab Protocol"
+      load_file: "domains/ai-native-build/mateus-dias-dna.md"
+      token_cost: 600
+      warning: "10 tokens para planejar vs 500+ tokens para corrigir erro. Plan Mode quase sempre vale"
+      tension_with: null
+
+    - id: AI-008
+      trigger: "Fazer code review com IA / revisar qualidade de codigo gerado"
+      primary_expert: chase
+      primary_domain: ai-native-build
+      framework: "Codex Adversarial Review + LLM externo como revisor"
+      load_file: "domains/ai-native-build/chase-dna.md"
+      token_cost: 600
+      warning: "LLM nao critica seu proprio codigo. Sempre usar modelo externo (Codex, Gemini) para revisao adversarial"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: DESIGN SYSTEMS (v2.0 — 2026-04-29)
+# ─────────────────────────────────────────────
+
+  design_systems:
+
+    - id: DS-001
+      trigger: "Criar componente UI / implementar interface sem AI slop"
+      primary_expert: design-library
+      primary_domain: design-systems
+      framework: "DESIGN.md Protocol + 70 Brand Library"
+      load_file: "knowledge/design-systems/brands/_INDEX.md"
+      token_cost: 200
+      warning: "Sempre ler DESIGN.md do squad ANTES de gerar qualquer UI. Nunca usar cores fora da paleta."
+      tension_with: null
+
+    - id: DS-002
+      trigger: "Escolher inspiracao de design / qual brand usar como referencia"
+      primary_expert: design-library
+      primary_domain: design-systems
+      framework: "Brand Recommendation Matrix por Mood + Audience"
+      load_file: "knowledge/design-systems/brands/_INDEX.md"
+      token_cost: 200
+      warning: null
+      tension_with: null
+
+    - id: DS-003
+      trigger: "Criar landing page para produto SaaS / produto digital"
+      primary_expert: design-library
+      primary_domain: design-systems
+      framework: "SaaS Landing Pattern: superhuman + stripe + framer"
+      load_file: "knowledge/design-systems/brands/_INDEX.md"
+      token_cost: 200
+      warning: "Verificar DESIGN.md do squad antes. Se nao existir, criar baseado no brand mais proximo + brand-guidelines"
+      tension_with: null
+
+# ─────────────────────────────────────────────
+# BLOCO: SAAS OPERATIONS (v2.0 — 2026-04-29)
+# ─────────────────────────────────────────────
+
+  saas_operations:
+
+    - id: SA-001
+      trigger: "Priorizar features de produto SaaS / decidir o que construir"
+      primary_expert: placeholder-marty-cagan
+      primary_domain: product-engineering
+      framework: "PLACEHOLDER — Fase 3: ingerir Inspired (Marty Cagan)"
+      load_file: "domains/product-engineering/marty-cagan-dna.md"
+      token_cost: 0
+      warning: "DNA nao disponivel ainda — Fase 3 do plano. Usar juizo proprio ou pesquisa externa."
+      tension_with: null
+
+    - id: SA-002
+      trigger: "Definir metricas de produto / North Star Metric para SaaS"
+      primary_expert: placeholder-lenny
+      primary_domain: product-engineering
+      framework: "PLACEHOLDER — Fase 3: ingerir Lenny's Newsletter"
+      load_file: "domains/product-engineering/lenny-rachitsky-dna.md"
+      token_cost: 0
+      warning: "DNA nao disponivel ainda — Fase 3 do plano."
+      tension_with: null
+
+    - id: SA-003
+      trigger: "Reduzir churn / reter clientes SaaS"
+      primary_expert: placeholder-product-led
+      primary_domain: saas-operations
+      framework: "PLACEHOLDER — Fase 3: ingerir materiais de product-led growth"
+      load_file: "domains/saas-operations/churn-reduction.md"
+      token_cost: 0
+      warning: "DNA nao disponivel ainda — Fase 3 do plano."
+      tension_with: null

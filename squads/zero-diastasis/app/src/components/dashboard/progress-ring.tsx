@@ -40,6 +40,11 @@ export function ProgressRing({ completedDays, totalDays = 28 }: ProgressRingProp
         <p className="text-sm text-foreground/60">
           {t('daysCompleted', { count: completedDays })}
         </p>
+        <p className="text-xs text-foreground/40 mt-1">
+          {completedDays < totalDays
+            ? `${totalDays - completedDays} días restantes`
+            : '¡Protocolo completado! 🎉'}
+        </p>
       </div>
     </div>
   );

@@ -1,0 +1,30 @@
+# Meta-Domain: Design Systems
+# Domínio visual: tokens, componentes, UI/UX, brand systems
+
+id: design-systems
+description: "Sistemas de design, tokens visuais, UI/UX, identidade visual digital"
+domains:
+  - design-tokens          # ATIVO: biblioteca 70 brands + DESIGN.md files
+  - component-patterns     # FASE 3: Refactoring UI (Adam Wathan), Atomic Design (Brad Frost)
+  - brand-systems          # ATUAL: brand-guidelines por squad
+
+primary_context: frontend, UI, landing pages, dashboards, marketing sites
+squad_affinity: [psi-saas, low-ticket, all]
+situations_prefix: [DS]
+
+active_resources:
+  - path: "knowledge/design-systems/brands/"
+    description: "70 brands DESIGN.md files"
+  - path: "knowledge/design-systems/brands/_INDEX.md"
+    description: "Índice por mood e categoria"
+
+planned_experts:
+  - name: Adam Wathan
+    source: "Refactoring UI"
+    file: domains/design-systems/adam-wathan-dna.md
+    eta: "Fase 3"
+
+  - name: Brad Frost
+    source: "Atomic Design"
+    file: domains/design-systems/brad-frost-dna.md
+    eta: "Fase 3"

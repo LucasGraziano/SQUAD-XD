@@ -43,14 +43,45 @@ const config: Config = {
         foreground: '#2D2D2D',
       },
       fontFamily: {
-        heading: ['Playfair Display', 'serif'],
-        body: ['Inter', 'sans-serif'],
+        heading: ['Montserrat', 'sans-serif'],
+        body: ['Poppins', 'sans-serif'],
       },
       minHeight: {
         touch: '44px',
       },
       minWidth: {
         touch: '44px',
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.4s ease-out forwards',
+        'slide-up': 'slideUp 0.4s ease-out forwards',
+        'scale-in': 'scaleIn 0.3s ease-out forwards',
+        'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+        'bounce-gentle': 'bounceGentle 0.6s ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          from: { opacity: '0' },
+          to: { opacity: '1' },
+        },
+        slideUp: {
+          from: { opacity: '0', transform: 'translateY(16px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        },
+        scaleIn: {
+          from: { opacity: '0', transform: 'scale(0.92)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
+        pulseSoft: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.7' },
+        },
+        bounceGentle: {
+          '0%': { transform: 'scale(1)' },
+          '40%': { transform: 'scale(1.12)' },
+          '70%': { transform: 'scale(0.96)' },
+          '100%': { transform: 'scale(1)' },
+        },
       },
     },
   },

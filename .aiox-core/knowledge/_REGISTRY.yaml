@@ -3,23 +3,32 @@
 # ~200 tokens - seguro para carregar sempre.
 # Ultima sync: 2026-04-07
 
-version: "3.0.0"
-source: "mega-brain-migration + knowledge-2.0 + knowledge-3.0-upgrade"
-schema_changelog: "v2→v3: _SITUATIONS.yaml (router situacional), cross-domain dossiers, _decision-map.md e _anti-patterns.md por dominio, DNA v3 (USE/FAIL/VS em L4)"
-total_experts: 16
-total_domains: 7
-total_dossiers: 6
+version: "3.1.0"
+source: "mega-brain-migration + knowledge-2.0 + knowledge-3.0-upgrade + ai-native-build-2026-04-29"
+schema_changelog: "v3→v3.1: novo dominio ai-native-build (3 experts: mateus-dias, chase, alon), dossier ai-native-operator-system, 16 novas situacoes (AI-001 a AI-008, DS-001 a DS-003, SA-001 a SA-003, CD-001/002), design library 70 brands"
+total_experts: 21
+total_domains: 8
+total_dossiers: 7
 total_cross_domain_dossiers: 1
-total_playbooks: 4
+total_playbooks: 5
 total_decision_maps: 7
 total_anti_patterns: 7
 
-# Novo: situation router
+# Design Library
+design_library:
+  path: "knowledge/design-systems/brands/"
+  total_brands: 70
+  index: "knowledge/design-systems/brands/_INDEX.md"
+  updated: "2026-04-29"
+  reinstall: "bash scripts/install-design-library.sh --force"
+
+# Situation router
 situation_router:
   file: "_SITUATIONS.yaml"
-  total_situations: 16
-  domains_covered: 7
+  total_situations: 32
+  domains_covered: 8
   cross_domain: 2
+  v2_additions: "AI-001..AI-008 (ai-native-build), DS-001..DS-003 (design-systems), SA-001..SA-003 (saas-ops)"
 
 # Status de upgrade DNA v3 (USE/FAIL/VS + Anti-Patterns + Situation Map)
 dna_v3_status:
@@ -60,6 +69,9 @@ dna_v3_status:
   traffic-ads/hard-copy: complete
   funnels-value-ladder/hard-copy: complete
   psychology-influence/hard-copy: complete
+  # matheus-bressan — 2 dominios
+  traffic-ads/matheus-bressan: complete
+  funnels-value-ladder/matheus-bressan: complete
 
 domains:
   copy-persuasion:
@@ -78,12 +90,12 @@ domains:
     description: "Discovery, objection handling, closing, NEPQ, call funnels"
 
   traffic-ads:
-    experts: [jeremy-haynes, richard-linder, jordan-lee, hard-copy, doug]
+    experts: [jeremy-haynes, richard-linder, jordan-lee, hard-copy, doug, matheus-bressan]
     agents: [traffic-head, creative-director]
     description: "Meta Ads, creative testing, scaling, audiences, kill rules, StoryAds, Money Brand"
 
   funnels-value-ladder:
-    experts: [russell-brunson, jeremy-haynes, sam-oven, hard-copy, doug]
+    experts: [russell-brunson, jeremy-haynes, sam-oven, hard-copy, doug, matheus-bressan]
     agents: [funnel-chief, pm, architect]
     description: "Quiz funnels, VSL, value ladders, bump/upsell, conversion, Teia de Ofertas"
 
@@ -97,6 +109,18 @@ domains:
     agents: [copy-chief, analyst, creative-director]
     description: "Persuasion principles, cognitive biases, emotional triggers"
 
+  ai-native-build:
+    experts: [mateus-dias, chase, alon]
+    agents: [aios-master, architect, dev, commander]
+    description: "Claude Code operations: skills, hooks, DESIGN.md, token optimization, agent systems, Plan Mode"
+    dna_v3_status:
+      mateus-dias: complete
+      chase: complete
+      alon: complete
+    decision_map: "domains/ai-native-build/_decision-map.md"
+    anti_patterns: "domains/ai-native-build/_anti-patterns.md"
+    playbook: "playbooks/ai-native-project-setup.md"
+
 # Cross-domain dossiers — sistemas integrados por expert
 cross_domain_dossiers:
   doug-system:
@@ -107,6 +131,12 @@ cross_domain_dossiers:
 
 # Cross-source dossiers — convergencias entre multiplos experts
 dossiers:
+  ai-native-operator-system:
+    sources: [mateus-dias, chase, alon, jack-roberts, and-7-others]
+    agents: [aios-master, architect, dev]
+    tokens: 950
+    file: "dossiers/cross-source/ai-native-operator-system.md"
+    description: "Convergencia de 10 transcricoes sobre Claude Code — skills, hooks, DESIGN.md, token economy, context hygiene, model hierarchy"
   copywriting-persuasion:
     sources: [agora-inc, blair-warren, jim-edwards, russell-brunson, diogo-kobata]
     agents: [copy-chief, creative-director]

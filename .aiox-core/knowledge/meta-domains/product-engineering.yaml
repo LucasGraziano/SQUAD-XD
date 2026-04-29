@@ -1,0 +1,25 @@
+# Meta-Domain: Product Engineering
+# Agrupa domínios de construção e gestão de produto digital/SaaS
+
+id: product-engineering
+description: "Estratégia de produto, decisões de feature, métricas, PM, engenharia"
+domains:
+  - product-strategy         # FASE 3: Marty Cagan (Inspired), Lenny's Newsletter
+  - engineering-practices    # FASE 3: clean code, refactoring
+  - saas-operations          # FASE 3: growth, churn, metrics
+
+primary_context: SaaS, produto digital, B2B, dashboard
+squad_affinity: [psi-saas]
+situations_prefix: [SA]
+status: partial  # Fase 3 — DNAs não criados ainda
+
+planned_experts:
+  - name: Marty Cagan
+    book: "Inspired"
+    file: domains/product-engineering/marty-cagan-dna.md
+    eta: "Fase 3 (quando Lucas fornecer fonte)"
+
+  - name: Lenny Rachitsky
+    source: "Lenny's Newsletter"
+    file: domains/product-engineering/lenny-rachitsky-dna.md
+    eta: "Fase 3"

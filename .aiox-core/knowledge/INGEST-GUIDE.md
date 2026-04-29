@@ -150,6 +150,22 @@ Localizado em: `.aiox-core/knowledge/domains/{dominio}/_anti-patterns.md`
 Sistemas integrados de um expert em multiplos dominios.
 - `dossiers/cross-domain/doug-system.md` — 7 dominios do Doug como fluxo unificado
 
+### Dossiers Cross-Source (v3.1 — 2026-04-29)
+Convergencias entre multiplas fontes sobre um mesmo tema.
+- `dossiers/cross-source/ai-native-operator-system.md` — 10 transcricoes Claude Code (~950 tokens)
+
+### Dominio ai-native-build (v3.1 — 2026-04-29)
+Novo dominio para operacao de sistemas Claude Code.
+- `domains/ai-native-build/mateus-dias-dna.md` — 22 agentes, Plan Mode, squads
+- `domains/ai-native-build/chase-dna.md` — skills, hooks, CLIs, token economy
+- `domains/ai-native-build/alon-dna.md` — DESIGN.md, design tokens, anti-AI-slop
+
+### Design Library (v3.1 — 2026-04-29)
+70 brands pre-analisados como DESIGN.md files.
+- Localizado em: `knowledge/design-systems/brands/`
+- Indice: `brands/_INDEX.md` | Categorias: `brands/_CATEGORIES.yaml`
+- Reinstalar/atualizar: `bash scripts/install-design-library.sh --force`
+
 ---
 
 ## Outros Comandos do Knowledge System

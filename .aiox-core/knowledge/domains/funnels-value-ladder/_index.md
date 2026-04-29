@@ -1,6 +1,6 @@
 ---
 domain: funnels-value-ladder
-experts: [russell-brunson, jim-edwards, diogo-kobata, agora-inc, doug]
+experts: [russell-brunson, jim-edwards, diogo-kobata, agora-inc, doug, matheus-bressan]
 source: mega-brain
 total_elements: 104
 ---
@@ -13,6 +13,7 @@ total_elements: 104
 - **Agora Inc** - Business model validation: front-end/back-end economics
 - **Hard Copy (Kleiver)** - VSL Kinshu structure, 3 pilares pricing, MPV methodology, infra stack Kiwifi+Vturb+Tomikcatch
 - **Doug (DeMarco)** - Teia de Ofertas (8 rotas omnidirecionais), niveis de acesso por velocidade, micro-produto como porta de entrada, Loop de Compras, ascensao automatica 4 estrategias, 82% compradores via ativo de pre-venda
+- **Matheus Bressan** - Funil Quiz+VSL para LATAM, upsell 1-click pos-compra, estrutura 2UP+1DS, entregavel em app, modelagem cultural de PT-BR para espanhol sem aparecer [DNA v3]
 
 ## Core Convergences
 - First funnel's job is NOT profit - it's customer acquisition (breakeven first)

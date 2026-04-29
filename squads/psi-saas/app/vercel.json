@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/whatsapp-reminders",
+      "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/alertas/recalculate",
+      "schedule": "0 11 * * *"
+    },
+    {
+      "path": "/api/cron/trial-expiry",
+      "schedule": "0 12 * * *"
+    }
+  ]
+}

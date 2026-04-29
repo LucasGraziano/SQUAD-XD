@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vacuum Master: Cintura Definida en 10 Minutos · Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --coral:  #F28C7A;
+      --green:  #7BC6A4;
+      --bg:     #F5F3F1;
+      --text:   #2B2B2B;
+      --white:  #FFFFFF;
+      --muted:  #6B6B6B;
+      --red-x:  #D94F3D;
+      --serif:  'Playfair Display', Georgia, serif;
+      --sans:   'Inter', system-ui, sans-serif;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --radius: 16px;
+    }
+    body { font-family: var(--sans); background: #E8E5E2; color: var(--text); line-height: 1.7; }
+    .page { width: 210mm; min-height: 297mm; background: var(--bg); margin: 12px auto; padding: 13mm 15mm; position: relative; overflow: hidden; }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; page-break-after: always; page-break-inside: avoid; box-shadow: none; width: 100%; min-height: 100vh; }
+      @page { size: A4; margin: 0; }
+    }
+    h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+    h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; line-height: 1.2; }
+    h3 { font-family: var(--sans); font-size: 0.95rem; font-weight: 700; }
+    p  { font-size: 0.92rem; line-height: 1.75; color: var(--text); }
+    .coral { color: var(--coral); } .green { color: var(--green); } .muted { color: var(--muted); } .small { font-size: 0.8rem; }
+    .section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 5px; }
+    .divider { width: 44px; height: 3px; background: var(--coral); border-radius: 2px; margin: 10px 0 16px; }
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 20px; }
+    .highlight { background: linear-gradient(135deg, #FFF0ED 0%, #FFF8F7 100%); border: 1.5px solid #F5C4BB; border-radius: var(--radius); padding: 14px 18px; margin: 20px 0; }
+    .info-box  { background: #E8F7F1; border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 14px 18px; margin: 12px 0; }
+    .page-footer { position: absolute; bottom: 10mm; left: 15mm; right: 15mm; display: flex; justify-content: space-between; align-items: center; }
+    .page-num { font-size: 0.7rem; color: var(--muted); }
+    .page-brand { font-size: 0.7rem; font-weight: 600; color: var(--coral); }
+
+    /* Level badge */
+    .level-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      border-radius: 100px; padding: 4px 12px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .level-1 { background: rgba(123,198,164,0.15); border: 1px solid rgba(123,198,164,0.4); color: #2E8B68; }
+    .level-2 { background: rgba(242,140,122,0.12); border: 1px solid rgba(242,140,122,0.4); color: #C05A46; }
+    .level-3 { background: rgba(123,141,198,0.12); border: 1px solid rgba(123,141,198,0.4); color: #3A5EA8; }
+
+    /* Exercise step list */
+    .step-list { list-style: none; padding: 0; margin: 10px 0; }
+    .step-list li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: 0.87rem; line-height: 1.65; color: var(--text);
+      padding: 5px 0; border-bottom: 1px solid #F0EDE9;
+    }
+    .step-list li:last-child { border-bottom: none; }
+    .step-num {
+      min-width: 22px; height: 22px; border-radius: 50%;
+      background: var(--coral); color: #fff;
+      font-size: 0.68rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* Tag rows */
+    .tag-row { display: flex; gap: 6px; align-items: flex-start; font-size: 0.82rem; line-height: 1.55; margin-top: 6px; }
+    .tag-icon { font-size: 0.85rem; flex-shrink: 0; margin-top: 1px; }
+    .tag-label { font-weight: 700; font-size: 0.72rem; color: var(--muted); margin-right: 3px; }
+
+    /* Timing row */
+    .timing-row {
+      display: flex; gap: 10px; margin: 12px 0 10px;
+    }
+    .timing-pill {
+      flex: 1; background: var(--white); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      padding: 10px 12px; text-align: center;
+    }
+    .timing-pill .t-val { font-family: var(--sans); font-size: 1.2rem; font-weight: 700; color: var(--coral); display: block; }
+    .timing-pill .t-lbl { font-size: 0.65rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* Routine step card */
+    .routine-step {
+      background: var(--white); border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      padding: 10px 14px; margin-bottom: 8px;
+      display: grid; grid-template-columns: 44px 1fr 52px; gap: 10px; align-items: center;
+    }
+    .rn { width: 36px; height: 36px; border-radius: 10px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .rs-name { font-weight: 700; font-size: 0.88rem; }
+    .rs-desc { font-size: 0.78rem; color: var(--muted); margin-top: 1px; }
+    .rs-time { font-family: var(--sans); font-size: 0.82rem; font-weight: 700; color: var(--coral); text-align: right; white-space: nowrap; }
+
+    /* Science diagram */
+    .muscle-card {
+      background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+      padding: 16px 20px; margin: 12px 0;
+    }
+    .muscle-layers { display: flex; gap: 0; flex-direction: column; }
+    .muscle-layer {
+      padding: 9px 14px; font-size: 0.82rem; font-weight: 500;
+      display: flex; align-items: center; gap: 10px;
+      border-radius: 0;
+    }
+    .muscle-layer:first-child { border-radius: 10px 10px 0 0; }
+    .muscle-layer:last-child  { border-radius: 0 0 10px 10px; }
+    .ml-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .ml-label { font-weight: 700; font-size: 0.8rem; }
+    .ml-note  { font-size: 0.75rem; color: var(--muted); margin-left: auto; }
+
+    /* Progress tracker */
+    .prog-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 14px 0;
+    }
+    .prog-cell {
+      background: var(--white); border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 10px 8px; text-align: center;
+    }
+    .prog-week { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .prog-hold { font-size: 1.1rem; font-weight: 700; color: var(--coral); display: block; margin: 3px 0; }
+    .prog-reps { font-size: 0.72rem; color: var(--muted); }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 1 · COVER
+═══════════════════════════════════════════════════════ -->
+<div class="page" style="background:#1E1E1E; display:flex; flex-direction:column; justify-content:space-between; padding:14mm 15mm;">
+
+  <!-- Decoration circles -->
+  <div style="position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(242,140,122,0.08);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:40px;left:-80px;width:220px;height:220px;border-radius:50%;background:rgba(123,198,164,0.06);pointer-events:none;"></div>
+
+  <!-- Top row -->
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:10px;height:10px;border-radius:50%;background:var(--coral);"></div>
+      <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);">Bonus 2 · Vacuum Master</span>
+    </div>
+    <div style="background:rgba(242,140,122,0.18);border:1px solid rgba(242,140,122,0.35);border-radius:100px;padding:4px 12px;">
+      <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);">Bonus incluido</span>
+    </div>
+  </div>
+
+  <!-- Center content -->
+  <div style="padding-top:16px;">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px;">Técnica avanzada de TVA</div>
+    <h1 style="color:#FFFFFF;font-size:3rem;line-height:1.05;margin-bottom:16px;">
+      Vacuum<br>
+      <span style="color:var(--coral);">Master</span>
+    </h1>
+    <p style="font-size:1.1rem;color:rgba(255,255,255,0.6);font-weight:300;margin-bottom:24px;max-width:340px;line-height:1.6;">
+      Cintura definida en 10 minutos sin impacto, sin crujidos, sin riesgo.
+    </p>
+
+    <!-- Value + key promise pills -->
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:6px 14px;font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.7);">
+        3 niveles progresivos
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:6px 14px;font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.7);">
+        Rutina express 10 min
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:100px;padding:6px 14px;font-size:0.75rem;font-weight:600;color:rgba(255,255,255,0.7);">
+        Sin presión abdominal
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div style="display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(255,255,255,0.1);">
+    <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:500;">ZERO DIASTASIS™ · zerodiastasis.com</div>
+    <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);">Protocolo de Reactivación del TVA</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 2 · LA CIENCIA DEL VACUUM
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-label" style="padding-top:4px;">La ciencia</div>
+  <h2 style="margin-bottom:4px;">¿Qué es el vacuum<br>y por qué funciona?</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">El <strong>vacuum abdominal</strong> es la contracción isométrica del transverso del abdomen (TVA), el músculo más profundo de la pared abdominal. A diferencia de los crujidos o los sit-ups, el vacuum <strong>no genera presión intraabdominal</strong> — simplemente activa y fortalece el músculo que actúa como una faja natural.</p>
+
+  <!-- Muscle layers diagram -->
+  <div class="muscle-card">
+    <div style="font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px;">Capas del abdomen · de fuera hacia adentro</div>
+    <div class="muscle-layers">
+      <div class="muscle-layer" style="background:#F9F6F3;">
+        <div class="ml-dot" style="background:#D0C8C0;"></div>
+        <span class="ml-label">Recto abdominal</span>
+        <span class="ml-note">Los "cuadrados" visibles · superficial</span>
+      </div>
+      <div class="muscle-layer" style="background:#F5F1EE;">
+        <div class="ml-dot" style="background:#C4B8B0;"></div>
+        <span class="ml-label">Oblicuos externo e interno</span>
+        <span class="ml-note">Rotación y flexión lateral</span>
+      </div>
+      <div class="muscle-layer" style="background:linear-gradient(135deg,#FFF0ED,#FFF8F7);border:1.5px solid #F5C4BB;">
+        <div class="ml-dot" style="background:var(--coral);"></div>
+        <span class="ml-label" style="color:var(--coral);">Transverso del abdomen (TVA)</span>
+        <span class="ml-note" style="color:var(--coral);font-weight:600;">La faja invisible · el vacuum lo activa</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;">
+    <div class="card">
+      <div style="font-size:1.3rem;margin-bottom:6px;">🎯</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Activa el TVA en profundidad</div>
+      <p style="font-size:0.8rem;color:var(--muted);line-height:1.5;">El TVA no responde a ejercicios superficiales. El vacuum lo recluta de forma directa y progresiva.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.3rem;margin-bottom:6px;">🛡️</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Zero presión intraabdominal</div>
+      <p style="font-size:0.8rem;color:var(--muted);line-height:1.5;">No empuja los órganos hacia afuera. Es el ejercicio abdominal más seguro para la diástasis.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.3rem;margin-bottom:6px;">📏</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Reduce el perímetro de cintura</div>
+      <p style="font-size:0.8rem;color:var(--muted);line-height:1.5;">Al tonificar el TVA, el abdomen se contrae naturalmente. Efecto visible en 4-6 semanas.</p>
+    </div>
+    <div class="card">
+      <div style="font-size:1.3rem;margin-bottom:6px;">🔗</div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Apoya el cierre de la diástasis</div>
+      <p style="font-size:0.8rem;color:var(--muted);line-height:1.5;">Complementa los ejercicios del protocolo creando tensión lateral que aproxima las dos mitades del recto.</p>
+    </div>
+  </div>
+
+  <div class="info-box" style="margin-top:14px;">
+    <div style="font-weight:700;font-size:0.88rem;color:#2E8B68;margin-bottom:5px;">¿Cuándo empezar el vacuum?</div>
+    <p style="font-size:0.83rem;line-height:1.6;">Puedes incorporar los Niveles 1 y 2 desde la <strong>Semana 2 del protocolo</strong> (a partir del Día 8). El Nivel 3 dinámico se recomienda a partir del <strong>Día 15</strong>, cuando el TVA ya tiene base de activación.</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Vacuum Master</span>
+    <span class="page-num">2</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 3 · MECANISMO + CONTRAINDICACIONES
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-label" style="padding-top:4px;">Cómo funciona</div>
+  <h2 style="margin-bottom:4px;">El mecanismo<br>del vacuum</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:16px;">El vacuum funciona en 4 fases. Aprenderlas bien desde el inicio te permite maximizar la activación del TVA y progresar con seguridad.</p>
+
+  <!-- 4 phases -->
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px;">
+
+    <div style="background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;">
+      <div style="width:40px;height:40px;border-radius:10px;background:#FFF0ED;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💨</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Fase 1 · Exhala todo el aire</div>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Inhala profundo y luego exhala completamente por la boca hasta vaciar los pulmones al máximo. No contengas la respiración aún.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;">
+      <div style="width:40px;height:40px;border-radius:10px;background:#FFF0ED;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🔄</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Fase 2 · Sella y aspira</div>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Sin inhalar, cierra la glotis (como si fueras a contener el aliento) y aspira el ombligo hacia arriba y adentro, hacia la columna vertebral.</p>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#FFF0ED,#FFF8F7);border:1.5px solid #F5C4BB;border-radius:12px;padding:12px 16px;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">⏱️</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;color:var(--coral);">Fase 3 · Mantén la contracción</div>
+        <p style="font-size:0.82rem;color:#7A3D30;line-height:1.55;">Sostén el vacío durante el tiempo indicado por tu nivel (entre 8 y 20 segundos). El abdomen permanece succionado hacia adentro.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--white);border-radius:12px;box-shadow:var(--shadow);padding:12px 16px;display:grid;grid-template-columns:40px 1fr;gap:12px;align-items:start;">
+      <div style="width:40px;height:40px;border-radius:10px;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🌬️</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Fase 4 · Suelta lentamente</div>
+        <p style="font-size:0.82rem;color:var(--muted);line-height:1.55;">Inhala lento y controlado, dejando que el abdomen se relaje gradualmente. Descansa 3-4 segundos antes de repetir.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contraindications -->
+  <div style="background:#FDECEA;border:1.5px solid #F5BFBA;border-radius:var(--radius);padding:14px 18px;">
+    <div style="font-weight:700;font-size:0.88rem;color:var(--red-x);margin-bottom:8px;">Cuándo NO hacer vacuum</div>
+    <div style="display:flex;flex-direction:column;gap:5px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;font-size:0.82rem;">
+        <span style="color:var(--red-x);font-weight:700;flex-shrink:0;">×</span>
+        <span>Durante el embarazo (en cualquier trimestre)</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;font-size:0.82rem;">
+        <span style="color:var(--red-x);font-weight:700;flex-shrink:0;">×</span>
+        <span>Menos de 6 semanas posparto (sin clearance médico)</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;font-size:0.82rem;">
+        <span style="color:var(--red-x);font-weight:700;flex-shrink:0;">×</span>
+        <span>Si sentís dolor, presión pélvica o mareo durante la práctica</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;font-size:0.82rem;">
+        <span style="color:var(--red-x);font-weight:700;flex-shrink:0;">×</span>
+        <span>En ayunas estricto o inmediatamente después de comer</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Vacuum Master</span>
+    <span class="page-num">3</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 4 · NIVEL 1 — VACUUM ACOSTADA
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-top:4px;">
+    <div class="level-badge level-1">Nivel 1 · Básico</div>
+    <div style="font-size:0.75rem;color:var(--muted);">Desde la Semana 2 · Días 8-14</div>
+  </div>
+
+  <h2 style="margin-bottom:4px;">Vacuum acostada</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">La posición acostada boca arriba es el punto de partida ideal. La gravedad ayuda a los órganos a posicionarse correctamente y la espalda tiene soporte total, lo que facilita la concentración en la contracción del TVA sin compensaciones.</p>
+
+  <!-- Position card -->
+  <div class="card" style="margin-bottom:12px;display:flex;gap:14px;align-items:center;">
+    <div style="width:48px;height:48px;min-width:48px;background:#F5F3F1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🛌</div>
+    <div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Posición</div>
+      <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;">Acostada boca arriba con las rodillas dobladas y los pies apoyados en el suelo (posición semi-supina). Brazos relajados a los costados. Espalda baja neutral, sin aplanar ni arquear.</p>
+    </div>
+  </div>
+
+  <!-- Timing pills -->
+  <div class="timing-row">
+    <div class="timing-pill">
+      <span class="t-val">3</span>
+      <span class="t-lbl">series</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">8</span>
+      <span class="t-lbl">repeticiones</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">8 seg</span>
+      <span class="t-lbl">retención</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">4 seg</span>
+      <span class="t-lbl">descanso entre reps</span>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <ul class="step-list" style="margin-bottom:12px;">
+    <li><div class="step-num">1</div><span>Inhala profundo por la nariz, dejando que el abdomen suba suavemente.</span></li>
+    <li><div class="step-num">2</div><span>Exhala completamente por la boca hasta sentir los pulmones vacíos.</span></li>
+    <li><div class="step-num">3</div><span>Sin inhalar, aspirá el ombligo hacia arriba y hacia la columna vertebral.</span></li>
+    <li><div class="step-num">4</div><span>Mantené la contracción durante 8 segundos contando mentalmente.</span></li>
+    <li><div class="step-num">5</div><span>Soltá lentamente, inhalá y descansá 4 segundos antes de repetir.</span></li>
+  </ul>
+
+  <!-- Tag rows -->
+  <div class="card" style="display:flex;flex-direction:column;gap:8px;">
+    <div class="tag-row">
+      <span class="tag-icon">✅</span>
+      <span><span class="tag-label">Sentís ·</span> El abdomen se hunde. La zona bajo el ombligo queda plana o cóncava.</span>
+    </div>
+    <div class="tag-row">
+      <span class="tag-icon">❌</span>
+      <span><span class="tag-label">Evitá ·</span> Retener el aire sin exhalar, elevar los hombros o contraer los glúteos.</span>
+    </div>
+    <div class="tag-row">
+      <span class="tag-icon">💡</span>
+      <span><span class="tag-label">Tip ·</span> Apoyá una mano sobre el ombligo. El abdomen se alejará de tu mano al hacer el vacuum.</span>
+    </div>
+  </div>
+
+  <!-- Progression note -->
+  <div class="info-box" style="margin-top:14px;">
+    <div style="font-weight:700;font-size:0.85rem;color:#2E8B68;margin-bottom:4px;">Progresión del Nivel 1</div>
+    <p style="font-size:0.82rem;line-height:1.55;">Cuando puedas mantener 8 segundos con control total en las 3 series, aumentá a 12 segundos de retención. Cuando alcances 12 segundos estables, estás lista para el Nivel 2.</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Vacuum Master</span>
+    <span class="page-num">4</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 5 · NIVEL 2 — VACUUM DE PIE
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-top:4px;">
+    <div class="level-badge level-2">Nivel 2 · Intermedio</div>
+    <div style="font-size:0.75rem;color:var(--muted);">Desde la Semana 2-3 · Días 10-14</div>
+  </div>
+
+  <h2 style="margin-bottom:4px;">Vacuum de pie</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">De pie, el TVA trabaja contra la gravedad para mantener la postura y sujetar los órganos. Esto lo hace más funcional que el Nivel 1 y traslada la fuerza del músculo directamente a tus actividades diarias.</p>
+
+  <!-- Position card -->
+  <div class="card" style="margin-bottom:12px;display:flex;gap:14px;align-items:center;">
+    <div style="width:48px;height:48px;min-width:48px;background:#F5F3F1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🧍</div>
+    <div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Posición</div>
+      <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;">De pie, pies al ancho de hombros, rodillas levemente flexionadas. Inclinada hacia adelante con manos sobre los muslos (posición de medio squat).</p>
+    </div>
+  </div>
+
+  <!-- Timing pills -->
+  <div class="timing-row">
+    <div class="timing-pill">
+      <span class="t-val">3</span>
+      <span class="t-lbl">series</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">8</span>
+      <span class="t-lbl">repeticiones</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">12 seg</span>
+      <span class="t-lbl">retención</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">5 seg</span>
+      <span class="t-lbl">descanso entre reps</span>
+    </div>
+  </div>
+
+  <!-- Steps -->
+  <ul class="step-list" style="margin-bottom:12px;">
+    <li><div class="step-num">1</div><span>Tomá la posición de medio squat con manos sobre muslos. Espalda plana, mirada al suelo.</span></li>
+    <li><div class="step-num">2</div><span>Inhalá profundo, luego exhalá completamente por la boca vaciando bien los pulmones.</span></li>
+    <li><div class="step-num">3</div><span>Sin inhalar, aspirá fuerte el ombligo hacia adentro y hacia la columna vertebral.</span></li>
+    <li><div class="step-num">4</div><span>Mantené 12 segundos. Podés contraer el suelo pélvico al mismo tiempo.</span></li>
+    <li><div class="step-num">5</div><span>Soltá, inhalá lentamente y descansá 5 segundos antes de repetir.</span></li>
+  </ul>
+
+  <!-- Tag rows -->
+  <div class="card" style="display:flex;flex-direction:column;gap:8px;">
+    <div class="tag-row">
+      <span class="tag-icon">✅</span>
+      <span><span class="tag-label">Sentís ·</span> Un jalón hacia adentro. El abdomen queda más plano. Puede haber leve ardor en el TVA.</span>
+    </div>
+    <div class="tag-row">
+      <span class="tag-icon">❌</span>
+      <span><span class="tag-label">Evitá ·</span> Doblar la espalda, apoyar el peso en los brazos o pujar. Si sentís mareo, detenete.</span>
+    </div>
+    <div class="tag-row">
+      <span class="tag-icon">💡</span>
+      <span><span class="tag-label">Tip ·</span> Practicá frente al espejo para confirmar que el abdomen se hunde al hacer el vacuum.</span>
+    </div>
+  </div>
+
+  <!-- Progression note -->
+  <div class="highlight" style="margin-top:14px;">
+    <div style="font-weight:700;font-size:0.85rem;color:var(--coral);margin-bottom:4px;">Progresión del Nivel 2</div>
+    <p style="font-size:0.82rem;line-height:1.55;">Cuando domines las 3 series de 12 segundos sin esfuerzo visible en el rostro ni compensaciones, incrementá a 16 segundos. Con 16 segundos estables, estás lista para el Nivel 3.</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Vacuum Master</span>
+    <span class="page-num">5</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 6 · NIVEL 3 — VACUUM DINÁMICO
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-top:4px;">
+    <div class="level-badge level-3">Nivel 3 · Avanzado</div>
+    <div style="font-size:0.75rem;color:var(--muted);">Desde el Día 15 · Anclaje Total</div>
+  </div>
+
+  <h2 style="margin-bottom:4px;">Vacuum dinámico</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">El vacuum dinámico integra la contracción del TVA con movimiento. En esta etapa el objetivo es que el TVA se active <strong>automáticamente</strong> durante esfuerzos cotidianos, como levantarse, cargar peso o al estornudar.</p>
+
+  <!-- Two variants -->
+  <div class="section-label" style="padding-top:8px;">Variante A · Vacuum en cuadrupedia con respiración</div>
+
+  <div class="card" style="margin:8px 0 14px;display:flex;gap:14px;align-items:center;">
+    <div style="width:48px;height:48px;min-width:48px;background:#F5F3F1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🐱</div>
+    <div>
+      <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;">En cuatro puntos (manos y rodillas), espalda neutral. Exhalá, hacé el vacuum, y mientras mantenés la contracción: inhalá en 4 tiempos SIN perder el vacío. Luego exhalá en 4 tiempos manteniendo. Soltá al terminar la exhalación.</p>
+    </div>
+  </div>
+
+  <div class="timing-row" style="margin-bottom:14px;">
+    <div class="timing-pill">
+      <span class="t-val">3</span>
+      <span class="t-lbl">series</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">6</span>
+      <span class="t-lbl">repeticiones</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">inhala + exhala</span>
+      <span class="t-lbl">4 + 4 tiempos</span>
+    </div>
+  </div>
+
+  <div class="section-label">Variante B · Vacuum funcional de pie</div>
+
+  <div class="card" style="margin:8px 0 14px;display:flex;gap:14px;align-items:center;">
+    <div style="width:48px;height:48px;min-width:48px;background:#F5F3F1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">🚶</div>
+    <div>
+      <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;">De pie, postura erguida. Exhalá, hacé el vacuum y mientras lo mantenés: doblá y extendé los brazos lentamente (como si alzaras algo del piso), sin perder la contracción del TVA. Soltá al volver a la posición inicial.</p>
+    </div>
+  </div>
+
+  <div class="timing-row" style="margin-bottom:14px;">
+    <div class="timing-pill">
+      <span class="t-val">3</span>
+      <span class="t-lbl">series</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">6</span>
+      <span class="t-lbl">repeticiones</span>
+    </div>
+    <div class="timing-pill">
+      <span class="t-val">20 seg</span>
+      <span class="t-lbl">retención total</span>
+    </div>
+  </div>
+
+  <!-- Tag rows -->
+  <div class="card" style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+    <div class="tag-row">
+      <span class="tag-icon">✅</span>
+      <span><span class="tag-label">Sentís ·</span> El abdomen permanece contraído incluso al respirar o mover los brazos. La zona core trabaja como una unidad.</span>
+    </div>
+    <div class="tag-row">
+      <span class="tag-icon">❌</span>
+      <span><span class="tag-label">Evitá ·</span> Perder el vacuum al inhalar. Si pasa, volvé al Nivel 2 hasta fortalecer más la contención. No fuerces el progreso.</span>
+    </div>
+    <div class="tag-row">
+      <span class="tag-icon">💡</span>
+      <span><span class="tag-label">Tip ·</span> Una vez que domines la Variante B, practicá el vacuum activo durante tareas cotidianas: al caminar, al lavar platos, al alzar a tus hijos.</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Vacuum Master</span>
+    <span class="page-num">6</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 7 · RUTINA EXPRESS 10 MINUTOS
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-label" style="padding-top:4px;">Rutina express</div>
+  <h2 style="margin-bottom:4px;">10 minutos · Vacuum completo</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">Combiná los tres niveles en una sola sesión cuando hayas dominado cada uno. Esta rutina integra calentamiento, trabajo progresivo y cierre en menos de 10 minutos.</p>
+
+  <!-- Routine steps -->
+  <div class="routine-step">
+    <div class="rn">🌬️</div>
+    <div>
+      <div class="rs-name">Activación respiratoria</div>
+      <div class="rs-desc">Respiración diafragmática consciente · 8 respiraciones lentas</div>
+    </div>
+    <div class="rs-time">1:30 min</div>
+  </div>
+
+  <div class="routine-step" style="border-left:3px solid #7BC6A4;">
+    <div class="rn" style="background:#E8F7F1;">🛌</div>
+    <div>
+      <div class="rs-name">Nivel 1 · Vacuum acostada</div>
+      <div class="rs-desc">3 series × 8 reps · 8 seg retención · 4 seg descanso</div>
+    </div>
+    <div class="rs-time">2:30 min</div>
+  </div>
+
+  <div style="padding:6px 0 6px 14px;">
+    <div style="width:2px;height:16px;background:#F0EDE9;border-radius:1px;"></div>
+  </div>
+
+  <div class="routine-step" style="border-left:3px solid var(--coral);">
+    <div class="rn" style="background:#FFF0ED;">🧍</div>
+    <div>
+      <div class="rs-name">Nivel 2 · Vacuum de pie</div>
+      <div class="rs-desc">3 series × 8 reps · 12 seg retención · 5 seg descanso</div>
+    </div>
+    <div class="rs-time">3:00 min</div>
+  </div>
+
+  <div style="padding:6px 0 6px 14px;">
+    <div style="width:2px;height:16px;background:#F0EDE9;border-radius:1px;"></div>
+  </div>
+
+  <div class="routine-step" style="border-left:3px solid #7BA8C6;">
+    <div class="rn" style="background:#EBF0F7;">🐱</div>
+    <div>
+      <div class="rs-name">Nivel 3A · Vacuum dinámico</div>
+      <div class="rs-desc">3 series × 6 reps · cuadrupedia con respiración</div>
+    </div>
+    <div class="rs-time">2:00 min</div>
+  </div>
+
+  <div class="routine-step" style="border-left:3px solid #7BA8C6;">
+    <div class="rn" style="background:#EBF0F7;">🚶</div>
+    <div>
+      <div class="rs-name">Nivel 3B · Vacuum funcional</div>
+      <div class="rs-desc">2 series × 6 reps · de pie con movimiento de brazos</div>
+    </div>
+    <div class="rs-time">1:30 min</div>
+  </div>
+
+  <div style="padding:6px 0 6px 14px;">
+    <div style="width:2px;height:16px;background:#F0EDE9;border-radius:1px;"></div>
+  </div>
+
+  <div class="routine-step">
+    <div class="rn">🌿</div>
+    <div>
+      <div class="rs-name">Cierre · Respiración de integración</div>
+      <div class="rs-desc">4 respiraciones profundas · abdomen relajado completamente</div>
+    </div>
+    <div class="rs-time">0:30 min</div>
+  </div>
+
+  <div style="display:flex;justify-content:flex-end;margin:10px 0;">
+    <div style="background:var(--coral);border-radius:100px;padding:5px 16px;font-size:0.78rem;font-weight:700;color:#fff;">Total · 11 min</div>
+  </div>
+
+  <div class="info-box">
+    <div style="font-weight:700;font-size:0.85rem;color:#2E8B68;margin-bottom:4px;">¿Con qué frecuencia hacer esta rutina?</div>
+    <p style="font-size:0.82rem;line-height:1.6;">Para los primeros 14 días: solo Nivel 1 y 2, en días alternos. A partir del Día 15: los 3 niveles, 4-5 días por semana. Los resultados se estabilizan entre la semana 4 y la semana 6.</p>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Vacuum Master</span>
+    <span class="page-num">7</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 8 · PROGRESO + CIERRE
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-label" style="padding-top:4px;">Seguimiento</div>
+  <h2 style="margin-bottom:4px;">Tu progresión<br>semana a semana</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">El vacuum es un ejercicio de fuerza isométrica. El progreso se mide en <strong>tiempo de retención</strong> y en <strong>capacidad funcional</strong>, no en series ni en peso. Usá esta tabla como referencia:</p>
+
+  <!-- Progress grid -->
+  <div class="prog-grid">
+    <div class="prog-cell">
+      <div class="prog-week">Semana 1</div>
+      <span class="prog-hold">8 seg</span>
+      <div class="prog-reps">Nivel 1 · 3×8</div>
+    </div>
+    <div class="prog-cell">
+      <div class="prog-week">Semana 2</div>
+      <span class="prog-hold">12 seg</span>
+      <div class="prog-reps">Nivel 1+2 · 3×8</div>
+    </div>
+    <div class="prog-cell">
+      <div class="prog-week">Semana 3</div>
+      <span class="prog-hold">16 seg</span>
+      <div class="prog-reps">Nivel 2 · 3×8</div>
+    </div>
+    <div class="prog-cell" style="border:1.5px solid #F5C4BB;">
+      <div class="prog-week" style="color:var(--coral);">Semana 4+</div>
+      <span class="prog-hold">20 seg</span>
+      <div class="prog-reps">Nivel 3 · completo</div>
+    </div>
+  </div>
+
+  <!-- Measurement tracker -->
+  <div class="card" style="margin:14px 0;">
+    <div style="font-weight:700;font-size:0.88rem;margin-bottom:12px;">Registro de cintura</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <div style="text-align:center;">
+        <div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Día 1</div>
+        <div style="border-bottom:2px solid #F0EDE9;height:28px;margin-bottom:4px;"></div>
+        <div style="font-size:0.72rem;color:var(--muted);">cm</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;">Semana 2</div>
+        <div style="border-bottom:2px solid #F0EDE9;height:28px;margin-bottom:4px;"></div>
+        <div style="font-size:0.72rem;color:var(--muted);">cm</div>
+      </div>
+      <div style="text-align:center;">
+        <div style="font-size:0.65rem;color:var(--coral);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;font-weight:700;">Día 28</div>
+        <div style="border-bottom:2px solid var(--coral);height:28px;margin-bottom:4px;"></div>
+        <div style="font-size:0.72rem;color:var(--coral);font-weight:600;">cm</div>
+      </div>
+    </div>
+    <p style="font-size:0.75rem;color:var(--muted);margin-top:10px;text-align:center;">Medite siempre a la misma hora (mañana, en ayunas), en el punto más estrecho de la cintura.</p>
+  </div>
+
+  <!-- Closing card -->
+  <div class="highlight" style="margin-top:14px;">
+    <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--coral);margin-bottom:8px;">Un hábito, no un ejercicio</div>
+    <p style="font-family:var(--serif);font-size:1.05rem;color:var(--text);font-weight:400;line-height:1.55;margin-bottom:10px;">
+      El vacuum no es una rutina más. Es la técnica que convierte cada respiración en un entrenamiento silencioso de tu core profundo.
+    </p>
+    <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Practícalo con constancia y en 28 días notarás que tu cintura se activa de forma automática incluso en movimientos cotidianos.</p>
+    <div style="margin-top:12px;font-size:0.7rem;font-weight:600;color:var(--coral);">ZERO DIASTASIS™ · zerodiastasis.com</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Vacuum Master</span>
+    <span class="page-num">8</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,9 +1,10 @@
-import { slashCommands, agentCommands, activationSyntax } from '@/data/commands'
+import { slashCommands, agentCommands, activationSyntax, autoSkills } from '@/data/commands'
 
-const categoryColors = {
+const categoryColors: Record<string, { bg: string; text: string; border: string }> = {
   productivity: { bg: 'bg-menta/10', text: 'text-menta', border: 'border-menta/20' },
   content: { bg: 'bg-gold/10', text: 'text-gold', border: 'border-gold/20' },
   tools: { bg: 'bg-coral/10', text: 'text-coral', border: 'border-coral/20' },
+  knowledge: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' },
 }
 
 export default function CommandsPage() {
@@ -54,6 +55,41 @@ export default function CommandsPage() {
               <p className="text-xs text-text-secondary">{cmd.description}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Auto Skills */}
+      <section className="px-12 py-10 border-b border-surface-600">
+        <h2 className="text-lg font-bold mb-2 text-text-primary">Auto Skills</h2>
+        <p className="text-sm text-text-secondary mb-6">
+          Skills semânticas — ativam automaticamente por contexto. Sem prefixo. A IA decide quando usar com base na descrição.
+        </p>
+        <div className="grid grid-cols-1 gap-3">
+          {autoSkills.map((skill) => {
+            const catColors = {
+              design: { bg: 'bg-purple-500/10', text: 'text-purple-400', border: 'border-purple-500/20' },
+              knowledge: { bg: 'bg-menta/10', text: 'text-menta', border: 'border-menta/20' },
+              productivity: { bg: 'bg-gold/10', text: 'text-gold', border: 'border-gold/20' },
+            }[skill.category]
+            return (
+              <div key={skill.name} className={`rounded-xl bg-surface-800 border ${catColors.border} p-5`}>
+                <div className="flex items-start justify-between mb-2">
+                  <code className={`text-base font-mono font-bold ${catColors.text}`}>{skill.name}</code>
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${catColors.bg} ${catColors.text} uppercase tracking-wider`}>
+                    {skill.category}
+                  </span>
+                </div>
+                <p className="text-sm text-text-secondary mb-3">{skill.description}</p>
+                <div className="flex flex-wrap gap-1.5">
+                  {skill.triggers.map((t) => (
+                    <span key={t} className="text-[10px] font-mono px-2 py-0.5 rounded bg-surface-900 text-text-muted border border-surface-700">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </section>
 

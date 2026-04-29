@@ -1,13 +1,15 @@
 'use client'
 import { useState } from 'react'
 import { tasks, taskCategories } from '@/data/tasks'
-import { workflows, workflowSelectionGuide } from '@/data/workflows'
+import { workflows, workflowSelectionGuide, WorkflowCategory } from '@/data/workflows'
 
 const workflowColors: Record<string, string> = {
   PRIMARY: 'border-coral/40 bg-coral/5',
   ITERATIVE: 'border-menta/40 bg-menta/5',
   'PRE-IMPLEMENTATION': 'border-gold/40 bg-gold/5',
   ASSESSMENT: 'border-purple-500/40 bg-purple-500/5',
+  GREENFIELD: 'border-menta/40 bg-menta/5',
+  BROWNFIELD: 'border-amber-500/40 bg-amber-500/5',
 }
 
 const workflowBadgeColors: Record<string, string> = {
@@ -15,6 +17,14 @@ const workflowBadgeColors: Record<string, string> = {
   ITERATIVE: 'bg-menta/10 text-menta border-menta/20',
   'PRE-IMPLEMENTATION': 'bg-gold/10 text-gold border-gold/20',
   ASSESSMENT: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  GREENFIELD: 'bg-menta/10 text-menta border-menta/20',
+  BROWNFIELD: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+}
+
+const selectionGuideColors: Record<string, string> = {
+  meta: 'text-coral',
+  greenfield: 'text-menta',
+  brownfield: 'text-amber-400',
 }
 
 type ActiveTab = 'workflows' | 'tasks'
@@ -22,6 +32,7 @@ type ActiveTab = 'workflows' | 'tasks'
 export default function WorkflowsPage() {
   const [activeTab, setActiveTab] = useState<ActiveTab>('workflows')
   const [activeCategory, setActiveCategory] = useState<string>('all')
+  const [workflowFilter, setWorkflowFilter] = useState<WorkflowCategory>('all')
   const [searchQuery, setSearchQuery] = useState('')
 
   const filteredTasks = tasks.filter(task => {
@@ -30,6 +41,10 @@ export default function WorkflowsPage() {
                           task.description.toLowerCase().includes(searchQuery.toLowerCase())
     return matchesCategory && matchesSearch
   })
+
+  const filteredWorkflows = workflows.filter(wf =>
+    workflowFilter === 'all' || wf.category === workflowFilter
+  )
 
   return (
     <div className="grid-bg min-h-screen">
@@ -45,7 +60,7 @@ export default function WorkflowsPage() {
             <span className="gradient-text-menta">Workflows & Tasks</span>
           </h1>
           <p className="text-text-secondary max-w-2xl leading-relaxed">
-            O AIOX orquestra desenvolvimento através de <strong className="text-menta">4 workflows primários</strong> compostos por <strong className="text-menta">207 tasks estruturadas</strong>. Cada workflow define a sequência, agentes e gates de qualidade.
+            O AIOX orquestra desenvolvimento através de <strong className="text-menta">10 workflows</strong> compostos por <strong className="text-menta">207 tasks estruturadas</strong>. Greenfield para projetos novos, Brownfield para sistemas existentes, e Meta-workflows para o ciclo de desenvolvimento contínuo.
           </p>
 
           {/* Tab Switcher */}
@@ -58,7 +73,7 @@ export default function WorkflowsPage() {
                   : 'bg-surface-800 text-text-secondary border-surface-600 hover:border-menta/20'
               }`}
             >
-              4 Workflows
+              10 Workflows
             </button>
             <button
               onClick={() => setActiveTab('tasks')}
@@ -77,19 +92,96 @@ export default function WorkflowsPage() {
       {/* ═══ WORKFLOWS TAB ═══ */}
       {activeTab === 'workflows' && (
         <>
+          {/* Greenfield vs Brownfield Explanation */}
+          <section className="px-12 py-8 border-b border-surface-600">
+            <h2 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-4">Greenfield vs Brownfield — Qual usar?</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              <div className="rounded-xl bg-surface-800 border border-menta/30 p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-lg">🌱</span>
+                  <h3 className="font-bold text-menta">Greenfield</h3>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-menta/10 text-menta border border-menta/20 font-bold uppercase ml-auto">Novo</span>
+                </div>
+                <p className="text-xs text-text-secondary leading-relaxed mb-3">
+                  Projeto do zero, sem código existente. Começa com PRD → Arquitetura → Schema → Stories → Dev.
+                </p>
+                <ul className="space-y-1.5 text-xs text-text-muted">
+                  <li className="flex gap-2"><span className="text-menta">→</span> Novo SaaS ou app completo</li>
+                  <li className="flex gap-2"><span className="text-menta">→</span> Nova API ou microservice</li>
+                  <li className="flex gap-2"><span className="text-menta">→</span> Nova UI ou landing page</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl bg-surface-800 border border-amber-500/30 p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-lg">🏚️</span>
+                  <h3 className="font-bold text-amber-400">Brownfield</h3>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20 font-bold uppercase ml-auto">Existente</span>
+                </div>
+                <p className="text-xs text-text-secondary leading-relaxed mb-3">
+                  Sistema existente com código legado. Sempre começa com assessment (Discovery) antes de modificar.
+                </p>
+                <ul className="space-y-1.5 text-xs text-text-muted">
+                  <li className="flex gap-2"><span className="text-amber-400">→</span> Entrar em projeto herdado</li>
+                  <li className="flex gap-2"><span className="text-amber-400">→</span> Refactor / migração de stack</li>
+                  <li className="flex gap-2"><span className="text-amber-400">→</span> Redesign de UI legada</li>
+                </ul>
+              </div>
+
+              <div className="rounded-xl bg-surface-800 border border-coral/30 p-5">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-lg">🔄</span>
+                  <h3 className="font-bold text-coral">Meta-Workflows</h3>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-coral/10 text-coral border border-coral/20 font-bold uppercase ml-auto">Sempre</span>
+                </div>
+                <p className="text-xs text-text-secondary leading-relaxed mb-3">
+                  Usados em todo projeto, independente de ser novo ou legado. SDC, QA Loop e Spec Pipeline são universais.
+                </p>
+                <ul className="space-y-1.5 text-xs text-text-muted">
+                  <li className="flex gap-2"><span className="text-coral">→</span> SDC: cada story implementada</li>
+                  <li className="flex gap-2"><span className="text-coral">→</span> QA Loop: problemas iterativos</li>
+                  <li className="flex gap-2"><span className="text-coral">→</span> Spec Pipeline: features complexas</li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
           {/* Selection Guide */}
           <section className="px-12 py-8 border-b border-surface-600">
             <h2 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-4">Quando usar cada workflow?</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
               {workflowSelectionGuide.map((g) => (
                 <div key={g.situation} className="flex items-start gap-3 p-4 rounded-lg bg-surface-800 border border-surface-700">
-                  <span className="text-menta mt-0.5 shrink-0">-</span>
+                  <span className={`mt-0.5 shrink-0 text-sm ${selectionGuideColors[g.category] || 'text-menta'}`}>→</span>
                   <div>
                     <span className="text-sm text-text-primary font-medium">{g.situation}</span>
-                    <span className="text-text-muted mx-2">→</span>
-                    <code className="text-xs font-mono text-menta">{g.workflow}</code>
+                    <div className="mt-1">
+                      <code className={`text-xs font-mono ${selectionGuideColors[g.category] || 'text-menta'}`}>{g.workflow}</code>
+                    </div>
                   </div>
                 </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Workflow Category Filter */}
+          <section className="px-12 pt-8 pb-4 border-b border-surface-600 sticky top-0 bg-surface-900/80 backdrop-blur-md z-30">
+            <div className="flex gap-2">
+              {(['all', 'meta', 'greenfield', 'brownfield'] as WorkflowCategory[]).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setWorkflowFilter(cat)}
+                  className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${
+                    workflowFilter === cat
+                      ? cat === 'greenfield' ? 'bg-menta/10 text-menta border-menta/30'
+                        : cat === 'brownfield' ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
+                        : cat === 'meta' ? 'bg-coral/10 text-coral border-coral/30'
+                        : 'bg-menta/10 text-menta border-menta/30'
+                      : 'bg-surface-800 text-text-secondary border-surface-600 hover:border-menta/20'
+                  }`}
+                >
+                  {cat === 'all' ? 'Todos (10)' : cat === 'meta' ? 'Meta (4)' : cat === 'greenfield' ? '🌱 Greenfield (3)' : '🏚️ Brownfield (4)'}
+                </button>
               ))}
             </div>
           </section>
@@ -97,7 +189,7 @@ export default function WorkflowsPage() {
           {/* Workflow Cards */}
           <section className="px-12 py-10 pb-20">
             <div className="space-y-8">
-              {workflows.map((wf) => (
+              {filteredWorkflows.map((wf) => (
                 <div key={wf.id} className={`rounded-2xl border ${workflowColors[wf.type] || 'border-surface-600'} p-0 overflow-hidden`}>
                   {/* Header */}
                   <div className="px-8 py-6 border-b border-surface-700/50">

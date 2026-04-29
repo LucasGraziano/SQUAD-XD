@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tracker 28 Días · Mi Transformación · Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --coral:  #F28C7A;
+      --green:  #7BC6A4;
+      --bg:     #F5F3F1;
+      --text:   #2B2B2B;
+      --white:  #FFFFFF;
+      --muted:  #6B6B6B;
+      --serif:  'Playfair Display', Georgia, serif;
+      --sans:   'Inter', system-ui, sans-serif;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --radius: 16px;
+
+      /* Module accent colors */
+      --m2: #7BC6A4;   /* Reconexión */
+      --m3: #F28C7A;   /* Compresión */
+      --m4a: #7BA8C6;  /* Intensificación */
+      --m4b: #A895C8;  /* Variación */
+      --m4c: #7BC6A4;  /* Anclaje */
+    }
+    body { font-family: var(--sans); background: #E8E5E2; color: var(--text); line-height: 1.6; }
+    .page { width: 210mm; height: 297mm; background: var(--bg); margin: 12px auto; padding: 11mm 14mm 22mm; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; page-break-after: always; page-break-inside: avoid; box-shadow: none; width: 100%; min-height: 100vh; }
+      @page { size: A4; margin: 0; }
+    }
+    h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+    .section-label { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 4px; }
+    .divider { width: 40px; height: 3px; background: var(--coral); border-radius: 2px; margin: 8px 0 14px; }
+    .page-footer { position: absolute; bottom: 9mm; left: 14mm; right: 14mm; display: flex; justify-content: space-between; align-items: center; }
+    .page-num { font-size: 0.68rem; color: var(--muted); }
+    .page-brand { font-size: 0.68rem; font-weight: 600; color: var(--coral); }
+
+    /* ── PAGE 1: Day grid ── */
+    .day-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin: 0 0 10px; }
+
+    .day-cell {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 22px 6px 20px;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      position: relative;
+    }
+    .day-num {
+      font-family: var(--sans); font-size: 1.05rem; font-weight: 700; color: var(--text); line-height: 1;
+    }
+    .day-mod {
+      font-size: 0.56rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+      text-align: center; line-height: 1.3;
+    }
+    .day-check {
+      width: 22px; height: 22px; border-radius: 5px;
+      border: 1.5px solid #DDD9D4;
+      margin-top: 4px; flex-shrink: 0;
+    }
+    .day-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      position: absolute; top: 6px; right: 6px;
+    }
+
+    /* Module row labels */
+    .week-label {
+      grid-column: 1 / -1;
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); padding: 8px 0 2px;
+    }
+
+    /* Legend */
+    .legend { display: flex; gap: 12px; flex-wrap: wrap; margin: 8px 0 14px; }
+    .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.72rem; color: var(--muted); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* Name/date row */
+    .field-row { display: flex; gap: 16px; margin-bottom: 12px; }
+    .field {
+      flex: 1; display: flex; flex-direction: column; gap: 3px;
+    }
+    .field-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .field-line { border-bottom: 1.5px solid #DDD9D4; height: 22px; }
+
+    /* ── PAGE 2: Measurements + progress ── */
+    .measure-table { width: 100%; border-collapse: collapse; margin: 10px 0; }
+    .measure-table th, .measure-table td { padding: 7px 10px; font-size: 0.8rem; text-align: left; }
+    .measure-table thead th { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1.5px solid #E8E4E0; padding-bottom: 6px; }
+    .measure-table tbody tr { border-bottom: 1px solid #F0EDE9; }
+    .measure-table tbody tr:last-child { border-bottom: none; }
+    .measure-table td.lbl { font-weight: 600; font-size: 0.82rem; }
+    .measure-table td.val { }
+    .input-cell { border-bottom: 1.5px solid #DDD9D4; width: 60px; display: inline-block; height: 16px; }
+
+    /* Weekly mood tracker */
+    .week-row { background: var(--white); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 10px 14px; margin-bottom: 8px; }
+    .week-row-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
+    .week-title { font-weight: 700; font-size: 0.85rem; }
+    .week-days-label { font-size: 0.7rem; color: var(--muted); }
+    .week-fields { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 8px; align-items: end; }
+    .wf-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 3px; }
+    .wf-line { border-bottom: 1.5px solid #DDD9D4; height: 18px; }
+
+    /* Emoji scale */
+    .emoji-scale { display: flex; justify-content: space-between; align-items: center; background: var(--white); border-radius: 10px; padding: 8px 14px; margin: 4px 0; }
+    .es-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); }
+    .es-options { display: flex; gap: 10px; }
+    .es-opt { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+    .es-emoji { font-size: 1.1rem; }
+    .es-check { width: 14px; height: 14px; border-radius: 4px; border: 1.5px solid #DDD9D4; }
+
+    /* Comparison box */
+    .compare-box {
+      display: grid; grid-template-columns: 1fr 40px 1fr; gap: 0; align-items: stretch;
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); margin-top: 10px;
+    }
+    .compare-before { background: #F0EDE9; padding: 14px 16px; }
+    .compare-arrow { background: #E8E4E0; display: flex; align-items: center; justify-content: center; font-size: 1rem; color: var(--muted); }
+    .compare-after  { background: linear-gradient(135deg, #E8F7F1, #F0FAF5); padding: 14px 16px; }
+    .compare-label  { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .compare-field  { border-bottom: 1.5px solid rgba(0,0,0,0.1); height: 20px; margin-bottom: 8px; }
+    .compare-note   { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 1 · CALENDARIO 28 DÍAS
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <!-- Header -->
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+    <div>
+      <div class="section-label">Bonus 3 · Tracker</div>
+      <h2>Mi calendario<br>de 28 días</h2>
+      <div class="divider"></div>
+    </div>
+    <div style="text-align:right;">
+      <div style="font-size:0.62rem;color:var(--muted);margin-bottom:4px;">Marcá cada día completado ✓</div>
+      <div style="display:flex;align-items:center;gap:6px;justify-content:flex-end;">
+        <div style="width:14px;height:14px;border-radius:4px;border:1.5px solid #DDD9D4;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-size:0.65rem;">✓</div>
+        <span style="font-size:0.7rem;color:var(--muted);">= día completado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Name / start date -->
+  <div class="field-row" style="margin-bottom:14px;">
+    <div class="field">
+      <div class="field-label">Nombre</div>
+      <div class="field-line"></div>
+    </div>
+    <div class="field" style="max-width:130px;">
+      <div class="field-label">Fecha de inicio</div>
+      <div class="field-line"></div>
+    </div>
+    <div class="field" style="max-width:130px;">
+      <div class="field-label">Fecha de fin</div>
+      <div class="field-line"></div>
+    </div>
+  </div>
+
+  <!-- ── SEMANA 1 · Módulo 2 Reconexión · Días 1-7 ── -->
+  <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--m2);margin-bottom:5px;display:flex;align-items:center;gap:6px;">
+    <div style="width:8px;height:8px;border-radius:50%;background:var(--m2);"></div>
+    Semana 1 · Módulo 2: Reconexión · Días 1-7
+  </div>
+  <div class="day-grid" style="margin-bottom:8px;">
+    <div class="day-cell"><div class="day-dot" style="background:var(--m2);"></div><div class="day-num">1</div><div class="day-mod" style="color:var(--m2);">Respiración</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m2);"></div><div class="day-num">2</div><div class="day-mod" style="color:var(--m2);">TVA</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m2);"></div><div class="day-num">3</div><div class="day-mod" style="color:var(--m2);">Activación</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m2);"></div><div class="day-num">4</div><div class="day-mod" style="color:var(--m2);">Sostén</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m2);"></div><div class="day-num">5</div><div class="day-mod" style="color:var(--m2);">TVA+SP</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m2);"></div><div class="day-num">6</div><div class="day-mod" style="color:var(--m2);">Combo</div><div class="day-check"></div></div>
+    <div class="day-cell" style="border:1.5px solid rgba(123,198,164,0.4);background:#F0FAF5;"><div class="day-dot" style="background:var(--m2);"></div><div class="day-num" style="color:var(--m2);">7</div><div class="day-mod" style="color:var(--m2);">Revisión</div><div class="day-check" style="border-color:var(--m2);"></div></div>
+  </div>
+
+  <!-- ── SEMANA 2 · Módulo 3 Compresión · Días 8-14 ── -->
+  <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--m3);margin-bottom:5px;margin-top:16px;display:flex;align-items:center;gap:6px;">
+    <div style="width:8px;height:8px;border-radius:50%;background:var(--m3);"></div>
+    Semana 2 · Módulo 3: Compresión Vertical · Días 8-14
+  </div>
+  <div class="day-grid" style="margin-bottom:8px;">
+    <div class="day-cell"><div class="day-dot" style="background:var(--m3);"></div><div class="day-num">8</div><div class="day-mod" style="color:var(--m3);">Hipopres.</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m3);"></div><div class="day-num">9</div><div class="day-mod" style="color:var(--m3);">Apertura</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m3);"></div><div class="day-num">10</div><div class="day-mod" style="color:var(--m3);">Vacuum</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m3);"></div><div class="day-num">11</div><div class="day-mod" style="color:var(--m3);">Pulsante</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m3);"></div><div class="day-num">12</div><div class="day-mod" style="color:var(--m3);">Cierre</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m3);"></div><div class="day-num">13</div><div class="day-mod" style="color:var(--m3);">Inclinado</div><div class="day-check"></div></div>
+    <div class="day-cell" style="border:1.5px solid rgba(242,140,122,0.4);background:#FFF8F7;"><div class="day-dot" style="background:var(--m3);"></div><div class="day-num" style="color:var(--m3);">14</div><div class="day-mod" style="color:var(--m3);">50% !</div><div class="day-check" style="border-color:var(--m3);"></div></div>
+  </div>
+
+  <!-- ── SEMANA 3 · Módulo 4 Anclaje I · Días 15-21 ── -->
+  <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--m4a);margin-bottom:5px;margin-top:16px;display:flex;align-items:center;gap:6px;">
+    <div style="width:8px;height:8px;border-radius:50%;background:var(--m4a);"></div>
+    Semana 3 · Módulo 4: Anclaje Total · Intensificación · Días 15-21
+  </div>
+  <div class="day-grid" style="margin-bottom:8px;">
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4a);"></div><div class="day-num">15</div><div class="day-mod" style="color:var(--m4a);">Plancha TVA</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4a);"></div><div class="day-num">16</div><div class="day-mod" style="color:var(--m4a);">Puente</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4a);"></div><div class="day-num">17</div><div class="day-mod" style="color:var(--m4a);">Lateral</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4a);"></div><div class="day-num">18</div><div class="day-mod" style="color:var(--m4a);">Integrado</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4a);"></div><div class="day-num">19</div><div class="day-mod" style="color:var(--m4a);">Progresión</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4a);"></div><div class="day-num">20</div><div class="day-mod" style="color:var(--m4a);">Variación</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4a);"></div><div class="day-num">21</div><div class="day-mod" style="color:var(--m4a);">Variación</div><div class="day-check"></div></div>
+  </div>
+
+  <!-- ── SEMANA 4 · Módulo 4 Anclaje II · Días 22-28 ── -->
+  <div style="font-size:0.6rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--m4b);margin-bottom:5px;margin-top:16px;display:flex;align-items:center;gap:6px;">
+    <div style="width:8px;height:8px;border-radius:50%;background:var(--m4b);"></div>
+    Semana 4 · Módulo 4: Anclaje Total · Anclaje Final · Días 22-28
+  </div>
+  <div class="day-grid" style="margin-bottom:10px;">
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4b);"></div><div class="day-num">22</div><div class="day-mod" style="color:var(--m4b);">Variación</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4b);"></div><div class="day-num">23</div><div class="day-mod" style="color:var(--m4b);">Variación</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4b);"></div><div class="day-num">24</div><div class="day-mod" style="color:var(--m4b);">Revisión</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4b);"></div><div class="day-num">25</div><div class="day-mod" style="color:var(--m4b);">Anclaje</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4b);"></div><div class="day-num">26</div><div class="day-mod" style="color:var(--m4b);">Anclaje</div><div class="day-check"></div></div>
+    <div class="day-cell"><div class="day-dot" style="background:var(--m4b);"></div><div class="day-num">27</div><div class="day-mod" style="color:var(--m4b);">Anclaje</div><div class="day-check"></div></div>
+    <div class="day-cell" style="border:1.5px solid rgba(168,149,200,0.5);background:linear-gradient(135deg,#EEE8F7,#F5F1FA);">
+      <div style="position:absolute;top:4px;right:4px;font-size:0.7rem;">🏆</div>
+      <div class="day-num" style="color:var(--m4b);font-size:1.15rem;">28</div>
+      <div class="day-mod" style="color:var(--m4b);font-weight:700;">FIN</div>
+      <div class="day-check" style="border-color:var(--m4b);"></div>
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:var(--m2);"></div>Semana 1 · Reconexión</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--m3);"></div>Semana 2 · Compresión</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--m4a);"></div>Semana 3 · Intensificación</div>
+    <div class="legend-item"><div class="legend-dot" style="background:var(--m4b);"></div>Semana 4 · Anclaje Final</div>
+  </div>
+
+  <!-- Streaks row — margin-top:auto pins it to the bottom -->
+  <div style="background:var(--white);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.05);padding:10px 16px;display:flex;gap:0;overflow:hidden;margin-top:auto;">
+    <div style="flex:1;text-align:center;border-right:1px solid #F0EDE9;padding:0 12px;">
+      <div style="font-size:0.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Racha más larga</div>
+      <div style="border-bottom:1.5px solid #DDD9D4;height:22px;"></div>
+      <div style="font-size:0.62rem;color:var(--muted);margin-top:3px;">días seguidos</div>
+    </div>
+    <div style="flex:1;text-align:center;border-right:1px solid #F0EDE9;padding:0 12px;">
+      <div style="font-size:0.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Días completados</div>
+      <div style="border-bottom:1.5px solid #DDD9D4;height:22px;"></div>
+      <div style="font-size:0.62rem;color:var(--muted);margin-top:3px;">de 28</div>
+    </div>
+    <div style="flex:1;text-align:center;padding:0 12px;">
+      <div style="font-size:0.6rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Días de descanso</div>
+      <div style="border-bottom:1.5px solid #DDD9D4;height:22px;"></div>
+      <div style="font-size:0.62rem;color:var(--muted);margin-top:3px;">tomados</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Mi Transformación</span>
+    <span class="page-num">1</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 2 · MI TRANSFORMACIÓN
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+    <div>
+      <div class="section-label">Registro de progreso</div>
+      <h2>Mi transformación</h2>
+      <div class="divider"></div>
+    </div>
+    <div style="background:linear-gradient(135deg,#E8F7F1,#F0FAF5);border:1.5px solid rgba(123,198,164,0.4);border-radius:12px;padding:8px 14px;text-align:center;">
+      <div style="font-size:1.5rem;margin-bottom:2px;">🌟</div>
+      <div style="font-size:0.62rem;font-weight:700;color:#2E8B68;text-transform:uppercase;letter-spacing:0.07em;">28 días</div>
+    </div>
+  </div>
+
+  <!-- Measurements section -->
+  <div style="font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">Medidas corporales</div>
+
+  <div style="background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:14px;">
+    <table class="measure-table" style="width:100%;">
+      <thead>
+        <tr>
+          <th style="width:38%;">Medida</th>
+          <th style="text-align:center;">Día 1</th>
+          <th style="text-align:center;">Semana 2</th>
+          <th style="text-align:center;">Semana 3</th>
+          <th style="text-align:center;color:var(--coral);">Día 28</th>
+          <th style="text-align:center;color:var(--green);">Diferencia</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lbl">Cintura (cm)</td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--coral);"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--green);"></div></td>
+        </tr>
+        <tr>
+          <td class="lbl">Abdomen bajo ombligo (cm)</td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--coral);"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--green);"></div></td>
+        </tr>
+        <tr>
+          <td class="lbl">Separación diastasis (dedos)</td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--coral);"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--green);"></div></td>
+        </tr>
+        <tr>
+          <td class="lbl">Peso (kg) · opcional</td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--coral);"></div></td>
+          <td style="text-align:center;"><div class="input-cell" style="border-color:var(--green);"></div></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Weekly energy / notes -->
+  <div style="font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">Registro semanal · energía y notas</div>
+
+  <!-- Week 1 -->
+  <div class="week-row">
+    <div class="week-row-head">
+      <div class="week-title" style="color:var(--m2);">Semana 1 · Reconexión</div>
+      <div class="week-days-label">Días 1-7</div>
+    </div>
+    <div class="week-fields">
+      <div>
+        <div class="wf-label">Nota de la semana</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Energía</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Dolor pélvico</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Abdomen</div>
+        <div class="wf-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Week 2 -->
+  <div class="week-row">
+    <div class="week-row-head">
+      <div class="week-title" style="color:var(--m3);">Semana 2 · Compresión</div>
+      <div class="week-days-label">Días 8-14</div>
+    </div>
+    <div class="week-fields">
+      <div>
+        <div class="wf-label">Nota de la semana</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Energía</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Dolor pélvico</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Abdomen</div>
+        <div class="wf-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Week 3 -->
+  <div class="week-row">
+    <div class="week-row-head">
+      <div class="week-title" style="color:var(--m4a);">Semana 3 · Intensificación</div>
+      <div class="week-days-label">Días 15-21</div>
+    </div>
+    <div class="week-fields">
+      <div>
+        <div class="wf-label">Nota de la semana</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Energía</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Dolor pélvico</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Abdomen</div>
+        <div class="wf-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Week 4 -->
+  <div class="week-row">
+    <div class="week-row-head">
+      <div class="week-title" style="color:var(--m4b);">Semana 4 · Anclaje Final</div>
+      <div class="week-days-label">Días 22-28</div>
+    </div>
+    <div class="week-fields">
+      <div>
+        <div class="wf-label">Nota de la semana</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Energía</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Dolor pélvico</div>
+        <div class="wf-line"></div>
+      </div>
+      <div>
+        <div class="wf-label">Abdomen</div>
+        <div class="wf-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Before / After comparison -->
+  <div class="compare-box" style="margin-top:12px;">
+    <div class="compare-before">
+      <div class="compare-label" style="color:var(--muted);">Antes · Día 1</div>
+      <div class="compare-field"></div>
+      <div class="compare-field"></div>
+      <div class="compare-note">¿Cómo te sentías? ¿Qué te motivó a empezar?</div>
+    </div>
+    <div class="compare-arrow">›</div>
+    <div class="compare-after">
+      <div class="compare-label" style="color:#2E8B68;">Después · Día 28</div>
+      <div class="compare-field" style="border-color:rgba(0,0,0,0.12);"></div>
+      <div class="compare-field" style="border-color:rgba(0,0,0,0.12);"></div>
+      <div class="compare-note" style="color:#2E8B68;">¿Qué cambió? ¿Qué sentís en tu cuerpo ahora?</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Mi Transformación</span>
+    <span class="page-num">2</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -5,7 +5,7 @@ import { updateSession } from './lib/supabase/middleware';
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-const PUBLIC_PATHS = ['/auth/login', '/auth/verify', '/auth/callback', '/api/webhook'];
+const PUBLIC_PATHS = ['/auth/login', '/auth/register', '/auth/verify', '/auth/callback', '/auth/forgot-password', '/auth/reset-password', '/api/webhook'];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

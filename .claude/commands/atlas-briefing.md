@@ -16,12 +16,14 @@ Gera um briefing operacional completo para o Lucas, mostrando exatamente o que f
 Ler os seguintes arquivos/fontes:
 
 ```
-# Memórias do projeto
-C:\Users\Graziano\.claude\projects\D--SQUAD-XD\memory\user_lucas_profile.md
-C:\Users\Graziano\.claude\projects\D--SQUAD-XD\memory\project_launch_zero_diastase.md
+# Memórias do projeto (paths corretos)
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\user_lucas_profile.md
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\project_company_context.md
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\project_launch_zero_diastase.md
+C:\Users\Graziano\.claude\projects\C--SQUAD-XD\memory\project_conclave_strategic_decision.md
 
-# Projeto ativo
-squads/low-ticket/projects/zero-diastase/briefing.md
+# Status operacional atual
+squads/low-ticket/projects/zero-diastase/sprint-status.md
 ```
 
 ### 2. Puxar tasks do Notion
@@ -50,7 +52,7 @@ Extrair de cada task: Name, Status, Priority, Due date.
 ```
 - Data de hoje (da system date)
 - Dia da semana
-- Dias até lançamento (2026-03-29)
+- Dias até lançamento: calcular com base no sprint-status.md (marco "GO LIVE")
 - Janela de trabalho: 20:15-22:15 (2h) se dia útil, tarde inteira se fds
 - Energia do dia: Seg/Ter = alta, Qua = média, Qui/Sex = baixa, Fds = variável
 ```

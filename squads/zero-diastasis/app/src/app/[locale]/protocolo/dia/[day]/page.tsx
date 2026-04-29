@@ -7,6 +7,8 @@ import { ContextualOffer } from '@/components/upsell/contextual-offer';
 import { Badge } from '@/components/ui/badge';
 import { redirect } from 'next/navigation';
 import { getContextualUpsell } from '@/lib/upsell-engine';
+import { getVideoForDay } from '@/lib/video-config';
+import { YouTubeEmbed } from '@/components/video/youtube-embed';
 import { isDemoMode, DEMO_PURCHASES, DEMO_COMPLETED_DAYS } from '@/lib/demo';
 import type { DayProgress, Purchase } from '@/types/database';
 
@@ -48,6 +50,7 @@ export default async function DayPage({ params }: Props) {
 
   const moduleNum = getModuleForDay(dayNumber);
   const upsell = getContextualUpsell(dayNumber);
+  const video = getVideoForDay(dayNumber);
   const audioDuration = moduleNum === 2 ? '8 min' : moduleNum === 3 ? '10 min' : '12 min';
 
   return (
@@ -66,12 +69,21 @@ export default async function DayPage({ params }: Props) {
       </div>
 
       <AudioPlayer
-        src={`/audio/dia-${dayNumber}.mp3`}
+        src={`${process.env.NEXT_PUBLIC_AUDIO_CDN_URL || ''}/audio/dia-${dayNumber}.mp3`}
         title={`Sesión Día ${dayNumber}`}
         dayNumber={dayNumber}
       />
 
       <CompleteDayButton dayNumber={dayNumber} isCompleted={completed} />
+
+      {video && (
+        <div className="mt-6">
+          <h2 className="font-heading font-bold text-foreground mb-3 text-sm uppercase tracking-wide text-foreground/50">
+            Video complementario
+          </h2>
+          <YouTubeEmbed videoId={video.videoId} title={video.title} />
+        </div>
+      )}
 
       {upsell && (
         <div className="mt-6">

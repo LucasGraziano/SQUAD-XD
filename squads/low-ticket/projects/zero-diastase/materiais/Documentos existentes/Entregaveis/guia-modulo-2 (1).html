@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Módulo 2: Reconexión — Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral:   #F28C7A;
+      --green:   #7BC6A4;
+      --bg:      #F5F3F1;
+      --text:    #2B2B2B;
+      --white:   #FFFFFF;
+      --muted:   #6B6B6B;
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+      --shadow:  0 4px 24px rgba(0,0,0,0.07);
+      --radius:  16px;
+    }
+
+    body { font-family: var(--sans); background: #E8E5E2; color: var(--text); line-height: 1.7; }
+
+    .page {
+      width: 210mm; min-height: 297mm; background: var(--bg);
+      margin: 12px auto; padding: 13mm 15mm;
+      position: relative; overflow: hidden;
+    }
+
+    @media print {
+      body { background: none; }
+      .page { margin: 0; page-break-after: always; page-break-inside: avoid; box-shadow: none; width: 100%; min-height: 100vh; }
+      @page { size: A4; margin: 0; }
+    }
+
+    /* Typography */
+    h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+    h2 { font-family: var(--serif); font-size: 1.7rem; font-weight: 700; line-height: 1.2; }
+    h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; }
+    p  { font-size: 0.92rem; line-height: 1.75; color: var(--text); }
+
+    .coral  { color: var(--coral); }
+    .green  { color: var(--green); }
+    .muted  { color: var(--muted); }
+    .small  { font-size: 0.8rem; }
+    .serif  { font-family: var(--serif); }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 5px;
+    }
+
+    /* Divider */
+    .divider { width: 44px; height: 3px; background: var(--coral); border-radius: 2px; margin: 10px 0 16px; }
+
+    /* Cards */
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 22px; }
+
+    /* Highlight */
+    .highlight {
+      background: linear-gradient(135deg, #FFF0ED 0%, #FFF8F7 100%);
+      border: 1.5px solid #F5C4BB; border-radius: var(--radius); padding: 14px 18px; margin: 20px 0;
+    }
+
+    /* Info box */
+    .info-box { background: #E8F7F1; border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 14px 18px; margin: 12px 0; }
+
+    /* Page footer */
+    .page-footer {
+      position: absolute; bottom: 10mm; left: 15mm; right: 15mm;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .page-num   { font-size: 0.7rem; color: var(--muted); }
+    .page-brand { font-size: 0.7rem; font-weight: 600; color: var(--coral); }
+
+    /* Cover */
+    .cover-bg { position: absolute; inset: 0; background: linear-gradient(155deg, #2B1E10 0%, #1A1A1A 100%); }
+    .cover-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 8mm 0 10mm; }
+
+    /* Day header */
+    .day-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .day-badge {
+      width: 44px; height: 44px; min-width: 44px; border-radius: 12px;
+      background: var(--coral); color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-weight: 700; line-height: 1;
+    }
+    .day-badge .day-num { font-size: 1.1rem; }
+    .day-badge .day-word { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85; }
+    .day-focus { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .day-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .day-meta  { display: flex; gap: 8px; margin-top: 4px; }
+    .day-pill  { background: #F5F3F1; border-radius: 100px; padding: 3px 10px; font-size: 0.7rem; font-weight: 600; color: var(--muted); }
+
+    /* Exercise card */
+    .exercise {
+      background: var(--white); border-radius: 14px; box-shadow: var(--shadow);
+      padding: 20px 22px; margin-bottom: 14px;
+    }
+    .exercise-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+      padding-bottom: 14px; border-bottom: 1px solid #F0EDE9;
+    }
+    .exercise-icon {
+      width: 34px; height: 34px; min-width: 34px; border-radius: 10px;
+      background: #FFF0ED; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .exercise-name { font-weight: 700; font-size: 0.9rem; }
+    .exercise-dur  { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+
+    .exercise-position {
+      background: #F9F6F3; border-radius: 10px; padding: 10px 14px;
+      font-size: 0.78rem; color: var(--muted); margin-bottom: 14px;
+      display: flex; gap: 6px; align-items: center;
+    }
+
+    .steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 0; }
+    .step  { display: flex; gap: 10px; align-items: flex-start; }
+    .step-num {
+      width: 20px; height: 20px; min-width: 20px; border-radius: 6px;
+      background: var(--coral); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 700; margin-top: 2px;
+    }
+    .step p { font-size: 0.82rem; line-height: 1.6; }
+
+    .exercise-tags { display: flex; flex-direction: column; gap: 9px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #F0EDE9; }
+    .tag-row { display: flex; gap: 7px; align-items: flex-start; }
+    .tag-icon { font-size: 0.78rem; min-width: 16px; margin-top: 1px; }
+    .tag-label { font-size: 0.72rem; font-weight: 700; min-width: 48px; }
+    .tag-text { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+    .tag-feel  .tag-label { color: var(--green); }
+    .tag-avoid .tag-label { color: #D94F3D; }
+    .tag-tip   .tag-label { color: var(--coral); }
+
+    /* Progress bar */
+    .prog-bar { background: #E8E5E2; border-radius: 100px; height: 6px; margin: 6px 0; }
+    .prog-fill { background: var(--coral); border-radius: 100px; height: 6px; }
+
+    /* Day nav dots */
+    .day-dots { display: flex; gap: 5px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #E0DDD9; }
+    .dot.active { background: var(--coral); width: 20px; border-radius: 4px; }
+    .dot.done   { background: var(--green); }
+
+    /* Completion card */
+    .completion {
+      background: linear-gradient(135deg, #E8F7F1 0%, #F0FBF7 100%);
+      border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 16px 20px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 1 — PORTADA
+═══════════════════════════════════════════════════════ -->
+<div class="page" style="padding:0;background:#1A1A1A;">
+  <div class="cover-bg"></div>
+
+  <div style="position:absolute;top:-50px;right:-50px;width:240px;height:240px;border-radius:50%;background:rgba(242,140,122,0.1);"></div>
+  <div style="position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(123,198,164,0.08);"></div>
+
+  <div class="cover-content" style="padding:10mm 15mm 10mm;">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 14px;font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:0.07em;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--green);"></span>
+        Módulo 2 de 4 · Días 1-7
+      </div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);">⏱ 8 min/día</div>
+    </div>
+
+    <div style="padding-top:16px;">
+      <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--green);margin-bottom:10px;">Guía de ejercicios</div>
+      <h1 style="color:#fff;font-size:3rem;margin-bottom:10px;">Reconexión</h1>
+      <p style="color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.65;max-width:80%;margin-bottom:22px;">Tu cuerpo ya sabe cómo activar la Faja Invisible™. Esta semana le recordamos cómo hacerlo.</p>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">🏠 Acostada en casa</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">⏱ 8 min/día</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">✓ Sin impacto</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">✓ Nivel principiante</span>
+      </div>
+
+      <!-- Week progress -->
+      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:14px 16px;">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:10px;">Días de esta semana</div>
+        <div style="display:flex;gap:6px;">
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">1</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">2</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">3</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">4</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">5</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">6</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">7</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(255,255,255,0.1);">
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:500;">ZERO DIASTASIS™ · zerodiastasis.com</div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);">Protocolo de Reactivación del TVA</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 2 — INTRO AL MÓDULO
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Módulo 2 · Reconexión</div>
+  <h2>Qué va a pasar<br>esta <span class="coral">semana</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">El Módulo 2 es la base de todo el protocolo. Sin esta semana, los módulos siguientes no funcionan. No hay ejercicios difíciles aquí, solo <strong>reconexión consciente</strong> con el músculo que dejó de responder.</p>
+
+  <div class="highlight" style="margin-bottom:14px;">
+    <p class="small"><strong style="font-family:var(--serif);font-size:0.95rem;">"El TVA no está dañado. Está desactivado."</strong><br>
+    <span style="color:var(--muted);">Esta semana le enviamos la señal para que despierte. No se necesita fuerza. Se necesita atención.</span></p>
+  </div>
+
+  <!-- Day overview -->
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;">
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">1</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Respiración diafragmática</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Reconectar la respiración con el abdomen</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">2</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Consciencia del TVA</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Localizar el músculo profundo con las manos</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">3</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Activación suave del TVA</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Primera contracción consciente al exhalar</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">4</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Activación con sostén</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Mantener la contracción 5-8 segundos</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">5</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">TVA + Suelo pélvico</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Integrar el core profundo completo</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">6</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Combinación completa</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Respiración + TVA + suelo pélvico + postura</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:#E8F7F1;border-radius:11px;padding:10px 13px;border:1.5px solid #A8DFC8;">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">7</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;color:#2E8B68;">Revisión + test de progreso</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Secuencia completa + auto-evaluación</div>
+      </div>
+      <div style="font-size:0.7rem;font-weight:700;color:var(--green);">🎉</div>
+    </div>
+
+  </div>
+
+  <div class="info-box">
+    <p class="small"><strong>Posición base de todo el módulo:</strong> Acostada boca arriba, rodillas dobladas, pies apoyados en el piso, espalda relajada. Brazos a los lados o manos sobre el abdomen. No necesitás colchoneta, con el piso es suficiente.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">2</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 3 — DÍA 1
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">1</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 2 · Reconexión</div>
+      <div class="day-title">Respiración diafragmática</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 8 min</span>
+        <span class="day-pill">🧘 Acostada</span>
+        <span class="day-pill">✓ Sin esfuerzo</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">El primer día es el más importante. No hay nada que "hacer bien" todavía, solo observar cómo respira tu cuerpo ahora mismo y empezar a redirigir esa respiración hacia el abdomen.</p>
+
+  <!-- Ejercicio 1 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🌬️</div>
+      <div>
+        <div class="exercise-name">Respiración abdominal básica</div>
+        <div class="exercise-dur">⏱ 4 minutos · 8-10 respiraciones lentas</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧘 <span><strong>Posición:</strong> Boca arriba, rodillas dobladas. Una mano en el abdomen, otra en el pecho.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Inhalá despacio. Solo el abdomen sube, el pecho queda quieto.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Sostené el aire 2 segundos, relajada.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Exhalá lento por la boca. El abdomen baja suavemente.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">El abdomen sube y baja. El pecho queda quieto. Sensación de calma y peso en la espalda.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Que los hombros suban al inhalar. Que el pecho se expanda. Apurar las respiraciones.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Si el pecho sube igual, poné más peso en la mano del abdomen para guiar la dirección.</span></div>
+    </div>
+  </div>
+
+  <!-- Ejercicio 2 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🔍</div>
+      <div>
+        <div class="exercise-name">Exploración del centro abdominal</div>
+        <div class="exercise-dur">⏱ 4 minutos · Continuo y lento</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧘 <span><strong>Posición:</strong> Boca arriba. Ambas manos sobre el abdomen, dedos apuntando hacia el ombligo.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Respirá igual que antes. Sentí el abdomen subir contra tus manos.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Al exhalar, acompañá la bajada del abdomen. Sin presionar.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Explorá el ombligo con los dedos. ¿Sentís el surco? Solo observalo.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">El abdomen se mueve en sincronía con la respiración. Podés notar el espacio en el centro.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Presionar fuerte. Tensionar el abdomen. Buscar resultados en el día 1.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Este ejercicio es de observación. Cuanto más relajada estés, más información te da tu cuerpo.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 1:</strong> Anotá en tu Tracker cómo se sintió. ¿Pudiste mover el abdomen sin el pecho? ¿Sentiste el surco? No importa si la respuesta es no, mañana lo intentás de nuevo.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">3</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 4 — DÍA 2
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">2</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 2 · Reconexión</div>
+      <div class="day-title">Consciencia del TVA</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 8 min</span>
+        <span class="day-pill">🧘 Acostada</span>
+        <span class="day-pill">↑ Nivel 2</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy agregamos un paso: localizar el TVA con las manos antes de intentar activarlo. Es el equivalente a saber dónde está la llave antes de intentar girarla.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🌬️</div>
+      <div>
+        <div class="exercise-name">Respiración abdominal (repaso)</div>
+        <div class="exercise-dur">⏱ 2 minutos · Calentamiento</div>
+      </div>
+    </div>
+    <div class="exercise-position">🧘 <span>Igual que el Día 1. Confirmá que el pecho no se mueve.</span></div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Si el pecho sigue subiendo, no avances hasta dominar la respiración abdominal.</span></div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🤲</div>
+      <div>
+        <div class="exercise-name">Localización del TVA</div>
+        <div class="exercise-dur">⏱ 3 minutos · Exploración guiada</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧘 <span><strong>Posición:</strong> Boca arriba. Pulgares en las crestas de la cadera, dedos apuntando al ombligo.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Al exhalar, tosé suavemente. Sentís algo que se contrae bajo los dedos — eso es el TVA.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Repetí 3 veces. Prestá atención a esa sensación lateral.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Ahora intentá activar esa zona sin toser. Exhalá lento y conscientemente.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Contracción lateral suave. La pared abdominal se aplana desde los costados.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Contraer los glúteos, apretar las piernas o subir la cadera. El TVA trabaja solo, sin ayuda.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">El ombligo viaja directo hacia atrás, hacia la columna. Sin subir ni bajar.</span></div>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🔄</div>
+      <div>
+        <div class="exercise-name">Respiración + TVA combinados</div>
+        <div class="exercise-dur">⏱ 3 minutos · 6-8 series</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Inhalá. El abdomen sube.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Al exhalar, activá el TVA. El ombligo viaja hacia la columna.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Al inhalar, soltá todo. El TVA se relaja con vos.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">La contracción del TVA que acompaña naturalmente la exhalación. Suave, no forzada.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Contener la respiración mientras activás el TVA. Deben fluir juntos.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 2:</strong> ¿Sentiste la contracción lateral bajo los dedos? Eso es el TVA. Si no lo encontraste todavía, repetí el ejercicio de la tos suave mañana antes de avanzar.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">4</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 5 — DÍA 3
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">3</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 2 · Reconexión</div>
+      <div class="day-title">Activación suave del TVA</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 8 min</span>
+        <span class="day-pill">↑ Nivel 3</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy activás el TVA de forma sostenida por primera vez. El objetivo no es intensidad, es duración suave.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">💪</div>
+      <div>
+        <div class="exercise-name">Activación TVA en exhalación · Series cortas</div>
+        <div class="exercise-dur">⏱ 8 minutos · 3 series de 8 repeticiones</div>
+      </div>
+    </div>
+    <div class="exercise-position">🧘 <span>Boca arriba, manos sobre el abdomen bajo (debajo del ombligo).</span></div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Al exhalar, activá el TVA y sostené 3 segundos. El ombligo hacia la columna.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Al inhalar, soltá todo. Sin apurar.</p></div>
+      <div class="step"><div class="step-num">3</div><p>8 repeticiones, 30 segundos de descanso, 3 series.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Fatiga suave en el abdomen profundo, no en los oblicuos ni en la espalda.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Apretar demasiado. El 30% de esfuerzo máximo es suficiente para el TVA.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">"Hunde el ombligo hacia la columna al exhalar" — la imagen que más funciona.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 3:</strong> Marcá el casillero en tu Tracker. ¿Sentiste la fatiga en el abdomen profundo? Eso confirma que el TVA está trabajando.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">5</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 6 — DÍA 4
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge" style="background:#E07060;">
+      <span class="day-num">4</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 2 · Reconexión</div>
+      <div class="day-title">Activación con sostén</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 8 min</span>
+        <span class="day-pill">↑ Nivel 4</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Igual que el Día 3 pero aumentamos el tiempo de sostén. De 3 segundos pasamos a 5-8 segundos por repetición.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">⏱</div>
+      <div>
+        <div class="exercise-name">Activación TVA sostenida · Holds largos</div>
+        <div class="exercise-dur">⏱ 8 minutos · 3 series de 6 repeticiones</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Al exhalar, activá el TVA y sostené 5 segundos. Seguí respirando suave.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Cuando los 5 segundos se sientan fáciles, intentá llegar a 8.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Relajá entre repeticiones. 6 reps, 3 series, 30 segundos de descanso.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Contracción estable, sin "temblar". Si tiembla, reducí el tiempo de sostén.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Apnea. Tenés que poder respirar normalmente mientras sostenés el TVA activado.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Contá en voz baja: "1... 2... 3... 4... 5..." Ayuda a mantener el ritmo y no apurar.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 4:</strong> ¿Llegaste a los 8 segundos? No te preocupes si aún no. El objetivo del Día 5 es sumar una capa más de activación, y ya vas a tener más tiempo para consolidar esto.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">6</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 7 — DÍA 5
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">5</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 2 · Reconexión</div>
+      <div class="day-title">TVA + Suelo pélvico</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 8 min</span>
+        <span class="day-pill">↑ Nivel 5</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">El TVA y el suelo pélvico trabajan como un equipo. Activarlos juntos multiplica el efecto de cada sesión.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🔗</div>
+      <div>
+        <div class="exercise-name">Activación integrada TVA + perineo</div>
+        <div class="exercise-dur">⏱ 8 minutos · 3 series de 8 repeticiones</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Al exhalar, activá primero el suelo pélvico y luego el TVA.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Sostené ambos 5-8 segundos. Respirá suave.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Al inhalar, soltá todo al mismo tiempo.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Una contracción que asciende del perineo al abdomen. Como un "elevador".</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Apretar los glúteos para activar el suelo pélvico. Son músculos distintos.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Si te cuesta, practicá el suelo pélvico solo antes de combinarlo con el TVA.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 5:</strong> ¿Sentiste el "elevador" que sube? Esa conexión perineo-abdomen es exactamente lo que estamos buscando. El Día 6 la vas a poner en práctica en una secuencia completa.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">7</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 8 — DÍA 6
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge" style="background:#E07060;">
+      <span class="day-num">6</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 2 · Reconexión</div>
+      <div class="day-title">Combinación completa</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 8 min</span>
+        <span class="day-pill">↑ Nivel 6</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy unís todo en una sola secuencia fluida: respiración, TVA y suelo pélvico moviéndose en sincronía.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🌀</div>
+      <div>
+        <div class="exercise-name">Secuencia integrada completa</div>
+        <div class="exercise-dur">⏱ 8 minutos · Flujo continuo</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p><strong>Inhalar (4s):</strong> Abdomen sube. TVA y suelo pélvico relajados.</p></div>
+      <div class="step"><div class="step-num">2</div><p><strong>Exhalar (6s):</strong> Suelo pélvico sube → TVA se activa → ombligo viaja a columna. Todo en ese orden.</p></div>
+      <div class="step"><div class="step-num">3</div><p><strong>Sostén (5-8s):</strong> Mantené ambos activados. Respiración suave y continua.</p></div>
+      <div class="step"><div class="step-num">4</div><p><strong>Relajar (4s):</strong> Soltá todo. Descansá completamente antes de repetir.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">El abdomen "contenido" desde adentro. Por primera vez sentís la Faja Invisible™.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Apurar la secuencia. Cada paso necesita su tiempo para coordinarse.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Si no podés hacer los 3 pasos juntos todavía, no hay problema. El Día 7 es para consolidar.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 6:</strong> Marcá en tu Tracker. Mañana es el Día 7, donde vas a revisar toda la semana y hacerte las preguntas de autoevaluación. Ya llegaste al final.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">8</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 9 — DÍA 7 + CIERRE
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--green);">
+      <span class="day-num">7</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus" style="color:var(--green);">Módulo 2 · Reconexión</div>
+      <div class="day-title">Revisión + test de progreso</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 8 min</span>
+        <span class="day-pill">🎉 Semana 1</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy repetís la secuencia del Día 6 y después te hacés las preguntas de evaluación. No hay respuestas buenas ni malas, hay información.</p>
+
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🔄</div>
+      <div>
+        <div class="exercise-name">Secuencia completa (repaso Día 6)</div>
+        <div class="exercise-dur">⏱ 6 minutos · 3 series de 8 repeticiones</div>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Igual que el Día 6. Inhalar → exhalar activando suelo pélvico + TVA → sostener 5-8s → relajar.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Prestá atención a cuánto más fácil se siente comparado con el Día 1.</p></div>
+    </div>
+    <div class="exercise-tags">
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">"¿Sentís la diferencia? Eso es tu Faja Invisible™ activándose."</span></div>
+    </div>
+  </div>
+
+  <!-- Auto-evaluación -->
+  <div class="card" style="margin-bottom:14px;">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);margin-bottom:12px;">📋 Test de progreso · Semana 1</div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <div style="background:#F9F6F3;border-radius:10px;padding:10px 12px;">
+        <div style="font-weight:600;font-size:0.82rem;margin-bottom:3px;">¿Podés respirar con el abdomen sin que el pecho suba?</div>
+        <div style="display:flex;gap:8px;margin-top:4px;">
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">Sí, siempre</div>
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">A veces</div>
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">Todavía no</div>
+        </div>
+      </div>
+
+      <div style="background:#F9F6F3;border-radius:10px;padding:10px 12px;">
+        <div style="font-weight:600;font-size:0.82rem;margin-bottom:3px;">¿Sentís la contracción del TVA (ombligo hacia la columna)?</div>
+        <div style="display:flex;gap:8px;margin-top:4px;">
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">Sí, claro</div>
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">Algo</div>
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">No aún</div>
+        </div>
+      </div>
+
+      <div style="background:#F9F6F3;border-radius:10px;padding:10px 12px;">
+        <div style="font-weight:600;font-size:0.82rem;margin-bottom:3px;">¿Podés sostener el TVA activo mientras respirás?</div>
+        <div style="display:flex;gap:8px;margin-top:4px;">
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">Sí</div>
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">Con dificultad</div>
+          <div style="background:var(--white);border:1.5px solid #E0DDD9;border-radius:8px;padding:4px 14px;font-size:0.72rem;">No todavía</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Completion -->
+  <div class="completion">
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <div style="font-size:1.8rem;">🎉</div>
+      <div>
+        <div style="font-weight:700;font-size:0.95rem;color:#2E8B68;margin-bottom:4px;">Semana 1 completada</div>
+        <p class="small muted">Tu TVA empezó a despertar. Mañana comienza el Módulo 3: <strong>Compresión Vertical</strong>, donde vas a aprender la técnica hipopresiva completa. Cada día que completaste esta semana le enviaste una señal al músculo. Esa señal se acumula.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">9</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 10 — REFERENCIA RÁPIDA
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Módulo 2 · Referencia rápida</div>
+  <h2>Los 7 días de un<br><span class="coral">vistazo</span></h2>
+  <div class="divider"></div>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">1</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Respiración diafragmática</div><div style="font-size:0.72rem;color:var(--muted);">Abdomen sube, pecho quieto</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">2</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Consciencia del TVA</div><div style="font-size:0.72rem;color:var(--muted);">Localizar con tos suave + activación</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">3</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Activación suave</div><div style="font-size:0.72rem;color:var(--muted);">TVA en exhalación, 3s sostén · 3×8</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:#E07060;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">4</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Activación con sostén</div><div style="font-size:0.72rem;color:var(--muted);">TVA 5-8s sostén · 3×6</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">5</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">TVA + Suelo pélvico</div><div style="font-size:0.72rem;color:var(--muted);">Core profundo integrado · 3×8</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:#E07060;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">6</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Combinación completa</div><div style="font-size:0.72rem;color:var(--muted);">Inhalar › exhalar+TVA+pélvico › sostén › relajar</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">8 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:#E8F7F1;border-radius:12px;padding:11px 14px;border:1.5px solid #A8DFC8;">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">7</div>
+      <div><div style="font-weight:600;font-size:0.85rem;color:#2E8B68;">Revisión + test de progreso</div><div style="font-size:0.72rem;color:var(--muted);">Secuencia completa + auto-evaluación</div></div>
+      <div style="font-size:0.7rem;font-weight:700;color:var(--green);">🎉</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <p class="small"><strong>Regla de este módulo:</strong> Si un día no podés completar la sesión completa, hacé la mitad. 4 minutos de activación consciente son infinitamente mejores que cero. La consistencia siempre gana a la perfección.</p>
+  </div>
+
+  <div style="margin-top:14px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;display:flex;gap:12px;align-items:center;">
+    <div style="font-size:1.5rem;">➡️</div>
+    <div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Siguiente: Módulo 3 · Compresión Vertical</div>
+      <p class="small muted">Días 8-14. Introducción al hipopresivo básico. Primera experiencia de presión negativa real. 10 min/día.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">10</div>
+  </div>
+</div>
+
+
+</body>
+</html>

@@ -18,10 +18,11 @@ export function Greeting({ name }: GreetingProps) {
   const timeOfDay = getTimeOfDay();
 
   return (
-    <div className="mb-6">
+    <div className="mb-6 animate-fade-in">
       <h1 className="text-2xl font-heading font-bold text-foreground">
         {t(timeOfDay)}{name ? `, ${name.split(' ')[0]}` : ''} 👋
       </h1>
+      <p className="text-sm text-foreground/40 mt-1">Zero Diastasis™ · Protocolo de 28 días</p>
     </div>
   );
 }

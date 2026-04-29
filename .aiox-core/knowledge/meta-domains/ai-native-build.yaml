@@ -1,0 +1,27 @@
+# Meta-Domain: AI-Native Build
+# Construção e operação de sistemas Claude Code em produção
+
+id: ai-native-build
+description: "Claude Code, skills, hooks, DESIGN.md, token economy, agent systems, model hierarchy"
+domains:
+  - ai-native-build  # ATIVO: mateus-dias, chase, alon — DNA v3 completo
+
+primary_context: Claude Code, Claude API, agentes IA, produtividade com IA
+squad_affinity: [all]
+situations_prefix: [AI]
+
+active_resources:
+  - path: "domains/ai-native-build/mateus-dias-dna.md"
+    description: "22 agentes, 8 squads, Plan Mode"
+  - path: "domains/ai-native-build/chase-dna.md"
+    description: "skills, hooks, CLIs, token optimization"
+  - path: "domains/ai-native-build/alon-dna.md"
+    description: "DESIGN.md protocol, design tokens"
+  - path: "dossiers/cross-source/ai-native-operator-system.md"
+    description: "Convergência 10 fontes (~950 tokens)"
+
+planned_experts:
+  - name: Jack Roberts
+    source: "Transcrições Claude Code avançado"
+    file: domains/ai-native-build/jack-roberts-dna.md
+    eta: "Fase 3"

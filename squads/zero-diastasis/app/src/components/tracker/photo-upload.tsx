@@ -7,23 +7,37 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export function PhotoUpload() {
   const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleUpload(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
+    setError(null);
 
-    const formData = new FormData();
-    formData.append('photo', file);
-    formData.append('photo_type', 'front');
+    try {
+      const formData = new FormData();
+      formData.append('photo', file);
+      formData.append('photo_type', 'front');
 
-    await fetch('/api/progress/photos', {
-      method: 'POST',
-      body: formData,
-    });
+      const res = await fetch('/api/progress/photos', {
+        method: 'POST',
+        body: formData,
+      });
 
-    setUploading(false);
+      if (!res.ok) throw new Error('Error al subir');
+
+      setUploaded(true);
+      setTimeout(() => setUploaded(false), 3000);
+    } catch {
+      setError('No se pudo subir la foto. Intenta de nuevo.');
+    } finally {
+      setUploading(false);
+      // Reset input so same file can be re-selected after error
+      e.target.value = '';
+    }
   }
 
   return (
@@ -38,6 +52,9 @@ export function PhotoUpload() {
         <p className="text-sm text-foreground/60 mb-4">
           Toma fotos de frente y de perfil para ver tu transformación. Solo tú puedes verlas.
         </p>
+        {error && (
+          <p className="text-sm text-red-500 text-center mb-3">{error}</p>
+        )}
         <label className="block">
           <input
             type="file"
@@ -45,10 +62,11 @@ export function PhotoUpload() {
             capture="environment"
             onChange={handleUpload}
             className="hidden"
+            disabled={uploading}
           />
-          <span className="inline-flex items-center justify-center w-full gap-2 h-11 px-5 text-base rounded-xl font-body font-semibold bg-secondary text-foreground hover:bg-secondary-300 transition-colors cursor-pointer">
+          <span className={`inline-flex items-center justify-center w-full gap-2 h-11 px-5 text-base rounded-xl font-body font-semibold transition-colors cursor-pointer ${uploading ? 'opacity-50 pointer-events-none' : ''} ${uploaded ? 'bg-green-100 text-green-700' : 'bg-secondary text-foreground hover:bg-secondary-300'}`}>
             <Upload size={18} />
-            {uploading ? 'Subiendo...' : 'Subir foto'}
+            {uploaded ? '¡Foto guardada!' : uploading ? 'Subiendo...' : 'Subir foto'}
           </span>
         </label>
       </CardContent>

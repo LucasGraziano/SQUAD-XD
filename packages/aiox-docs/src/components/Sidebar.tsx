@@ -32,6 +32,7 @@ const nav = [
       { href: '/mega-brain/', label: 'Mega Brain', icon: '🧠' },
       { href: '/memory/', label: 'Memory System', icon: '💾' },
       { href: '/bridge/', label: 'AIOX + MB Bridge', icon: '🔗' },
+      { href: '/wiki/', label: 'Wiki Compounding', icon: '📖' },
     ],
   },
   {
@@ -112,7 +113,7 @@ export default function Sidebar() {
       <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-surface-600 bg-surface-800">
         <div className="flex items-center gap-2 text-xs text-text-muted">
           <span className="w-2 h-2 rounded-full bg-menta status-dot shrink-0" />
-          {!collapsed && <span>Synkra AIOX v3.0</span>}
+          {!collapsed && <span>Synkra AIOX v3.1</span>}
         </div>
       </div>
     </aside>

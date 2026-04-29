@@ -14,10 +14,12 @@ export function CompleteDayButton({ dayNumber, isCompleted }: CompleteDayButtonP
   const [completed, setCompleted] = useState(isCompleted);
   const [loading, setLoading] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   async function handleComplete() {
     if (completed || loading) return;
     setLoading(true);
+    setError(null);
 
     try {
       const res = await fetch('/api/progress/complete', {
@@ -30,9 +32,11 @@ export function CompleteDayButton({ dayNumber, isCompleted }: CompleteDayButtonP
         setCompleted(true);
         setShowCelebration(true);
         setTimeout(() => setShowCelebration(false), 4000);
+      } else {
+        setError('No se pudo guardar. Intenta de nuevo.');
       }
     } catch {
-      // silently fail — user can retry
+      setError('Sin conexión. Intenta de nuevo.');
     } finally {
       setLoading(false);
     }
@@ -51,14 +55,19 @@ export function CompleteDayButton({ dayNumber, isCompleted }: CompleteDayButtonP
   }
 
   return (
-    <Button
-      size="lg"
-      className="w-full gap-2 mt-6"
-      onClick={handleComplete}
-      disabled={loading}
-    >
-      <CheckCircle size={18} />
-      {loading ? 'Guardando...' : 'Marcar como completado'}
-    </Button>
+    <div className="mt-6">
+      {error && (
+        <p className="text-sm text-red-500 text-center mb-2">{error}</p>
+      )}
+      <Button
+        size="lg"
+        className="w-full gap-2"
+        onClick={handleComplete}
+        disabled={loading}
+      >
+        <CheckCircle size={18} />
+        {loading ? 'Guardando...' : 'Marcar como completado'}
+      </Button>
+    </div>
   );
 }

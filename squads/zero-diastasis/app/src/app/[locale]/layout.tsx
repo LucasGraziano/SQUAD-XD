@@ -4,6 +4,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { BottomNav } from '@/components/ui/bottom-nav';
+import { DesktopNav } from '@/components/ui/desktop-nav';
 import { AudioProvider } from '@/components/audio/audio-provider';
 import { MiniPlayer } from '@/components/audio/mini-player';
 
@@ -22,8 +23,11 @@ export default async function LocaleLayout({ children, params: { locale } }: Pro
   return (
     <NextIntlClientProvider messages={messages}>
       <AudioProvider>
-        {children}
-        <MiniPlayer />
+        <DesktopNav />
+        <div className="md:pl-56">
+          {children}
+          <MiniPlayer />
+        </div>
         <BottomNav />
       </AudioProvider>
     </NextIntlClientProvider>

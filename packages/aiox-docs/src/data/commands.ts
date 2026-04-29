@@ -90,6 +90,52 @@ export const slashCommands: Command[] = [
     usage: ['/conclave {pergunta}', '/conclave --v1 {pergunta}'],
     category: 'knowledge',
   },
+  {
+    name: '/wiki',
+    description: 'Sistema de conhecimento compounding (Karpathy-style). Ingere fontes no wiki, consulta conhecimento acumulado, faz lint de qualidade. RAW/ (imutável) + WIKI/ (artigos compilados).',
+    usage: ['/wiki-ingest <url|path>', '/wiki-query "<pergunta>"', '/wiki-lint', '/wiki-status'],
+    category: 'knowledge',
+  },
+]
+
+export interface AutoSkill {
+  name: string
+  description: string
+  triggers: string[]
+  category: 'design' | 'knowledge' | 'productivity'
+}
+
+export const autoSkills: AutoSkill[] = [
+  {
+    name: 'design-aware-ui',
+    description: 'Carrega DESIGN.md do squad antes de gerar qualquer UI. Previne AI slop (bento grids, neon, glassmorphism). Aplica tokens de cor, tipografia e espaçamento corretos.',
+    triggers: ['criar componente', 'build UI', 'landing page', 'dashboard', 'form', 'button', 'card', 'style', 'frontend', 'layout'],
+    category: 'design',
+  },
+  {
+    name: 'brand-recommender',
+    description: 'Recomenda o melhor brand da biblioteca de 70 DESIGN.md files com base no mood, propósito ou público do projeto.',
+    triggers: ['inspiração de design', 'qual brand usar', 'referência visual', 'como o Linear', 'como o Stripe', 'estilo similar'],
+    category: 'design',
+  },
+  {
+    name: 'knowledge-router',
+    description: 'Roteia para o expert DNA, dossier ou playbook correto da knowledge layer. Evita respostas genéricas em copy, oferta, tráfego, design, produto e SaaS.',
+    triggers: ['copy', 'oferta', 'funil', 'tráfego', 'vendas', 'estratégia', 'posicionamento', 'design system', 'produto', 'saas'],
+    category: 'knowledge',
+  },
+  {
+    name: 'atlas-briefing',
+    description: 'Gera status operacional rápido do sistema: squads ativos, último commit, próximas ações. Ativa ao iniciar sessão.',
+    triggers: ['status', 'o que está acontecendo', 'contexto', 'onde estamos', 'briefing', 'retomar', 'overview'],
+    category: 'productivity',
+  },
+  {
+    name: 'context-hygiene',
+    description: 'Recomenda /clear, /compact ou /checkpoint nos momentos certos para manter tokens baixos e contexto limpo.',
+    triggers: ['limpar contexto', 'nova tarefa', 'start fresh', 'contexto grande', 'está lento', 'clear'],
+    category: 'productivity',
+  },
 ]
 
 export const agentCommands = [

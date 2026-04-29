@@ -1,0 +1,46 @@
+# Meta-Domains Index
+# 5 meta-domínios organizam os 8 domínios por vertical de negócio
+
+version: "1.0"
+updated: "2026-04-29"
+
+meta_domains:
+
+  - id: business-operations
+    file: business-operations.yaml
+    domains: 7
+    status: active
+    squad_affinity: [low-ticket, zero-diastasis]
+    description: "Info-marketing, copy, vendas, funis, tráfego, ops"
+
+  - id: ai-native-build
+    file: ai-native-build.yaml
+    domains: 1
+    status: active
+    squad_affinity: [all]
+    description: "Claude Code, skills, hooks, DESIGN.md, token economy"
+
+  - id: design-systems
+    file: design-systems.yaml
+    domains: 1
+    status: partial
+    squad_affinity: [all]
+    description: "Design tokens, brand library 70 brands, UI/UX"
+    active: "design library, DESIGN.md protocol"
+    pending_fase3: "Refactoring UI, Atomic Design"
+
+  - id: product-engineering
+    file: product-engineering.yaml
+    domains: 2
+    status: planned
+    squad_affinity: [psi-saas]
+    description: "Product strategy, SaaS ops, métricas"
+    pending_fase3: "Marty Cagan, Lenny Rachitsky"
+
+  - id: startup-founder
+    file: startup-founder.yaml
+    domains: 1
+    status: planned
+    squad_affinity: [psi-saas]
+    description: "Startup mindset, PMF, growth"
+    pending_fase3: "Paul Graham, YC Library"

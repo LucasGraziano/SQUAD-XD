@@ -1,6 +1,6 @@
 ---
 domain: traffic-ads
-experts: [jeremy-haynes, richard-linder, jordan-lee, doug]
+experts: [jeremy-haynes, richard-linder, jordan-lee, doug, matheus-bressan]
 source: mega-brain
 total_elements: 93
 ---
@@ -12,6 +12,7 @@ total_elements: 93
 - **Jordan Lee** - AI-driven ops, variable cost structure, enterprise scaling
 - **Hard Copy (Kleiver)** - Kinshu ad framework 4-act, lateralizacao, escala Facebook R$50→R$500/dia, creative testing matrix
 - **Doug (DeMarco)** - StoryAds (anuncio que parece story organico), Money Brand, Z4 crescimento 4Cs, evolucao 2022-2025, jornada seguidor→comprador, 82% via ativo de pre-venda
+- **Matheus Bressan** - Modelagem Cultural LATAM, escala 1 campanha CBO, teste de criativo low-ticket, variacoes de gancho, pre-escala obrigatoria [DNA v3]
 
 ## Core Convergences
 - Creative volume is the #1 competitive advantage (Haynes: 50+/week, Tornado method)

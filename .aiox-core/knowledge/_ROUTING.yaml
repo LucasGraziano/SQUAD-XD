@@ -73,14 +73,14 @@ routing:
     load_on_activation: false
 
   commander:
-    primary: [offers-pricing]
+    primary: [offers-pricing, ai-native-build]
     secondary: [systems-ops, traffic-ads]
-    dossiers: [offers-pricing]
-    playbooks: [operating-system]
+    dossiers: [offers-pricing, ai-native-operator-system]
+    playbooks: [operating-system, ai-native-project-setup]
     cross_domain_dossiers: [doug-system]
-    decision_maps: [offers-pricing, systems-ops, traffic-ads]
-    anti_patterns: [offers-pricing, systems-ops]
-    situations_filter: [SC-006, SC-007, SC-008, SC-010, SC-015, SC-016]
+    decision_maps: [offers-pricing, systems-ops, traffic-ads, ai-native-build]
+    anti_patterns: [offers-pricing, systems-ops, ai-native-build]
+    situations_filter: [SC-006, SC-007, SC-008, SC-010, SC-015, SC-016, AI-001, AI-003, AI-004, AI-006]
     load_on_activation: false
 
   sm:
@@ -103,6 +103,41 @@ routing:
     decision_maps: [systems-ops, funnels-value-ladder]
     anti_patterns: [systems-ops]
     situations_filter: [SC-015, SC-016]
+    load_on_activation: false
+
+  # ── AI-NATIVE BUILD agents (added 2026-04-29) ────────────
+
+  aios-master:
+    primary: [ai-native-build]
+    secondary: [systems-ops]
+    dossiers: [ai-native-operator-system]
+    playbooks: []
+    cross_domain_dossiers: []
+    decision_maps: []
+    anti_patterns: []
+    situations_filter: [AI-001, AI-002, AI-003, AI-004, AI-005, AI-006, AI-007, AI-008]
+    load_on_activation: false
+
+  dev:
+    primary: [ai-native-build]
+    secondary: [systems-ops]
+    dossiers: [ai-native-operator-system]
+    playbooks: []
+    cross_domain_dossiers: []
+    decision_maps: []
+    anti_patterns: []
+    situations_filter: [AI-001, AI-002, AI-003, AI-004, AI-005, AI-007, AI-008]
+    load_on_activation: false
+
+  ux-design-expert:
+    primary: [ai-native-build]
+    secondary: []
+    dossiers: [ai-native-operator-system]
+    playbooks: []
+    cross_domain_dossiers: []
+    decision_maps: []
+    anti_patterns: []
+    situations_filter: [AI-004, DS-001, DS-002, DS-003]
     load_on_activation: false
 
 # Token budget por nivel de carregamento:

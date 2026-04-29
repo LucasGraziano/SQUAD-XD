@@ -1,0 +1,17 @@
+# Meta-Domain: Business Operations
+# Agrupa domínios voltados para operar e escalar negócios digitais
+
+id: business-operations
+description: "Estratégia, marketing, vendas e operação de negócios digitais"
+domains:
+  - copy-persuasion
+  - offers-pricing
+  - sales-closing
+  - traffic-ads
+  - funnels-value-ladder
+  - systems-ops
+  - psychology-influence
+
+primary_context: info-marketing, low-ticket, high-ticket, mentoria, consultoria
+squad_affinity: [low-ticket, zero-diastasis]
+situations_prefix: [SC, SO, ST, SS, SF, SY, SP]

@@ -106,6 +106,25 @@ export default function ProfilePage() {
         </CardContent>
       </Card>
 
+      {/* Acceso rápido */}
+      <div className="mb-4 space-y-2">
+        <h2 className="text-sm font-semibold text-foreground/50 uppercase tracking-wide mb-2">Acceso rápido</h2>
+        <a href="/loja" className="flex items-center justify-between p-4 bg-white rounded-xl border border-secondary-200 hover:border-primary-200 transition-colors">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">🛍️</span>
+            <span className="font-medium text-foreground text-sm">Tienda de productos</span>
+          </div>
+          <span className="text-foreground/30">→</span>
+        </a>
+        <a href="/bonus" className="flex items-center justify-between p-4 bg-white rounded-xl border border-secondary-200 hover:border-primary-200 transition-colors">
+          <div className="flex items-center gap-3">
+            <span className="text-xl">🎁</span>
+            <span className="font-medium text-foreground text-sm">Mis bonuses</span>
+          </div>
+          <span className="text-foreground/30">→</span>
+        </a>
+      </div>
+
       <Button variant="ghost" className="w-full gap-2 text-red-500" onClick={handleSignOut}>
         <LogOut size={18} />
         Cerrar sesión

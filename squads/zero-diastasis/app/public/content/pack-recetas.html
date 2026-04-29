@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pack Antiinflamatorio · 15 Recetas · Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --coral:  #F28C7A;
+      --green:  #7BC6A4;
+      --bg:     #F5F3F1;
+      --text:   #2B2B2B;
+      --white:  #FFFFFF;
+      --muted:  #6B6B6B;
+      --serif:  'Playfair Display', Georgia, serif;
+      --sans:   'Inter', system-ui, sans-serif;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --radius: 16px;
+      --amber:  #E8A44A;
+      --blue:   var(--blue);
+      --purple: var(--purple);
+    }
+    body { font-family: var(--sans); background: #E8E5E2; color: var(--text); line-height: 1.7; }
+    .page { width: 210mm; min-height: 297mm; background: var(--bg); margin: 12px auto; padding: 12mm 14mm; position: relative; overflow: hidden; }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; page-break-after: always; page-break-inside: avoid; box-shadow: none; width: 100%; min-height: 100vh; }
+      @page { size: A4; margin: 0; }
+    }
+    h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+    h2 { font-family: var(--serif); font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
+    p  { font-size: 0.9rem; line-height: 1.75; color: var(--text); }
+    .coral { color: var(--coral); } .green { color: var(--green); } .muted { color: var(--muted); }
+    .section-label { font-size: 0.66rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 4px; }
+    .divider { width: 40px; height: 3px; background: var(--coral); border-radius: 2px; margin: 8px 0 14px; }
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 18px; }
+    .page-footer { position: absolute; bottom: 9mm; left: 14mm; right: 14mm; display: flex; justify-content: space-between; align-items: center; }
+    .page-num { font-size: 0.68rem; color: var(--muted); }
+    .page-brand { font-size: 0.68rem; font-weight: 600; color: var(--coral); }
+
+    /* ── Section header banner ── */
+    .section-banner {
+      border-radius: var(--radius); padding: 14px 18px; margin-bottom: 14px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .section-icon { font-size: 2rem; flex-shrink: 0; }
+    .section-banner-title { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; }
+    .section-banner-sub   { font-size: 0.78rem; margin-top: 1px; }
+
+    /* ── Recipe card ── */
+    .recipe {
+      background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow);
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .recipe-head {
+      padding: 12px 16px 10px;
+      border-bottom: 1px solid #F0EDE9;
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .recipe-emoji { font-size: 1.6rem; flex-shrink: 0; margin-top: 2px; }
+    .recipe-name  { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; line-height: 1.25; margin-bottom: 5px; }
+    .recipe-meta  { display: flex; gap: 8px; flex-wrap: wrap; }
+    .meta-pill {
+      background: var(--bg); border-radius: 100px; padding: 2px 9px;
+      font-size: 0.66rem; font-weight: 600; color: var(--muted);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .benefit-pill {
+      border-radius: 100px; padding: 2px 9px;
+      font-size: 0.66rem; font-weight: 700;
+      background: #E8F7F1; color: #2E8B68;
+    }
+    .recipe-body { padding: 12px 16px; display: flex; flex-direction: column; gap: 10px; }
+    .recipe-body-full { padding: 12px 16px; }
+
+    /* Ingredients */
+    .ingr-title { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+    .ingr-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+    .ingr-list li { font-size: 0.79rem; line-height: 1.5; padding: 2px 0; display: flex; gap: 5px; }
+    .ingr-list li::before { content: "·"; color: var(--coral); font-weight: 700; flex-shrink: 0; }
+
+    /* Steps */
+    .steps-list { list-style: none; }
+    .steps-list li { display: flex; gap: 10px; font-size: 0.82rem; line-height: 1.6; padding: 5px 0; border-bottom: 1px solid #F7F4F1; align-items: flex-start; }
+    .steps-list li:last-child { border-bottom: none; }
+    .step-n { min-width: 20px; height: 20px; border-radius: 50%; background: var(--coral); color: #fff; font-size: 0.62rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+
+    /* Tip row */
+    .recipe-tip { background: linear-gradient(135deg,#FFF0ED,#FFF8F7); border-top: 1px solid #F5C4BB; padding: 8px 16px; font-size: 0.78rem; display: flex; gap: 6px; align-items: flex-start; }
+    .tip-icon { font-size: 0.88rem; flex-shrink: 0; line-height: 1.5; }
+    .recipe-tip strong { color: var(--coral); font-size: 0.7rem; font-weight: 700; flex-shrink: 0; white-space: nowrap; line-height: 1.5; }
+
+    /* ── Section divider stripe ── */
+    .cat-stripe {
+      height: 3px; border-radius: 2px; margin: 0 0 14px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 1 · COVER
+═══════════════════════════════════════════════════════ -->
+<div class="page" style="background:#1E1E1E; display:flex; flex-direction:column; justify-content:space-between; padding:14mm 15mm;">
+
+  <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(232,164,74,0.07);pointer-events:none;"></div>
+  <div style="position:absolute;bottom:60px;left:-80px;width:240px;height:240px;border-radius:50%;background:rgba(123,198,164,0.06);pointer-events:none;"></div>
+
+  <!-- Top row -->
+  <div style="display:flex;justify-content:space-between;align-items:center;">
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div style="width:10px;height:10px;border-radius:50%;background:var(--amber);"></div>
+      <span style="font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);">Pack Antiinflamatorio</span>
+    </div>
+    <div style="background:rgba(232,164,74,0.18);border:1px solid rgba(232,164,74,0.35);border-radius:100px;padding:4px 12px;">
+      <span style="font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);">Complemento exclusivo</span>
+    </div>
+  </div>
+
+  <!-- Center -->
+  <div style="padding-top:16px;">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:14px;">Nutrición para la recuperación</div>
+    <h1 style="color:#FFFFFF;font-size:3rem;line-height:1.05;margin-bottom:16px;">
+      Pack<br>
+      <span style="color:var(--amber);">Anti-</span><br>
+      <span style="color:var(--amber);">inflamatorio</span>
+    </h1>
+    <p style="font-size:1.05rem;color:rgba(255,255,255,0.55);font-weight:300;margin-bottom:24px;max-width:350px;line-height:1.65;">
+      15 recetas diseñadas para acelerar el cierre de la diástasis desde adentro.
+    </p>
+
+    <!-- Category pills -->
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 13px;font-size:0.73rem;font-weight:600;color:rgba(255,255,255,0.65);">🌅 5 Desayunos</div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 13px;font-size:0.73rem;font-weight:600;color:rgba(255,255,255,0.65);">🥗 5 Almuerzos</div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 13px;font-size:0.73rem;font-weight:600;color:rgba(255,255,255,0.65);">🌙 3 Cenas</div>
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:5px 13px;font-size:0.73rem;font-weight:600;color:rgba(255,255,255,0.65);">🍃 2 Snacks</div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div style="display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(255,255,255,0.1);">
+    <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:500;">ZERO DIASTASIS™ · zerodiastasis.com</div>
+    <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);">Protocolo de Reactivación del TVA</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 2 · INTRO — LA CONEXIÓN NUTRICIÓN-DIÁSTASIS
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-label" style="padding-top:4px;">Por qué importa lo que comés</div>
+  <h2 style="margin-bottom:4px;">Nutrición e inflamación:<br>la conexión que nadie te explicó</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">La diástasis no es solo un problema muscular. La inflamación crónica debilita el tejido conectivo (la línea alba) y ralentiza su capacidad de regenerarse. Lo que comés puede acelerar ese proceso de recuperación o frenarlo.</p>
+
+  <!-- 5 key foods -->
+  <div style="font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Los 5 alimentos estrella de este pack</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:16px;">
+
+    <div class="card" style="padding:12px 14px;display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start;">
+      <div style="width:36px;height:36px;border-radius:10px;background:#FFF8E7;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🟡</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Cúrcuma</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.4;">Curcumina: el antiinflamatorio natural más potente. Activa genes de reparación del colágeno.</p>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px 14px;display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start;">
+      <div style="width:36px;height:36px;border-radius:10px;background:#F0FAF5;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🐟</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Omega-3 (salmón, chía)</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.4;">Reduce el cortisol inflamatorio. Apoya la elasticidad del tejido conectivo.</p>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px 14px;display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start;">
+      <div style="width:36px;height:36px;border-radius:10px;background:#FFF0ED;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🥑</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Aguacate</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.4;">Grasas monoinsaturadas + vitamina E. Protegen la integridad celular y reducen el edema.</p>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px 14px;display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start;">
+      <div style="width:36px;height:36px;border-radius:10px;background:#FDF0F7;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🍇</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Frutos rojos</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.4;">Antioxidantes que neutralizan radicales libres. Refuerzan la síntesis de colágeno.</p>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px 14px;display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start;grid-column:1/-1;">
+      <div style="width:36px;height:36px;border-radius:10px;background:#F5F3EE;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🟠</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Jengibre</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.4;">Inhibe las enzimas inflamatorias. Mejora la absorción intestinal de nutrientes clave para la recuperación muscular.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick guideline -->
+  <div style="background:linear-gradient(135deg,#FFF0ED,#FFF8F7);border:1.5px solid #F5C4BB;border-radius:var(--radius);padding:13px 16px;">
+    <div style="font-weight:700;font-size:0.88rem;color:var(--coral);margin-bottom:6px;">La regla de oro de este pack</div>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;gap:8px;font-size:0.82rem;align-items:flex-start;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">✓</span><span>Comé abundante proteína en cada comida principal (huevo, pollo, pescado, legumbres)</span></div>
+      <div style="display:flex;gap:8px;font-size:0.82rem;align-items:flex-start;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">✓</span><span>Incluí grasa saludable en al menos 2 comidas diarias</span></div>
+      <div style="display:flex;gap:8px;font-size:0.82rem;align-items:flex-start;"><span style="color:var(--green);font-weight:700;flex-shrink:0;">✓</span><span>Priorizá colores vivos en vegetales — más colores, más antioxidantes</span></div>
+      <div style="display:flex;gap:8px;font-size:0.82rem;align-items:flex-start;"><span style="color:#D94F3D;font-weight:700;flex-shrink:0;">×</span><span>Evitá azúcar refinada, harinas blancas y aceites vegetales procesados durante los 28 días</span></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">2</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 3 · DESAYUNOS — RECETAS 1 Y 2
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-banner" style="background:linear-gradient(135deg,#FFF8ED,#FFFBF5);border:1.5px solid rgba(232,164,74,0.3);">
+    <div class="section-icon">🌅</div>
+    <div>
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:2px;">Sección 1 · 5 recetas</div>
+      <div class="section-banner-title">Desayunos</div>
+      <div class="section-banner-sub" style="color:var(--muted);">Activan el metabolismo, reducen la inflamación desde la primera comida y te dan energía sostenida para el protocolo.</div>
+    </div>
+  </div>
+
+  <!-- Recipe 1 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🥣</div>
+      <div>
+        <div class="recipe-name">Bowl de avena con cúrcuma y frutos rojos</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 10 min</span>
+          <span class="meta-pill">👤 1 porción</span>
+          <span class="benefit-pill">Colágeno · Antiox.</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>½ taza avena arrollada</li>
+          <li>1 taza leche vegetal</li>
+          <li>½ cdta cúrcuma en polvo</li>
+          <li>1 cdta miel cruda</li>
+          <li>½ taza frutos rojos mixtos</li>
+          <li>1 cda semillas de chía</li>
+          <li>Canela a gusto</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Calentá la leche vegetal a fuego medio. Agregá la avena y revolvé.</span></li>
+          <li><div class="step-n">2</div><span>Incorporá la cúrcuma y la canela. Cociná 5 min revolviendo hasta que espese.</span></li>
+          <li><div class="step-n">3</div><span>Volcá en el bowl, cubrí con frutos rojos, chía y un hilo de miel.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> La piperina (pimienta negra) multiplica la absorción de curcumina un 2000%.</div>
+  </div>
+
+  <!-- Recipe 2 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🥤</div>
+      <div>
+        <div class="recipe-name">Smoothie verde antiinflamatorio</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 5 min</span>
+          <span class="meta-pill">👤 1 porción</span>
+          <span class="benefit-pill">Digestión · Energía</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>1 taza espinaca fresca</li>
+          <li>½ taza piña congelada</li>
+          <li>1 banana madura</li>
+          <li>1 cm jengibre fresco</li>
+          <li>1 taza agua de coco</li>
+          <li>Jugo de ½ limón</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Licuá todos los ingredientes hasta obtener una mezcla homogénea.</span></li>
+          <li><div class="step-n">2</div><span>Probá y ajustá dulzor con un dátil extra si lo preferís.</span></li>
+          <li><div class="step-n">3</div><span>Serví de inmediato para aprovechar los antioxidantes.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> La piña aporta bromelina, enzima antiinflamatoria que mejora la digestión.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">3</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 4 · DESAYUNOS — RECETAS 3 Y 4
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;padding-top:4px;display:flex;align-items:center;gap:6px;">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--amber);"></div>
+    Desayunos · continuación
+  </div>
+
+  <!-- Recipe 3 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🥑</div>
+      <div>
+        <div class="recipe-name">Tostadas de aguacate con huevo pochado</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 12 min</span>
+          <span class="meta-pill">👤 1 porción</span>
+          <span class="benefit-pill">Proteína · Grasas buenas</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>2 tostadas de pan integral</li>
+          <li>1 aguacate maduro</li>
+          <li>2 huevos</li>
+          <li>Jugo de ½ limón</li>
+          <li>Sal rosada y pimienta</li>
+          <li>Semillas de sésamo</li>
+          <li>Hojuelas de chile (opcional)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Aplastá el aguacate con el limón, sal y pimienta hasta obtener una crema.</span></li>
+          <li><div class="step-n">2</div><span>Pochá los huevos: agua con vinagre hirviendo, remolino, 3 min.</span></li>
+          <li><div class="step-n">3</div><span>Untá el aguacate en las tostadas, colocá el huevo, salpicá con sésamo.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> Los huevos son fuente completa de aminoácidos para la síntesis de colágeno.</div>
+  </div>
+
+  <!-- Recipe 4 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🍶</div>
+      <div>
+        <div class="recipe-name">Yogur griego con chía, mango y jengibre</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 5 min</span>
+          <span class="meta-pill">👤 1 porción</span>
+          <span class="benefit-pill">Probióticos · Omega-3</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>200 g yogur griego natural</li>
+          <li>½ mango maduro en cubos</li>
+          <li>1 cda semillas de chía</li>
+          <li>½ cdta jengibre rallado</li>
+          <li>1 cdta miel</li>
+          <li>Granola sin azúcar (opcional)</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>En un bowl, colocá el yogur griego como base.</span></li>
+          <li><div class="step-n">2</div><span>Distribuí el mango y espolvoreá la chía y el jengibre.</span></li>
+          <li><div class="step-n">3</div><span>Terminá con la miel y granola si usás. Listo.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> El yogur aporta probióticos que regulan la inflamación intestinal.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">4</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 5 · DESAYUNOS — RECETA 5
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:12px;padding-top:4px;display:flex;align-items:center;gap:6px;">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--amber);"></div>
+    Desayunos · Receta 5
+  </div>
+
+  <!-- Recipe 5 — Full width -->
+  <div class="recipe" style="margin-bottom:16px;">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🥞</div>
+      <div>
+        <div class="recipe-name">Panqueques de avena y banana (sin harina)</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 15 min</span>
+          <span class="meta-pill">👤 2 porciones</span>
+          <span class="benefit-pill">Fibra · Energía sostenida</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>1 banana madura</li>
+          <li>2 huevos</li>
+          <li>½ taza avena arrollada</li>
+          <li>½ cdta canela</li>
+          <li>½ cdta esencia de vainilla</li>
+          <li>1 cdta polvo de hornear</li>
+          <li>Aceite de coco para cocinar</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Pisá la banana hasta hacerla puré. Mezclá con los huevos batidos.</span></li>
+          <li><div class="step-n">2</div><span>Incorporá la avena, canela, vainilla y polvo de hornear. Integrá bien.</span></li>
+          <li><div class="step-n">3</div><span>En sartén con aceite de coco, vertí porciones pequeñas y cociná 2-3 min por lado.</span></li>
+          <li><div class="step-n">4</div><span>Serví con frutos rojos, miel y una pizca de cúrcuma.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> La avena tiene beta-glucano: reduce la inflamación sistémica.</div>
+  </div>
+
+  <!-- Bridge to next section -->
+  <div style="background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;display:flex;gap:16px;align-items:center;">
+    <div style="font-size:2rem;flex-shrink:0;">🥗</div>
+    <div>
+      <div style="font-weight:700;font-size:0.95rem;margin-bottom:4px;">A continuación: Almuerzos antiinflamatorios</div>
+      <p style="font-size:0.82rem;color:var(--muted);line-height:1.5;">Los almuerzos son la comida más importante para la recuperación muscular. Las 5 recetas siguientes combinan proteína completa, grasas antiinflamatorias y carbohidratos de bajo índice glucémico.</p>
+    </div>
+  </div>
+
+  <!-- Desayunos summary row -->
+  <div style="margin-top:14px;background:linear-gradient(135deg,#FFF8ED,#FFFBF7);border:1px solid rgba(232,164,74,0.25);border-radius:12px;padding:12px 16px;">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--amber);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Resumen de desayunos</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <span style="background:rgba(232,164,74,0.12);border-radius:100px;padding:3px 10px;font-size:0.72rem;font-weight:600;color:#8A5C00;">🥣 Bowl de avena con cúrcuma</span>
+      <span style="background:rgba(232,164,74,0.12);border-radius:100px;padding:3px 10px;font-size:0.72rem;font-weight:600;color:#8A5C00;">🥤 Smoothie verde</span>
+      <span style="background:rgba(232,164,74,0.12);border-radius:100px;padding:3px 10px;font-size:0.72rem;font-weight:600;color:#8A5C00;">🥑 Tostadas de aguacate</span>
+      <span style="background:rgba(232,164,74,0.12);border-radius:100px;padding:3px 10px;font-size:0.72rem;font-weight:600;color:#8A5C00;">🍶 Yogur con chía</span>
+      <span style="background:rgba(232,164,74,0.12);border-radius:100px;padding:3px 10px;font-size:0.72rem;font-weight:600;color:#8A5C00;">🥞 Panqueques de avena</span>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">5</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 6 · ALMUERZOS — RECETAS 6 Y 7
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-banner" style="background:linear-gradient(135deg,#EEF7F0,#F5FAF7);border:1.5px solid rgba(123,198,164,0.3);">
+    <div class="section-icon">🥗</div>
+    <div>
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:2px;">Sección 2 · 5 recetas</div>
+      <div class="section-banner-title">Almuerzos</div>
+      <div class="section-banner-sub" style="color:var(--muted);">Comidas completas, saciantes y diseñadas para apoyar la síntesis de colágeno y la recuperación muscular activa.</div>
+    </div>
+  </div>
+
+  <!-- Recipe 6 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🌾</div>
+      <div>
+        <div class="recipe-name">Bowl de quinoa con vegetales asados y limón</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 30 min</span>
+          <span class="meta-pill">👤 2 porciones</span>
+          <span class="benefit-pill">Proteína completa · Fibra</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>1 taza quinoa</li>
+          <li>1 zucchini en cubos</li>
+          <li>1 morrón rojo</li>
+          <li>½ berenjena en cubos</li>
+          <li>2 cdas aceite de oliva</li>
+          <li>Jugo de 1 limón</li>
+          <li>Sal, pimienta, orégano</li>
+          <li>Perejil fresco</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Cociná la quinoa en agua con sal (2:1 agua/quinoa), 15 min.</span></li>
+          <li><div class="step-n">2</div><span>Asá los vegetales al horno a 200°C con aceite de oliva, 20 min.</span></li>
+          <li><div class="step-n">3</div><span>Mezclá todo en un bowl, rociá con limón y perejil fresco.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> La quinoa tiene proteína completa — todos los aminoácidos esenciales.</div>
+  </div>
+
+  <!-- Recipe 7 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🍗</div>
+      <div>
+        <div class="recipe-name">Pollo al horno con cúrcuma, jengibre y ajo</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 35 min</span>
+          <span class="meta-pill">👤 2 porciones</span>
+          <span class="benefit-pill">Proteína · Antiinflamatorio</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>2 pechugas de pollo</li>
+          <li>1 cdta cúrcuma</li>
+          <li>1 cdta jengibre en polvo</li>
+          <li>2 dientes de ajo</li>
+          <li>2 cdas aceite de oliva</li>
+          <li>Jugo de limón</li>
+          <li>Sal, pimienta negra</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Mezclá el aceite, cúrcuma, jengibre, ajo rallado, limón, sal y pimienta.</span></li>
+          <li><div class="step-n">2</div><span>Marinás las pechugas al menos 30 min (o toda la noche).</span></li>
+          <li><div class="step-n">3</div><span>Horneás a 200°C por 25-30 min hasta que estén doradas. Descansá 5 min antes de cortar.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> Acompañá con batata al horno: aporta beta-caroteno, antioxidante clave.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">6</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 7 · ALMUERZOS — RECETAS 8 Y 9
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:12px;padding-top:4px;display:flex;align-items:center;gap:6px;">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--green);"></div>
+    Almuerzos · continuación
+  </div>
+
+  <!-- Recipe 8 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🍲</div>
+      <div>
+        <div class="recipe-name">Sopa de lentejas rojas con coco y curry</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 25 min</span>
+          <span class="meta-pill">👤 3 porciones</span>
+          <span class="benefit-pill">Hierro · Antiinflamatorio</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>1 taza lentejas rojas</li>
+          <li>1 lata leche de coco</li>
+          <li>1 cebolla</li>
+          <li>2 dientes de ajo</li>
+          <li>1 cdta curry en polvo</li>
+          <li>½ cdta cúrcuma</li>
+          <li>2 tazas caldo de verduras</li>
+          <li>Cilantro fresco</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Sofré la cebolla y el ajo hasta dorar. Agregá el curry y la cúrcuma, 1 min.</span></li>
+          <li><div class="step-n">2</div><span>Sumá las lentejas, caldo y leche de coco. Cocinás 20 min hasta que las lentejas estén tiernas.</span></li>
+          <li><div class="step-n">3</div><span>Licuás parcialmente para dar cremosidad. Servís con cilantro fresco.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> Se hace en cantidad y dura 4 días en heladera — ideal para la semana.</div>
+  </div>
+
+  <!-- Recipe 9 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🐟</div>
+      <div>
+        <div class="recipe-name">Bowl de salmón con arroz integral y edamame</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 20 min</span>
+          <span class="meta-pill">👤 1 porción</span>
+          <span class="benefit-pill">Omega-3 · Proteína completa</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>150 g salmón</li>
+          <li>½ taza arroz integral cocido</li>
+          <li>½ taza edamame cocido</li>
+          <li>½ aguacate en rodajas</li>
+          <li>2 cdas salsa tamari</li>
+          <li>1 cdta aceite de sésamo</li>
+          <li>Sésamo tostado y jengibre</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Cocinás el salmón a la plancha o al horno 12 min. Desmigás.</span></li>
+          <li><div class="step-n">2</div><span>Armás el bowl con arroz de base, luego el salmón, edamame y aguacate.</span></li>
+          <li><div class="step-n">3</div><span>Rociás con tamari, aceite de sésamo, sésamo tostado y jengibre rallado.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> El salmón aporta DHA y EPA, los omega-3 más potentes contra la inflamación.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">7</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 8 · ALMUERZOS — RECETA 10
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--green);margin-bottom:12px;padding-top:4px;display:flex;align-items:center;gap:6px;">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--green);"></div>
+    Almuerzos · Receta 10
+  </div>
+
+  <!-- Recipe 10 -->
+  <div class="recipe" style="margin-bottom:16px;">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🌯</div>
+      <div>
+        <div class="recipe-name">Wrap de pollo con hummus y vegetales frescos</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 15 min</span>
+          <span class="meta-pill">👤 1 porción</span>
+          <span class="benefit-pill">Proteína · Legumbres</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>1 tortilla integral grande</li>
+          <li>100 g pechuga cocida en tiras</li>
+          <li>3 cdas hummus casero</li>
+          <li>Lechuga, tomate cherry</li>
+          <li>½ aguacate en rodajas</li>
+          <li>Zanahoria rallada</li>
+          <li>Jugo de limón, sal</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Extendé el hummus sobre toda la superficie de la tortilla.</span></li>
+          <li><div class="step-n">2</div><span>Distribuí las tiras de pollo, lechuga, tomate, aguacate y zanahoria.</span></li>
+          <li><div class="step-n">3</div><span>Rociá con limón y sal. Enrollá bien ajustado y cortá al medio.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> Preparás el pollo y el hummus el domingo — wraps en 5 min entre semana.</div>
+  </div>
+
+  <!-- Hummus recipe bonus -->
+  <div style="background:linear-gradient(135deg,#EEF7F0,#F5FAF7);border:1.5px solid rgba(123,198,164,0.35);border-radius:var(--radius);padding:14px 18px;">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;">Receta bonus · Hummus casero antiinflamatorio</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list" style="color:var(--text);">
+          <li>400 g garbanzos cocidos</li>
+          <li>2 cdas tahini</li>
+          <li>Jugo de 1 limón</li>
+          <li>1 diente de ajo</li>
+          <li>½ cdta cúrcuma</li>
+          <li>3 cdas aceite de oliva</li>
+          <li>Sal y comino a gusto</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n" style="background:var(--green);">1</div><span>Procesás todo junto hasta obtener una crema suave.</span></li>
+          <li><div class="step-n" style="background:var(--green);">2</div><span>Ajustás con agua si quedó muy espeso.</span></li>
+          <li><div class="step-n" style="background:var(--green);">3</div><span>Guardás hasta 5 días en la heladera.</span></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">8</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 9 · CENAS — RECETAS 11 Y 12
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-banner" style="background:linear-gradient(135deg,#EDF0F7,#F3F5FB);border:1.5px solid rgba(123,141,198,0.3);">
+    <div class="section-icon">🌙</div>
+    <div>
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:2px;">Sección 3 · 3 recetas</div>
+      <div class="section-banner-title">Cenas livianas</div>
+      <div class="section-banner-sub" style="color:var(--muted);">Recetas livianas y digestivas para la noche. El cuerpo repara el tejido mientras dormís: la cena es tu última dosis antiinflamatoria del día.</div>
+    </div>
+  </div>
+
+  <!-- Recipe 11 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🥦</div>
+      <div>
+        <div class="recipe-name">Crema de brócoli, espinaca y jengibre</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 20 min</span>
+          <span class="meta-pill">👤 2 porciones</span>
+          <span class="benefit-pill">Digestiva · Antioxidante</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>2 tazas brócoli</li>
+          <li>1 taza espinaca fresca</li>
+          <li>1 cm jengibre fresco</li>
+          <li>1 cebolla</li>
+          <li>2 tazas caldo vegetal</li>
+          <li>2 cdas crema de coco</li>
+          <li>Sal, pimienta, nuez moscada</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Sofré la cebolla y el jengibre. Agregás el brócoli y cocinás 5 min.</span></li>
+          <li><div class="step-n">2</div><span>Cubrís con el caldo y cocinás 10 min hasta tiernizar.</span></li>
+          <li><div class="step-n">3</div><span>Agregás la espinaca, licuás todo y terminás con crema de coco.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> El brócoli es rico en sulforafano, compuesto que activa la reparación celular.</div>
+  </div>
+
+  <!-- Recipe 12 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🍳</div>
+      <div>
+        <div class="recipe-name">Frittata de vegetales al horno</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 25 min</span>
+          <span class="meta-pill">👤 2 porciones</span>
+          <span class="benefit-pill">Proteína · Bajo índice glucémico</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>4 huevos</li>
+          <li>½ morrón en tiras</li>
+          <li>1 taza espinaca</li>
+          <li>½ cebolla morada</li>
+          <li>Queso de cabra (opcional)</li>
+          <li>Aceite de oliva</li>
+          <li>Sal, pimienta, orégano</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Precalentá el horno a 180°C. Sofré los vegetales en sartén apta para horno.</span></li>
+          <li><div class="step-n">2</div><span>Batí los huevos con sal, pimienta y orégano. Vertís sobre los vegetales.</span></li>
+          <li><div class="step-n">3</div><span>Llevás al horno 12-15 min hasta que el centro esté firme. Salpicás con queso de cabra.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> Preparála la noche anterior — los huevos apoyan la síntesis proteica nocturna.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">9</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 10 · CENAS — RECETA 13 + SNACKS 14 Y 15
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;padding-top:4px;display:flex;align-items:center;gap:6px;">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--blue);"></div>
+    Cenas · Receta 13
+  </div>
+
+  <!-- Recipe 13 -->
+  <div class="recipe" style="margin-bottom:14px;">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🍵</div>
+      <div>
+        <div class="recipe-name">Caldo reconstituyente de huesos y vegetales</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 2-4 h (slow)</span>
+          <span class="meta-pill">👤 4 porciones</span>
+          <span class="benefit-pill">Colágeno natural · Reparación</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>500 g huesos de res o pollo</li>
+          <li>2 zanahorias</li>
+          <li>2 ramas de apio</li>
+          <li>1 cebolla cortada</li>
+          <li>3 dientes de ajo</li>
+          <li>2 cdas vinagre de manzana</li>
+          <li>Sal, pimienta, laurel</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Cubrís los huesos con agua fría. Agregás el vinagre y dejás reposar 30 min (activa el colágeno).</span></li>
+          <li><div class="step-n">2</div><span>Llevás a hervor, retirás la espuma. Bajás el fuego y cocinás mínimo 2 hs (4 hs ideal).</span></li>
+          <li><div class="step-n">3</div><span>Colás, ajustás sal. Tomás una taza caliente como cena liviana o base para sopas.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> La fuente más biodisponible de colágeno. Tomalo 3-4 noches por semana.</div>
+  </div>
+
+  <!-- Snacks section header -->
+  <div class="section-banner" style="background:linear-gradient(135deg,#F5F0FA,#FAF7FC);border:1.5px solid rgba(168,149,200,0.3);margin-bottom:12px;">
+    <div class="section-icon">🍃</div>
+    <div>
+      <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:2px;">Sección 4 · 2 recetas</div>
+      <div class="section-banner-title" style="font-size:1.1rem;">Snacks antiinflamatorios</div>
+      <div class="section-banner-sub" style="color:var(--muted);">Para mantener el metabolismo activo y evitar los picos de azúcar entre comidas.</div>
+    </div>
+  </div>
+
+  <!-- Recipe 14 -->
+  <div class="recipe">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🍫</div>
+      <div>
+        <div class="recipe-name">Bolas de energía con dátiles, cacao y coco</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 15 min</span>
+          <span class="meta-pill">👤 12 bolitas</span>
+          <span class="benefit-pill">Energía · Magnesio</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>10 dátiles sin carozo</li>
+          <li>1 taza avena arrollada</li>
+          <li>2 cdas cacao puro</li>
+          <li>2 cdas mantequilla de almendras</li>
+          <li>Coco rallado para rebozar</li>
+          <li>Pizca de sal</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Procesás los dátiles hasta obtener una pasta. Mezclás con avena, cacao y mantequilla.</span></li>
+          <li><div class="step-n">2</div><span>Formás bolitas del tamaño de una nuez y rebozás en coco rallado.</span></li>
+          <li><div class="step-n">3</div><span>Refrigerás 30 min hasta que se endurezcan. Duran 2 semanas en heladera.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> El cacao puro aporta magnesio, clave para la relajación muscular y el sueño.</div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">10</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 11 · SNACK 15 + LISTA DE COMPRAS
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div style="font-size:0.62rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--purple);margin-bottom:12px;padding-top:4px;display:flex;align-items:center;gap:6px;">
+    <div style="width:7px;height:7px;border-radius:50%;background:var(--purple);"></div>
+    Snacks · Receta 15
+  </div>
+
+  <!-- Recipe 15 -->
+  <div class="recipe" style="margin-bottom:16px;">
+    <div class="recipe-head">
+      <div class="recipe-emoji">🥑</div>
+      <div>
+        <div class="recipe-name">Guacamole con bastones de vegetales</div>
+        <div class="recipe-meta">
+          <span class="meta-pill">⏱ 8 min</span>
+          <span class="meta-pill">👤 2 porciones</span>
+          <span class="benefit-pill">Grasas buenas · Vitaminas</span>
+        </div>
+      </div>
+    </div>
+    <div class="recipe-body">
+      <div>
+        <div class="ingr-title">Ingredientes</div>
+        <ul class="ingr-list">
+          <li>2 aguacates maduros</li>
+          <li>Jugo de 1 limón</li>
+          <li>½ tomate en cubos</li>
+          <li>¼ cebolla morada picada</li>
+          <li>Cilantro fresco</li>
+          <li>Sal y chile a gusto</li>
+          <li>Zanahoria, apio y pepino en bastones</li>
+        </ul>
+      </div>
+      <div>
+        <div class="ingr-title">Preparación</div>
+        <ol class="steps-list">
+          <li><div class="step-n">1</div><span>Aplastás los aguacates con el limón y la sal hasta obtener una crema rústica.</span></li>
+          <li><div class="step-n">2</div><span>Incorporás el tomate, la cebolla y el cilantro. Mezclás suavemente.</span></li>
+          <li><div class="step-n">3</div><span>Servís con los bastones de vegetales frescos. Consumís de inmediato.</span></li>
+        </ol>
+      </div>
+    </div>
+    <div class="recipe-tip"><span class="tip-icon">💡</span><strong>TIP ·</strong> La zanahoria aporta vitamina A, esencial para la regeneración celular.</div>
+  </div>
+
+  <!-- Lista de compras -->
+  <div style="font-size:0.68rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;">Lista de compras esencial · 28 días</div>
+  <div style="background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px 16px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div>
+        <div style="font-size:0.65rem;font-weight:700;color:var(--coral);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Básicos</div>
+        <ul class="ingr-list" style="display:block;">
+          <li>Avena arrollada</li>
+          <li>Quinoa</li>
+          <li>Arroz integral</li>
+          <li>Lentejas rojas</li>
+          <li>Garbanzos</li>
+          <li>Huevos</li>
+          <li>Aceite de oliva</li>
+          <li>Aceite de coco</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:0.65rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Frescos</div>
+        <ul class="ingr-list" style="display:block;">
+          <li>Aguacates</li>
+          <li>Espinaca</li>
+          <li>Brócoli</li>
+          <li>Morrón rojo</li>
+          <li>Zanahoria</li>
+          <li>Jengibre fresco</li>
+          <li>Limones</li>
+          <li>Frutos rojos</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:0.65rem;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:0.07em;margin-bottom:5px;">Especias / Extras</div>
+        <ul class="ingr-list" style="display:block;">
+          <li>Cúrcuma en polvo</li>
+          <li>Jengibre en polvo</li>
+          <li>Canela</li>
+          <li>Pimienta negra</li>
+          <li>Semillas de chía</li>
+          <li>Leche de coco</li>
+          <li>Tahini</li>
+          <li>Cacao puro</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">11</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PAGE 12 · PLAN SEMANAL + CIERRE
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+  <div class="section-label" style="padding-top:4px;">Organizate</div>
+  <h2 style="margin-bottom:4px;">Menú tipo para la semana</h2>
+  <div class="divider"></div>
+
+  <!-- Weekly menu table -->
+  <div style="background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px;">
+    <table style="width:100%;border-collapse:collapse;font-size:0.78rem;">
+      <thead>
+        <tr style="background:#F5F3F1;">
+          <th style="padding:8px 12px;text-align:left;font-size:0.62rem;font-weight:700;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;border-bottom:1.5px solid #E8E4E0;">Día</th>
+          <th style="padding:8px 12px;text-align:left;font-size:0.62rem;font-weight:700;color:var(--amber);letter-spacing:0.07em;text-transform:uppercase;border-bottom:1.5px solid #E8E4E0;">Desayuno</th>
+          <th style="padding:8px 12px;text-align:left;font-size:0.62rem;font-weight:700;color:var(--green);letter-spacing:0.07em;text-transform:uppercase;border-bottom:1.5px solid #E8E4E0;">Almuerzo</th>
+          <th style="padding:8px 12px;text-align:left;font-size:0.62rem;font-weight:700;color:var(--blue);letter-spacing:0.07em;text-transform:uppercase;border-bottom:1.5px solid #E8E4E0;">Cena</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom:1px solid #F0EDE9;">
+          <td style="padding:13px 12px;font-weight:700;">Lunes</td>
+          <td style="padding:13px 12px;color:var(--muted);">Bowl de avena</td>
+          <td style="padding:13px 12px;color:var(--muted);">Pollo al horno</td>
+          <td style="padding:13px 12px;color:var(--muted);">Crema de brócoli</td>
+        </tr>
+        <tr style="border-bottom:1px solid #F0EDE9;background:#FAFAF9;">
+          <td style="padding:13px 12px;font-weight:700;">Martes</td>
+          <td style="padding:13px 12px;color:var(--muted);">Smoothie verde</td>
+          <td style="padding:13px 12px;color:var(--muted);">Bowl de quinoa</td>
+          <td style="padding:13px 12px;color:var(--muted);">Frittata al horno</td>
+        </tr>
+        <tr style="border-bottom:1px solid #F0EDE9;">
+          <td style="padding:13px 12px;font-weight:700;">Miércoles</td>
+          <td style="padding:13px 12px;color:var(--muted);">Tostadas aguacate</td>
+          <td style="padding:13px 12px;color:var(--muted);">Sopa de lentejas</td>
+          <td style="padding:13px 12px;color:var(--muted);">Caldo de huesos</td>
+        </tr>
+        <tr style="border-bottom:1px solid #F0EDE9;background:#FAFAF9;">
+          <td style="padding:13px 12px;font-weight:700;">Jueves</td>
+          <td style="padding:13px 12px;color:var(--muted);">Yogur con chía</td>
+          <td style="padding:13px 12px;color:var(--muted);">Bowl de salmón</td>
+          <td style="padding:13px 12px;color:var(--muted);">Crema de brócoli</td>
+        </tr>
+        <tr style="border-bottom:1px solid #F0EDE9;">
+          <td style="padding:13px 12px;font-weight:700;">Viernes</td>
+          <td style="padding:13px 12px;color:var(--muted);">Panqueques avena</td>
+          <td style="padding:13px 12px;color:var(--muted);">Wrap de pollo</td>
+          <td style="padding:13px 12px;color:var(--muted);">Frittata + ensalada</td>
+        </tr>
+        <tr style="background:#FAFAF9;">
+          <td style="padding:13px 12px;font-weight:700;">Finde</td>
+          <td style="padding:13px 12px;color:var(--muted);">Libre (misma línea)</td>
+          <td style="padding:13px 12px;color:var(--muted);">Rotá entre las 5</td>
+          <td style="padding:13px 12px;color:var(--muted);">Caldo de huesos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Closing card -->
+  <div style="background:var(--white);border-left:4px solid var(--coral);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow);">
+    <div style="font-size:0.65rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--coral);margin-bottom:8px;">La cocina es tu segundo protocolo</div>
+    <p style="font-family:var(--serif);font-size:1.05rem;color:var(--text);font-weight:400;line-height:1.55;margin-bottom:10px;">
+      No necesitás comer perfectamente los 28 días. Necesitás reducir los alimentos que inflaman y aumentar los que reparan.
+    </p>
+    <p style="font-size:0.82rem;color:var(--muted);line-height:1.6;">Una cosa a la vez. Una receta a la vez. Eso es suficiente.</p>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:8px;">
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--coral);"></div>
+      <div style="font-size:0.7rem;font-weight:600;color:var(--coral);">ZERO DIASTASIS™ · zerodiastasis.com</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span class="page-brand">ZERO DIASTASIS™ · Pack Antiinflamatorio</span>
+    <span class="page-num">12</span>
+  </div>
+</div>
+
+</body>
+</html>

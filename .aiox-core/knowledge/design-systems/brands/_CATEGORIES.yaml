@@ -1,0 +1,97 @@
+# _CATEGORIES.yaml — Brand Library Categories
+# Organização das 70 brands por categoria de uso
+
+version: "1.0"
+updated: "2026-04-29"
+total_brands: 70
+
+categories:
+
+  saas_dashboard:
+    description: "Ideal para dashboards, ferramentas de produtividade, SaaS B2B"
+    brands: [linear.app, airtable, notion, posthog, sentry, intercom, cal, mintlify, resend, clickhouse]
+    mood: "clean, data-dense, purposeful"
+    best_for: "psi-saas (Vínculo), analytics tools, dev tools"
+
+  ai_ml_platform:
+    description: "Plataformas de IA, ML, modelos de linguagem"
+    brands: [cursor, elevenlabs, cohere, minimax, mistral.ai, x.ai, opencode.ai, together.ai, runwayml, replicate, voltagent, claude]
+    mood: "dark, sophisticated, technical"
+    best_for: "landing pages de ferramentas IA, demos"
+
+  developer_tools:
+    description: "Ferramentas para desenvolvedores, infra, APIs"
+    brands: [supabase, expo, vercel, hashicorp, warp, ollama, mongodb, composio, raycast, resend]
+    mood: "minimal, dark-friendly, code-first"
+    best_for: "docs, APIs, developer products"
+
+  fintech_payments:
+    description: "Fintechs, pagamentos, bancos digitais, crypto"
+    brands: [stripe, revolut, coinbase, mastercard, kraken, binance, wise]
+    mood: "trustworthy, polished, secure"
+    best_for: "checkout pages, financial products"
+
+  premium_luxury:
+    description: "Marcas premium, luxury, alto padrão"
+    brands: [superhuman, apple, ferrari, stripe, bmw, lamborghini, bugatti, bmw-m, tesla, spacex]
+    mood: "minimal, cinematic, premium"
+    best_for: "produtos premium, high-ticket, marcas de luxo"
+
+  dark_cinematic:
+    description: "Dark mode nativo, energético, cinematográfico"
+    brands: [cursor, raycast, elevenlabs, spotify, runwayml, shopify, spacex, nvidia, voltagent, elevenlabs]
+    mood: "dark-native, dramatic, powerful"
+    best_for: "landing pages impactantes, tech products"
+
+  warm_friendly:
+    description: "Amigável, acolhedor, humano"
+    brands: [notion, intercom, airtable, starbucks, wise, zapier, slack, mastercard]
+    mood: "warm, approachable, human"
+    best_for: "produtos B2C, comunidades, healthcare adjacent"
+
+  creative_playful:
+    description: "Criativo, expressivo, builder-oriented"
+    brands: [figma, clay, framer, lovable, miro, airtable, webflow, framer]
+    mood: "vibrant, creative, motion-first"
+    best_for: "design tools, no-code builders, agências"
+
+  infoproduct_marketing:
+    description: "Marketing, conteúdo, e-commerce, produtos digitais"
+    brands: [shopify, pinterest, airbnb, zapier, miro, framer]
+    mood: "bold, conversion-focused, visual"
+    best_for: "low-ticket squad, landing pages de produtos"
+
+  editorial_media:
+    description: "Jornalismo, editorial, media, conteúdo rico"
+    brands: [wired, theverge, pinterest]
+    mood: "editorial, typography-heavy, content-first"
+    best_for: "blogs, newsletters, mídia digital"
+
+  enterprise_b2b:
+    description: "Enterprise, B2B, corporativo, soluções empresariais"
+    brands: [ibm, hashicorp, mongodb, clickhouse, vodafone, meta]
+    mood: "structured, trustworthy, scalable"
+    best_for: "enterprise SaaS, B2B landing pages"
+
+  automotive_industrial:
+    description: "Automotivo, industrial, engineering brands"
+    brands: [ferrari, bmw, bmw-m, lamborghini, bugatti, tesla, renault, vodafone]
+    mood: "cinematic, precision, power"
+    best_for: "referência de tipografia display, photography-driven"
+
+# Mapeamento por squad
+squad_recommendations:
+  psi-saas:
+    primary: "squads/psi-saas/app/DESIGN.md (custom)"
+    pattern_refs: [notion, linear.app, intercom]
+    category: warm_friendly + saas_dashboard
+
+  low-ticket:
+    primary: "squads/low-ticket/app/DESIGN.md (a criar)"
+    pattern_refs: [shopify, framer, zapier]
+    category: infoproduct_marketing + creative_playful
+
+  zero-diastasis:
+    primary: "squads/zero-diastasis/app/DESIGN.md (a criar)"
+    pattern_refs: [airbnb, notion, starbucks]
+    category: warm_friendly

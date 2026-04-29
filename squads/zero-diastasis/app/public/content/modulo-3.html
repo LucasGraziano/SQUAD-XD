@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guía Módulo 3: Compresión Vertical · Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral:   #F28C7A;
+      --green:   #7BC6A4;
+      --bg:      #F5F3F1;
+      --text:    #2B2B2B;
+      --white:   #FFFFFF;
+      --muted:   #6B6B6B;
+      --serif:   'Playfair Display', Georgia, serif;
+      --sans:    'Inter', system-ui, sans-serif;
+      --shadow:  0 4px 24px rgba(0,0,0,0.07);
+      --radius:  16px;
+    }
+
+    body { font-family: var(--sans); background: #E8E5E2; color: var(--text); line-height: 1.7; }
+
+    .page {
+      width: 210mm; min-height: 297mm; background: var(--bg);
+      margin: 12px auto; padding: 13mm 15mm;
+      position: relative; overflow: hidden;
+    }
+
+    @media print {
+      body { background: none; }
+      .page { margin: 0; page-break-after: always; page-break-inside: avoid; box-shadow: none; width: 100%; min-height: 100vh; }
+      @page { size: A4; margin: 0; }
+    }
+
+    /* Typography */
+    h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+    h2 { font-family: var(--serif); font-size: 1.7rem; font-weight: 700; line-height: 1.2; }
+    h3 { font-family: var(--sans); font-size: 1rem; font-weight: 700; }
+    p  { font-size: 0.92rem; line-height: 1.75; color: var(--text); }
+
+    .coral  { color: var(--coral); }
+    .green  { color: var(--green); }
+    .muted  { color: var(--muted); }
+    .small  { font-size: 0.8rem; }
+    .serif  { font-family: var(--serif); }
+
+    /* Section label */
+    .section-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 5px;
+    }
+
+    /* Divider */
+    .divider { width: 44px; height: 3px; background: var(--coral); border-radius: 2px; margin: 10px 0 16px; }
+
+    /* Cards */
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 18px 22px; }
+
+    /* Highlight */
+    .highlight {
+      background: linear-gradient(135deg, #FFF0ED 0%, #FFF8F7 100%);
+      border: 1.5px solid #F5C4BB; border-radius: var(--radius); padding: 14px 18px; margin: 20px 0;
+    }
+
+    /* Info box */
+    .info-box { background: #E8F7F1; border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 14px 18px; margin: 12px 0; }
+
+    /* Page footer */
+    .page-footer {
+      position: absolute; bottom: 10mm; left: 15mm; right: 15mm;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .page-num   { font-size: 0.7rem; color: var(--muted); }
+    .page-brand { font-size: 0.7rem; font-weight: 600; color: var(--coral); }
+
+    /* Cover */
+    .cover-bg { position: absolute; inset: 0; background: linear-gradient(155deg, #1A1010 0%, #1A1A1A 100%); }
+    .cover-content { position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 8mm 0 10mm; }
+
+    /* Day header */
+    .day-header {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+    }
+    .day-badge {
+      width: 44px; height: 44px; min-width: 44px; border-radius: 12px;
+      background: var(--coral); color: #fff;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      font-weight: 700; line-height: 1;
+    }
+    .day-badge .day-num { font-size: 1.1rem; }
+    .day-badge .day-word { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.85; }
+    .day-focus { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+    .day-title { font-family: var(--serif); font-size: 1.2rem; font-weight: 700; color: var(--text); }
+    .day-meta  { display: flex; gap: 8px; margin-top: 4px; }
+    .day-pill  { background: #F5F3F1; border-radius: 100px; padding: 3px 10px; font-size: 0.7rem; font-weight: 600; color: var(--muted); }
+
+    /* Exercise card */
+    .exercise {
+      background: var(--white); border-radius: 14px; box-shadow: var(--shadow);
+      padding: 20px 22px; margin-bottom: 14px;
+    }
+    .exercise-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+      padding-bottom: 14px; border-bottom: 1px solid #F0EDE9;
+    }
+    .exercise-icon {
+      width: 34px; height: 34px; min-width: 34px; border-radius: 10px;
+      background: #FFF0ED; display: flex; align-items: center; justify-content: center; font-size: 1rem;
+    }
+    .exercise-name { font-weight: 700; font-size: 0.9rem; }
+    .exercise-dur  { font-size: 0.72rem; color: var(--muted); margin-top: 1px; }
+
+    .exercise-position {
+      background: #F9F6F3; border-radius: 10px; padding: 10px 14px;
+      font-size: 0.78rem; color: var(--muted); margin-bottom: 14px;
+      display: flex; gap: 6px; align-items: center;
+    }
+
+    .steps { display: flex; flex-direction: column; gap: 10px; }
+    .step  { display: flex; gap: 9px; align-items: flex-start; }
+    .step-num {
+      width: 20px; height: 20px; min-width: 20px; border-radius: 6px;
+      background: var(--coral); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.68rem; font-weight: 700; margin-top: 1px;
+    }
+    .step p { font-size: 0.82rem; line-height: 1.6; }
+
+    .exercise-tags { display: flex; flex-direction: column; gap: 9px; margin-top: 16px; padding-top: 14px; border-top: 1px solid #F0EDE9; }
+    .tag-row { display: flex; gap: 7px; align-items: flex-start; }
+    .tag-icon { font-size: 0.78rem; min-width: 16px; margin-top: 1px; }
+    .tag-label { font-size: 0.72rem; font-weight: 700; min-width: 48px; }
+    .tag-text { font-size: 0.78rem; color: var(--muted); line-height: 1.45; }
+    .tag-feel  .tag-label { color: var(--green); }
+    .tag-avoid .tag-label { color: #D94F3D; }
+    .tag-tip   .tag-label { color: var(--coral); }
+
+    /* Progress bar */
+    .prog-bar { background: #E8E5E2; border-radius: 100px; height: 6px; margin: 6px 0; }
+    .prog-fill { background: var(--coral); border-radius: 100px; height: 6px; }
+
+    /* Day nav dots */
+    .day-dots { display: flex; gap: 5px; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #E0DDD9; }
+    .dot.active { background: var(--coral); width: 20px; border-radius: 4px; }
+    .dot.done   { background: var(--green); }
+
+    /* Completion card */
+    .completion {
+      background: linear-gradient(135deg, #E8F7F1 0%, #F0FBF7 100%);
+      border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 16px 20px;
+    }
+
+  </style>
+</head>
+<body>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 1 — PORTADA
+═══════════════════════════════════════════════════════ -->
+<div class="page" style="padding:0;background:#1A1A1A;">
+  <div class="cover-bg"></div>
+
+  <div style="position:absolute;top:-50px;right:-50px;width:240px;height:240px;border-radius:50%;background:rgba(242,140,122,0.12);"></div>
+  <div style="position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;border-radius:50%;background:rgba(242,140,122,0.07);"></div>
+
+  <div class="cover-content" style="padding:10mm 15mm 10mm;">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 14px;font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:0.07em;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--coral);"></span>
+        Módulo 3 de 4 · Días 8-14
+      </div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);">⏱ 10 min/día</div>
+    </div>
+
+    <div style="padding-top:16px;">
+      <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;">Guía de ejercicios</div>
+      <h1 style="color:#fff;font-size:3rem;margin-bottom:10px;">Compresión<br>Vertical</h1>
+      <p style="color:rgba(255,255,255,0.65);font-size:0.95rem;line-height:1.65;max-width:80%;margin-bottom:22px;">La presión negativa que reorganiza tu abdomen desde adentro. Esta semana aprendés la técnica que los fisioterapeutas europeos usan desde los años 80.</p>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">🧍 De pie y sentada</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">⏱ 10 min/día</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">✓ Nivel intermedio</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">✓ Sin impacto</span>
+      </div>
+
+      <!-- Week progress -->
+      <div style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:14px 16px;">
+        <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:10px;">Días de esta semana</div>
+        <div style="display:flex;gap:6px;">
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">8</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">9</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">10</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">11</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">12</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">13</div>
+          </div>
+          <div style="flex:1;text-align:center;background:rgba(255,255,255,0.06);border-radius:10px;padding:8px 4px;">
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.4);margin-bottom:2px;">DÍA</div>
+            <div style="font-size:0.9rem;font-weight:700;color:#fff;">14</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(255,255,255,0.1);">
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:500;">ZERO DIASTASIS™ · zerodiastasis.com</div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);">Protocolo de Reactivación del TVA</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 2 — INTRO AL MÓDULO
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Módulo 3 · Compresión Vertical</div>
+  <h2>Qué va a pasar<br>esta <span class="coral">semana</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">El Módulo 2 te enseñó a sentir y activar tu TVA. El Módulo 3 lleva esa activación a otro nivel: vas a aprender la técnica hipopresiva, que usa la <strong>presión negativa</strong> para reorganizar el abdomen desde adentro.</p>
+
+  <div class="highlight" style="margin-bottom:14px;">
+    <p class="small"><strong style="font-family:var(--serif);font-size:0.95rem;">"El abdomen no se sostiene empujando hacia afuera. Se sostiene tirando hacia adentro."</strong><br>
+    <span style="color:var(--muted);">Eso es exactamente lo que hacen los hipopresivos y el vacuum. Presión negativa, no positiva.</span></p>
+  </div>
+
+  <!-- Day overview -->
+  <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:16px;">
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">8</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Hipopresivo básico en pie</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Postura + exhalación + apnea + apertura costal</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">9</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Hipopresivo + TVA activo</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Sumar la contracción del TVA durante la apnea</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">10</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Vacuum abdominal introductorio</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Primera succión abdominal profunda · 5s de sostén</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">11</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Vacuum con sostenimiento</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Alargar el vacuum a 8-10 segundos con pulsos</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">12</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Secuencia combinada</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Hipopresivo + vacuum + relajar + repetir</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:var(--white);border-radius:11px;padding:10px 13px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">13</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;">Variaciones de posición</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Hipopresivo inclinado + vacuum de pie erguida</div>
+      </div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+
+    <div style="display:flex;gap:10px;align-items:center;background:#E8F7F1;border-radius:11px;padding:10px 13px;border:1.5px solid #A8DFC8;">
+      <div style="width:28px;height:28px;min-width:28px;border-radius:8px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">14</div>
+      <div style="flex:1;">
+        <div style="font-weight:700;font-size:0.82rem;color:#2E8B68;">Revisión + test de progreso</div>
+        <div style="font-size:0.72rem;color:var(--muted);">Secuencia completa + auto-medición</div>
+      </div>
+      <div style="font-size:0.7rem;font-weight:700;color:var(--green);">🎉</div>
+    </div>
+
+  </div>
+
+  <div class="info-box">
+    <p class="small"><strong>Sobre la apnea:</strong> La apnea (retención de aire) es central en la técnica hipopresiva. No es peligrosa. Si en algún momento sentís mareo, soltá el aire y respirá normal. Con la práctica, la tolerancia aumenta y el mareo desaparece.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">2</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 3 — DÍA 8
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">8</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 3 · Compresión Vertical</div>
+      <div class="day-title">Hipopresivo básico en pie</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 10 min</span>
+        <span class="day-pill">🧍 De pie</span>
+        <span class="day-pill">✓ Nueva técnica</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy aprendés la técnica hipopresiva desde cero. Es diferente a todo lo que hiciste en el Módulo 2. No se trata de contraer, sino de crear un vacío. Leé cada paso con cuidado antes de empezar.</p>
+
+  <!-- Ejercicio 1 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🧍</div>
+      <div>
+        <div class="exercise-name">Postura hipopresiva base</div>
+        <div class="exercise-dur">⏱ 4 minutos · 5 repeticiones · 5-8s de apnea</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧍 <span><strong>Posición:</strong> De pie, pies al ancho de caderas, rodillas levemente dobladas. Brazos relajados, ligeramente separados del cuerpo.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Inclinate desde la cadera, espalda recta, cuello neutral.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Inhalá profundo. Exhalá todo el aire por la boca hasta vaciar los pulmones.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Cerrá la boca (apnea). Abrí las costillas hacia los lados como si quisieras inhalar.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Mantené las costillas abiertas 5-8 segundos. Soltá e inhalá.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Las costillas se abren. El abdomen se retrae solo, sin que vos lo fuerces.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Empujar el abdomen. Tensar los hombros. Apneas de menos de 4 segundos.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Imaginá que tus costillas son un paraguas abriéndose hacia los lados, no hacia arriba.</span></div>
+    </div>
+  </div>
+
+  <!-- Ejercicio 2 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🙌</div>
+      <div>
+        <div class="exercise-name">Hipopresivo con brazos elevados</div>
+        <div class="exercise-dur">⏱ 5 minutos · 6 repeticiones · 8s de apnea</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧍 <span><strong>Posición:</strong> Misma postura. Brazos al frente, codos doblados, como sosteniendo una pelota.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Brazos al frente, a la altura del pecho, levemente alejados del cuerpo.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Exhalá completamente. Apnea. Abrí las costillas bien amplio.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Los brazos amplifican la apertura. Sentirás que el abdomen retrocede más.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Mantené 8 segundos. Soltá, inhalá, relajá.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Expansión costal más pronunciada. El abdomen retrocede más profundo.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Subir los hombros hacia las orejas. Arquear la espalda lumbar.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Si los brazos se tensan, bajá los codos. Es señal de que los hombros están subiendo.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 8:</strong> ¿Sentiste las costillas abrirse? Si el movimiento no fue claro todavía, tranquila. El cuerpo necesita 2-3 días para entender esta técnica nueva. Mañana ya va a fluir mejor.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">3</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 4 — DÍA 9
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">9</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 3 · Compresión Vertical</div>
+      <div class="day-title">Hipopresivo + TVA activo</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 10 min</span>
+        <span class="day-pill">🧍 De pie y sentada</span>
+        <span class="day-pill">✓ Doble activación</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy sumás una capa: después de abrir las costillas (hipopresivo), activás el TVA al mismo tiempo. Es una doble activación que genera tensión profunda sin ningún esfuerzo visible desde afuera.</p>
+
+  <!-- Ejercicio 1 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">💡</div>
+      <div>
+        <div class="exercise-name">Hipopresivo con TVA consciente</div>
+        <div class="exercise-dur">⏱ 4 minutos · 6 repeticiones · 8-10s de apnea</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧍 <span><strong>Posición:</strong> De pie, misma postura del Día 8. Pies al ancho de caderas, leve inclinación desde la cadera.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Exhalá todo el aire. Apnea. Abrí las costillas completamente (técnica del Día 8).</p></div>
+      <div class="step"><div class="step-num">2</div><p>Ya con las costillas abiertas, activá suavemente el TVA: llevá el ombligo hacia la columna.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Mantené ambas cosas a la vez: costillas abiertas hacia afuera + TVA activo hacia adentro.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Sostené 8-10 segundos. Soltá todo junto y respirá.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Dos tensiones a la vez: costillas afuera, abdomen adentro. Firmeza profunda.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Activar el TVA antes de que las costillas estén abiertas. El orden importa.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Primero abrí las costillas. Recién entonces sumá el TVA.</span></div>
+    </div>
+  </div>
+
+  <!-- Ejercicio 2 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🪑</div>
+      <div>
+        <div class="exercise-name">Hipopresivo sentada</div>
+        <div class="exercise-dur">⏱ 5 minutos · 6 repeticiones · 8-10s de apnea</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🪑 <span><strong>Posición:</strong> En el borde de una silla, pies apoyados. Inclinada desde la cadera, espalda recta.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Sentate en el borde de la silla. No uses el respaldo. Pies bien apoyados.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Inclinate levemente desde la cadera, espalda larga y recta.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Exhalá todo. Apnea. Abrí costillas + activá TVA. Sostené 8-10 segundos.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Soltá y respirá con calma antes de la siguiente repetición.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Más intenso que de pie. La gravedad ayuda y el abdomen retrocede más.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Redondear la espalda al inclinarte. Recostarte en el respaldo de la silla.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">El borde de la silla es clave: permite la inclinación de cadera que facilita la técnica.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 9:</strong> ¿Lograste sentir las dos activaciones a la vez? Si todavía no, no te preocupes. En los días siguientes el cuerpo lo integra solo. La clave es el orden correcto: costillas primero, TVA después.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">4</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 5 — DÍA 10
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">10</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 3 · Compresión Vertical</div>
+      <div class="day-title">Vacuum abdominal introductorio</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 10 min</span>
+        <span class="day-pill">🤸 Manos en rodillas</span>
+        <span class="day-pill">✓ Técnica nueva</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">El vacuum es diferente al hipopresivo: en lugar de abrir las costillas, jalás el abdomen hacia adentro y hacia arriba con toda tu fuerza. Es la técnica de activación máxima del TVA.</p>
+
+  <!-- Ejercicio 1 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🌀</div>
+      <div>
+        <div class="exercise-name">Vacuum básico (manos en rodillas)</div>
+        <div class="exercise-dur">⏱ 5 minutos · 5 repeticiones · 5s de sostén</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🤸 <span><strong>Posición:</strong> De pie, inclinada hacia adelante, manos en las rodillas. Espalda neutra.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Manos en las rodillas, espalda recta y plana.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Exhalá todo el aire por la boca. Vaciá los pulmones del todo.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Cerrá la boca (apnea). Jalá el abdomen adentro y arriba con toda tu fuerza.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Mantené 5 segundos. Soltá e inhalá.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Succión profunda en todo el abdomen. Es normal verlo marcado en el espejo.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Inhalar antes de soltar el vacuum. Forzar con los músculos de la espalda.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">La posición manos-en-rodillas es la entrada más fácil al vacuum. Empezá siempre así.</span></div>
+    </div>
+  </div>
+
+  <!-- Ejercicio 2 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🐱</div>
+      <div>
+        <div class="exercise-name">Vacuum en cuadrupedia</div>
+        <div class="exercise-dur">⏱ 4 minutos · 4 repeticiones · 5s de sostén</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🐱 <span><strong>Posición:</strong> En cuadrupedia, espalda neutra. Manos bajo los hombros, rodillas bajo las caderas.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Cuadrupedia, espalda plana, sin hundir ni arquear la zona lumbar.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Exhalá todo el aire completamente.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Apnea. Jalá el abdomen hacia arriba (hacia la columna) contra la gravedad.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Mantené 5 segundos. Soltá. Inhalá.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">El abdomen sube hacia la columna. Podés verlo y sentirlo al mismo tiempo.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Arquear la espalda. La columna queda neutra durante todo el ejercicio.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Ideal para aprender a ver el vacuum. Practicalo frente a un espejo lateral.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 10:</strong> ¿Lograste sentir la succión abdominal? Si el abdomen no retrocede mucho todavía, es normal. El músculo todavía está aprendiendo el movimiento. Mañana ya va a responder mejor.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">5</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 6 — DÍA 11
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">11</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 3 · Compresión Vertical</div>
+      <div class="day-title">Vacuum con sostenimiento</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 10 min</span>
+        <span class="day-pill">⏱ 8-10s de sostén</span>
+        <span class="day-pill">✓ Pulsos</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy alargás el vacuum del Día 10. De 5 segundos pasás a 8-10 segundos, y sumás una técnica de pulsos que profundiza la activación durante el sostén.</p>
+
+  <!-- Ejercicio 1 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">⏱️</div>
+      <div>
+        <div class="exercise-name">Vacuum con sostenimiento progresivo</div>
+        <div class="exercise-dur">⏱ 5 minutos · 4-5 repeticiones · 8-10s de sostén</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🤸 <span><strong>Posición:</strong> Manos en las rodillas, espalda neutra. Misma posición del Día 10.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Misma preparación del Día 10: exhalá completo, apnea, vacuum profundo.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Esta vez sostené 8-10 segundos, el doble que ayer.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Durante el sostén, pulsá el vacuum: apretá un poco más adentro cada 2 segundos.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Soltá suavemente. Esperá 3 respiraciones completas antes de la siguiente.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Tensión profunda y sostenida. La incomodidad es señal de activación real.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Sostener tanto que necesites inhalar de golpe. Soltá antes si el cuerpo lo pide.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Progresá el tiempo: 5s (Día 10) → 8s → 10s. No fuerces si el cuerpo no está listo.</span></div>
+    </div>
+  </div>
+
+  <!-- Ejercicio 2 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🫀</div>
+      <div>
+        <div class="exercise-name">Vacuum pulsante</div>
+        <div class="exercise-dur">⏱ 4 minutos · 4 repeticiones · 10s con 5 pulsos</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🤸 <span><strong>Posición:</strong> Manos en las rodillas, espalda neutra. Igual que antes.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Exhalá completo, apnea, vacuum profundo.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Adentro, hacé 5 pulsos: apretá fuerte, soltá un poco. Un segundo por pulso.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Después de los 5 pulsos, sostené un momento más y soltá.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Respirá con calma. Repetí.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Pulsaciones profundas en el abdomen. Como si el músculo hablara en morse.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Hacer los pulsos muy rápido. El ritmo tiene que ser controlado, 1 segundo por pulso.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Si los pulsos se sienten débiles, es normal. La coordinación tarda 2-3 días en afinarse.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 11:</strong> Los pulsos son difíciles al principio. Si sentiste aunque sea dos o tres, ya es un logro. El músculo está despertando. Mañana vas a notar la diferencia.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">6</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 7 — DÍA 12
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">12</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 3 · Compresión Vertical</div>
+      <div class="day-title">Secuencia combinada</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 10 min</span>
+        <span class="day-pill">🔄 4 ciclos</span>
+        <span class="day-pill">✓ Integración total</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy integrás las dos técnicas aprendidas esta semana: el hipopresivo y el vacuum se alternan dentro de un mismo ciclo. Son sensaciones opuestas que se complementan.</p>
+
+  <!-- Ejercicio 1 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🔄</div>
+      <div>
+        <div class="exercise-name">Ciclo hipopresivo + vacuum</div>
+        <div class="exercise-dur">⏱ 8 minutos · 4 ciclos completos</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧍 <span><strong>Posición:</strong> De pie. Alternás entre erguida (hipopresivo) e inclinada con manos en rodillas (vacuum).</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p><strong>Ronda hipopresivo:</strong> Exhalá completo, apnea, abrí costillas + TVA, sostené 8s, soltá.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Respirá 3 veces normal para recuperarte.</p></div>
+      <div class="step"><div class="step-num">3</div><p><strong>Ronda vacuum:</strong> Doblate, manos en rodillas, exhalá completo, vacuum, sostené 8s, soltá.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Respirá 3 veces normal. Ese es 1 ciclo completo. Repetí 4 veces.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Dos sensaciones opuestas: expansión costal (hipo) y succión abdominal (vacuum).</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Mezclar las dos técnicas en la misma apnea. Son ejercicios separados.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Las 3 respiraciones de recuperación son parte del ejercicio. No las saltes.</span></div>
+    </div>
+  </div>
+
+  <!-- Ejercicio 2 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🧘</div>
+      <div>
+        <div class="exercise-name">Respiración de cierre</div>
+        <div class="exercise-dur">⏱ 2 minutos · Continuo y lento</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧍 <span><strong>Posición:</strong> De pie, erguida. Manos sobre el abdomen, una encima de la otra.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Después de los 4 ciclos, colocá las manos sobre el abdomen.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Respirá profundo 6 veces, lento. Sin técnica, sin apnea. Solo respiración abdominal.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Con cada exhalación, sentí cómo el abdomen vuelve a su posición natural.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Relajación progresiva. El abdomen recuerda la posición activada incluso al soltar.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Saltarte el cierre. La recuperación activa consolida lo trabajado.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Este cierre de 2 minutos va a ser parte de todos los días del Módulo 4. Integralo ahora.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 12:</strong> Hoy combinaste las dos técnicas de este módulo. Si lo sentiste fluir, ya tenés el ciclo completo. Si no salió prolijo, no importa. Mañana se ajusta solo.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">7</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 8 — DÍA 13
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge">
+      <span class="day-num">13</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 3 · Compresión Vertical</div>
+      <div class="day-title">Variaciones de posición</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 10 min</span>
+        <span class="day-pill">🧍 Inclinada + erguida</span>
+        <span class="day-pill">✓ Uso diario</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy aprendés las dos variaciones de posición que vas a usar fuera de la sesión. El hipopresivo inclinado y el vacuum de pie erguida son las versiones "portátiles" de las técnicas.</p>
+
+  <!-- Ejercicio 1 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🤸</div>
+      <div>
+        <div class="exercise-name">Hipopresivo inclinado (manos en rodillas)</div>
+        <div class="exercise-dur">⏱ 5 minutos · 5 repeticiones · 8-10s de apnea</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🤸 <span><strong>Posición:</strong> Inclinada hacia adelante, manos en rodillas. Espalda plana, no redondes la lumbar.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Posición inclinada, manos en rodillas, espalda larga y plana.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Exhalá completo, apnea, abrí las costillas hacia los lados.</p></div>
+      <div class="step"><div class="step-num">3</div><p>La inclinación amplifica la apertura costal. Sentirás más amplitud que de pie erguida.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Activá el TVA. Sostené 8-10s. Soltá.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Más apertura costal. El abdomen se retrae más fácil. La gravedad trabaja a favor.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Redondear la espalda al inclinarte. Mantené la espalda plana en todo momento.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Más fácil para principiantes. Si el erguido te costó, empezá siempre por acá.</span></div>
+    </div>
+  </div>
+
+  <!-- Ejercicio 2 -->
+  <div class="exercise">
+    <div class="exercise-header">
+      <div class="exercise-icon">🧍</div>
+      <div>
+        <div class="exercise-name">Vacuum de pie erguida</div>
+        <div class="exercise-dur">⏱ 5 minutos · 5 repeticiones · 5-8s de sostén</div>
+      </div>
+    </div>
+
+    <div class="exercise-position">
+      🧍 <span><strong>Posición:</strong> De pie, completamente erguida, pies al ancho de caderas. Sin inclinarte.</span>
+    </div>
+
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><p>Sin inclinarte, exhalá completamente.</p></div>
+      <div class="step"><div class="step-num">2</div><p>Apnea. Jalá el abdomen hacia adentro y hacia arriba.</p></div>
+      <div class="step"><div class="step-num">3</div><p>Es más difícil que inclinada. Menor profundidad visual, mayor esfuerzo muscular.</p></div>
+      <div class="step"><div class="step-num">4</div><p>Sostené 5-8s. Soltá. Respirá.</p></div>
+    </div>
+
+    <div class="exercise-tags">
+      <div class="tag-row tag-feel"><span class="tag-icon">✅</span><span class="tag-label">Sentí:</span><span class="tag-text">Más difícil que inclinada. Más esfuerzo, menos profundidad visual. Es completamente normal.</span></div>
+      <div class="tag-row tag-avoid"><span class="tag-icon">❌</span><span class="tag-label">Evitá:</span><span class="tag-text">Frustrarte si no se ve tan marcado. De pie trabaja más, no menos.</span></div>
+      <div class="tag-row tag-tip"><span class="tag-icon">💡</span><span class="tag-label">Tip:</span><span class="tag-text">Esta es la versión del día a día: cola del súper, lavando los platos, esperando el semáforo.</span></div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong>Al terminar el Día 13:</strong> Mañana es el último día del Módulo 3. Vas a hacer la secuencia completa y medirte. Preparate para sorprenderte con los números.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">8</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 9 — DÍA 14 + CIERRE
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="day-header">
+    <div class="day-badge" style="background:var(--green);">
+      <span class="day-num">14</span>
+      <span class="day-word">día</span>
+    </div>
+    <div>
+      <div class="day-focus">Módulo 3 · Revisión final</div>
+      <div class="day-title">Secuencia completa + auto-medición</div>
+      <div class="day-meta">
+        <span class="day-pill">⏱ 10 min</span>
+        <span class="day-pill">📏 Auto-medición</span>
+        <span class="day-pill">🎉 50% del protocolo</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:0.85rem;color:var(--muted);margin-bottom:14px;">Hoy completás la mitad del protocolo. Repetís la secuencia completa del Día 12 y después te hacés las preguntas de evaluación. Anotá todo en tu Tracker.</p>
+
+  <!-- Secuencia del día -->
+  <div style="background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:12px;">
+    <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--coral);margin-bottom:10px;">Secuencia del Día 14</div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div style="width:22px;height:22px;min-width:22px;border-radius:6px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;">1</div>
+        <p style="font-size:0.82rem;"><strong>Hipopresivo con brazos</strong> · 4 repeticiones · 8s de apnea</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div style="width:22px;height:22px;min-width:22px;border-radius:6px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;">2</div>
+        <p style="font-size:0.82rem;"><strong>Hipopresivo sentada + TVA</strong> · 4 repeticiones · 8s de apnea</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div style="width:22px;height:22px;min-width:22px;border-radius:6px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;">3</div>
+        <p style="font-size:0.82rem;"><strong>Vacuum manos en rodillas</strong> · 4 repeticiones · 8-10s de sostén</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <div style="width:22px;height:22px;min-width:22px;border-radius:6px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;">4</div>
+        <p style="font-size:0.82rem;"><strong>Vacuum de pie erguida</strong> · 3 repeticiones · 5-8s de sostén</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-medición -->
+  <div style="background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 16px;margin-bottom:12px;">
+    <div style="font-size:0.75rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Auto-medición del Día 14</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="font-size:0.8rem;min-width:16px;margin-top:2px;">📏</span>
+        <p style="font-size:0.82rem;"><strong>Medida de cintura:</strong> ___ cm (misma posición que el Día 1)</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="font-size:0.8rem;min-width:16px;margin-top:2px;">📏</span>
+        <p style="font-size:0.82rem;"><strong>Medida a nivel del ombligo:</strong> ___ cm</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="font-size:0.8rem;min-width:16px;margin-top:2px;">✋</span>
+        <p style="font-size:0.82rem;"><strong>Auto-test de diástasis:</strong> ¿Cuántos dedos caben ahora? ___</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="font-size:0.8rem;min-width:16px;margin-top:2px;">💬</span>
+        <p style="font-size:0.82rem;"><strong>¿Sentís el vacuum más profundo que en el Día 10?</strong> Sí / No / A veces</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="completion">
+    <div style="display:flex;gap:12px;align-items:center;margin-bottom:8px;">
+      <span style="font-size:1.6rem;">🎉</span>
+      <div>
+        <div style="font-family:var(--sans);font-size:1.05rem;font-weight:700;color:#2E8B68;margin-bottom:2px;">¡50% del protocolo completado!</div>
+        <div style="font-size:0.78rem;color:var(--muted);">Dominás el hipopresivo y el vacuum. Tu abdomen ya sabe crear presión negativa.</div>
+      </div>
+    </div>
+    <div class="prog-bar"><div class="prog-fill" style="width:50%;background:var(--green);"></div></div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:6px;">Semana 1 completada · Semana 2 completada · Semana 3 en camino · Semana 4 pendiente</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">9</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 10 — REFERENCIA RÁPIDA
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Módulo 3 · Referencia rápida</div>
+  <h2>Los 7 días de un<br><span class="coral">vistazo</span></h2>
+  <div class="divider"></div>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">8</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Hipopresivo básico en pie</div><div style="font-size:0.72rem;color:var(--muted);">Exhala + apnea + apertura costal · 5-8s</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">9</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Hipopresivo + TVA activo</div><div style="font-size:0.72rem;color:var(--muted);">Costillas abiertas + TVA · 8-10s</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:#E07060;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">10</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Vacuum introductorio</div><div style="font-size:0.72rem;color:var(--muted);">Manos en rodillas · vacuum 5s · 5 reps</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:#E07060;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">11</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Vacuum con sostenimiento</div><div style="font-size:0.72rem;color:var(--muted);">Vacuum 8-10s + pulsos · 4-5 reps</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">12</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Secuencia combinada</div><div style="font-size:0.72rem;color:var(--muted);">Hipopresivo + vacuum · 4 ciclos</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:var(--white);border-radius:12px;padding:11px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">13</div>
+      <div><div style="font-weight:600;font-size:0.85rem;">Variaciones de posición</div><div style="font-size:0.72rem;color:var(--muted);">Vacuum de pie erguida · integración diaria</div></div>
+      <div style="font-size:0.7rem;color:var(--muted);">10 min</div>
+    </div>
+    <div style="display:grid;grid-template-columns:40px 1fr auto;gap:10px;align-items:center;background:#E8F7F1;border-radius:12px;padding:11px 14px;border:1.5px solid #A8DFC8;">
+      <div style="width:32px;height:32px;border-radius:9px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">14</div>
+      <div><div style="font-weight:600;font-size:0.85rem;color:#2E8B68;">Revisión + auto-medición</div><div style="font-size:0.72rem;color:var(--muted);">Secuencia completa + medición de progreso</div></div>
+      <div style="font-size:0.7rem;font-weight:700;color:var(--green);">🎉</div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <p class="small"><strong>Regla de este módulo:</strong> Si en alguna sesión sentís mareo durante la apnea, soltá el aire inmediatamente y respirá normal. El mareo leve desaparece con la práctica. Si persiste más allá del Día 10, consultá con tu médico antes de continuar.</p>
+  </div>
+
+  <div style="margin-top:14px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;display:flex;gap:12px;align-items:center;">
+    <div style="font-size:1.5rem;">➡️</div>
+    <div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Siguiente: Módulo 4 · Anclaje Total</div>
+      <p class="small muted">Días 15-28. Intensificación, variaciones y anclaje permanente. 12 min/día. Múltiples posiciones.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">10</div>
+  </div>
+</div>
+
+
+</body>
+</html>

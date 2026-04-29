@@ -4,10 +4,10 @@
   "last_updated": "2026-03-24",
   "services": {
     "claude": {
-      "plan": "Pro",
-      "cost_monthly_usd": 20,
+      "plan": "Max",
+      "cost_monthly_usd": 100,
       "status": "active",
-      "notes": "Claude Code CLI + Claude App (mobile/web) — primary tool"
+      "notes": "Claude Code CLI + Claude App (mobile/web) — primary tool. Max plan = uso ilimitado."
     },
     "elevenlabs": {
       "plan": "Free",
@@ -48,7 +48,7 @@
     }
   },
   "monthly_logs": [],
-  "total_fixed_monthly_brl": 104.65,
-  "exchange_rate_usd_brl": 5.2323,
+  "total_fixed_monthly_brl": 575,
+  "exchange_rate_usd_brl": 5.75,
   "notes": "Total fixo = Claude Max ($100 x 5.75 = R$575). Restante tudo gratuito."
 }

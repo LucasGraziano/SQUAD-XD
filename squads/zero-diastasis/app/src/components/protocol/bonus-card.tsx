@@ -54,7 +54,7 @@ export function BonusCard({ bonus, status, onDownload }: BonusCardProps) {
             ) : (
               <Button size="sm" variant={status === 'new' ? 'accent' : 'secondary'} className="gap-1.5" onClick={onDownload}>
                 <Download size={14} />
-                Descargar {bonus.format.toUpperCase()}
+                Ver contenido
               </Button>
             )}
           </div>

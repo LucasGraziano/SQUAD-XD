@@ -1,0 +1,24 @@
+# Meta-Domain: Startup Founder
+# Mentalidade e frameworks de fundadores de startups de alto crescimento
+
+id: startup-founder
+description: "Startups, fundraising, PMF, growth, founder mindset, decisões de alto impacto"
+domains:
+  - startup-strategy       # FASE 3: Paul Graham essays, Y Combinator
+  - growth-product         # FASE 3: Sean Ellis, Reforge
+
+primary_context: startup, SaaS, fundraising, PMF, pivot
+squad_affinity: [psi-saas]
+situations_prefix: [SU]
+status: planned
+
+planned_experts:
+  - name: Paul Graham
+    source: "Essays (paulgraham.com)"
+    file: domains/startup-founder/paul-graham-dna.md
+    eta: "Fase 3"
+
+  - name: Y Combinator
+    source: "YC Library"
+    file: domains/startup-founder/yc-principles-dna.md
+    eta: "Fase 3"

@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stack 360°: Postura, Flexibilidad y Hábitos · Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --coral:  #F28C7A;
+      --green:  #7BC6A4;
+      --bg:     #F5F3F1;
+      --text:   #2B2B2B;
+      --white:  #FFFFFF;
+      --muted:  #6B6B6B;
+      --serif:  'Playfair Display', Georgia, serif;
+      --sans:   'Inter', system-ui, sans-serif;
+      --shadow: 0 4px 24px rgba(0,0,0,0.07);
+      --radius: 16px;
+    }
+    body { font-family: var(--sans); background: #E8E5E2; color: var(--text); line-height: 1.7; }
+    .page { width: 210mm; min-height: 297mm; background: var(--bg); margin: 12px auto; padding: 13mm 15mm; position: relative; overflow: hidden; }
+    @media print {
+      body { background: none; }
+      .page { margin: 0; page-break-after: always; page-break-inside: avoid; box-shadow: none; width: 100%; min-height: 100vh; }
+      @page { size: A4; margin: 0; }
+    }
+    h1 { font-family: var(--serif); font-size: 2.8rem; font-weight: 900; line-height: 1.1; }
+    h2 { font-family: var(--serif); font-size: 1.6rem; font-weight: 700; line-height: 1.2; }
+    h3 { font-family: var(--sans); font-size: 0.95rem; font-weight: 700; }
+    p  { font-size: 0.92rem; line-height: 1.75; color: var(--text); }
+    .coral { color: var(--coral); } .green { color: var(--green); } .muted { color: var(--muted); } .small { font-size: 0.8rem; }
+    .section-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral); margin-bottom: 5px; }
+    .divider { width: 44px; height: 3px; background: var(--coral); border-radius: 2px; margin: 10px 0 16px; }
+    .card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 16px 20px; }
+    .highlight { background: linear-gradient(135deg, #FFF0ED 0%, #FFF8F7 100%); border: 1.5px solid #F5C4BB; border-radius: var(--radius); padding: 14px 18px; margin: 20px 0; }
+    .info-box { background: #E8F7F1; border: 1.5px solid #A8DFC8; border-radius: var(--radius); padding: 14px 18px; margin: 12px 0; }
+    .page-footer { position: absolute; bottom: 10mm; left: 15mm; right: 15mm; display: flex; justify-content: space-between; align-items: center; }
+    .page-num { font-size: 0.7rem; color: var(--muted); }
+    .page-brand { font-size: 0.7rem; font-weight: 600; color: var(--coral); }
+
+    /* Correction card */
+    .correction {
+      background: var(--white); border-radius: 14px; box-shadow: var(--shadow);
+      padding: 14px 16px; margin-bottom: 10px;
+      display: grid; grid-template-columns: 44px 1fr; gap: 12px;
+    }
+    .correction-num {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--coral); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--sans); font-size: 1.1rem; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .correction-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+    .correction-body { font-size: 0.82rem; line-height: 1.6; color: var(--muted); }
+    .correction-tip { font-size: 0.78rem; margin-top: 7px; display: flex; gap: 6px; align-items: flex-start; }
+    .correction-tip strong { color: var(--coral); font-size: 0.72rem; }
+
+    /* Wrong/right rows */
+    .wr-row { display: flex; gap: 8px; margin-top: 6px; font-size: 0.78rem; line-height: 1.5; }
+    .wr-badge { min-width: 36px; height: 20px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+    .badge-no  { background: #FDECEA; color: #D94F3D; }
+    .badge-si  { background: #E8F7F1; color: #2E8B68; }
+
+    /* Stretch card */
+    .stretch {
+      background: var(--white); border-radius: 14px; box-shadow: var(--shadow);
+      padding: 14px 16px; margin-bottom: 10px;
+    }
+    .stretch-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; padding-bottom: 8px; border-bottom: 1px solid #F0EDE9; }
+    .stretch-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; background: #FFF0ED; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .stretch-name { font-weight: 700; font-size: 0.88rem; }
+    .stretch-dur  { font-size: 0.7rem; color: var(--muted); margin-top: 1px; }
+    .stretch-body { font-size: 0.82rem; line-height: 1.6; color: var(--text); margin-bottom: 7px; }
+    .stretch-tag  { display: flex; gap: 6px; font-size: 0.75rem; }
+    .stretch-tag span:first-child { font-weight: 700; color: var(--green); }
+    .stretch-tag span:last-child  { color: var(--muted); }
+
+    /* Habit card */
+    .habit { background: var(--white); border-radius: 14px; box-shadow: var(--shadow); padding: 14px 18px; margin-bottom: 10px; }
+    .habit-header { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+    .habit-icon { font-size: 1.3rem; }
+    .habit-title { font-weight: 700; font-size: 0.92rem; }
+    .habit-subtitle { font-size: 0.72rem; color: var(--muted); }
+
+    /* Checklist item */
+    .check-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: var(--white); border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 8px; }
+    .check-box { width: 20px; height: 20px; min-width: 20px; border-radius: 6px; border: 2px solid #D4CFC9; margin-top: 1px; }
+    .check-text { font-size: 0.85rem; line-height: 1.55; }
+    .check-text strong { display: block; font-weight: 700; font-size: 0.88rem; margin-bottom: 1px; }
+    .check-text span { color: var(--muted); font-size: 0.78rem; }
+  </style>
+</head>
+<body>
+
+
+<!-- PÁGINA 1 — PORTADA -->
+<div class="page" style="padding:0;background:#1A1A1A;">
+  <div style="position:absolute;inset:0;background:linear-gradient(150deg,#1A1A12 0%,#1A1A1A 100%);"></div>
+  <div style="position:absolute;top:-60px;right:-60px;width:260px;height:260px;border-radius:50%;background:rgba(242,140,122,0.08);"></div>
+  <div style="position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(123,198,164,0.06);"></div>
+  <div style="position:absolute;top:50%;left:-60px;width:180px;height:180px;border-radius:50%;background:rgba(242,140,122,0.05);transform:translateY(-50%);"></div>
+
+  <div style="position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:space-between;padding:10mm 15mm 10mm;">
+
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 14px;font-size:0.7rem;font-weight:600;color:rgba(255,255,255,0.8);letter-spacing:0.07em;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--coral);"></span>
+        Bonus incluido
+      </div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.4);">Zero Diastasis™</div>
+    </div>
+
+    <div style="padding-top:16px;">
+      <div style="font-size:0.68rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--coral);margin-bottom:12px;">Guía de hábitos complementarios</div>
+      <h1 style="color:#fff;font-size:3.2rem;margin-bottom:6px;">Stack<br>360°</h1>
+      <p style="font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:rgba(255,255,255,0.5);margin-bottom:20px;">Postura, Flexibilidad y Hábitos</p>
+      <p style="color:rgba(255,255,255,0.65);font-size:0.92rem;line-height:1.65;max-width:85%;margin-bottom:26px;">Los ejercicios hacen el trabajo. Estos hábitos multiplican los resultados. Aplicalos junto al protocolo y la diferencia se nota el doble.</p>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">🧍 5 correcciones posturales</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">🤸 6 micro-estiramientos</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">💧 4 hábitos diarios</span>
+        <span style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:5px 12px;font-size:0.73rem;color:rgba(255,255,255,0.75);">✅ Checklist imprimible</span>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center;padding-top:18px;border-top:1px solid rgba(255,255,255,0.1);">
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);font-weight:500;">ZERO DIASTASIS™ · zerodiastasis.com</div>
+      <div style="font-size:0.7rem;color:rgba(255,255,255,0.35);">Protocolo de Reactivación del TVA</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 2 — ÍNDICE -->
+<div class="page">
+  <div class="section-label">Stack 360° · Contenido</div>
+  <h2>Todo lo que hay<br>en esta <span class="coral">guía</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:18px;">El Stack 360° no es un programa separado. Es una capa de hábitos que se pone por encima del protocolo y amplifica los resultados. Podés empezarlo el Día 1 o el Día 15.</p>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+
+    <div style="background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:34px;height:34px;min-width:34px;border-radius:10px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">1</div>
+        <div><div style="font-weight:700;font-size:0.92rem;">Postura Inteligente</div><div style="font-size:0.72rem;color:var(--muted);">Páginas 3-4 · 5 correcciones para el día a día</div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);">Cómo sentarse, levantarse, cargar a los hijos y caminar sin aumentar la presión abdominal. Cada corrección activa el TVA de forma pasiva.</p>
+    </div>
+
+    <div style="background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:34px;height:34px;min-width:34px;border-radius:10px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">2</div>
+        <div><div style="font-weight:700;font-size:0.92rem;">Micro-estiramientos</div><div style="font-size:0.72rem;color:var(--muted);">Páginas 5-6 · 6 estiramientos de 30 segundos</div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);">3 estiramientos para la mañana + 3 para la noche. Foco en caderas, zona lumbar y cadena posterior. Los podés hacer mientras tus hijos desayunan.</p>
+    </div>
+
+    <div style="background:var(--white);border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:34px;height:34px;min-width:34px;border-radius:10px;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.82rem;">3</div>
+        <div><div style="font-weight:700;font-size:0.92rem;">Hábitos que Potencian</div><div style="font-size:0.72rem;color:var(--muted);">Páginas 7-8 · Hidratación, respiración, sueño y alimentación</div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);">Cuatro hábitos simples con impacto directo en la recuperación abdominal. No requieren esfuerzo extra, solo pequeños cambios en lo que ya hacés.</p>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#E8F7F1,#F0FBF7);border-radius:14px;box-shadow:var(--shadow);padding:14px 18px;border:1.5px solid #A8DFC8;">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+        <div style="width:34px;height:34px;min-width:34px;border-radius:10px;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-size:0.9rem;">✅</div>
+        <div><div style="font-weight:700;font-size:0.92rem;color:#2E8B68;">Checklist Diario</div><div style="font-size:0.72rem;color:var(--muted);">Página 9 · Imprimible</div></div>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);">5 hábitos del día resumidos en un checklist. Imprimilo, pegalo en la heladera y tachá cada uno cuando lo completés.</p>
+    </div>
+
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong style="font-family:var(--serif);font-size:0.95rem;">¿Cuándo aplicar el Stack 360°?</strong><br>
+    <span style="color:var(--muted);">Desde el Día 1. Estas correcciones y hábitos no interfieren con el protocolo, lo amplifican. Mientras más temprano los incorporés, más rápido notás la diferencia.</span></p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">2</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 3 — POSTURA INTELIGENTE (parte 1) -->
+<div class="page">
+  <div class="section-label">Sección 1 · Postura Inteligente</div>
+  <h2>5 correcciones que<br>activan el <span class="coral">TVA</span> sin ejercicio</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:16px;">La postura incorrecta aumenta la presión intra-abdominal y empuja la diástasis hacia afuera. Estas correcciones son pequeños cambios que, repetidos cada día, tienen más impacto que cualquier ejercicio.</p>
+
+  <div class="correction">
+    <div class="correction-num">1</div>
+    <div>
+      <div class="correction-title">Sentarse en los isquiones, no en el coxis</div>
+      <div class="correction-body">La mayoría se sienta sobre el coxis (cola), lo que redondea la espalda baja y desactiva el TVA completamente. Los isquiones son los dos huesos que sentís cuando te sentás en una silla dura.</div>
+      <div class="wr-row"><span class="wr-badge badge-no">NO</span><span style="color:var(--muted);">Espalda redondeada, pelvis volcada hacia atrás, panza hacia adelante.</span></div>
+      <div class="wr-row"><span class="wr-badge badge-si">SÍ</span><span>Sentate sobre los huesos de la base. La espalda baja tiene una curva natural suave. Cabeza sobre los hombros.</span></div>
+      <div class="correction-tip"><strong>💡 TIP:</strong> <span style="font-size:0.78rem;color:var(--muted);">Si la silla es muy suave, poné una toalla doblada bajo la zona lumbar hasta que el cuerpo lo corrija solo.</span></div>
+    </div>
+  </div>
+
+  <div class="correction">
+    <div class="correction-num">2</div>
+    <div>
+      <div class="correction-title">Levantarse del suelo sin forzar el abdomen</div>
+      <div class="correction-body">Incorporarse directo desde el suelo (como un abdominal) genera una presión intra-abdominal enorme. Es uno de los movimientos que más empujan la diástasis.</div>
+      <div class="wr-row"><span class="wr-badge badge-no">NO</span><span style="color:var(--muted);">Subir directo: cabeza primero, abdomen empujando hacia afuera.</span></div>
+      <div class="wr-row"><span class="wr-badge badge-si">SÍ</span><span>Rodar al costado primero, apoyar la mano en el suelo, activar el TVA y subir empujando con los brazos.</span></div>
+      <div class="correction-tip"><strong>💡 TIP:</strong> <span style="font-size:0.78rem;color:var(--muted);">Esto también aplica para levantarse de la cama. Siempre de costado primero.</span></div>
+    </div>
+  </div>
+
+  <div class="correction">
+    <div class="correction-num">3</div>
+    <div>
+      <div class="correction-title">Cargar a los hijos en el centro, no en una cadera</div>
+      <div class="correction-body">Cargar el bebé o niño sobre una cadera desplaza el peso, inclina la pelvis y desactiva el TVA del lado de carga. Es un patrón muy común y muy dañino a largo plazo.</div>
+      <div class="wr-row"><span class="wr-badge badge-no">NO</span><span style="color:var(--muted);">Niño sobre la cadera, pelvis lateralizada, espalda curva.</span></div>
+      <div class="wr-row"><span class="wr-badge badge-si">SÍ</span><span>Niño centrado frente al cuerpo o alternando caderas cada 5 minutos. TVA levemente activo.</span></div>
+      <div class="correction-tip"><strong>💡 TIP:</strong> <span style="font-size:0.78rem;color:var(--muted);">Si usás portabebé, asegurate de que el peso esté distribuido simétricamente.</span></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">3</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 4 — POSTURA INTELIGENTE (parte 2) -->
+<div class="page">
+  <div class="section-label">Sección 1 · Postura Inteligente</div>
+  <h2>Correcciones 4 y 5 · <span class="coral">Dormir y caminar</span></h2>
+  <div class="divider"></div>
+
+  <div class="correction">
+    <div class="correction-num">4</div>
+    <div>
+      <div class="correction-title">Dormir en la posición que recupera el abdomen</div>
+      <div class="correction-body">La posición al dormir afecta directamente la tensión en la línea alba durante las horas de recuperación nocturna.</div>
+      <div class="wr-row"><span class="wr-badge badge-no">NO</span><span style="color:var(--muted);">Boca abajo: comprime el abdomen y rota la columna. La peor posición para diástasis.</span></div>
+      <div class="wr-row"><span class="wr-badge badge-si">SÍ</span><span>De costado con una almohada entre las rodillas (pelvis neutra). O boca arriba con almohada bajo las rodillas (desactiva los flexores de cadera).</span></div>
+      <div class="correction-tip"><strong>💡 TIP:</strong> <span style="font-size:0.78rem;color:var(--muted);">Al acomodarte de costado, hacé una activación TVA suave antes de cerrar los ojos. El músculo mantiene una leve contracción durante el sueño.</span></div>
+    </div>
+  </div>
+
+  <div class="correction">
+    <div class="correction-num">5</div>
+    <div>
+      <div class="correction-title">Caminar con el abdomen activo, no caído</div>
+      <div class="correction-body">Al caminar con el abdomen "suelto", la panza cae hacia adelante con cada paso y estira la línea alba repetidamente. Un TVA al 20-30% de activación mientras caminás es suficiente para protegerla.</div>
+      <div class="wr-row"><span class="wr-badge badge-no">NO</span><span style="color:var(--muted);">Cabeza adelantada, hombros caídos, panza suelta hacia adelante.</span></div>
+      <div class="wr-row"><span class="wr-badge badge-si">SÍ</span><span>Cabeza arriba, hombros atrás y abajo, TVA suave (no al máximo), talón-punta al pisar.</span></div>
+      <div class="correction-tip"><strong>💡 TIP:</strong> <span style="font-size:0.78rem;color:var(--muted);">Elegí una caminata diaria de 10 minutos para practicar esto conscientemente. Con el tiempo se vuelve automático.</span></div>
+    </div>
+  </div>
+
+  <div class="info-box" style="margin-top:16px;">
+    <p class="small"><strong>¿Cuánto tiempo para que se convierta en hábito?</strong> La investigación en neuroplasticidad indica entre 21 y 66 días para instalar un hábito postural. No lo fuercés: con que hagas 2 de estas 5 correcciones de forma consistente, el cuerpo empieza a reorganizarse solo.</p>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong style="font-family:var(--serif);font-size:0.95rem;">La postura es el ejercicio que hacés las 16 horas que no estás en sesión.</strong><br>
+    <span style="color:var(--muted);">Si la sesión dura 10 minutos pero la postura durante el resto del día empuja en dirección contraria, los resultados son más lentos. Corregir la postura es la forma más eficiente de multiplicar el trabajo del protocolo.</span></p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">4</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 5 — MICRO-ESTIRAMIENTOS MAÑANA -->
+<div class="page">
+  <div class="section-label">Sección 2 · Micro-Estiramientos</div>
+  <h2>3 estiramientos de<br><span class="coral">mañana</span> · 90 segundos</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:16px;">Hacelos antes de levantarte de la cama o mientras tus hijos desayunan. 30 segundos cada uno, no se necesita colchoneta.</p>
+
+  <div class="stretch">
+    <div class="stretch-header">
+      <div class="stretch-icon">🦵</div>
+      <div>
+        <div class="stretch-name">Rodilla al pecho</div>
+        <div class="stretch-dur">⏱ 30 segundos · Cada lado</div>
+      </div>
+    </div>
+    <div class="stretch-body">Acostada boca arriba. Llevá una rodilla hacia el pecho con las manos. La otra pierna queda extendida o con la planta en el suelo. Respirá profundo y soltá con cada exhalación.</div>
+    <div class="stretch-tag"><span>Zona:</span><span>Cadera, zona lumbar baja, glúteo</span></div>
+    <div class="stretch-tag" style="margin-top:3px;"><span>Beneficio:</span><span>Libera la tensión acumulada en la cadera que interfiere con la activación del TVA</span></div>
+  </div>
+
+  <div class="stretch">
+    <div class="stretch-header">
+      <div class="stretch-icon">🌀</div>
+      <div>
+        <div class="stretch-name">Rotación de columna en el suelo</div>
+        <div class="stretch-dur">⏱ 30 segundos · Cada lado</div>
+      </div>
+    </div>
+    <div class="stretch-body">Acostada boca arriba, rodillas dobladas y juntas. Dejá caer las rodillas lentamente hacia un lado mientras la espalda alta queda en el suelo. Brazos en cruz. No fuerces, dejá que la gravedad haga el trabajo.</div>
+    <div class="stretch-tag"><span>Zona:</span><span>Columna torácica y lumbar, oblicuos</span></div>
+    <div class="stretch-tag" style="margin-top:3px;"><span>Beneficio:</span><span>Descomprime la columna y mejora la movilidad que facilita los hipopresivos</span></div>
+  </div>
+
+  <div class="stretch">
+    <div class="stretch-header">
+      <div class="stretch-icon">🙆</div>
+      <div>
+        <div class="stretch-name">Elongación lateral de pie</div>
+        <div class="stretch-dur">⏱ 30 segundos · Cada lado</div>
+      </div>
+    </div>
+    <div class="stretch-body">De pie, pies juntos. Extendé un brazo hacia arriba y doblate suavemente hacia el lado opuesto. La cadera no se mueve. El otro brazo cae relajado. Respirá en la posición.</div>
+    <div class="stretch-tag"><span>Zona:</span><span>Intercostales, oblicuos, cadena lateral</span></div>
+    <div class="stretch-tag" style="margin-top:3px;"><span>Beneficio:</span><span>Amplía el espacio costal para la apertura hipopresiva</span></div>
+  </div>
+
+  <div class="info-box">
+    <p class="small"><strong>Cuándo hacerlos:</strong> Inmediatamente al levantarte, todavía en cama o junto a la cama. El cuerpo está caliente del sueño y los tejidos se estiran con mucho menos esfuerzo que en cualquier otro momento del día.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">5</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 6 — MICRO-ESTIRAMIENTOS NOCHE -->
+<div class="page">
+  <div class="section-label">Sección 2 · Micro-Estiramientos</div>
+  <h2>3 estiramientos de<br><span class="coral">noche</span> · 90 segundos</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:16px;">Hacelos antes de dormir. Preparan el cuerpo para la recuperación nocturna y sueltan la tensión acumulada durante el día.</p>
+
+  <div class="stretch">
+    <div class="stretch-header">
+      <div class="stretch-icon">🦋</div>
+      <div>
+        <div class="stretch-name">Mariposa relajada</div>
+        <div class="stretch-dur">⏱ 30 segundos · Sentada en el piso</div>
+      </div>
+    </div>
+    <div class="stretch-body">Sentada en el piso, juntá las plantas de los pies. Dejá caer las rodillas hacia los lados sin forzarlas. Las manos sujetan los pies o los tobillos. Inclinate un poco hacia adelante si querés más intensidad.</div>
+    <div class="stretch-tag"><span>Zona:</span><span>Cara interna de los muslos, cadera, suelo pélvico</span></div>
+    <div class="stretch-tag" style="margin-top:3px;"><span>Beneficio:</span><span>Relaja el suelo pélvico después de un día activo, mejorando la calidad del sueño</span></div>
+  </div>
+
+  <div class="stretch">
+    <div class="stretch-header">
+      <div class="stretch-icon">🧎</div>
+      <div>
+        <div class="stretch-name">Postura del niño extendida</div>
+        <div class="stretch-dur">⏱ 30 segundos · En el suelo</div>
+      </div>
+    </div>
+    <div class="stretch-body">De rodillas, sentate sobre los talones y extendé los brazos al frente sobre el suelo. La frente puede apoyarse en el piso o en las manos. Respirá profundo: con cada inhalación la espalda se abre, con cada exhalación el cuerpo baja más.</div>
+    <div class="stretch-tag"><span>Zona:</span><span>Zona lumbar, dorsales, caderas, hombros</span></div>
+    <div class="stretch-tag" style="margin-top:3px;"><span>Beneficio:</span><span>Descomprime toda la columna y activa la respiración diafragmática de forma pasiva</span></div>
+  </div>
+
+  <div class="stretch">
+    <div class="stretch-header">
+      <div class="stretch-icon">💓</div>
+      <div>
+        <div class="stretch-name">Apertura pectoral + respiración</div>
+        <div class="stretch-dur">⏱ 30 segundos · Acostada</div>
+      </div>
+    </div>
+    <div class="stretch-body">Acostada boca arriba, brazos en cruz con las palmas hacia arriba. Respirá profundo 5 veces: al inhalar, las costillas se abren hacia los lados. Al exhalar, todo se suelta. No hagas nada, solo respirá y dejá que el pecho se abra solo.</div>
+    <div class="stretch-tag"><span>Zona:</span><span>Pecho, costillas, intercostales</span></div>
+    <div class="stretch-tag" style="margin-top:3px;"><span>Beneficio:</span><span>Refuerza la apertura costal del hipopresivo y relaja el sistema nervioso para el sueño</span></div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong style="font-family:var(--serif);font-size:0.95rem;">6 estiramientos · 3 minutos en total · todos los días.</strong><br>
+    <span style="color:var(--muted);">No requieren colchoneta especial, ropa deportiva ni espacio. El único requisito es hacerlos. Con consistencia durante 28 días, la movilidad mejora lo suficiente para que los hipopresivos sean considerablemente más profundos.</span></p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">6</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 7 — HÁBITOS: HIDRATACIÓN + RESPIRACIÓN -->
+<div class="page">
+  <div class="section-label">Sección 3 · Hábitos que Potencian</div>
+  <h2>Hidratación y<br>respiración <span class="coral">consciente</span></h2>
+  <div class="divider"></div>
+
+  <div class="habit">
+    <div class="habit-header">
+      <span class="habit-icon">💧</span>
+      <div>
+        <div class="habit-title">Hidratación · 2 litros por día</div>
+        <div class="habit-subtitle">Impacto directo en la recuperación del tejido conectivo</div>
+      </div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px;">La línea alba es tejido conectivo. El tejido conectivo se nutre y regenera con agua. La deshidratación leve crónica (muy común en mamás) ralentiza la recuperación abdominal de forma significativa.</p>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:var(--green);font-size:0.8rem;min-width:14px;margin-top:2px;">✓</span>
+        <p style="font-size:0.82rem;"><strong>Primer vaso al despertar,</strong> antes del café. El cuerpo lleva 7-8 horas sin agua.</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:var(--green);font-size:0.8rem;min-width:14px;margin-top:2px;">✓</span>
+        <p style="font-size:0.82rem;"><strong>1 vaso antes de cada comida</strong> (desayuno, almuerzo, cena) + 1 botella durante el ejercicio.</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:var(--green);font-size:0.8rem;min-width:14px;margin-top:2px;">✓</span>
+        <p style="font-size:0.82rem;"><strong>Señales de que tomás poco:</strong> orina oscura, hinchazón abdominal, calambres musculares, poca energía.</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:var(--coral);font-size:0.8rem;min-width:14px;margin-top:2px;">✗</span>
+        <p style="font-size:0.82rem;color:var(--muted);">Reemplazar agua por jugos, infusiones o gaseosas. Solo el agua hidrata el tejido de forma efectiva.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="habit" style="margin-top:12px;">
+    <div class="habit-header">
+      <span class="habit-icon">💨</span>
+      <div>
+        <div class="habit-title">Respiración consciente · 3 micro-prácticas de 1 minuto</div>
+        <div class="habit-subtitle">El TVA se desactiva bajo estrés. La respiración lo resetea.</div>
+      </div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px;">Cuando el sistema nervioso está en modo estrés (cortisol alto), el TVA se apaga como medida de supervivencia. Es un mecanismo automático. La respiración diafragmática lo revierte en segundos.</p>
+    <div style="background:#F9F6F3;border-radius:10px;padding:10px 14px;margin-bottom:8px;">
+      <div style="font-size:0.72rem;font-weight:700;color:var(--coral);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;">Respiración de reseteo · 1 minuto</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <p style="font-size:0.82rem;"><strong>Inhala</strong> por la nariz, 4 segundos. Solo el abdomen sube.</p>
+        <p style="font-size:0.82rem;"><strong>Retené</strong> 2 segundos sin tensión.</p>
+        <p style="font-size:0.82rem;"><strong>Exhala</strong> por la boca, 6 segundos. Lento y controlado.</p>
+        <p style="font-size:0.82rem;color:var(--muted);">Repetí 5 veces. Total: 1 minuto.</p>
+      </div>
+    </div>
+    <p style="font-size:0.8rem;color:var(--muted);"><strong style="color:var(--text);">Cuándo hacerlo:</strong> Antes de la sesión de ejercicio, cuando sentís que el estrés sube, y antes de dormir.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">7</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 8 — HÁBITOS: SUEÑO + ALIMENTACIÓN -->
+<div class="page">
+  <div class="section-label">Sección 3 · Hábitos que Potencian</div>
+  <h2>Sueño y <span class="coral">alimentos</span><br>antiinflamatorios</h2>
+  <div class="divider"></div>
+
+  <div class="habit">
+    <div class="habit-header">
+      <span class="habit-icon">🌙</span>
+      <div>
+        <div class="habit-title">Sueño reparador · La recuperación ocurre de noche</div>
+        <div class="habit-subtitle">El tejido conectivo se regenera durante el sueño profundo</div>
+      </div>
+    </div>
+    <p style="font-size:0.82rem;color:var(--muted);margin-bottom:10px;">Durante las fases de sueño profundo, el cuerpo libera hormona de crecimiento que regenera el tejido conectivo, incluyendo la línea alba. Dormir mal o poco es uno de los factores que más ralentizan la recuperación de la diástasis.</p>
+    <div style="display:flex;flex-direction:column;gap:6px;">
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:var(--green);font-size:0.8rem;min-width:14px;margin-top:2px;">✓</span>
+        <p style="font-size:0.82rem;"><strong>Posición ideal:</strong> de costado con almohada entre rodillas, o boca arriba con almohada bajo las rodillas (ver Corrección 4).</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:var(--green);font-size:0.8rem;min-width:14px;margin-top:2px;">✓</span>
+        <p style="font-size:0.82rem;"><strong>Temperatura fresca</strong> en el cuarto (18-20°C) favorece el sueño profundo donde ocurre la regeneración.</p>
+      </div>
+      <div style="display:flex;gap:8px;align-items:flex-start;">
+        <span style="color:var(--green);font-size:0.8rem;min-width:14px;margin-top:2px;">✓</span>
+        <p style="font-size:0.82rem;"><strong>Los 3 estiramientos nocturnos</strong> (página 6) mejoran la calidad del sueño de forma directa al bajar el cortisol.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="habit" style="margin-top:12px;">
+    <div class="habit-header">
+      <span class="habit-icon">🥗</span>
+      <div>
+        <div class="habit-title">3 alimentos antiinflamatorios · Fáciles de conseguir</div>
+        <div class="habit-subtitle">Reducen la inflamación abdominal desde adentro</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:9px;margin-top:4px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;background:#F9F6F3;border-radius:10px;padding:10px 12px;">
+        <div style="font-size:1.2rem;min-width:28px;text-align:center;">🟠</div>
+        <div>
+          <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Jengibre fresco</div>
+          <p style="font-size:0.78rem;color:var(--muted);">Reduce la inflamación abdominal y mejora la digestión. Rallalo en agua caliente o en batidos. 1-2 cm por día es suficiente.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:#F9F6F3;border-radius:10px;padding:10px 12px;">
+        <div style="font-size:1.2rem;min-width:28px;text-align:center;">🌿</div>
+        <div>
+          <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Cúrcuma</div>
+          <p style="font-size:0.78rem;color:var(--muted);">Antiinflamatorio potente. Combinala siempre con pimienta negra: la piperina multiplica su absorción por 2000%. Agregala a sopas, arroces o leche caliente.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;background:#F9F6F3;border-radius:10px;padding:10px 12px;">
+        <div style="font-size:1.2rem;min-width:28px;text-align:center;">⚪</div>
+        <div>
+          <div style="font-weight:700;font-size:0.85rem;margin-bottom:2px;">Semillas de chía</div>
+          <p style="font-size:0.78rem;color:var(--muted);">Omega-3 antiinflamatorio + fibra que mejora el tránsito intestinal. La hinchazón por constipación presiona la diástasis. 1 cucharada en agua o yogur por día.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">8</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 9 — CHECKLIST DIARIO -->
+<div class="page">
+  <div class="section-label">Sección 4 · Checklist Diario</div>
+  <h2>Tus 5 hábitos<br>de cada <span class="coral">día</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:18px;">Imprimí esta página, pegala en la heladera o en el espejo del baño. Tachálos a medida que los completás. La visualización diaria del progreso multiplica la adherencia al hábito.</p>
+
+  <div class="check-item">
+    <div class="check-box"></div>
+    <div class="check-text">
+      <strong>Sesión del protocolo</strong>
+      <span>8-12 minutos · Hipopresivo y/o vacuum según el día del módulo.</span>
+    </div>
+  </div>
+
+  <div class="check-item">
+    <div class="check-box"></div>
+    <div class="check-text">
+      <strong>2 litros de agua</strong>
+      <span>1 vaso al despertar · 1 antes de cada comida · 1 durante el ejercicio.</span>
+    </div>
+  </div>
+
+  <div class="check-item">
+    <div class="check-box"></div>
+    <div class="check-text">
+      <strong>Micro-estiramientos matutinos</strong>
+      <span>90 segundos · Los 3 de la página 5 antes o después de levantarte.</span>
+    </div>
+  </div>
+
+  <div class="check-item">
+    <div class="check-box"></div>
+    <div class="check-text">
+      <strong>1 corrección postural consciente</strong>
+      <span>Elegí una de las 5 correcciones y aplicala hoy de forma intencional.</span>
+    </div>
+  </div>
+
+  <div class="check-item">
+    <div class="check-box"></div>
+    <div class="check-text">
+      <strong>Respiración de reseteo</strong>
+      <span>1 minuto · Inhala 4s · Retené 2s · Exhala 6s · Repetí 5 veces.</span>
+    </div>
+  </div>
+
+  <div style="margin-top:20px;background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 20px;">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Mi registro semanal</div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center;">
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);padding-bottom:4px;">LUN</div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);padding-bottom:4px;">MAR</div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);padding-bottom:4px;">MIÉ</div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);padding-bottom:4px;">JUE</div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);padding-bottom:4px;">VIE</div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);padding-bottom:4px;">SÁB</div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--muted);padding-bottom:4px;">DOM</div>
+      <div style="height:28px;border-radius:8px;border:1.5px solid #E0DDD9;"></div>
+      <div style="height:28px;border-radius:8px;border:1.5px solid #E0DDD9;"></div>
+      <div style="height:28px;border-radius:8px;border:1.5px solid #E0DDD9;"></div>
+      <div style="height:28px;border-radius:8px;border:1.5px solid #E0DDD9;"></div>
+      <div style="height:28px;border-radius:8px;border:1.5px solid #E0DDD9;"></div>
+      <div style="height:28px;border-radius:8px;border:1.5px solid #E0DDD9;"></div>
+      <div style="height:28px;border-radius:8px;border:1.5px solid #E0DDD9;"></div>
+    </div>
+    <p style="font-size:0.72rem;color:var(--muted);margin-top:10px;text-align:center;">Marcá con ✓ cada día que completaste los 5 hábitos.</p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">9</div>
+  </div>
+</div>
+
+
+<!-- PÁGINA 10 — CIERRE -->
+<div class="page">
+  <div class="section-label">Stack 360° · Resumen</div>
+  <h2>Todo junto,<br>cada <span class="coral">día</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:16px;">El Stack 360° no reemplaza el protocolo. Lo potencia. Acá está todo resumido para que lo tengas a mano.</p>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+    <div style="background:var(--white);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:13px 16px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:1.2rem;min-width:26px;padding-top:1px;">🧍</span>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:3px;">Postura Inteligente</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.55;">Levantarte de costado · Isquiones al sentarte · TVA activo al caminar · Dormir de lado</p>
+      </div>
+    </div>
+    <div style="background:var(--white);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:13px 16px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:1.2rem;min-width:26px;padding-top:1px;">🤸</span>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:3px;">Micro-estiramientos · 3 min/día</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.55;">3 matutinos + 3 nocturnos · 30 segundos cada uno</p>
+      </div>
+    </div>
+    <div style="background:var(--white);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:13px 16px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:1.2rem;min-width:26px;padding-top:1px;">💧</span>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:3px;">Hidratación · 2L/día</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.55;">Primer vaso al despertar · 1 antes de cada comida · 1 durante el ejercicio</p>
+      </div>
+    </div>
+    <div style="background:var(--white);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:13px 16px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:1.2rem;min-width:26px;padding-top:1px;">💨</span>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:3px;">Respiración consciente · 1 min × 3</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.55;">Inhala 4s · Retené 2s · Exhala 6s · Repetí 5 veces</p>
+      </div>
+    </div>
+    <div style="background:var(--white);border-radius:12px;box-shadow:0 2px 10px rgba(0,0,0,0.06);padding:13px 16px;display:flex;gap:14px;align-items:flex-start;">
+      <span style="font-size:1.2rem;min-width:26px;padding-top:1px;">🥗</span>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;margin-bottom:3px;">Antiinflamatorios · 1/día mínimo</div>
+        <p style="font-size:0.78rem;color:var(--muted);line-height:1.55;">Jengibre en agua · Cúrcuma + pimienta negra · Chía en yogur o agua</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--white);border-left:4px solid var(--coral);border-radius:var(--radius);padding:18px 22px;box-shadow:var(--shadow);">
+    <p style="margin-bottom:10px;">"El protocolo activa la Faja Invisible en 10 minutos al día. El Stack 360° la mantiene activa las otras 23 horas y 50 minutos."</p>
+    <div style="font-size:0.7rem;font-weight:600;color:var(--coral);">ZERO DIASTASIS™ · zerodiastasis.com</div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">10</div>
+  </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Desbloqueo — Zero Diastasis™</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ─── TOKENS ────────────────────────────────────────── */
+    :root {
+      --coral:    #F28C7A;
+      --green:    #7BC6A4;
+      --bg:       #F5F3F1;
+      --text:     #2B2B2B;
+      --white:    #FFFFFF;
+      --muted:    #6B6B6B;
+      --red-x:    #D94F3D;
+      --serif:    'Playfair Display', Georgia, serif;
+      --sans:     'Inter', system-ui, sans-serif;
+      --shadow:   0 4px 24px rgba(0,0,0,0.07);
+      --radius:   16px;
+    }
+
+    /* ─── BASE ──────────────────────────────────────────── */
+    body {
+      font-family: var(--sans);
+      background: #E8E5E2;
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ─── PAGE WRAPPER ──────────────────────────────────── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--bg);
+      margin: 12px auto;
+      padding: 14mm 16mm;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ─── PRINT ─────────────────────────────────────────── */
+    @media print {
+      body { background: none; }
+      .page {
+        margin: 0;
+        padding: 14mm 16mm;
+        page-break-after: always;
+        page-break-inside: avoid;
+        box-shadow: none;
+        width: 100%;
+        min-height: 100vh;
+      }
+      @page { size: A4; margin: 0; }
+    }
+
+    /* ─── TYPOGRAPHY ────────────────────────────────────── */
+    .serif { font-family: var(--serif); }
+
+    h1 { font-family: var(--serif); font-size: 2.6rem; font-weight: 900; line-height: 1.15; }
+    h2 { font-family: var(--serif); font-size: 1.9rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem; }
+    h3 { font-family: var(--sans); font-size: 1.1rem; font-weight: 700; letter-spacing: -0.01em; }
+    p  { font-size: 0.95rem; line-height: 1.75; color: var(--text); }
+
+    .coral    { color: var(--coral); }
+    .green    { color: var(--green); }
+    .muted    { color: var(--muted); }
+    .italic   { font-style: italic; }
+    .bold     { font-weight: 700; }
+    .center   { text-align: center; }
+    .small    { font-size: 0.8rem; }
+
+    /* ─── CARDS ─────────────────────────────────────────── */
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 24px;
+    }
+    .card-sm { padding: 14px 18px; border-radius: 12px; }
+
+    /* ─── DIVIDER ───────────────────────────────────────── */
+    .divider {
+      width: 48px; height: 3px;
+      background: var(--coral);
+      border-radius: 2px;
+      margin: 12px 0 18px;
+    }
+    .divider.center { margin: 12px auto 18px; }
+
+    /* ─── PILL BADGE ────────────────────────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--white); border-radius: 100px;
+      padding: 5px 12px; font-size: 0.78rem; font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: var(--text);
+    }
+    .badge-coral { background: var(--coral); color: #fff; }
+    .badge-green { background: var(--green); color: #fff; }
+
+    /* ─── SECTION LABEL ─────────────────────────────────── */
+    .section-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--coral);
+      margin-bottom: 6px;
+    }
+
+    /* ─── CHECK LIST ────────────────────────────────────── */
+    .check-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.92rem;
+    }
+    .check-list li .icon {
+      width: 20px; height: 20px; min-width: 20px;
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; margin-top: 2px;
+    }
+    .icon-green { background: var(--green); color: #fff; }
+    .icon-red   { background: var(--red-x); color: #fff; }
+
+    /* ─── X LIST (myths) ────────────────────────────────── */
+    .x-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 16px; background: var(--white);
+      border-radius: 12px; margin-bottom: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .x-icon {
+      width: 28px; height: 28px; min-width: 28px;
+      border-radius: 50%; background: #FEE8E5;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; color: var(--red-x); font-weight: 800;
+    }
+    .x-title { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; }
+    .x-title > span:first-child { text-decoration: line-through; color: var(--muted); }
+    .x-body  { font-size: 0.82rem; color: var(--muted); line-height: 1.5; text-decoration: none; }
+
+    /* ─── STAT BOX ──────────────────────────────────────── */
+    .stat-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px; margin: 16px 0;
+    }
+    .stat-box {
+      background: var(--white); border-radius: 12px;
+      padding: 14px 12px; text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-number { font-family: var(--serif); font-size: 1.8rem; font-weight: 900; color: var(--coral); }
+    .stat-label  { font-size: 0.72rem; color: var(--muted); margin-top: 2px; line-height: 1.3; }
+
+    /* ─── QUOTE BLOCK ───────────────────────────────────── */
+    .quote {
+      border-left: 3px solid var(--coral);
+      padding: 12px 16px;
+      background: var(--white);
+      border-radius: 0 12px 12px 0;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--text);
+      box-shadow: var(--shadow);
+    }
+
+    /* ─── PRESSURE DIAGRAM ──────────────────────────────── */
+    .pressure-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 12px; margin: 16px 0;
+    }
+    .pressure-box {
+      border-radius: 14px; padding: 16px;
+      text-align: center;
+    }
+    .pressure-bad  { background: #FEE8E5; border: 1.5px solid #F5B8AF; }
+    .pressure-good { background: #E8F7F1; border: 1.5px solid #A8DFC8; }
+    .pressure-icon { font-size: 2rem; margin-bottom: 6px; }
+    .pressure-title { font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
+    .pressure-desc  { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+    .pressure-result { font-size: 0.78rem; font-weight: 700; margin-top: 6px; }
+    .pressure-result.bad  { color: var(--red-x); }
+    .pressure-result.good { color: var(--green); }
+
+    /* ─── ANATOMY VISUAL ────────────────────────────────── */
+    .muscle-layers {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+      margin: 16px 0;
+    }
+    .muscle-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 12px; border-radius: 10px;
+      margin-bottom: 8px;
+    }
+    .muscle-dot {
+      width: 14px; height: 14px; min-width: 14px;
+      border-radius: 50%;
+    }
+    .muscle-label { font-weight: 600; font-size: 0.88rem; }
+    .muscle-desc  { font-size: 0.78rem; color: var(--muted); }
+
+    /* ─── SELF-TEST ─────────────────────────────────────── */
+    .test-steps {
+      display: flex; flex-direction: column; gap: 10px;
+      margin: 14px 0;
+    }
+    .test-step {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--white); border-radius: 12px;
+      padding: 12px 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    .test-num {
+      width: 28px; height: 28px; min-width: 28px;
+      border-radius: 50%; background: var(--coral); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.82rem; margin-top: 1px;
+    }
+
+    /* ─── SEVERITY TABLE ────────────────────────────────── */
+    .severity-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px; margin: 14px 0;
+    }
+    .severity-box {
+      border-radius: 12px; padding: 14px 12px; text-align: center;
+    }
+    .sev-1 { background: #E8F7F1; border: 1.5px solid #A8DFC8; }
+    .sev-2 { background: #FFF8E6; border: 1.5px solid #F5D88A; }
+    .sev-3 { background: #FEE8E5; border: 1.5px solid #F5B8AF; }
+    .sev-title  { font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
+    .sev-fingers { font-family: var(--serif); font-size: 1.4rem; font-weight: 900; }
+    .sev-label  { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
+    .sev-action { font-size: 0.75rem; font-weight: 600; margin-top: 6px; }
+    .sev-1 .sev-action { color: #3B9A72; }
+    .sev-2 .sev-action { color: #B8860B; }
+    .sev-3 .sev-action { color: var(--red-x); }
+
+    /* ─── WEEK TIMELINE ─────────────────────────────────── */
+    .week-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin: 14px 0;
+    }
+    .week-box {
+      background: var(--white); border-radius: 14px;
+      padding: 14px 16px; box-shadow: var(--shadow);
+    }
+    .week-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 4px;
+    }
+    .week-title { font-weight: 700; font-size: 0.9rem; margin-bottom: 4px; }
+    .week-desc  { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    /* ─── RULES ─────────────────────────────────────────── */
+    .rule-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 14px; background: var(--white);
+      border-radius: 12px; margin-bottom: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .rule-num {
+      width: 28px; height: 28px; min-width: 28px;
+      border-radius: 50%; background: #E8F7F1; color: var(--green);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 0.85rem;
+    }
+
+    /* ─── KIT ITEMS ─────────────────────────────────────── */
+    .kit-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; margin: 14px 0;
+    }
+    .kit-item {
+      background: var(--white); border-radius: 14px;
+      padding: 14px 16px; box-shadow: var(--shadow);
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .kit-icon { font-size: 1.4rem; }
+
+    /* ─── DISCLAIMER ────────────────────────────────────── */
+    .disclaimer {
+      background: #F9F6F3; border: 1px solid #E5E0DA;
+      border-radius: 12px; padding: 14px 16px;
+      font-size: 0.75rem; color: var(--muted); line-height: 1.6;
+    }
+
+    /* ─── PAGE NUMBER ───────────────────────────────────── */
+    .page-footer {
+      position: absolute; bottom: 10mm; left: 16mm; right: 16mm;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .page-num { font-size: 0.72rem; color: var(--muted); }
+    .page-brand { font-size: 0.72rem; font-weight: 600; color: var(--coral); }
+
+    /* ─── COVER SPECIFIC ────────────────────────────────── */
+    .cover-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #2B2B2B 0%, #1A1A1A 100%);
+    }
+    .cover-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(43,43,43,0.3) 0%, rgba(43,43,43,0.85) 100%);
+    }
+    .cover-content {
+      position: relative; z-index: 2;
+      height: 100%; display: flex; flex-direction: column;
+      justify-content: space-between;
+      padding: 6mm 0 8mm;
+    }
+    .cover-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px; padding: 5px 14px;
+      font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.85);
+      letter-spacing: 0.08em; width: fit-content;
+    }
+    .cover-module {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--coral); margin-bottom: 8px;
+    }
+    .cover-title {
+      font-family: var(--serif); font-size: 3.2rem; font-weight: 900;
+      line-height: 1.05; color: #fff; margin-bottom: 10px;
+    }
+    .cover-subtitle {
+      font-size: 1rem; color: rgba(255,255,255,0.7); line-height: 1.6;
+      max-width: 85%; margin-bottom: 24px;
+    }
+    .cover-pills {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px;
+    }
+    .cover-pill {
+      background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px; padding: 5px 12px;
+      font-size: 0.75rem; color: rgba(255,255,255,0.8);
+    }
+    .cover-cta {
+      background: var(--coral); color: #fff;
+      border-radius: 100px; padding: 12px 28px;
+      font-weight: 700; font-size: 0.9rem;
+      display: inline-block; width: fit-content;
+      letter-spacing: 0.02em;
+    }
+    .cover-brand {
+      font-size: 0.75rem; color: rgba(255,255,255,0.45);
+      letter-spacing: 0.05em; font-weight: 500;
+    }
+
+    /* ─── BACK COVER ────────────────────────────────────── */
+    .back-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(160deg, #F28C7A 0%, #E07060 100%);
+    }
+    .back-content {
+      position: relative; z-index: 2; height: 100%;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center;
+      text-align: center; padding: 6mm 0;
+    }
+
+    /* ─── HIGHLIGHT BOX ─────────────────────────────────── */
+    .highlight {
+      background: linear-gradient(135deg, #FFF0ED 0%, #FFF8F7 100%);
+      border: 1.5px solid #F5C4BB;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 14px 0;
+    }
+    .highlight h3 { color: var(--coral); margin-bottom: 6px; }
+
+    /* ─── INFO BOX ──────────────────────────────────────── */
+    .info-box {
+      background: #E8F7F1; border: 1.5px solid #A8DFC8;
+      border-radius: var(--radius); padding: 16px 20px; margin: 14px 0;
+    }
+    .info-box h3 { color: #2E8B68; margin-bottom: 6px; }
+
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 1 — PORTADA
+═══════════════════════════════════════════════════════ -->
+<div class="page" style="padding:0; background:#1A1A1A;">
+  <div class="cover-bg"></div>
+
+  <!-- Warm photo placeholder — replace with actual lifestyle photo -->
+  <div style="position:absolute;inset:0;background:linear-gradient(135deg,#3D2B1A 0%,#2B1E0F 40%,#1A1A1A 100%);opacity:0.9;"></div>
+
+  <!-- Decorative warm accent -->
+  <div style="position:absolute;top:-60px;right:-60px;width:280px;height:280px;border-radius:50%;background:rgba(242,140,122,0.12);"></div>
+  <div style="position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(123,198,164,0.08);"></div>
+
+  <div class="cover-content" style="padding:10mm 16mm 10mm;">
+
+    <!-- Top -->
+    <div>
+      <div class="cover-tag" style="margin:0 auto;">
+        <span style="width:6px;height:6px;border-radius:50%;background:var(--coral);"></span>
+        Módulo 1 de 4 · Zero Diastasis™
+      </div>
+    </div>
+
+    <!-- Center -->
+    <div>
+      <div class="cover-module" style="margin-top:28px;">Guía de inicio</div>
+      <div class="cover-title">El<br>Desbloqueo</div>
+      <div class="cover-subtitle">Lo que nadie te contó sobre tu abdomen después del parto, y por qué todo lo que intentaste no funcionó.</div>
+
+      <div class="cover-pills">
+        <span class="cover-pill">🏠 Desde casa</span>
+        <span class="cover-pill">⏱ 8-12 min/día</span>
+        <span class="cover-pill">📅 Protocolo 28 días</span>
+        <span class="cover-pill">✓ Sin dieta</span>
+        <span class="cover-pill">✓ Sin cirugía</span>
+      </div>
+
+      <div class="cover-cta">COMIENZA TU LECTURA →</div>
+    </div>
+
+    <!-- Bottom -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;">
+      <div class="cover-brand">ZERO DIASTASIS™ · zerodiastasis.com</div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 2 — ÍNDICE
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Contenido</div>
+  <h2>Lo que vas a<br><span class="coral">descubrir hoy</span></h2>
+  <div class="divider"></div>
+  <p class="muted small" style="margin-bottom:20px;">Antes de comenzar el protocolo, necesitas entender <strong>por qué</strong>. Esta guía es tu punto de partida.</p>
+
+  <div style="display:flex;flex-direction:column;gap:8px;">
+
+    <div class="card card-sm" style="display:flex;gap:14px;align-items:center;">
+      <div style="width:36px;height:36px;min-width:36px;border-radius:10px;background:#FFF0ED;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">📖</div>
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;">Sección 1</div>
+        <div style="font-size:0.82rem;color:var(--muted);">Lo que nadie te contó después del parto</div>
+      </div>
+      <div style="margin-left:auto;font-size:0.78rem;font-weight:700;color:var(--coral);">Pág. 3</div>
+    </div>
+
+    <div class="card card-sm" style="display:flex;gap:14px;align-items:center;">
+      <div style="width:36px;height:36px;min-width:36px;border-radius:10px;background:#FEE8E5;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">⚠️</div>
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;">Sección 2</div>
+        <div style="font-size:0.82rem;color:var(--muted);">Por qué todo lo que intentaste empeoró las cosas</div>
+      </div>
+      <div style="margin-left:auto;font-size:0.78rem;font-weight:700;color:var(--coral);">Pág. 5</div>
+    </div>
+
+    <div class="card card-sm" style="display:flex;gap:14px;align-items:center;">
+      <div style="width:36px;height:36px;min-width:36px;border-radius:10px;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">💪</div>
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;">Sección 3</div>
+        <div style="font-size:0.82rem;color:var(--muted);">Tu Faja Invisible: el músculo que nadie menciona</div>
+      </div>
+      <div style="margin-left:auto;font-size:0.78rem;font-weight:700;color:var(--coral);">Pág. 7</div>
+    </div>
+
+    <div class="card card-sm" style="display:flex;gap:14px;align-items:center;">
+      <div style="width:36px;height:36px;min-width:36px;border-radius:10px;background:#F0F4FF;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🔍</div>
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;">Sección 4</div>
+        <div style="font-size:0.82rem;color:var(--muted);">Tu autodiagnóstico en 2 minutos</div>
+      </div>
+      <div style="margin-left:auto;font-size:0.78rem;font-weight:700;color:var(--coral);">Pág. 10</div>
+    </div>
+
+    <div class="card card-sm" style="display:flex;gap:14px;align-items:center;">
+      <div style="width:36px;height:36px;min-width:36px;border-radius:10px;background:#F5F0FF;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🗓</div>
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;">Sección 5</div>
+        <div style="font-size:0.82rem;color:var(--muted);">Tu hoja de ruta: los próximos 28 días</div>
+      </div>
+      <div style="margin-left:auto;font-size:0.78rem;font-weight:700;color:var(--coral);">Pág. 12</div>
+    </div>
+
+    <div class="card card-sm" style="display:flex;gap:14px;align-items:center;">
+      <div style="width:36px;height:36px;min-width:36px;border-radius:10px;background:#FFFBE6;display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🎒</div>
+      <div>
+        <div style="font-weight:700;font-size:0.9rem;">Sección 6</div>
+        <div style="font-size:0.82rem;color:var(--muted);">Antes de empezar: tu kit de inicio</div>
+      </div>
+      <div style="margin-left:auto;font-size:0.78rem;font-weight:700;color:var(--coral);">Pág. 15</div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:22px;" class="highlight">
+    <h3 style="font-size:0.92rem;">Una nota antes de empezar</h3>
+    <p class="small">Este protocolo no es medicina. Es un sistema de reactivación muscular guiado por la técnica hipopresiva, desarrollada por el Dr. Marcel Caufriez en los años 80. <strong>Si tienes dudas de salud, consulta a tu médico antes de comenzar.</strong></p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">2</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 3 — SECCIÓN 1: LO QUE NADIE TE CONTÓ (parte A)
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 1</div>
+  <h2>Lo que nadie te contó<br>después del <span class="coral">parto</span></h2>
+  <div class="divider"></div>
+
+  <div class="stat-row">
+    <div class="stat-box">
+      <div class="stat-number">60%</div>
+      <div class="stat-label">de las mamás desarrollan diástasis</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">3cm</div>
+      <div class="stat-label">de separación promedio sin tratamiento</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number">2 años</div>
+      <div class="stat-label">es el tiempo promedio que las mamás esperan sin saber qué hacer</div>
+    </div>
+  </div>
+
+  <div class="quote" style="margin-bottom:16px;">
+    "Mi barriga seguía igual aunque ya había bajado de peso. Pensé que era así para siempre."
+    <div style="font-size:0.75rem;color:var(--muted);margin-top:6px;font-style:normal;font-weight:600;">— Sofía, 34 años, Colombia</div>
+  </div>
+
+  <h3 style="margin-bottom:8px;">¿Qué es la diástasis abdominal?</h3>
+  <p style="margin-bottom:12px;">La diástasis es la <strong>separación de los músculos rectos del abdomen</strong> (los que forman el "six-pack") en la línea central. Durante el embarazo, el útero se expande y presiona esta zona hasta separarla.</p>
+
+  <p style="margin-bottom:14px;">El resultado: un espacio entre los músculos que debería estar cerrado. Esto provoca que el abdomen <span class="bold">protruya hacia afuera</span>, incluso cuando no hay grasa extra, creando la apariencia de embarazo meses o años después del parto.</p>
+
+  <!-- Anatomy visual -->
+  <div class="muscle-layers">
+    <div style="font-size:0.78rem;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);">Capas musculares del abdomen</div>
+
+    <div class="muscle-row" style="background:#F5F3F1;">
+      <div class="muscle-dot" style="background:#D4C5B0;"></div>
+      <div>
+        <div class="muscle-label">Piel + Tejido graso</div>
+        <div class="muscle-desc small">Capa externa, visible</div>
+      </div>
+    </div>
+
+    <div class="muscle-row" style="background:#FEE8E5;">
+      <div class="muscle-dot" style="background:var(--red-x);"></div>
+      <div>
+        <div class="muscle-label" style="color:var(--red-x);">Recto Abdominal · SEPARADO</div>
+        <div class="muscle-desc small">Los "abdominales" visibles, divididos en el centro por el embarazo</div>
+      </div>
+    </div>
+
+    <div class="muscle-row" style="background:#FFFBE6;">
+      <div class="muscle-dot" style="background:#D4A800;"></div>
+      <div>
+        <div class="muscle-label">Oblicuos (interno + externo)</div>
+        <div class="muscle-desc small">Músculos laterales, también debilitados</div>
+      </div>
+    </div>
+
+    <div class="muscle-row" style="background:#E8F7F1;">
+      <div class="muscle-dot" style="background:var(--green);"></div>
+      <div>
+        <div class="muscle-label" style="color:#2E8B68;">✦ Transverso Abdominal (TVA) · LA CLAVE</div>
+        <div class="muscle-desc small">El músculo más profundo. Horizontal. Funciona como una faja natural. <strong>Este es el que reactivamos.</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">3</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 4 — SECCIÓN 1: continuación
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 1 · continuación</div>
+  <h3 style="margin-bottom:10px;">Los síntomas que nadie conecta con la diástasis</h3>
+  <p style="margin-bottom:14px;">La separación muscular no solo afecta la apariencia. Tiene consecuencias físicas reales que la mayoría de los médicos no relacionan directamente con la diástasis:</p>
+
+  <ul class="check-list" style="margin-bottom:18px;">
+    <li>
+      <div class="icon icon-red">✕</div>
+      <div><span class="bold">Barriga hinchada en ayunas.</span> No es grasa. Es el abdomen que no tiene soporte desde adentro y protruye hacia afuera con la presión de los órganos.</div>
+    </li>
+    <li>
+      <div class="icon icon-red">✕</div>
+      <div><span class="bold">"Gomo" visible en el centro.</span> La protuberancia en la línea media al hacer un abdominal o levantarse. Es la separación en acción.</div>
+    </li>
+    <li>
+      <div class="icon icon-red">✕</div>
+      <div><span class="bold">Dolor de espalda baja crónico.</span> Sin el TVA activo, la columna lumbar trabaja sola para sostener tu tronco. El resultado: tensión y dolor constante.</div>
+    </li>
+    <li>
+      <div class="icon icon-red">✕</div>
+      <div><span class="bold">Incontinencia urinaria leve.</span> Al toser, reír o saltar. El suelo pélvico y el TVA trabajan juntos: cuando uno falla, el otro lo resiente.</div>
+    </li>
+    <li>
+      <div class="icon icon-red">✕</div>
+      <div><span class="bold">Sensación de debilidad en el core.</span> Cansancio al cargar a tu bebé, dificultad para mantenerte erguida durante el día.</div>
+    </li>
+  </ul>
+
+  <div class="info-box">
+    <h3 style="font-size:0.9rem;">La buena noticia</h3>
+    <p class="small" style="margin-top:6px;">La separación muscular <strong>no se corrige con cirugía ni con dieta.</strong> El tejido conectivo responde a estímulos específicos de movimiento. Con el protocolo correcto (el que activa el TVA desde adentro) el abdomen recupera su sostén natural. <span class="bold" style="color:#2E8B68;">Eso es exactamente lo que vas a hacer en 28 días.</span></p>
+  </div>
+
+  <div style="margin-top:16px;padding:14px 16px;background:var(--white);border-radius:14px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start;">
+    <div style="font-size:1.6rem;">🧬</div>
+    <div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:4px;">Base científica</div>
+      <p class="small muted">La técnica hipopresiva fue desarrollada por el <strong>Dr. Marcel Caufriez</strong> (Bélgica, 1980s) específicamente para la rehabilitación pélvica y abdominal postparto. Estudios publicados muestran reducción de la distancia inter-rectal (IRD) en protocolos de 4 a 8 semanas.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">4</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 5 — SECCIÓN 2: POR QUÉ TODO EMPEORÓ
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 2</div>
+  <h2>Por qué todo lo que<br>intentaste <span class="coral">empeoró</span><br>las cosas</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:16px;">No fallaste. El problema es que las soluciones que el mercado te vendió <strong>no están diseñadas para la diástasis.</strong> Algunas incluso la empeoran activamente.</p>
+
+  <!-- Myth 1 -->
+  <div class="x-item">
+    <div class="x-icon">✕</div>
+    <div>
+      <div class="x-title"><span>Abdominales y plancha</span> <span style="color:var(--muted);font-weight:400;margin:0 4px;">›</span> <span style="color:var(--red-x);text-transform:uppercase;">EMPEORAN LA DIÁSTASIS</span></div>
+      <div class="x-body">Los abdominales tradicionales y la plancha <strong>aumentan la presión intra-abdominal</strong>, empujan los órganos hacia afuera y hacia abajo, forzando la separación en lugar de cerrarla. Cada vez que hiciste crunch, pusiste más presión sobre el tejido dañado.</div>
+    </div>
+  </div>
+
+  <!-- Myth 2 -->
+  <div class="x-item">
+    <div class="x-icon">✕</div>
+    <div>
+      <div class="x-title"><span>Faja modeladora</span> <span style="color:var(--muted);font-weight:400;margin:0 4px;">›</span> <span style="color:var(--red-x);text-transform:uppercase;">NO REACTIVA EL CORE</span></div>
+      <div class="x-body">La faja comprime desde afuera pero <strong>no le envía ninguna señal al músculo</strong> para que se active. Al usarla constantemente, el TVA aprende a no trabajar porque "ya tiene ayuda." Cuando la quitás, todo vuelve al mismo estado, o peor.</div>
+    </div>
+  </div>
+
+  <!-- Myth 3 -->
+  <div class="x-item">
+    <div class="x-icon">✕</div>
+    <div>
+      <div class="x-title"><span>Dieta y cardio</span> <span style="color:var(--muted);font-weight:400;margin:0 4px;">›</span> <span style="color:var(--red-x);text-transform:uppercase;">NO CIERRAN LA SEPARACIÓN</span></div>
+      <div class="x-body">La diástasis no es grasa. Es separación muscular. Podés llegar a tu peso ideal y seguir con la barriga "de embarazada" porque el problema nunca fue lo que comés. <strong>Son dos problemas distintos que requieren soluciones distintas.</strong></div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">5</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 6 — SECCIÓN 2: DIAGRAMA PRESIÓN
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 2 · continuación</div>
+  <h3 style="margin-bottom:6px;">El principio que lo cambia todo:</h3>
+  <h2 style="font-size:1.45rem;margin-bottom:4px;white-space:nowrap;">Presión <span style="color:var(--red-x);">Positiva</span> <span style="font-size:1rem;font-family:var(--sans);font-weight:700;color:var(--muted);margin:0 6px;">VS</span> Presión <span class="coral">Negativa</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">Todo se reduce a este concepto. La mayoría de los ejercicios abdominales generan presión positiva, empujan hacia afuera. El protocolo Zero Diastasis genera presión negativa, aspira hacia adentro.</p>
+
+  <div class="pressure-grid">
+    <div class="pressure-box pressure-bad">
+      <div class="pressure-icon">⬇️</div>
+      <div class="pressure-title">Presión Positiva</div>
+      <div class="pressure-desc">
+        <strong>Ejercicios:</strong> abdominales, plancha, cardio intenso, levantamiento<br><br>
+        Los músculos empujan hacia <strong>afuera</strong> y hacia <strong>abajo</strong>. Aumenta la presión sobre el tejido dañado.
+      </div>
+      <div class="pressure-result bad">✕ Abre la separación más</div>
+    </div>
+
+    <div class="pressure-box pressure-good">
+      <div class="pressure-icon">⬆️</div>
+      <div class="pressure-title">Presión Negativa</div>
+      <div class="pressure-desc">
+        <strong>Ejercicios:</strong> hipopresivos, vacuum abdominal, respiración diafragmática<br><br>
+        El abdomen se <strong>aspira hacia adentro</strong>. Reorganiza los órganos. Reactiva el TVA.
+      </div>
+      <div class="pressure-result good">✓ Cierra y sostiene</div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <h3 style="font-size:0.9rem;">La lógica del protocolo</h3>
+    <p class="small" style="margin-top:6px;">El protocolo Zero Diastasis utiliza <strong>exclusivamente técnicas de presión negativa.</strong> Cada sesión de 8-12 minutos trabaja desde adentro hacia afuera. Exactamente al revés de todo lo que el mercado te vendió antes.</p>
+  </div>
+
+  <div style="margin-top:16px;display:flex;gap:10px;align-items:flex-start;">
+    <div style="background:var(--coral);color:#fff;border-radius:50%;width:32px;height:32px;min-width:32px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;">!</div>
+    <div>
+      <div style="font-weight:700;font-size:0.88rem;margin-bottom:3px;">Importante durante el protocolo</div>
+      <p class="small muted">Suspende los ejercicios de presión positiva (abdominales, plancha, cardio fuerte) durante los 28 días. Tu cuerpo no puede reorganizarse si seguís generando presión positiva al mismo tiempo. No es para siempre. Es por 28 días.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">6</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 7 — SECCIÓN 3: LA FAJA INVISIBLE
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 3</div>
+  <h2>Tu <span class="coral">Faja Invisible™</span><br>el músculo que nadie menciona</h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">Hay un músculo en tu cuerpo que los médicos no mencionan en el postparto. Los instructores de gym casi no lo trabajan. Sin embargo, es el músculo más importante para la estabilidad abdominal.</p>
+
+  <div class="card" style="margin-bottom:14px;border-left:3px solid var(--green);">
+    <div style="display:flex;gap:12px;align-items:flex-start;">
+      <div style="font-size:1.8rem;">💪</div>
+      <div>
+        <h3 style="color:#2E8B68;margin-bottom:6px;">El Transverso Abdominal (TVA)</h3>
+        <p class="small">El TVA es el músculo más profundo del abdomen. Sus fibras se orientan <strong>horizontalmente</strong>, envuelven el torso como una banda elástica o un corsé. Cuando se contrae, comprime el abdomen desde todos los lados simultáneamente.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:10px;">Cómo funciona como faja natural</h3>
+
+  <div class="test-steps">
+    <div class="test-step">
+      <div class="test-num">1</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;">Estado normal (TVA activo)</div>
+        <p class="small muted" style="margin-top:3px;">El TVA mantiene una contracción suave constante. Tu abdomen está "contenido" desde adentro. Postura erguida. Sin esfuerzo consciente.</p>
+      </div>
+    </div>
+    <div class="test-step">
+      <div class="test-num">2</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;">Durante el embarazo (TVA desactivado)</div>
+        <p class="small muted" style="margin-top:3px;">El útero en crecimiento estira el TVA más allá de su capacidad. El músculo "aprende" a ceder. Después del parto, no vuelve a activarse solo.</p>
+      </div>
+    </div>
+    <div class="test-step">
+      <div class="test-num">3</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88svg;font-size:0.88rem;">Después del parto (TVA desactivado)</div>
+        <p class="small muted" style="margin-top:3px;">Sin el TVA activo, el abdomen no tiene soporte. Los órganos presionan hacia afuera. La barriga "cae". No hay fuerza ni estabilidad en el core.</p>
+      </div>
+    </div>
+    <div class="test-step" style="border-left:2px solid var(--green);">
+      <div class="test-num" style="background:var(--green);">✓</div>
+      <div>
+        <div style="font-weight:700;font-size:0.88rem;color:#2E8B68;">Con el protocolo (TVA reactivado)</div>
+        <p class="small muted" style="margin-top:3px;">Las técnicas hipopresivas enseñan al TVA a contraerse nuevamente. En 28 días, el músculo recuerda su función. El abdomen recupera su sostén desde adentro.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">7</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 8 — SECCIÓN 3: LA TÉCNICA HIPOPRESIVA
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 3 · continuación</div>
+  <h3 style="margin-bottom:10px;">La técnica que activa la Faja Invisible™</h3>
+
+  <p style="margin-bottom:14px;">La <strong>Gimnasia Hipopresiva</strong> fue creada en Bélgica en los años 80 por el Dr. Marcel Caufriez con un objetivo específico: rehabilitar el suelo pélvico y el abdomen profundo después del parto. Durante décadas fue usada exclusivamente por fisioterapeutas europeos de élite.</p>
+
+  <div style="background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px 20px;margin-bottom:14px;">
+    <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;">Cómo funciona en 3 pasos</div>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:32px;height:32px;min-width:32px;border-radius:10px;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--green);">1</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Expiración completa</div>
+          <p class="small muted" style="margin-top:2px;">Soltás todo el aire de los pulmones. El diafragma sube.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:32px;height:32px;min-width:32px;border-radius:10px;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--green);">2</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Apnea + apertura costal</div>
+          <p class="small muted" style="margin-top:2px;">Sin inhalar, expandís las costillas lateralmente. Esto crea presión negativa en la cavidad abdominal.</p>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="width:32px;height:32px;min-width:32px;border-radius:10px;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;color:var(--green);">3</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Aspiración abdominal</div>
+          <p class="small muted" style="margin-top:2px;">Los órganos "suben". El abdomen se aspira hacia adentro y hacia arriba. El TVA se contrae para sostener esa posición.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="highlight">
+    <p class="small"><strong style="font-family:var(--serif);font-size:1rem;">"Cuando el TVA se reactiva,<br>tu abdomen se sostiene solo."</strong><br><br>No necesitás fuerza. Necesitás reprogramación. Esa es la diferencia entre el protocolo Zero Diastasis y todo lo demás.</p>
+  </div>
+
+  <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+    <div class="badge badge-green">✓ Sin equipamiento</div>
+    <div class="badge badge-green">✓ En casa</div>
+    <div class="badge badge-green">✓ 8-12 min/día</div>
+    <div class="badge badge-green">✓ Desde el piso</div>
+    <div class="badge badge-green">✓ Sin impacto</div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">8</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 9 — SECCIÓN 4: AUTODIAGNÓSTICO
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 4</div>
+  <h2>Tu autodiagnóstico<br>en <span class="coral">2 minutos</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">Antes de comenzar el protocolo, es útil saber en qué punto estás. Este test casero te da una referencia objetiva para medir tu progreso al día 28.</p>
+
+  <div class="card" style="margin-bottom:16px;">
+    <div style="font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:12px;">Test de los dedos · paso a paso</div>
+
+    <div class="test-steps">
+      <div class="test-step">
+        <div class="test-num">1</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Acostáte boca arriba</div>
+          <p class="small muted" style="margin-top:2px;">Rodillas dobladas, pies apoyados en el piso, espalda relajada.</p>
+        </div>
+      </div>
+      <div class="test-step">
+        <div class="test-num">2</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Levantá apenas la cabeza</div>
+          <p class="small muted" style="margin-top:2px;">Como si quisieras ver tus pies. Solo la cabeza, no los hombros.</p>
+        </div>
+      </div>
+      <div class="test-step">
+        <div class="test-num">3</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Palpá con los dedos</div>
+          <p class="small muted" style="margin-top:2px;">Con 2-3 dedos horizontales, presioná suavemente 3 cm por encima del ombligo en la línea media.</p>
+        </div>
+      </div>
+      <div class="test-step">
+        <div class="test-num">4</div>
+        <div>
+          <div style="font-weight:700;font-size:0.88rem;">Medí el espacio</div>
+          <p class="small muted" style="margin-top:2px;">Contá cuántos dedos "caen" en el surco entre los músculos. Eso es tu diástasis.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Severity classification -->
+  <div style="font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:10px;">Tu clasificación</div>
+
+  <div class="severity-grid">
+    <div class="severity-box sev-1">
+      <div class="sev-fingers" style="color:#2E8B68;">1-2</div>
+      <div class="sev-title">dedos</div>
+      <div class="sev-label">Diástasis leve</div>
+      <div class="sev-action">Protocolo completo. Resultados visibles desde semana 2.</div>
+    </div>
+    <div class="severity-box sev-2">
+      <div class="sev-fingers" style="color:#B8860B;">2-3</div>
+      <div class="sev-title">dedos</div>
+      <div class="sev-label">Diástasis moderada</div>
+      <div class="sev-action">Protocolo completo. Sé constante. Resultados desde semana 3.</div>
+    </div>
+    <div class="severity-box sev-3">
+      <div class="sev-fingers" style="color:var(--red-x);">3+</div>
+      <div class="sev-title">dedos</div>
+      <div class="sev-label">Diástasis significativa</div>
+      <div class="sev-action">Protocolo completo + considera consulta médica de seguimiento.</div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">9</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 10 — SECCIÓN 4: REGISTRA TU PUNTO DE PARTIDA
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 4 · continuación</div>
+  <h3 style="margin-bottom:10px;">Registrá tu punto de partida</h3>
+  <p style="margin-bottom:14px;">Completá este registro hoy, antes de empezar. Al día 28 vas a repetir las medidas y ver la diferencia. Sin números, no hay evidencia de progreso.</p>
+
+  <!-- Measurement form -->
+  <div class="card" style="margin-bottom:12px;">
+    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--coral);margin-bottom:12px;">📋 Mi registro · Día 0</div>
+
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid #F0EDE9;">
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;">Fecha de inicio</div>
+          <div class="small muted">Día que empezás el protocolo</div>
+        </div>
+        <div style="width:120px;height:28px;background:#F5F3F1;border-radius:8px;border:1px solid #E0DDD9;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid #F0EDE9;">
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;">Medida cintura</div>
+          <div class="small muted">A la altura del ombligo</div>
+        </div>
+        <div style="width:80px;height:28px;background:#F5F3F1;border-radius:8px;border:1px solid #E0DDD9;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:8px;border-bottom:1px solid #F0EDE9;">
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;">Test de dedos</div>
+          <div class="small muted">Espacio entre músculos</div>
+        </div>
+        <div style="width:80px;height:28px;background:#F5F3F1;border-radius:8px;border:1px solid #E0DDD9;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <div>
+          <div style="font-weight:600;font-size:0.85rem;">Mi clasificación</div>
+          <div class="small muted">Leve / Moderada / Significativa</div>
+        </div>
+        <div style="width:130px;height:28px;background:#F5F3F1;border-radius:8px;border:1px solid #E0DDD9;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <h3 style="font-size:0.88rem;">¿Tenés el Tracker 28 Días?</h3>
+    <p class="small" style="margin-top:6px;">Incluido en tu compra: el <strong>Tracker de 28 Días</strong> es una hoja imprimible donde registrás medidas semana a semana, marcás tus sesiones completadas y anotás cómo te sentís. Imprimila y pegala en un lugar visible.</p>
+  </div>
+
+  <div style="margin-top:14px;" class="quote">
+    "No juzgues el progreso del día 14 con los ojos del día 1.<br>El músculo se reactiva en silencio antes de que el espejo lo muestre."
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">10</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 11 — SECCIÓN 5: HOJA DE RUTA 28 DÍAS
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 5</div>
+  <h2>Tu hoja de ruta:<br>los próximos <span class="coral">28 días</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">El protocolo está diseñado en 4 fases progresivas. Cada semana construye sobre la anterior. No saltes adelante. La progresión es intencional.</p>
+
+  <div class="week-grid" style="margin-bottom:14px;">
+    <div class="week-box">
+      <div class="week-label">Módulo 2 · Días 1-7</div>
+      <div class="week-title">Reconexión</div>
+      <div class="week-desc">Respiración diafragmática. Localización y activación suave del TVA. El músculo "recuerda" que existe.</div>
+      <div style="margin-top:8px;"><span class="badge" style="font-size:0.72rem;">⏱ 8 min/día</span></div>
+    </div>
+    <div class="week-box">
+      <div class="week-label">Módulo 3 · Días 8-14</div>
+      <div class="week-title">Compresión</div>
+      <div class="week-desc">Se introduce el hipopresivo básico. Primera experiencia de presión negativa real. El abdomen comienza a reorganizarse.</div>
+      <div style="margin-top:8px;"><span class="badge" style="font-size:0.72rem;">⏱ 10 min/día</span></div>
+    </div>
+    <div class="week-box" style="border-left:2px solid var(--coral);">
+      <div class="week-label">Módulo 4A · Días 15-21</div>
+      <div class="week-title">Intensificación</div>
+      <div class="week-desc">Secuencia completa. Hipopresivos avanzados. Vacuum abdominal. La transformación se vuelve visible.</div>
+      <div style="margin-top:8px;"><span class="badge" style="font-size:0.72rem;">⏱ 12 min/día</span></div>
+    </div>
+    <div class="week-box" style="border-left:2px solid var(--green);">
+      <div class="week-label">Módulo 4B · Días 22-28</div>
+      <div class="week-title">Anclaje</div>
+      <div class="week-desc">El patrón se instala en el sistema nervioso. Se establece la rutina de mantenimiento. Medición final.</div>
+      <div style="margin-top:8px;"><span class="badge" style="font-size:0.72rem;">⏱ 12 min/día</span></div>
+    </div>
+  </div>
+
+  <div style="background:var(--white);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px;">
+    <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:10px;">Qué esperar semana a semana</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:24px;height:24px;min-width:24px;border-radius:6px;background:#F5F3F1;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;">S1</div>
+        <p class="small muted"><strong>Podés no sentir nada todavía,</strong> o sentir una fatiga suave en el abdomen profundo. Eso es normal. El músculo está aprendiendo a activarse.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:24px;height:24px;min-width:24px;border-radius:6px;background:#FFF0ED;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--coral);">S2</div>
+        <p class="small muted"><strong>Primera sensación de "contención":</strong> el abdomen empieza a responder. Algunas mujeres notan mejoría en la postura.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:24px;height:24px;min-width:24px;border-radius:6px;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--green);">S3</div>
+        <p class="small muted"><strong>Cambios visibles para la mayoría.</strong> Menos hinchazón. La ropa se siente diferente. Menos dolor de espalda.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div style="width:24px;height:24px;min-width:24px;border-radius:6px;background:#E8F7F1;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;color:var(--green);">S4</div>
+        <p class="small muted"><strong>El músculo "recuerda".</strong> La contracción del TVA se vuelve más natural e inconsciente. El protocolo de mantenimiento se establece.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">11</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 12 — SECCIÓN 5: LAS 3 REGLAS
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 5 · continuación</div>
+  <h3 style="margin-bottom:12px;">Las 3 reglas del protocolo</h3>
+
+  <div class="rule-item">
+    <div class="rule-num">1</div>
+    <div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:3px;">Consistencia sobre intensidad</div>
+      <p class="small muted">8 minutos todos los días supera 45 minutos tres veces por semana. El TVA se reactiva con señales frecuentes y suaves, no con esfuerzo máximo. Si un día solo tenés 5 minutos, hacé 5 minutos.</p>
+    </div>
+  </div>
+
+  <div class="rule-item">
+    <div class="rule-num">2</div>
+    <div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:3px;">Suspendé la presión positiva por 28 días</div>
+      <p class="small muted">Abdominales, plancha, crunch, cardio intenso: fuera por un mes. No es para siempre. El protocolo no puede reorganizar lo que estás desorganizando en paralelo.</p>
+    </div>
+  </div>
+
+  <div class="rule-item">
+    <div class="rule-num">3</div>
+    <div>
+      <div style="font-weight:700;font-size:0.9rem;margin-bottom:3px;">Medí al inicio y al final</div>
+      <p class="small muted">Sin números, no hay evidencia. El test de dedos al inicio y al final del día 28 es tu brújula. Los cambios internos siempre preceden a los cambios visuales.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;" class="quote">
+    "No es tu culpa. Por años te dijeron que hicieras abdominales, que usaras faja, que hicieras dieta. Nada de eso enciende el músculo que sostiene tu abdomen desde adentro. Por eso estás aquí."
+  </div>
+
+  <div class="highlight" style="margin-top:16px;">
+    <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--coral);margin-bottom:8px;">Tu misión</div>
+    <p style="font-family:var(--serif);font-size:1.1rem;font-weight:700;line-height:1.5;color:var(--text);">28 días. 8-12 minutos al día.<br>Sin gym. Sin dieta. Sin cirugía.<br><span style="color:var(--coral);">Solo tu Faja Invisible™ activándose.</span></p>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">12</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 13 — SECCIÓN 6: KIT DE INICIO
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 6</div>
+  <h2>Antes de empezar:<br>tu <span class="coral">kit de inicio</span></h2>
+  <div class="divider"></div>
+
+  <p style="margin-bottom:14px;">Buenas noticias: no necesitás nada especial. El protocolo está diseñado para hacerse con lo que ya tenés en casa.</p>
+
+  <div class="kit-grid" style="margin-bottom:14px;">
+    <div class="kit-item">
+      <div class="kit-icon">🏠</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;">Un espacio en el piso</div>
+        <p class="small muted" style="margin-top:2px;">1.5m × 1.5m es suficiente. Sala, dormitorio, piso de la cocina.</p>
+      </div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-icon">📱</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;">Tu celular</div>
+        <p class="small muted" style="margin-top:2px;">Para acceder a los audio-guías del protocolo desde la app.</p>
+      </div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-icon">👕</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;">Ropa cómoda</div>
+        <p class="small muted" style="margin-top:2px;">Sin faja, sin cinturón, sin ropa ajustada en el abdomen.</p>
+      </div>
+    </div>
+    <div class="kit-item">
+      <div class="kit-icon">⏱</div>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;">8-12 minutos</div>
+        <p class="small muted" style="margin-top:2px;">Cualquier momento del día sirve. Mañana es ideal, antes de comer.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:10px;">El mejor momento para practicar</h3>
+
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">
+    <div style="display:flex;gap:10px;align-items:flex-start;background:var(--white);border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <span style="font-size:1.1rem;">🌅</span>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;color:var(--green);">Mañana en ayunas <span style="font-weight:400;color:var(--muted);">(ideal)</span></div>
+        <p class="small muted" style="margin-top:2px;">Antes de desayunar. El abdomen está vacío, más fácil sentir la activación del TVA.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;align-items:flex-start;background:var(--white);border-radius:12px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+      <span style="font-size:1.1rem;">🌆</span>
+      <div>
+        <div style="font-weight:700;font-size:0.85rem;">Tarde / noche <span style="font-weight:400;color:var(--muted);">(también funciona)</span></div>
+        <p class="small muted" style="margin-top:2px;">Al menos 2 horas después de comer. El momento menos importante que la consistencia.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin-bottom:8px;">Cómo usar el protocolo</h3>
+  <div class="check-list">
+    <li>
+      <div class="icon icon-green">✓</div>
+      <div class="small">Abrí la app Zero Diastasis™ en tu celular cada día</div>
+    </li>
+    <li>
+      <div class="icon icon-green">✓</div>
+      <div class="small">Tocá el día correspondiente, el contenido se desbloquea automáticamente</div>
+    </li>
+    <li>
+      <div class="icon icon-green">✓</div>
+      <div class="small">Seguí las instrucciones en pantalla: posición, pasos, sensación esperada</div>
+    </li>
+    <li>
+      <div class="icon icon-green">✓</div>
+      <div class="small">Marcá el día como completado cuando termines</div>
+    </li>
+    <li>
+      <div class="icon icon-green">✓</div>
+      <div class="small">Descargá los PDFs complementarios desde la sección "Bonos"</div>
+    </li>
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">13</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 14 — SECCIÓN 6: PREGUNTAS FRECUENTES
+═══════════════════════════════════════════════════════ -->
+<div class="page">
+
+  <div class="section-label">Sección 6 · continuación</div>
+  <h3 style="margin-bottom:14px;">Preguntas que todas hacen</h3>
+
+  <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px;">
+
+    <div class="card card-sm">
+      <div style="font-weight:700;font-size:0.88rem;color:var(--coral);margin-bottom:4px;">¿Cuándo voy a ver resultados?</div>
+      <p class="small muted">La mayoría nota cambios al final de la semana 2-3. Algunos antes. Depende del grado de diástasis y la consistencia. Los cambios internos (menos dolor, mejor postura) generalmente preceden a los visuales.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div style="font-weight:700;font-size:0.88rem;color:var(--coral);margin-bottom:4px;">¿Puedo hacer esto si di a luz hace mucho tiempo?</div>
+      <p class="small muted">Sí. La diástasis no "vence". El TVA puede reactivarse años después del parto. Mujeres que dieron a luz hace 5 o 10 años reportan resultados con este protocolo.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div style="font-weight:700;font-size:0.88rem;color:var(--coral);margin-bottom:4px;">¿Qué pasa si me salto un día?</div>
+      <p class="small muted">Retomá al día siguiente y continuá. No es necesario reiniciar. La consistencia global importa más que la perfección diaria.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div style="font-weight:700;font-size:0.88rem;color:var(--coral);margin-bottom:4px;">¿Puedo hacer otras actividades mientras hago el protocolo?</div>
+      <p class="small muted">Sí. Caminar, yoga suave, pilates básico están bien. Suspendé solo los ejercicios de presión positiva (abdominales, plancha, HIIT intenso) por 28 días.</p>
+    </div>
+
+    <div class="card card-sm">
+      <div style="font-weight:700;font-size:0.88rem;color:var(--coral);margin-bottom:4px;">¿Funciona para cesárea también?</div>
+      <p class="small muted">Sí. La diástasis ocurre igualmente en partos por cesárea. Espera al menos 8-12 semanas post-operación antes de comenzar y consultá a tu médico.</p>
+    </div>
+
+  </div>
+
+  <div class="disclaimer">
+    <strong>Aviso importante:</strong> Los resultados varían según cada persona. Este protocolo no sustituye la atención médica profesional. Consulta a tu médico antes de comenzar cualquier programa de ejercicios, especialmente en el postparto. Zero Diastasis™ no diagnostica ni trata condiciones médicas.
+  </div>
+
+  <div class="page-footer">
+    <div class="page-brand">ZERO DIASTASIS™</div>
+    <div class="page-num">14</div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════
+     PÁGINA 15 — CONTRAPORTADA
+═══════════════════════════════════════════════════════ -->
+<div class="page" style="padding:0;overflow:hidden;">
+  <div class="back-bg"></div>
+
+  <!-- Decorative circles -->
+  <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+  <div style="position:absolute;bottom:-60px;left:-60px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,0.08);"></div>
+
+  <div class="back-content" style="padding:10mm 16mm;">
+
+    <div>
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:8px;">Módulo 1 completado</div>
+      <div style="font-family:var(--serif);font-size:2.2rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:12px;">Abre la app y<br>comienza el Día 1.</div>
+      <div style="font-size:1rem;color:rgba(255,255,255,0.7);margin-bottom:24px;">Tu Faja Invisible™ te espera.</div>
+    </div>
+
+    <!-- What's inside the app -->
+    <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius);padding:18px 20px;margin-bottom:24px;">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:12px;">Lo que tenés en tu protocolo</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;gap:10px;align-items:center;color:#fff;">
+          <span style="color:var(--green);font-weight:700;">✓</span>
+          <span style="font-size:0.85rem;">28 sesiones guiadas paso a paso</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;color:#fff;">
+          <span style="color:var(--green);font-weight:700;">✓</span>
+          <span style="font-size:0.85rem;">4 guías PDF de ejercicios ilustradas</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;color:#fff;">
+          <span style="color:var(--green);font-weight:700;">✓</span>
+          <span style="font-size:0.85rem;">Stack 360° + Vacuum Master + Tracker</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;color:#fff;">
+          <span style="color:var(--green);font-weight:700;">✓</span>
+          <span style="font-size:0.85rem;">Progreso guardado, funciona offline</span>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;color:#fff;">
+          <span style="color:var(--green);font-weight:700;">✓</span>
+          <span style="font-size:0.85rem;">Garantía 28 días, sin preguntas</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:100px;padding:14px 32px;font-weight:700;font-size:1rem;color:var(--coral);display:inline-block;">
+      Abrir Zero Diastasis™ →
+    </div>
+
+    <div style="margin-top:24px;font-size:0.72rem;color:rgba(255,255,255,0.4);">
+      Zero Diastasis™ · Protocolo de Reactivación del TVA · zerodiastasis.com
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>

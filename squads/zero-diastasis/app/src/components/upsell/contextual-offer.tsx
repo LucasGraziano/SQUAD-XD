@@ -25,9 +25,13 @@ export function ContextualOffer({ product, message }: ContextualOfferProps) {
             <h4 className="font-heading font-bold text-foreground">{product.name}</h4>
             <span className="text-accent font-bold">${price}</span>
           </div>
-          <a href={product.checkoutUrl} target="_blank" rel="noopener noreferrer">
-            <Button size="sm" variant="accent">Quiero esto</Button>
-          </a>
+          {product.checkoutUrl !== '#' ? (
+            <a href={product.checkoutUrl} target="_blank" rel="noopener noreferrer">
+              <Button size="sm" variant="accent">Quiero esto</Button>
+            </a>
+          ) : (
+            <Button size="sm" variant="secondary" disabled>Próximo</Button>
+          )}
         </div>
       </CardContent>
     </Card>

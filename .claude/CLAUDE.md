@@ -603,3 +603,52 @@ Memória entre sessões via `*remember` / `*recall` / `*forget`.
 - `npm run lint` - Check code style
 - `npm run build` - Build project
 <!-- AIOX-MANAGED-END: common-commands -->
+
+<!-- AIOX-MANAGED-START: active-systems -->
+## Sistemas Ativos — AI-Native Operator Stack
+
+### Design Library (70 brands)
+Instalada em `.aiox-core/knowledge/design-systems/brands/`
+- **Índice:** `.aiox-core/knowledge/design-systems/brands/_INDEX.md`
+- **Reinstalar/atualizar:** `bash scripts/install-design-library.sh --force`
+- **Uso:** skill `design-aware-ui` carrega automaticamente ao gerar frontend
+
+### DESIGN.md por Squad
+| Squad | Arquivo |
+|-------|---------|
+| psi-saas (Vínculo) | `squads/psi-saas/app/DESIGN.md` |
+| Adicionar outros | `squads/{squad}/app/DESIGN.md` |
+
+Ao gerar qualquer UI, SEMPRE leia o DESIGN.md do squad antes de escrever código.
+Nunca usar cores, fontes ou espaçamentos fora do que está no DESIGN.md.
+
+### Skills Ativas (auto-trigger por descrição)
+| Skill | Trigger | Propósito |
+|-------|---------|-----------|
+| `design-aware-ui` | UI/frontend/component/form/button | Carrega DESIGN.md, previne AI slop |
+| `knowledge-router` | copy/oferta/funil/strategy/product | Roteia para expert DNA correto |
+| `brand-recommender` | inspiração/referência/qual brand | Recomenda brand da biblioteca |
+| `atlas-briefing` | status/contexto/onde estamos | Status operacional do sistema |
+| `context-hygiene` | limpar/novo contexto/clear | Higiene de tokens |
+
+### Dossiers Cross-Source
+| Dossier | Conteúdo | Tokens |
+|---------|---------|--------|
+| `ai-native-operator-system.md` | Convergência 10 transcrições Claude Code | ~950 |
+
+Localização: `.aiox-core/knowledge/dossiers/cross-source/`
+
+### Context Hygiene — Regras Obrigatórias
+- `/clear` entre tarefas não relacionadas
+- `/compact` quando contexto > 80k tokens
+- `/checkpoint` antes de mudanças grandes
+- Hierarquia de modelos: Opus (orquestrar) → Sonnet (implementar) → Haiku (simples)
+- Background agents para tarefas independentes (não poluem contexto principal)
+
+### Knowledge Layer v3.0
+- 7 domínios: copy-persuasion, offers-pricing, sales-closing, traffic-ads, funnels-value-ladder, systems-ops, psychology-influence
+- 28 experts com DNA v3 (L1 Filosofias → L5 Metodologias)
+- Registry: `.aiox-core/knowledge/_REGISTRY.yaml`
+- Situações: `.aiox-core/knowledge/_SITUATIONS.yaml`
+- Token budget: max 5000/sessão
+<!-- AIOX-MANAGED-END: active-systems -->
