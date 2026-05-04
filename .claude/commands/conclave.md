@@ -5,12 +5,13 @@ Convoca multiplos agentes AIOX para deliberar sobre uma decisao e produzir uma r
 ## Uso
 
 ```
-/conclave {pergunta}                              # Auto-seleciona agentes operacionais (v2)
+/conclave {pergunta}                              # Auto-seleciona agentes operacionais (v2 + knowledge-backed)
 /conclave --agents copy-chief,analyst {pergunta}  # Agentes operacionais especificos
 /conclave --size small|medium|large {pergunta}    # Controla tamanho do painel
 /conclave --v1 {pergunta}                         # Modo legado v1 (sem CRITIC/ADVOCATE/SYNTHESIZER)
 /conclave --experts {pergunta}                    # Experts do knowledge debatem (auto-selecao)
 /conclave --experts hormozi,brunson,hard-copy {pergunta}  # Experts especificos pelo ID
+/conclave --mini product-architect,capital-allocator {pergunta}  # Mini-conclave: 2 agentes, deliberacao rapida
 ```
 
 ## MODO --experts (Expert Knowledge Debate)
@@ -199,7 +200,74 @@ Formato da sintese do Commander:
 ========================================================
 ```
 
-## Execucao (modo padrao — sem --experts)
+## MODO --mini (Mini-Conclave — Deliberacao Rapida)
+
+Quando a flag `--mini` estiver presente com 2 agentes especificados, executa um mini-conclave sem os roles CRITIC/ADVOCATE/SYNTHESIZER.
+
+**Formato:**
+```
+/conclave --mini {agent1},{agent2} {pergunta}
+```
+
+**Casos de uso:**
+- Resolver tensao entre dois experts/agentes especificos rapidamente
+- Decisao binaria (ex: PLG vs. sales-led, freemium vs. trial)
+- ~150 tokens totais — ideal quando o contexto ja esta cheio
+- Quando voce sabe exatamente quais dois perspectives precisa
+
+**Execucao:**
+
+1. Gerar perspectiva autentica de cada um dos 2 agentes (formato padrao v2)
+2. Gerar 1 replica cruzada de cada agente para o outro (~3 linhas cada)
+3. Sintese curta (~5 linhas): concordancia, tensao central, recomendacao
+
+**Formato de saida:**
+```
+========================================================
+  MINI-CONCLAVE — {agent1} vs. {agent2}
+========================================================
+
+## Pergunta
+{pergunta}
+
+---
+
+### {Agent 1} — "{posicao em 1 linha}"
+{perspectiva em 3-4 linhas}
+
+### {Agent 2} — "{posicao em 1 linha}"
+{perspectiva em 3-4 linhas}
+
+---
+
+## Replica
+
+**{Agent 1}:** "{replica direta para {Agent 2} em 3 linhas}"
+**{Agent 2}:** "{replica direta para {Agent 1} em 3 linhas}"
+
+---
+
+## Sintese
+**Concordam em:** {1 ponto de consenso}
+**Tensao central:** {o conflito real}
+**Recomendacao:** {decisao clara + condicao}
+
+========================================================
+```
+
+**Pares pre-configurados (tension detection automatico):**
+
+| Pergunta contendo... | Mini-conclave sugerido |
+|---------------------|----------------------|
+| PLG vs. sales, freemium vs. paid | `product-architect,capital-allocator` |
+| hook vs. oferta, criativo vs. landing | `hook-master,funnel-chief` |
+| copy emocional vs. copy logico | `copy-chief,analyst` |
+| escalar vs. consolidar, trafego vs. orgânico | `traffic-head,pm` |
+| produto vs. marketing | `product-architect,copy-chief` |
+
+---
+
+## MODO --experts (Expert Knowledge Debate)
 
 ### 1. Parsear input
 
@@ -479,6 +547,10 @@ confidence: {ALTA/MEDIA/BAIXA}
 | pm | Modelo de negocio, margens, ROI | offers-pricing, systems-ops |
 | architect | Viabilidade tecnica, escalabilidade | systems-ops |
 | commander | Alinhamento estrategico, recursos, timeline | offers-pricing, systems-ops |
+| product-architect | ICP, MVP, PMF, product discovery, PLG/SLG | product-engineering, saas-operations |
+| hook-master | Hooks, atenção nos primeiros 3s, criativo | traffic-ads, copy-persuasion |
+| capital-allocator | Unit economics, LTV/CAC, pricing tiers | offers-pricing, systems-ops |
+| intel-chief | Inteligencia competitiva, positioning, blue ocean | offers-pricing, sales-closing |
 
 ## Notas
 
@@ -486,8 +558,11 @@ confidence: {ALTA/MEDIA/BAIXA}
 - Nunca force concordancia — divergencia e informacao valiosa
 - O Conclave e consultivo — o usuario toma a decisao final
 - Para decisoes triviais, use um agente individual em vez do Conclave
-- Knowledge Layer e consultado automaticamente para fundamentar perspectivas
+- **Knowledge-backed (v3, default):** Antes de gerar perspectivas, o engine detecta automaticamente keywords na pergunta, carrega experts e dossiers relevantes do knowledge layer, e injeta como contexto em cada perspectiva. Os agentes fundamentam opinioes em frameworks reais, nao em intuicao de role.
+- **Tension detection (v3):** Quando a pergunta acionar uma tensao conhecida (PLG vs. sales-led, copy emocional vs. logico, etc.), o sistema sugere automaticamente um mini-conclave pre-configurado com os agentes certos.
 - **v2 (default):** Inclui 3 deliberation roles (CRITIC, DEVIL'S ADVOCATE, SYNTHESIZER) apos as perspectivas
+- **--mini (v3):** 2 agentes, sem CRITIC/ADVOCATE/SYNTHESIZER, ~150 tokens. Ideal para tensoes especificas ou quando o contexto esta quase cheio.
 - **--v1 (backward compat):** Pula etapas 3b/3c/3d, usa apenas sintese simples como na versao original
 - v2 produz um Veredicto Final com GO/NO-GO/CONDITIONAL e score de confianca 0-100%
 - **--experts (v3):** Substitui agentes operacionais pelos experts reais do knowledge system — cada expert fala com seus frameworks proprios, tensoes mapeadas via campos VS: do DNA v3, Commander sintetiza ao contexto real do usuario. Use quando quiser ouvir "o que Hormozi diria vs. o que Brunson diria" em vez de perspectivas por papel operacional
+- Compound situations (`_SITUATIONS.yaml`) incluem `conclave_suggested: true` com o comando pre-configurado — quando o router detectar CS-XXX, sugerir o conclave diretamente

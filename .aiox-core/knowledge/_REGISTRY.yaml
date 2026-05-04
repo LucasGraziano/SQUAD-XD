@@ -1,13 +1,13 @@
 # AIOX Knowledge Registry v2.0
 # INDICE MESTRE de todo conhecimento: experts, dossiers, playbooks.
 # ~200 tokens - seguro para carregar sempre.
-# Ultima sync: 2026-04-07
+# Ultima sync: 2026-05-04
 
-version: "3.1.0"
-source: "mega-brain-migration + knowledge-2.0 + knowledge-3.0-upgrade + ai-native-build-2026-04-29"
-schema_changelog: "v3→v3.1: novo dominio ai-native-build (3 experts: mateus-dias, chase, alon), dossier ai-native-operator-system, 16 novas situacoes (AI-001 a AI-008, DS-001 a DS-003, SA-001 a SA-003, CD-001/002), design library 70 brands"
-total_experts: 21
-total_domains: 8
+version: "3.3.0"
+source: "mega-brain-migration + knowledge-2.0 + knowledge-3.0-upgrade + ai-native-build-2026-04-29 + knowledge-system-upgrade-2026-05-04 + mark-builds-brands-2026-05-04"
+schema_changelog: "v3.2→v3.3: novo expert mark-builds-brands (traffic-ads primary, 4 dominios, 21 videos transcritos, $10M branded dropshipping + $1M quiz funnels); v3.1→v3.2: 3 novos experts DNA v3 (marty-cagan, lenny-rachitsky, wes-bush), 2 novos dominios (product-engineering, saas-operations), 4 novos agentes conclave (product-architect, hook-master, capital-allocator, intel-chief), mini-conclave --mini, 7 compound situations (CS-001..CS-007), knowledge-backed deliberation v3"
+total_experts: 25
+total_domains: 10
 total_dossiers: 7
 total_cross_domain_dossiers: 1
 total_playbooks: 5
@@ -25,10 +25,12 @@ design_library:
 # Situation router
 situation_router:
   file: "_SITUATIONS.yaml"
-  total_situations: 32
-  domains_covered: 8
-  cross_domain: 2
+  total_situations: 40
+  domains_covered: 10
+  cross_domain: 9
   v2_additions: "AI-001..AI-008 (ai-native-build), DS-001..DS-003 (design-systems), SA-001..SA-003 (saas-ops)"
+  v3_additions: "SA-004 (PLG vs SLG go-to-market), CS-001..CS-007 (compound situations multi-domain)"
+  compound_situations: 7
 
 # Status de upgrade DNA v3 (USE/FAIL/VS + Anti-Patterns + Situation Map)
 dna_v3_status:
@@ -72,6 +74,16 @@ dna_v3_status:
   # matheus-bressan — 2 dominios
   traffic-ads/matheus-bressan: complete
   funnels-value-ladder/matheus-bressan: complete
+  # product-engineering experts (v3.2 — 2026-05-04)
+  product-engineering/marty-cagan: complete
+  product-engineering/lenny-rachitsky: complete
+  # saas-operations experts (v3.2 — 2026-05-04)
+  saas-operations/wes-bush: complete
+  # mark-builds-brands (v3.3 — 2026-05-04)
+  traffic-ads/mark-builds-brands: complete
+  funnels-value-ladder/mark-builds-brands: complete
+  copy-persuasion/mark-builds-brands: complete
+  psychology-influence/mark-builds-brands: complete
 
 domains:
   copy-persuasion:
@@ -90,9 +102,9 @@ domains:
     description: "Discovery, objection handling, closing, NEPQ, call funnels"
 
   traffic-ads:
-    experts: [jeremy-haynes, richard-linder, jordan-lee, hard-copy, doug, matheus-bressan]
-    agents: [traffic-head, creative-director]
-    description: "Meta Ads, creative testing, scaling, audiences, kill rules, StoryAds, Money Brand"
+    experts: [jeremy-haynes, richard-linder, jordan-lee, hard-copy, doug, matheus-bressan, mark-builds-brands]
+    agents: [traffic-head, creative-director, hook-master]
+    description: "Meta Ads, creative testing, scaling, audiences, kill rules, StoryAds, Money Brand, AI image ads, quiz funnels"
 
   funnels-value-ladder:
     experts: [russell-brunson, jeremy-haynes, sam-oven, hard-copy, doug, matheus-bressan]
@@ -108,6 +120,23 @@ domains:
     experts: [blair-warren, jeremy-miner, alex-hormozi, hard-copy, doug]
     agents: [copy-chief, analyst, creative-director]
     description: "Persuasion principles, cognitive biases, emotional triggers"
+
+  product-engineering:
+    experts: [marty-cagan, lenny-rachitsky]
+    agents: [product-architect, pm, architect]
+    description: "Product discovery, North Star Metric, activation audit, growth accounting, Dual-Track Agile, Opportunity Backlog"
+    dna_v3_status:
+      marty-cagan: complete
+      lenny-rachitsky: complete
+    squad_affinity: psi-saas
+
+  saas-operations:
+    experts: [wes-bush]
+    agents: [product-architect, capital-allocator, pm]
+    description: "PLG Flywheel, PQL scoring, TTV, freemium vs. free trial design, virality loops, PLG vs. SLG spectrum"
+    dna_v3_status:
+      wes-bush: complete
+    squad_affinity: psi-saas
 
   ai-native-build:
     experts: [mateus-dias, chase, alon]

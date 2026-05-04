@@ -68,8 +68,15 @@ export const slashCommands: Command[] = [
   },
   {
     name: '/ingest',
-    description: 'Extrai DNA cognitivo de experts a partir de vídeos, transcrições ou texto. Comprime em 5 camadas (Filosofias, Modelos Mentais, Heurísticas, Frameworks, Metodologias) com max ~700 tokens.',
-    usage: ['/ingest', '/ingest --mode simple', '/ingest --merge'],
+    description: 'v3 — Extrai DNA cognitivo de experts a partir de vídeos, transcrições, URLs ou texto. Suporte a YouTube via yt-dlp (sem colar manual), quality score automático por camada, --research para recomendação de materiais e --suggest-gaps para análise de lacunas do knowledge layer.',
+    usage: [
+      '/ingest',
+      '/ingest {url-youtube} --domain offers-pricing',
+      '/ingest {expert} --merge',
+      '/ingest {expert} --research',
+      '/ingest --suggest-gaps copy-persuasion',
+      '/ingest --mode simple',
+    ],
     category: 'knowledge',
   },
   {
@@ -86,8 +93,8 @@ export const slashCommands: Command[] = [
   },
   {
     name: '/conclave',
-    description: 'Deliberação multi-agente v2 com CRITIC (scoring 0-100), DEVIL\'S ADVOCATE (stress test) e SYNTHESIZER (GO/NO-GO/CONDITIONAL).',
-    usage: ['/conclave {pergunta}', '/conclave --v1 {pergunta}'],
+    description: 'Deliberação multi-agente v3 — knowledge-backed (experts e dossiers injetados automaticamente), 12 agentes incluindo product-architect, hook-master, capital-allocator e intel-chief. CRITIC (scoring 0-100), DEVIL\'S ADVOCATE (stress test) e SYNTHESIZER (GO/NO-GO/CONDITIONAL). Mini-conclave via --mini para deliberação rápida 2 agentes.',
+    usage: ['/conclave {pergunta}', '/conclave --mini agent1,agent2 {pergunta}', '/conclave --experts hormozi,brunson {pergunta}', '/conclave --v1 {pergunta}'],
     category: 'knowledge',
   },
   {
@@ -102,7 +109,7 @@ export interface AutoSkill {
   name: string
   description: string
   triggers: string[]
-  category: 'design' | 'knowledge' | 'productivity'
+  category: 'design' | 'knowledge' | 'productivity' | 'marketing'
 }
 
 export const autoSkills: AutoSkill[] = [
@@ -123,6 +130,30 @@ export const autoSkills: AutoSkill[] = [
     description: 'Roteia para o expert DNA, dossier ou playbook correto da knowledge layer. Evita respostas genéricas em copy, oferta, tráfego, design, produto e SaaS.',
     triggers: ['copy', 'oferta', 'funil', 'tráfego', 'vendas', 'estratégia', 'posicionamento', 'design system', 'produto', 'saas'],
     category: 'knowledge',
+  },
+  {
+    name: 'humanized-copy',
+    description: 'Protocolo de 8 etapas para copy humanizada. Carrega automaticamente Jim Edwards, Doug, Diogo Kobata e Blair Warren do knowledge layer. Guia: ICP → dores → desejos → dores latentes → segredos → headlines → ângulos → draft com checklist anti-AI-slop.',
+    triggers: ['copy humanizada', 'escrever copy', 'copy para', 'headline', 'ângulo de copy', 'copy que converte', 'reescrever copy', 'melhorar copy', 'copy de ad', 'copy de landing'],
+    category: 'marketing',
+  },
+  {
+    name: 'offer-audit',
+    description: 'Diagnóstico rápido (< 5 min) de qualquer oferta. Avalia Value Equation (Hormozi), Offer Stack (Brunson) e Mecanismo Único. Retorna score /40, top 3 problemas com fix específico e próximo passo imediato.',
+    triggers: ['auditar oferta', 'revisar oferta', 'por que não converte', 'oferta fraca', 'melhorar oferta', 'diagnóstico de oferta', 'oferta não vende'],
+    category: 'marketing',
+  },
+  {
+    name: 'hook-diagnostic',
+    description: 'Diagnóstico de hooks que não performam. Checklist de 8 critérios (scroll-stop, especificidade, promessa implícita, relevância, credibilidade, curiosity gap, awareness level, formato). Score /80 + rewrite sugerido com explicação + 2 variações alternativas.',
+    triggers: ['hook não funciona', 'hook fraco', 'por que esse hook falha', 'melhorar hook', 'revisar hook', 'hook não para o scroll', 'hook de ad', 'hook não converte'],
+    category: 'marketing',
+  },
+  {
+    name: 'campaign-autopsy',
+    description: 'Análise post-mortem estruturada de campanhas que não performaram. Localiza a camada exata onde o funil quebra (tráfego/criativo/landing/oferta/avatar), aplica árvore de causas com 5 porquês e entrega hipóteses de teste ordenadas por probabilidade de impacto.',
+    triggers: ['campanha não funcionou', 'por que a campanha falhou', 'analisar resultados', 'post-mortem de campanha', 'campanha zerou', 'ads não convertendo', 'o que deu errado na campanha'],
+    category: 'marketing',
   },
   {
     name: 'atlas-briefing',

@@ -20,6 +20,8 @@ const domainColors: Record<string, string> = {
   'systems-ops': 'bg-menta/10 text-menta border-menta/20',
   'psychology-influence': 'bg-pink-500/10 text-pink-400 border-pink-500/20',
   'ai-native-build': 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
+  'product-engineering': 'bg-orange-500/10 text-orange-400 border-orange-500/20',
+  'saas-operations': 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20',
 }
 
 const domainLabels: Record<string, string> = {
@@ -31,6 +33,8 @@ const domainLabels: Record<string, string> = {
   'systems-ops': 'Systems',
   'psychology-influence': 'Psych',
   'ai-native-build': 'AI Build',
+  'product-engineering': 'Product',
+  'saas-operations': 'SaaS Ops',
 }
 
 export default function KnowledgePage() {

@@ -47,7 +47,7 @@ export interface WikiLayer {
   immutable: boolean
 }
 
-export const knowledgeVersion = '3.1.0'
+export const knowledgeVersion = '3.3.0'
 
 export const domains: Domain[] = [
   {
@@ -74,9 +74,9 @@ export const domains: Domain[] = [
   {
     id: 'traffic-ads',
     name: 'Traffic & Ads',
-    expertCount: 5,
-    agents: ['traffic-head', 'creative-director'],
-    description: 'Meta Ads, creative testing, scaling, audiences, kill rules',
+    expertCount: 6,
+    agents: ['traffic-head', 'creative-director', 'hook-master'],
+    description: 'Meta Ads, creative testing, scaling, audiences, kill rules, AI image ads, quiz funnels, contrast marketing',
   },
   {
     id: 'funnels-value-ladder',
@@ -106,6 +106,20 @@ export const domains: Domain[] = [
     agents: ['aios-master', 'architect', 'dev', 'commander'],
     description: 'Claude Code operations: skills, hooks, DESIGN.md, token optimization, agent systems, Plan Mode',
   },
+  {
+    id: 'product-engineering',
+    name: 'Product Engineering',
+    expertCount: 2,
+    agents: ['product-architect', 'pm', 'architect'],
+    description: 'Product discovery, North Star Metric, activation audit, growth accounting, Dual-Track Agile, Opportunity Backlog',
+  },
+  {
+    id: 'saas-operations',
+    name: 'SaaS Operations',
+    expertCount: 1,
+    agents: ['product-architect', 'capital-allocator', 'pm'],
+    description: 'PLG Flywheel, PQL scoring, TTV, freemium vs. free trial design, virality loops, PLG vs. SLG spectrum',
+  },
 ]
 
 export const experts: Expert[] = [
@@ -127,6 +141,10 @@ export const experts: Expert[] = [
   { id: 'mateus-dias', name: 'Mateus Dias', domains: ['ai-native-build'], specialty: '22 agentes, 8 squads, Plan Mode, CLAUDE.md como contrato' },
   { id: 'chase', name: 'Chase', domains: ['ai-native-build'], specialty: 'Skills, hooks, CLIs, token economy, adversarial review' },
   { id: 'alon', name: 'Alon', domains: ['ai-native-build'], specialty: 'DESIGN.md protocol, design tokens, anti-AI-slop' },
+  { id: 'marty-cagan', name: 'Marty Cagan', domains: ['product-engineering'], specialty: 'Dual-Track Agile, Opportunity Backlog, Product Trio, 4 riscos do produto' },
+  { id: 'lenny-rachitsky', name: 'Lenny Rachitsky', domains: ['product-engineering'], specialty: 'North Star Framework, Growth Accounting, Activation Audit, T2D3, NRR >110%' },
+  { id: 'wes-bush', name: 'Wes Bush', domains: ['saas-operations'], specialty: 'PLG Flywheel, PQL scoring, TTV, Freemium vs. Free Trial Design, K-factor' },
+  { id: 'mark-builds-brands', name: 'Mark (Mark Builds Brands)', domains: ['traffic-ads', 'funnels-value-ladder', 'copy-persuasion', 'psychology-influence'], specialty: 'Foundational docs system, AI image ads (20/hora), contrast marketing (Schwartz stages), quiz funnels ($1M/30 dias), branded dropshipping $10M' },
 ]
 
 export const dossiers: Dossier[] = [
@@ -315,7 +333,7 @@ export const knowledgeCommands = [
   { command: '/ingest', description: 'Extrair DNA cognitivo de video, transcricao ou texto', mode: 'DNA v3 (5 camadas) ou --mode simple (3 campos)' },
   { command: '/dossier', description: 'Gerar dossier cross-source de um tema ou dominio', mode: '/dossier {tema} ou /dossier --auto {dominio}' },
   { command: '/playbook', description: 'Consultar ou gerar playbook operacional', mode: '/playbook {nome} ou /playbook --generate {tema}' },
-  { command: '/conclave', description: 'Deliberacao multi-agente com CRITIC + ADVOCATE + SYNTHESIZER', mode: '/conclave {pergunta} ou /conclave --v1 {pergunta}' },
+  { command: '/conclave', description: 'Deliberacao multi-agente v3: knowledge-backed, 12 agentes, CRITIC + ADVOCATE + SYNTHESIZER, mini-conclave e modo --experts', mode: '/conclave {pergunta} | --mini a1,a2 | --experts | --v1' },
   { command: '/wiki-ingest', description: 'Ingerir fonte no wiki compounding (URL ou path)', mode: '/wiki-ingest <url|path> — usa defuddle para URLs' },
   { command: '/wiki-query', description: 'Buscar no conhecimento acumulado do wiki', mode: '/wiki-query "<pergunta>" — sintetiza com citações' },
   { command: '/wiki-lint', description: 'Verificar qualidade e integridade do wiki', mode: '/wiki-lint — auto-fix links, reporta contradições' },
