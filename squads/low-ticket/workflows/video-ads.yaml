@@ -1,0 +1,489 @@
+# Video Ads Creation Workflow v2.0
+# Pipeline completo: WSM validation → hook → script → AI video production → review
+# Squad: low-ticket | Plataformas: Meta Reels, TikTok, YouTube Shorts
+# v2.0: Foundational Docs Gate, WSM-first, Schwartz sophistication, AI tool stack Kling/Veo/Seedance
+
+name: video-ads
+description: "Pipeline de ads de vídeo com gate WSM obrigatório: image ads provam a mensagem antes do vídeo. Inclui AI video production spec (Kling 3.0, Veo 3.1, Seedance 2.0)."
+trigger: "*video-ads"
+orchestrator: creative-director
+version: "2.0.0"
+
+knowledge_context:
+  auto_load:
+    - domains/traffic-ads/mark-builds-brands.md
+    - domains/traffic-ads/matheus-bressan-dna.md
+    - domains/traffic-ads/jeremy-haynes-dna.md
+    - domains/copy-persuasion/hard-copy.md
+    - domains/copy-persuasion/jim-edwards-dna.md
+    - domains/copy-persuasion/blair-warren-dna.md
+  skills_activated:
+    - knowledge-router
+    - hook-diagnostic
+    - humanized-copy
+
+phases:
+
+  # ── FASE 0: FOUNDATIONAL DOCS GATE ────────────────────────
+  - id: 0-foundational-gate
+    name: "Foundational Docs Gate + WSM Validation"
+    chief: creative-director
+    agents: [creative-director, hook-master]
+    elicit: true
+    description: |
+      OBRIGATÓRIO antes de qualquer vídeo.
+      Mark: "Find the winning message first via image ads, then transmute to video."
+      Video sem WSM validada = escalar a mensagem errada. Custo alto, aprendizado zero.
+    gate_check:
+      - field: research_doc
+        label: "Research Doc existe? (customer voice, verbatim quotes, jobs-to-be-done)"
+        required: true
+        blocker: true
+        note: "AI deep research nos próprios clientes — o que eles dizem, não o que você acha"
+      - field: avatar_doc
+        label: "Avatar Doc existe? (momento de vida específico, não demografias)"
+        required: true
+        blocker: true
+      - field: offer_doc
+        label: "Offer Doc existe? (mecanismo único, stack de valor, garantia)"
+        required: true
+        blocker: true
+      - field: beliefs_doc
+        label: "Beliefs Doc existe? (crenças que bloqueiam, crenças que habilitam)"
+        required: true
+        blocker: true
+        note: "Usado na Fase 2 para hook de crença + script de transformação de identidade"
+      - field: wsm_validated
+        label: "Winning Sales Message (WSM) foi encontrada via image ads?"
+        required: true
+        blocker: true
+        options: [sim-tenho-wsm, nao-ainda, incerto]
+        note: |
+          WSM = a mensagem que moveu a agulha em image ads ($10-50/dia por 3-5 dias).
+          SE NÃO: rodar static-ads primeiro para encontrar a WSM. Vídeo sem WSM = desperdício.
+          SE SIM: informar qual mensagem/ângulo ganhou e qual foi o hook vencedor.
+      - field: wsm_content
+        label: "Cole a WSM vencedora (mensagem + hook que ganhou em imagem)"
+        required: false
+        note: "Só preencher se wsm_validated = sim-tenho-wsm. O script vai partir daqui."
+    gate_verdict:
+      PROSSEGUIR: "Todos os 4 docs existem + WSM validada"
+      BLOQUEADO_DOCS: "Docs faltando → rodar /foundational-docs-sop antes"
+      BLOQUEADO_WSM: "WSM não validada → rodar *static-ads para encontrar mensagem vencedora primeiro"
+    sop_foundational_docs:
+      note: "SOP completo para criar os 4 docs com AI deep research"
+      steps:
+        - "1. Research Doc: Claude deep research + Perplexity nos reviews do produto, comentários de concorrentes, DMs de clientes. Coletar verbatim quotes (exatas, sem parafrasear)."
+        - "2. Avatar Doc: a partir do Research Doc, criar 1 avatar hiper-específico com momento de vida (não 'mulher 30-45 anos')"
+        - "3. Offer Doc: descrever mecanismo único, comparar com alternativas, construir stack de valor, definir garantia"
+        - "4. Beliefs Doc: listar crenças que bloqueiam a compra + crenças que habilitam. Este doc alimenta diretamente o quiz e o script de vídeo."
+
+  # ── FASE 1: ESTRATÉGIA DO VÍDEO ───────────────────────────
+  - id: 1-strategy
+    name: "Estratégia & Briefing"
+    chief: creative-director
+    agents: [creative-director, hook-master]
+    depends_on: [0-foundational-gate]
+    elicit: true
+    inputs:
+      - field: produto
+        label: "Produto/Oferta"
+        required: true
+      - field: avatar
+        label: "Avatar específico com momento de vida"
+        required: true
+        example: "Sofia, 38 anos, psicóloga, quer captar pacientes particulares, cansada do plano"
+      - field: sophistication_stage
+        label: "Estágio de Sofisticação do mercado (Schwartz 1-5)"
+        required: true
+        options: [1-claim-direto, 2-enlarged-claim, 3-mecanismo-unico, 4-nova-experiencia, 5-identidade]
+        note: |
+          1: Mercado ingênuo — claim direto funciona ("perca 10kg em 30 dias")
+          2: Saturado de claims — ampliar/especificar o claim ("perca 10kg sem academia em 21 dias")
+          3: Saturado de mecanismos — único mecanismo novo funciona
+          4: Ceticismo alto — nova experiência/ângulo, atacar o mecanismo do concorrente
+          5: Ultra-saturado — venda identidade, não produto. "Eu era você, mas pior" framework.
+          Diagnóstico: >50% dos seus ads são ignorados → você está em estágio mais alto que pensa.
+      - field: objetivo
+        label: "Objetivo da campanha"
+        required: true
+        options: [trafego-frio, retargeting-engajamento, conversao-direta, remarketing-video]
+      - field: plataforma
+        label: "Plataforma principal"
+        required: true
+        options: [meta-reels, tiktok, youtube-shorts, youtube-pre-roll, instagram-stories]
+      - field: formato
+        label: "Formato do vídeo"
+        required: true
+        options: [ugc-estilo, talking-head, slideshow-texto, animacao-ai, imagem-para-video-ai, compilacao-prova]
+        note: |
+          ugc-estilo/talking-head: filmagem real ou avatar AI falando
+          animacao-ai: Higgsfield com texto → animação (nunca text-to-video direto)
+          imagem-para-video-ai: workflow Mark — Nano Banana Pro → Kling 3.0 ou Veo 3.1
+          compilacao-prova: montagem de testimonials/screenshots com narração
+      - field: duracao
+        label: "Duração alvo"
+        required: false
+        options: [15s, 30s, 60s, 90s, 2-3min-vsl]
+        default: 30s
+      - field: temperatura
+        label: "Temperatura do tráfego"
+        required: true
+        options: [frio-unaware, frio-problem-aware, morno-retargeting, quente-bottom-funnel]
+      - field: rota_criativa
+        label: "Rota criativa do vídeo"
+        required: true
+        options: [transmutacao-wsm, novo-angulo, remake-top-performer]
+        note: |
+          transmutacao-wsm: pegar hook/mensagem vencedora de image ad e transmutar para vídeo (MAIS COMUM)
+          novo-angulo: explorar ângulo diferente mantendo a WSM como âncora
+          remake-top-performer: Seedance 2.0 APENAS — remake de vídeo já validado com gasto >$10K
+    output: video-brief.md
+    approval: true
+    approval_message: "Briefing de vídeo confirmado. WSM, sofisticação, formato e rota criativa alinhados."
+
+  # ── FASE 2: HOOK (PRIMEIROS 3 SEGUNDOS) ───────────────────
+  - id: 2-hook
+    name: "Hook — Primeiros 3 Segundos"
+    chief: hook-master
+    agents: [hook-master, script-writer]
+    depends_on: [1-strategy]
+    tasks:
+      - "Criar hook VISUAL: o que aparece na tela no frame 0 (pattern interrupt obrigatório)"
+      - "Criar hook de ÁUDIO: primeira frase falada (deve completar/contradizer o hook visual)"
+      - "Criar 3 variações de hook completo (visual + áudio) para teste"
+    hook_rules:
+      - "Regra dos 3 segundos: se remover os 3 primeiros segundos, o vídeo perde sentido"
+      - "Pattern interrupt: quebrar expectativa do formato comum do feed"
+      - "Nunca começar com logo, apresentação ('Oi, eu sou X') ou música de abertura"
+      - "Hook visual e hook de áudio devem criar uma pergunta que só o vídeo responde"
+      - "Transmutação WSM: o hook de imagem vencedor deve ser o ponto de partida — adapt, não reinvente"
+    sophistication_calibration:
+      stages_1_2:
+        approach: "Hook de resultado direto ou dor específica"
+        exemplos:
+          - "Dor visualizada: mostrar o problema acontecendo, não descrever"
+          - "Número específico: '3 pacientes em 7 dias com esse método'"
+          - "Prova antes da apresentação: resultado primeiro, explicação depois"
+      stages_3_4:
+        approach: "Hook de mecanismo único ou contradição com o que já foi tentado"
+        exemplos:
+          - "Contradição: 'Você está fazendo tráfego errado se ainda usa [método comum]'"
+          - "Revelação: 'O motivo real pelo qual [solução comum] não funciona para você'"
+          - "Unique mechanism tease: 'Existe um método que [resultado] sem [sacrifício comum]'"
+      stage_5:
+        approach: "Hook de identidade — 'eu era você, mas pior'"
+        exemplos:
+          - "Identidade espelhada: 'Eu era exatamente onde você está agora — [situação específica]'"
+          - "Transformação brutal: 'Há 18 meses eu [situação pior que o avatar]. Hoje [resultado]'"
+          - "'Without' power word: '[resultado] without [sacrifício que eles acham necessário]'"
+        nota: "Estágio 5 requer que o falante seja credível e a história seja verificável"
+    hook_tipos:
+      - "Dor visualizada: mostrar o problema acontecendo, não descrever"
+      - "Contradição: afirmação que vai contra o que a audiência acredita"
+      - "Prova antes da apresentação: resultado primeiro, explicação depois"
+      - "Pergunta que dói: 'você ainda está fazendo X?' (onde X é o erro comum)"
+      - "Número específico: '3 pacientes em 7 dias com esse método'"
+      - "Identidade espelhada (estágio 5): 'Eu era você — [situação específica pior]'"
+    skill_gate: hook-diagnostic
+    skill_gate_min_score: 55
+    output: video-hooks.md
+    approval: true
+    approval_message: |
+      3 hooks de vídeo criados e diagnosticados.
+      Selecionar 1 hook principal e 1 alternativo para o script.
+
+  # ── FASE 3: ESTRUTURA NARRATIVA ───────────────────────────
+  - id: 3-structure
+    name: "Estrutura Narrativa"
+    chief: script-writer
+    agents: [script-writer, hook-master]
+    depends_on: [2-hook]
+    tasks:
+      - "Selecionar framework narrativo baseado na duração, temperatura e estágio de sofisticação"
+      - "Mapear beat a beat da estrutura antes de escrever o script"
+    frameworks:
+      PASTOR:
+        uso: "VSLs longas (2-3min) e tráfego morno/quente, estágios 1-3"
+        estrutura:
+          - "P — Problem: mostrar o problema com especificidade emocional"
+          - "A — Amplify: intensificar a dor, mostrar o custo de não resolver"
+          - "S — Story/Solution: a história de transformação ou o mecanismo"
+          - "T — Transformation: o depois, em detalhes visuais e emocionais"
+          - "O — Offer: apresentar a solução com stack de valor"
+          - "R — Response: CTA direto, claro e com urgência real"
+      PAS_CURTO:
+        uso: "Ads curtos (15-30s) e tráfego frio, estágios 1-2"
+        estrutura:
+          - "P — Problem: 1 frase de dor específica"
+          - "A — Agitate: 1 frase intensificando a dor"
+          - "S — Solution: 1 frase apresentando o mecanismo + CTA"
+      PROVA_PRIMEIRO:
+        uso: "Retargeting e audiência que já viu o produto, estágios 1-3"
+        estrutura:
+          - "Resultado: mostrar o resultado real primeiro (screenshot, depoimento)"
+          - "Como: explicar o mecanismo em 1 frase"
+          - "Prova: adicionar credibilidade (quantos fizeram, quem)"
+          - "CTA: próximo passo específico"
+      REVELACAO:
+        uso: "Tráfego frio problem-aware que já tentou outras soluções, estágios 3-4"
+        estrutura:
+          - "Você já tentou X (validar a experiência)"
+          - "O motivo real pelo qual não funcionou (revelação do bloqueio)"
+          - "O que muda com [mecanismo único] — sem [sacrifício que tentaram antes]"
+          - "Prova + CTA"
+      EU_ERA_VOCE_MAS_PIOR:
+        uso: "Estágio 5 EXCLUSIVO — mercado ultra-saturado, audiência cética, identidade"
+        estrutura:
+          - "Hook identidade: 'Eu era exatamente onde você está' + prova da situação anterior"
+          - "O pior estava por vir: intensificar para baixo antes de subir (contrast building)"
+          - "O que mudou: 1 mecanismo ou decisão específica — não lista de táticas"
+          - "Transformação com detalhe visual/emocional: o depois concreto"
+          - "Ponte: 'A única diferença entre você e eu é [decisão]' + CTA"
+        nota: "Mark: estágio 5 é vender identidade, não produto. O produto é o veículo da identidade."
+      IDENTITY_REPROGRAMMING:
+        uso: "Ads de crença/identidade, estágio 5, tráfego quente"
+        estrutura:
+          - "Espelhar a identidade atual (onde eles estão — com empatia)"
+          - "Nomear a crença limitante que mantém nessa identidade"
+          - "Apresentar a identidade possível (quem podem se tornar)"
+          - "Mostrar o primeiro passo — o produto como ritual de transição de identidade"
+        nota: "Beliefs Doc é obrigatório para este framework. Cada crença nomeada deve vir do doc."
+    output: narrative-structure.md
+    approval: false
+
+  # ── FASE 4: SCRIPT COMPLETO ───────────────────────────────
+  - id: 4-script
+    name: "Script Completo"
+    chief: script-writer
+    agents: [script-writer, copywriter]
+    depends_on: [3-structure]
+    skill_gate: humanized-copy
+    tasks:
+      - "Escrever script completo na estrutura aprovada"
+      - "Formatar em colunas: VISUAL | ÁUDIO | LEGENDA"
+      - "Marcar timestamps aproximados por beat"
+      - "Indicar tom, ritmo e emoção por seção"
+    script_rules:
+      - "1 ideia por frase — frases longas perdem atenção em vídeo"
+      - "Tom conversacional: como alguém falaria para um amigo, não para uma câmera"
+      - "Pausas estratégicas: usar ... ou [pausa] para indicar respiro antes de ponto importante"
+      - "Sem roteiro óbvio: o script deve parecer espontâneo quando lido"
+      - "Palavras proibidas: 'Olá pessoal', 'Espero que estejam bem', 'Deixa o like', 'Antes de tudo'"
+      - "CTA deve ser falado E mostrado na tela simultaneamente"
+      - "Verbatim do Research Doc: pelo menos 1-2 frases exatas do cliente devem aparecer no script"
+      - "'Without' power word: para estágios 4-5, incluir '[resultado] without [sacrifício]' mínimo 1x"
+    customer_voice_rules:
+      - "Stágios 4-5: MÍNIMO 2 frases verbatim do Research Doc inseridas no script"
+      - "Frases verbatim criam reconhecimento imediato — a audiência pensa 'é exatamente isso'"
+      - "Nunca parafrasear verbatim — usar exatamente como o cliente disse"
+    output_format: |
+      | TIMESTAMP | VISUAL (o que aparece) | ÁUDIO (o que é falado) | LEGENDA (texto na tela) |
+      |-----------|----------------------|----------------------|------------------------|
+      | 0:00-0:03 | [hook visual]        | [hook áudio]         | [texto impactante]     |
+    output: video-script.md
+    approval: true
+    approval_message: "Script completo formatado em 3 colunas (visual/áudio/legenda). Revisar naturalidade e fluxo."
+
+  # ── FASE 5: AI VIDEO PRODUCTION SPEC ──────────────────────
+  - id: 5-ai-production
+    name: "AI Video Production Spec"
+    chief: creative-director
+    agents: [creative-director, visual-designer]
+    depends_on: [4-script]
+    description: |
+      Mark: quase nunca usa text-to-video. O workflow correto é:
+      Prompt → Nano Banana Pro (imagem) → Kling 3.0 ou Veo 3.1 (imagem→vídeo)
+      Text-to-video direto = controle baixo, resultados inconsistentes.
+    tasks:
+      - "Definir rota de produção baseada no formato escolhido na Fase 1"
+      - "Especificar prompts de imagem (Nano Banana Pro) + prompts de animação (Kling/Veo)"
+      - "Definir storyboard de produção: qual imagem base para cada beat do script"
+      - "Especificar B-roll real vs. AI-generated para cada seção"
+    ai_tool_stack:
+      FERRAMENTA_PRIMARIA:
+        tool: "Kling 3.0"
+        uso: "Imagem → vídeo (sempre). Melhor qualidade/custo no mercado atual."
+        quando_usar: "Todo vídeo AI-generated de qualidade — hero ad, talking head AI, cenários"
+        workflow: "Nano Banana Pro → PNG de alta qualidade → Kling 3.0 → composição final"
+      FERRAMENTA_BUDGET:
+        tool: "Veo 3.1"
+        uso: "Imagem → vídeo (sempre). Mais barato que Kling, qualidade ligeiramente inferior."
+        quando_usar: "Testes de variações, volume alto de criativos, B-roll secundário"
+        workflow: "Nano Banana Pro → PNG → Veo 3.1 → usar se custo importar mais que qualidade peak"
+      FERRAMENTA_TOP_PERFORMERS:
+        tool: "Seedance 2.0"
+        uso: "EXCLUSIVO para remake de top performers com gasto >$10K. NUNCA para novos conceitos."
+        quando_usar: "Ad validado que ainda roda mas começa a saturar — Seedance para refrescar"
+        regra: "Proibido usar Seedance para novo conceito. Caro e desperdiçador sem validação prévia."
+      ANIMACAO_ESTATICA:
+        tool: "Higgsfield"
+        uso: "Animação de imagens estáticas com motion (zoom, parallax, sutil movimento)"
+        quando_usar: "Formato slideshow com movimento, native static com vida, B-roll animado"
+        workflow: "Canva ou Nano Banana Pro → PNG → Higgsfield → composição"
+      GERACAO_IMAGEM_BASE:
+        tool: "Nano Banana Pro"
+        uso: "Geração da imagem base para TODOS os fluxos AI-video"
+        regra_critica: "Nunca text-to-video sem passar por imagem primeiro. Controle > velocidade."
+    production_routes:
+      ugc_estilo_ou_talking_head:
+        descricao: "Avatar AI ou pessoa real falando para câmera"
+        workflow:
+          - "Script na mão → filmar talking head (real) ou gerar avatar AI"
+          - "SE avatar AI: Nano Banana Pro (personagem consistente) → Kling 3.0 (sync labial)"
+          - "Legendas 100%: DaVinci Resolve ou CapCut (auto + correção manual)"
+          - "B-roll: Kling 3.0 para complementar os beats visuais do script"
+      animacao_ai:
+        descricao: "Sequência de imagens AI animadas (não talking head)"
+        workflow:
+          - "Criar prompt master para o personagem/cena (consistência visual entre frames)"
+          - "Nano Banana Pro: gerar 1 imagem base por beat principal do script"
+          - "Higgsfield: animar cada imagem (motion sutil — zoom in, parallax, drift)"
+          - "CapCut/Premiere: sequenciar + adicionar narração do script + legendas"
+          - "Kling 3.0 para transições entre cenas quando necessário"
+      imagem_para_video:
+        descricao: "Workflow principal de Mark — imagem base → vídeo animado"
+        workflow:
+          - "Definir cena central de cada beat (3-5 cenas para ad de 30s)"
+          - "Nano Banana Pro: gerar PNG de alta qualidade para cada cena"
+          - "Kling 3.0: animar cada PNG (4-8s por cena, natural motion)"
+          - "Narração: gravar áudio do script ou usar TTS (ElevenLabs)"
+          - "Composição: CapCut ou DaVinci — juntar cenas + áudio + legendas + música"
+      remake_top_performer:
+        descricao: "APENAS para ads com >$10K gasto. Usar Seedance 2.0."
+        workflow:
+          - "Identificar o top performer (gasto, ROAS, CTR, tempo de veiculação)"
+          - "Seedance 2.0: upload do ad original → variações geradas automaticamente"
+          - "Selecionar 2-3 variações mais diferentes do original"
+          - "Testar as variações contra o original — orçamento de $50/dia por 5 dias"
+    prompt_engineering:
+      imagem_base: |
+        Estrutura de prompt Nano Banana Pro:
+        "[Sujeito em detalhes] + [Ação] + [Ambiente/Cenário] + [Iluminação] + [Estilo visual] + [Aspectual ratio]"
+        Exemplo: "Professional woman, 38 years, warm smile, looking directly at camera, home office background with plants,
+        natural window light, photorealistic, editorial photography style, 9:16 portrait"
+      animacao_kling: |
+        Prompt Kling 3.0 para imagem→vídeo:
+        "[Motion description] + [Camera behavior] + [Duration hint]"
+        Exemplo: "Subtle breathing movement, slight head tilt, warm smile slowly growing, camera slowly pushing in, 6 seconds"
+      regras_gerais:
+        - "Consistência visual: usar o mesmo prompt base de personagem em TODOS os frames do mesmo ad"
+        - "Nunca variar estilo visual entre cenas do mesmo ad — quebra imersão"
+        - "Para talking head AI: priorizar naturalidade > perfeição técnica"
+    spec_output:
+      nota: "Para cada cena do storyboard, definir: prompt_imagem, ferramenta_animacao, duracao_seg, narração_sync, legenda_texto"
+    output: ai-production-spec.md
+    approval: false
+
+  # ── FASE 6: STORYBOARD / DIREÇÃO ──────────────────────────
+  - id: 6-storyboard
+    name: "Storyboard & Direção Final"
+    chief: creative-director
+    agents: [creative-director, visual-designer, video-editor]
+    depends_on: [4-script, 5-ai-production]
+    tasks:
+      - "Integrar AI production spec com roteiro: 1 linha por cena com visual + áudio + ferramenta"
+      - "Definir ritmo de corte (rápido para energia, lento para emoção)"
+      - "Especificar legendas: fonte, tamanho, cor, posição, animação"
+      - "Definir música/sons: BPM, mood, pontos de sincronia com fala"
+      - "Especificar transições entre beats"
+    directions:
+      ritmo_corte:
+        energetico: "Corte a cada 1.5-2 segundos, antes de terminar a frase"
+        conversacional: "Corte a cada 3-4 segundos, no final de frases"
+        dramatico: "Cortes longos (5-8s) com câmera parada para peso emocional"
+      legendas:
+        regra: "100% de legendas — 70% dos vídeos são assistidos sem som"
+        posicao: "Centralizado, nunca sobreposto ao rosto do apresentador"
+        destaque: "Palavras-chave em cor diferente ou uppercase para scan rápido"
+        nota: "Para estágio 5: palavras de identidade em destaque ('você', 'seu futuro', 'quem você pode ser')"
+      musica:
+        regra: "Música abaixo de -18dB para não competir com narração"
+        escolha: "BPM da música deve refletir o ritmo emocional do script (não o ritmo de corte)"
+    output: storyboard.md
+    approval: false
+
+  # ── FASE 7: REVIEW GATE ───────────────────────────────────
+  - id: 7-review
+    name: "Review Gate de Vídeo"
+    chief: copy-chief
+    agents: [copy-chief, creative-director]
+    depends_on: [4-script, 5-ai-production, 6-storyboard]
+    gate_criteria:
+      - id: hook-force
+        label: "Hook force (3 segundos)"
+        question: "Alguém scrollando pararia no frame 1? O hook visual + áudio criam uma pergunta irresistível?"
+        weight: critical
+      - id: wsm-alignment
+        label: "WSM alignment"
+        question: "O vídeo transmuta a mensagem vencedora do image ad? Hook e script são coerentes com a WSM?"
+        weight: critical
+        nota: "Se WSM foi validada em imagem e o vídeo muda a mensagem, invalida o aprendizado anterior"
+      - id: retention
+        label: "Retention curve"
+        question: "Tem razão para continuar assistindo em cada beat (0s, 5s, 15s, 25s)?"
+        weight: critical
+      - id: sophistication-match
+        label: "Sophistication match"
+        question: "Hook, framework e copy estão calibrados para o estágio de sofisticação definido?"
+        weight: high
+        nota: "Estágio 1-2 com copy de identidade = missão errada. Estágio 5 com claim direto = ignorado."
+      - id: customer-voice
+        label: "Customer voice verbatim"
+        question: "O script usa linguagem exata dos clientes (Research Doc)? Parece que eles escreveram para si mesmos?"
+        weight: high
+      - id: clarity
+        label: "Clareza de proposta"
+        question: "Fica claro o que está sendo oferecido antes dos 15 segundos?"
+        weight: high
+      - id: emotion
+        label: "Arco emocional"
+        question: "O vídeo cria tensão emocional antes de resolver? Tem contraste claro entre antes e depois?"
+        weight: high
+      - id: cta
+        label: "CTA específico e urgente"
+        question: "O CTA diz exatamente o que fazer e por que agora?"
+        weight: high
+      - id: sound_off
+        label: "Funciona sem som"
+        question: "Com legendas e sem áudio, a mensagem principal ainda chega?"
+        weight: medium
+    verdicts:
+      APROVADO: "Critérios críticos ok + 3+ dos altos ok"
+      REVISAR_HOOK: "Hook force ou WSM-alignment falharam → volta para Fase 2"
+      REVISAR_SCRIPT: "Retention, sophistication-match ou customer-voice falharam → volta para Fase 4"
+      REVISAR_PRODUCAO: "Critérios visuais/técnicos falharam → volta para Fase 5/6"
+    output: video-review-verdict.md
+    approval: true
+    max_review_cycles: 2
+
+completion:
+  message: |
+    ✅ Ad de vídeo pronto para produção!
+
+    Artefatos gerados:
+    - Gate de Foundational Docs + WSM validada (Fase 0)
+    - Brief estratégico: formato, plataforma, sofisticação, rota criativa (Fase 1)
+    - 3 hooks diagnosticados calibrados para o estágio de sofisticação (score > 55/80) (Fase 2)
+    - Estrutura narrativa mapeada com framework adequado ao estágio (Fase 3)
+    - Script completo em 3 colunas com verbatim do Research Doc (Fase 4)
+    - AI Production Spec: Nano Banana Pro + Kling/Veo/Seedance por rota (Fase 5)
+    - Storyboard com B-roll, cortes, legendas e música (Fase 6)
+    - Veredicto de review com 9 critérios incluindo WSM-alignment e sophistication-match (Fase 7)
+
+  testing_guidance:
+    - "Testar 2-3 variações de hook com o mesmo corpo (hook testing, WSM permanece)"
+    - "Orçamento mínimo por variação: R$50/dia por 3-5 dias"
+    - "80/20 regra: 80% budget em variações do vídeo vencedor + 20% em novos ângulos"
+    - "Threshold de fadiga de vídeo: muito maior que imagem — só preocupar com >$50K de gasto"
+    - "Se CTR baixo: problema no hook → Fase 2. Se conversion baixo: problema no script → Fase 4"
+    - "Se thumbstop rate < 25%: usar /hook-diagnostic para diagnóstico"
+    - "Vídeo que valida = transmutar para static ads também — o aprendizado vai nos dois sentidos"
+
+  funnel_note: |
+    Mark: "Funnel quality is like sea level — raising it raises floor and ceiling of all creative."
+    Se os resultados estiverem abaixo do esperado mesmo com bom criativo, avaliar:
+    → Landing page converte acima de 3%?
+    → Checkout tem fricção desnecessária?
+    → Email/SMS follow-up está capturando leads?
+    O criativo pode trazer os cliques, mas o funil é que converte.

@@ -1,0 +1,369 @@
+# Ad Intake & Quality Gate Workflow v1.0
+# Aceita material existente, avalia qualidade, identifica gaps e roteia ações
+# Squad: low-ticket | Trigger: *ad-intake
+# Fluxo: intake → quality gate → gap report → rotas de ação
+
+name: ad-intake
+description: |
+  Para quando você já tem material (docs, criativos, copy, hooks, scripts) e quer saber:
+  (1) O que está bom e pode ir ao ar?
+  (2) O que precisa de ajuste?
+  (3) O que está faltando?
+  (4) Qual é o próximo passo certo?
+  Aceita o estado atual do projeto e devolve diagnóstico + plano de ação específico.
+trigger: "*ad-intake"
+orchestrator: creative-director
+version: "1.0.0"
+
+knowledge_context:
+  auto_load:
+    - domains/traffic-ads/mark-builds-brands.md
+    - domains/traffic-ads/matheus-bressan-dna.md
+    - domains/copy-persuasion/hard-copy.md
+  skills_activated:
+    - knowledge-router
+    - hook-diagnostic
+
+phases:
+
+  # ── FASE 0: INTAKE — O QUE VOCÊ JÁ TEM ───────────────────
+  - id: 0-intake
+    name: "Intake — Mapeamento do Material Existente"
+    chief: creative-director
+    agents: [creative-director]
+    elicit: true
+    description: |
+      Antes de qualquer avaliação, preciso saber exatamente o que você já tem.
+      Não importa se está incompleto — o ponto é partir do que existe.
+    inputs:
+      - field: projeto
+        label: "Nome do projeto / oferta"
+        required: true
+        example: "Zero Diastase", "Vínculo PSI", "Dropshipping Curso"
+      - field: objetivo_imediato
+        label: "O que você quer fazer agora com esses materiais?"
+        required: true
+        options:
+          - subir-novos-ads-esta-semana
+          - avaliar-antes-de-escalar
+          - diagnosticar-ads-que-nao-estao-performando
+          - validar-antes-do-primeiro-lancamento
+          - fazer-iteracoes-do-que-ja-roda
+      - field: tem_foundational_docs
+        label: "Foundational Docs — quais existem?"
+        required: true
+        options_multiplas: [research-doc, avatar-doc, offer-doc, beliefs-doc, nenhum, nao-sei]
+        note: "Se tiver, informar o caminho ou colar o conteúdo na próxima etapa"
+      - field: tem_wsm
+        label: "Tem Winning Sales Message validada? (mensagem que funcionou em image ads)"
+        required: true
+        options: [sim, nao, nunca-testou-imagem, incerto]
+      - field: criativos_existentes
+        label: "Que tipo de material criativo já existe?"
+        required: true
+        options_multiplas:
+          - image-ads-prontos
+          - image-ads-rodando-agora
+          - video-ads-prontos
+          - video-ads-rodando-agora
+          - hooks-escritos
+          - scripts-escritos
+          - copy-para-primary-text
+          - nenhum-criativo-ainda
+      - field: dados_de_performance
+        label: "Tem dados de performance dos criativos existentes?"
+        required: false
+        options: [sim-tenho-metricas, tenho-parcial, nao-tenho-dados, nunca-foram-ao-ar]
+        note: "Se sim, informar CTR, CPC, CPL, CPR, thumbstop rate, tempo de veiculação por criativo"
+      - field: material_paths
+        label: "Onde estão os materiais? (paths ou cole o conteúdo principal aqui)"
+        required: false
+        note: "Ex: squads/low-ticket/projects/zero-diastase/materiais/ | ou colar conteúdo direto"
+    output: intake-summary.md
+    approval: true
+    approval_message: "Mapeamento completo. Iniciando Quality Gate com o material identificado."
+
+  # ── FASE 1: FOUNDATIONAL DOCS ASSESSMENT ──────────────────
+  - id: 1-docs-assessment
+    name: "Avaliação dos Foundational Docs"
+    chief: copy-chief
+    agents: [copy-chief, hook-master]
+    depends_on: [0-intake]
+    description: |
+      Os 4 docs são a fundação. Sem eles, qualquer avaliação de criativo é superficial.
+      Esta fase avalia o que existe, a qualidade do que existe, e o que falta.
+    evaluation_criteria:
+      research_doc:
+        check_exists: "Research Doc foi criado?"
+        check_quality:
+          - "Tem verbatim quotes dos clientes (frases exatas, não parafraseadas)?"
+          - "Cobre jobs-to-be-done principais (o que eles tentam realizar)?"
+          - "Tem linguagem nativa da audiência (as palavras DELES sobre o problema)?"
+          - "Inclui crenças limitantes identificadas pelos próprios clientes?"
+        quality_score: "0-10 por critério → total /40"
+        threshold_aprovado: 28
+        threshold_parcial: 16
+      avatar_doc:
+        check_exists: "Avatar Doc foi criado?"
+        check_quality:
+          - "Avatar tem momento de vida específico (não só demografias)?"
+          - "Inclui o que o avatar já tentou antes?"
+          - "Descreve o que o avatar teme que os outros pensem se não resolver?"
+          - "Tem 1 avatar principal (não vários genéricos)?"
+        quality_score: "0-10 por critério → total /40"
+        threshold_aprovado: 28
+        threshold_parcial: 16
+      offer_doc:
+        check_exists: "Offer Doc foi criado?"
+        check_quality:
+          - "Descreve o mecanismo único com clareza (por que este produto funciona)?"
+          - "Lista o stack de valor com preços ancorados?"
+          - "Define a garantia com clareza?"
+          - "Compara com alternativas (por que não as outras soluções)?"
+        quality_score: "0-10 por critério → total /40"
+        threshold_aprovado: 28
+        threshold_parcial: 16
+      beliefs_doc:
+        check_exists: "Beliefs Doc foi criado?"
+        check_quality:
+          - "Lista crenças que BLOQUEIAM a compra (pelo menos 3)?"
+          - "Lista crenças que HABILITAM a compra (pelo menos 3)?"
+          - "Crenças vêm do Research Doc (não inventadas)?"
+          - "Inclui a crença sobre IDENTIDADE ('não sou o tipo de pessoa que...')?"
+        quality_score: "0-10 por critério → total /40"
+        threshold_aprovado: 28
+        threshold_parcial: 16
+    verdicts:
+      FUNDACAO_SOLIDA: "Todos os 4 docs com score >= 28 → pode avaliar criativos com confiança"
+      FUNDACAO_PARCIAL: "1-3 docs existem mas com qualidade baixa → criativos podem ser avaliados mas com ressalvas"
+      SEM_FUNDACAO: "Docs faltando ou score < 16 → criar docs antes de avaliar criativos (qualquer avaliação será superficial)"
+    output: docs-assessment.md
+    approval: false
+
+  # ── FASE 2: CREATIVE QUALITY GATE ─────────────────────────
+  - id: 2-creative-gate
+    name: "Quality Gate dos Criativos"
+    chief: creative-director
+    agents: [creative-director, hook-master, copy-chief]
+    depends_on: [1-docs-assessment]
+    description: |
+      Avalia cada criativo existente (image ads, video ads, hooks, scripts, copy)
+      contra os critérios de qualidade dos workflows static-ads v2.0 e video-ads v2.0.
+      Resultado: semáforo por criativo (APROVADO / AJUSTAR / REFAZER).
+    image_ad_criteria:
+      - id: hook-force
+        label: "Hook force"
+        question: "O hook faria alguém parar de scrollar? Tem pattern interrupt claro?"
+        weight: critical
+      - id: sophistication-match
+        label: "Sophistication match"
+        question: "O tipo de claim/hook está calibrado para o estágio de sofisticação do mercado?"
+        weight: critical
+        instrucao: "Avaliar: estágio 1-2 = claim direto OK | estágio 3-4 = precisa de mecanismo único | estágio 5 = precisa de identidade"
+      - id: customer-voice
+        label: "Customer voice"
+        question: "O texto usa linguagem dos próprios clientes (verbatim do Research Doc) ou parece copy genérica de AI?"
+        weight: high
+      - id: wsm-alignment
+        label: "WSM alignment"
+        question: "O criativo representa a melhor mensagem encontrada, não só um ângulo aleatório?"
+        weight: high
+      - id: native-static-format
+        label: "Formato nativo"
+        question: "A imagem parece um post orgânico ou claramente um anúncio? (nativo > polido)"
+        weight: medium
+      - id: primary-text-copy
+        label: "Primary text copy"
+        question: "O texto do primary text completa o hook e faz a venda? (para native statics, o texto é quem vende)"
+        weight: high
+    video_ad_criteria:
+      - id: hook-3s
+        label: "Hook 3 segundos"
+        question: "Hook visual + áudio nos primeiros 3s criam uma pergunta irresistível?"
+        weight: critical
+      - id: wsm-transmutation
+        label: "WSM transmutation"
+        question: "O vídeo parte de uma mensagem validada em imagem ou é um conceito não testado?"
+        weight: critical
+      - id: retention-curve
+        label: "Retention curve"
+        question: "Tem razão para continuar assistindo em cada beat (0s, 5s, 15s, 25s)?"
+        weight: critical
+      - id: sophistication-match-video
+        label: "Sophistication match"
+        question: "Framework narrativo escolhido está correto para o estágio do mercado?"
+        weight: high
+      - id: customer-voice-video
+        label: "Customer voice no script"
+        question: "Tem pelo menos 2 frases verbatim dos clientes no script?"
+        weight: high
+      - id: sound-off
+        label: "Funciona sem som"
+        question: "Legendas + visuais comunicam a mensagem principal sem áudio?"
+        weight: medium
+    hook_criteria:
+      - id: specificity
+        label: "Especificidade"
+        question: "O hook tem números, nomes, situações específicas ou é genérico?"
+        weight: high
+      - id: pattern-interrupt
+        label: "Pattern interrupt"
+        question: "Interrompe o padrão esperado do feed?"
+        weight: critical
+      - id: creates-question
+        label: "Cria pergunta"
+        question: "O hook abre um loop que só o ad resolve?"
+        weight: high
+      - id: sophistication-calibration
+        label: "Calibração de sofisticação"
+        question: "O tipo de hook (claim/mecanismo/identidade) está certo para o estágio do mercado?"
+        weight: critical
+    semaforo:
+      APROVADO: "Critérios críticos ok + maioria dos altos ok → pode ir ao ar"
+      AJUSTAR: "1 critério crítico fraco ou 2+ altos fracos → ajustes pontuais identificados"
+      REFAZER: "2+ critérios críticos fracos → reprocessar no workflow adequado"
+      SEM_DADOS_SUFICIENTES: "Não foi possível avaliar por falta de material ou docs insuficientes"
+    output: creative-quality-report.md
+    approval: false
+
+  # ── FASE 3: PERFORMANCE ANALYSIS (se houver dados) ────────
+  - id: 3-performance-analysis
+    name: "Análise de Performance (se disponível)"
+    chief: metrics-analyst
+    agents: [metrics-analyst, media-buyer]
+    depends_on: [2-creative-gate]
+    condition: "APENAS se dados_de_performance != nao-tenho-dados AND != nunca-foram-ao-ar"
+    description: |
+      Se os criativos já rodaram, os dados de performance são mais confiáveis que qualquer avaliação subjetiva.
+      Esta fase cruza o quality gate qualitativo com os dados reais.
+    metrics_framework:
+      thumbstop_rate:
+        label: "Thumbstop rate (scroll-stop)"
+        benchmark_bom: ">= 25%"
+        benchmark_medio: "15-24%"
+        benchmark_ruim: "< 15%"
+        diagnostico_se_ruim: "Hook fraco → Fase 2 do static-ads ou video-ads para recriar hook"
+      ctr_link:
+        label: "CTR (click-through rate)"
+        benchmark_bom: ">= 1.5%"
+        benchmark_medio: "0.8-1.4%"
+        benchmark_ruim: "< 0.8%"
+        diagnostico_se_ruim: "Primary text ou oferta fraca → revisar copy e WSM-alignment"
+      cpp_custo_por_purchase:
+        label: "CPP (custo por compra)"
+        benchmark: "Depende do produto — avaliar vs meta de CPA definida"
+        diagnostico_se_alto: "Criativo traz tráfego errado (audiência não converte) ou funil dropa → checar landing page"
+      tempo_veiculacao:
+        label: "Tempo de veiculação sem queda de performance"
+        benchmark: "Image ads: $10K-$50K antes de fadiga. Vídeo: muito maior."
+        diagnostico_se_fadiga: "Recriar variações do winner — não abandonar a mensagem, só refrescar o criativo"
+      frequencia:
+        label: "Frequência por audiência"
+        benchmark_alerta: "> 3.5 para tráfego frio"
+        diagnostico_se_alta: "Expandir audiência ou criar novas variações de hook mantendo a WSM"
+    cruzamento_qualitativo_quantitativo:
+      QUALITY_HIGH_PERF_HIGH: "Criativo validado → escalar e criar variações (80/20)"
+      QUALITY_HIGH_PERF_LOW: "Criativo bom mas mercado errado ou funil fraco → auditar funil"
+      QUALITY_LOW_PERF_HIGH: "Sorte ou audiência hot — não escalar sem entender o porquê"
+      QUALITY_LOW_PERF_LOW: "Refazer → começar pelo hook e pela mensagem"
+    output: performance-analysis.md
+    approval: false
+
+  # ── FASE 4: GAP REPORT + PLANO DE AÇÃO ───────────────────
+  - id: 4-gap-report
+    name: "Gap Report & Plano de Ação"
+    chief: creative-director
+    agents: [creative-director, copy-chief]
+    depends_on: [1-docs-assessment, 2-creative-gate, 3-performance-analysis]
+    description: |
+      Consolida tudo em um relatório de gaps priorizado + rotas de ação específicas.
+      Cada gap mapeia para um workflow ou task existente.
+    gap_categories:
+      GAPS_DE_FUNDACAO:
+        exemplos:
+          - "Research Doc inexistente ou superficial"
+          - "Sem verbatim quotes de clientes"
+          - "Avatar genérico sem momento de vida"
+          - "Beliefs Doc não criado"
+        acao: "Criar os docs faltantes antes de qualquer criativo"
+        workflow: "SOP foundational-docs (Fase 0 do *static-ads)"
+      GAPS_DE_MENSAGEM:
+        exemplos:
+          - "WSM não foi encontrada (nunca testou image ads)"
+          - "Criativos usam ângulos diferentes sem saber qual funciona"
+          - "Copy genérica sem voice do cliente"
+        acao: "Encontrar a WSM via image ads antes de vídeo"
+        workflow: "*static-ads (Fase 1-5 completo)"
+      GAPS_DE_HOOK:
+        exemplos:
+          - "Hooks não geram pattern interrupt"
+          - "Hooks desalinhados com estágio de sofisticação"
+          - "Hook visual e hook de áudio não se complementam"
+        acao: "Recriar hooks com calibração de sofisticação"
+        workflow: "*static-ads Fase 2 | *video-ads Fase 2 | @hook-master *generate-hooks"
+      GAPS_DE_PRODUCAO:
+        exemplos:
+          - "Image ads muito polidos (parecem anúncio, não post nativo)"
+          - "Video ads sem workflow imagem→vídeo (text-to-video direto)"
+          - "Sem variações para teste (só 1 versão de cada criativo)"
+        acao: "Reprocessar com AI production spec correto"
+        workflow: "*static-ads Fase 3 | *video-ads Fase 5"
+      GAPS_DE_COPY:
+        exemplos:
+          - "Primary text não completa o hook"
+          - "Faltam frases verbatim dos clientes"
+          - "'Without' power word ausente em estágio 4-5"
+          - "CTA vago ou sem urgência"
+        acao: "Revisar copy com customer voice e calibração de sofisticação"
+        workflow: "*static-ads Fase 4 | *video-ads Fase 4 | @copy-chief *review"
+      GAPS_DE_VOLUME:
+        exemplos:
+          - "Menos de 5 criativos ativos"
+          - "Só 1 formato sendo testado (só imagem ou só vídeo)"
+          - "Sem iterações de winners (80/20 não está sendo aplicado)"
+        acao: "Criar volume com base no que já funciona"
+        workflow: "*static-ads (batch mode) | *video-ads"
+      SEM_GAPS_SIGNIFICATIVOS:
+        condicao: "Quality gate aprovado + performance dentro do benchmark"
+        acao: "Escalar e criar variações"
+        workflow: "*scaling-pipeline"
+    action_plan_format: |
+      Para cada gap identificado, o plano de ação deverá especificar:
+      1. PRIORIDADE: Crítico / Alto / Médio (ordem de execução)
+      2. GAP: Descrição do problema específico
+      3. EVIDÊNCIA: O que no material mostrou esse gap
+      4. AÇÃO: O que fazer (específico, não genérico)
+      5. WORKFLOW: Qual workflow/task executar
+      6. ESFORÇO: Rápido (< 2h) / Médio (2-8h) / Alto (> 8h)
+    output: gap-report-action-plan.md
+    approval: true
+    approval_message: |
+      Gap Report completo com plano de ação priorizado.
+      Revise as prioridades e confirme para receber o resumo executivo.
+
+completion:
+  message: |
+    ✅ Ad Intake completo!
+
+    Artefatos gerados:
+    - Intake summary: mapa do material existente (Fase 0)
+    - Docs assessment: qualidade dos 4 foundational docs (Fase 1)
+    - Creative quality report: semáforo por criativo (Fase 2)
+    - Performance analysis: dados cruzados com qualidade (Fase 3, se disponível)
+    - Gap report + action plan: o que fazer agora, em ordem (Fase 4)
+
+  proximos_passos: |
+    Com base no gap report:
+
+    → FUNDAÇÃO FRACA: criar docs com SOP (Fase 0 do *static-ads)
+    → SEM WSM: rodar *static-ads completo para encontrar a mensagem
+    → HOOKS FRACOS: @hook-master *generate-hooks ou *static-ads Fase 2
+    → COPY FRACA: @copy-chief *review ou *static-ads Fase 4
+    → PRODUCAO ERRADA: *static-ads Fase 3 ou *video-ads Fase 5
+    → VOLUME BAIXO: batch de variações com *static-ads
+    → TUDO OK: *scaling-pipeline para diagnóstico de escala
+
+  nota_funil: |
+    Se criativos foram aprovados mas performance segue baixa:
+    → Landing page converte < 3%? → auditar funil antes de criar mais criativos
+    → Use *audit para diagnóstico completo (funil + criativo + capital)

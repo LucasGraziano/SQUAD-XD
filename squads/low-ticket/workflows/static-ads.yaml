@@ -1,0 +1,368 @@
+# Static Ads Creation Workflow v2.0
+# Pipeline completo para criação de ads estáticos: foundational docs → brief → hook → visual → copy → gate
+# Squad: low-ticket | Plataformas: Meta, TikTok, Google Display
+# v2.0: Foundational Docs Gate, Swipe vs. New Concept (80/20), Sophistication Stage, AI tool stack, mark-builds-brands
+
+name: static-ads
+description: "Pipeline completo de criação de ads estáticos — da pesquisa de cliente até o criativo aprovado"
+trigger: "*static-ads"
+orchestrator: creative-director
+version: "2.0.0"
+
+knowledge_context:
+  auto_load:
+    - domains/traffic-ads/mark-builds-brands.md
+    - domains/traffic-ads/matheus-bressan-dna.md
+    - domains/copy-persuasion/jim-edwards-dna.md
+    - domains/copy-persuasion/hard-copy.md
+  skills_activated:
+    - hook-diagnostic
+    - humanized-copy
+    - design-aware-ui
+    - knowledge-router
+
+# ──────────────────────────────────────────────────────────────────────────────
+# FASE 0 — FOUNDATIONAL DOCS GATE (pré-requisito absoluto)
+# "60-80% do tempo de um bom copywriter vai para a pesquisa, não para a escrita"
+# ──────────────────────────────────────────────────────────────────────────────
+phases:
+
+  - id: 0-foundational-docs
+    name: "Foundational Docs Gate"
+    chief: creative-director
+    agents: [creative-director, copywriter]
+    elicit: true
+    gate_type: prerequisite
+    description: |
+      Os 4 Foundational Docs são o input que determina a qualidade de TUDO que vem depois.
+      Sem eles, o criativo vai ser genérico — AI slop com gatilhos emocionais errados.
+      Se já existem, carregar e prosseguir. Se não, criar antes de avançar.
+    inputs:
+      - field: foundational_docs_status
+        label: "Foundational Docs já existem?"
+        required: true
+        options:
+          - sim-todos-4-prontos
+          - sim-parcial-faltam-alguns
+          - nao-preciso-criar-agora
+      - field: foundational_docs_path
+        label: "Caminho dos docs (se existirem)"
+        required: false
+        example: "squads/low-ticket/projects/zero-diastase/foundational-docs/"
+    decision:
+      sim-todos-4-prontos: "Carregar docs e prosseguir para Fase 1"
+      sim-parcial-faltam-alguns: "Identificar quais faltam e criar antes de prosseguir"
+      nao-preciso-criar-agora: "Executar SOP de criação dos 4 docs abaixo"
+    foundational_docs_sop:
+      doc_1_research:
+        nome: "Research Doc"
+        objetivo: "Voz do cliente verbatim — quotes, linguagem de transformação, narrativa de dor"
+        ferramenta: "ChatGPT com Deep Research"
+        prompt_approach: "Pesquisa profunda sobre [produto/nicho] — coletar reviews, fóruns, depoimentos. Extrair: frases exatas, transformações descritas, medos específicos, objeções recorrentes."
+        output_formato: "DOC com seções: Dores (com quotes), Desejos (com quotes), Transformações relatadas, Linguagem exata do avatar, Mecanismos já conhecidos, Objeções frequentes"
+      doc_2_avatar:
+        nome: "Avatar Doc"
+        objetivo: "Quem compra, o que pensa, o que teme, onde está na jornada"
+        ferramenta: "ChatGPT com contexto do Research Doc"
+        campos: [nome, idade, situação de vida, maior dor consciente, maior desejo, crença limitante, dia a dia, onde consome conteúdo, o que já tentou]
+      doc_3_offer:
+        nome: "Offer Doc"
+        objetivo: "Mecanismo único, posicionamento de contraste, proposta de valor"
+        ferramenta: "ChatGPT"
+        campos: [nome do produto, mecanismo único (como funciona diferente), promessa principal, stack de benefícios, prova disponível, preço e posicionamento]
+      doc_4_beliefs:
+        nome: "Beliefs Doc"
+        objetivo: "Mapa de crenças — atual vs. necessária vs. ponte"
+        ferramenta: "ChatGPT com contexto dos 3 docs anteriores"
+        campos: [crenças atuais do avatar, crenças necessárias para comprar, como fazer a ponte (quais seeds plantar no criativo), objeções a pre-handle]
+    approval: true
+    approval_message: |
+      ✅ Foundational Docs verificados.
+      Confirmar: todos os 4 docs (Research, Avatar, Offer, Beliefs) estão disponíveis antes de prosseguir.
+      Sem eles, a Fase 1 não pode começar.
+    output: foundational-docs-status.md
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # FASE 1 — BRIEF DE GUERRA + CALIBRAÇÃO DE MERCADO
+  # ──────────────────────────────────────────────────────────────────────────
+  - id: 1-brief
+    name: "Brief de Guerra"
+    chief: creative-director
+    agents: [creative-director, hook-master]
+    elicit: true
+    depends_on: [0-foundational-docs]
+    inputs:
+      - field: produto
+        label: "Produto/Oferta"
+        required: true
+        example: "Curso Zero Diastase 30 Dias"
+      - field: objetivo
+        label: "Objetivo do ad"
+        required: true
+        options: [trafego-frio, retargeting-morno, conversao-direta, lead-magnet-quiz]
+      - field: plataforma
+        label: "Plataforma de veiculação"
+        required: true
+        options: [meta-feed, meta-stories, tiktok-feed, google-display, youtube-thumbnail]
+      - field: formato
+        label: "Formato do criativo"
+        required: true
+        options: [imagem-unica, carrossel, native-static, ugc-estilo, banner-simples]
+        notes:
+          native-static: "Blend-in com feed natural mas cria contraste visual (ex: imagem discordante + copy no texto primário faz o selling)"
+          imagem-unica: "Hook visual + copy integrada na imagem"
+      - field: sophistication_stage
+        label: "Estágio de sofisticação do mercado (Schwartz 1-5)"
+        required: true
+        options:
+          - "1-problema-nao-conhecido"
+          - "2-problema-conhecido-solucao-desconhecida"
+          - "3-solucao-conhecida-produto-desconhecido"
+          - "4-mercado-saturado-diferenciacao-necessaria"
+          - "5-mercado-ultra-saturado-mecanismo-unico-obrigatorio"
+        calibration:
+          "1-2": "Hook direto na dor ou no desejo. Copy simples."
+          "3": "Apresentar mecanismo único. Discreditar soluções existentes começando a entrar."
+          "4-5": "Mecanismo único obrigatório. Palavra 'without' (sem fazer X). Contraste com concorrência."
+      - field: winning_sales_message
+        label: "Winning Sales Message já validada? (se sim, qual?)"
+        required: false
+        description: "Se já testou image ads antes e sabe qual mensagem converte, informar. Isso direciona o hook."
+        example: "Diastase some em 30 dias sem cirurgia e sem academia"
+      - field: rota_criativa
+        label: "Rota de criação"
+        required: true
+        options:
+          - swipe-80pct
+          - novo-conceito-20pct
+          - ambos-batch-completo
+        notes:
+          swipe-80pct: "Swipe de ad competitor via Get Hooked → remix com Claude → Higgsfield"
+          novo-conceito-20pct: "Ideação original via Claude com foundational docs → Higgsfield"
+          ambos-batch-completo: "4 swipes + 1 novo conceito = batch de 5 variações"
+    output: ad-brief.md
+    approval: true
+    approval_message: |
+      Brief preenchido. Confirmar:
+      - Sophistication stage definido (calibra o hook)
+      - Rota criativa escolhida (swipe vs. novo conceito vs. batch)
+      - Foundational docs acessíveis para as próximas fases
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # FASE 2 — CRIAÇÃO DO HOOK (com rota A ou B)
+  # ──────────────────────────────────────────────────────────────────────────
+  - id: 2-hook
+    name: "Hook + Ângulo Criativo"
+    chief: hook-master
+    agents: [hook-master, copywriter]
+    depends_on: [1-brief]
+    description: |
+      Baseado no sophistication_stage e na rota escolhida, construir os hooks.
+      Stages 4-5: SEMPRE incluir mecanismo único e discreditar alternativas.
+      Rota Swipe: analisar o que está funcionando no mercado e criar twist.
+      Rota Novo Conceito: usar Beliefs Doc para criar hook baseado na crença que precisa ser mudada.
+
+    rota_swipe:
+      ferramenta_pesquisa: "Get Hooked (filtros: 4-5 estrelas, still running, image, mesmo nicho ou cross-niche)"
+      processo:
+        - "Baixar 2-3 ads que estão performando"
+        - "Abrir Claude com Foundational Docs no projeto"
+        - "Upload do ad swiped → Claude analisa POR QUE funcionou + reverse engineer elementos"
+        - "Claude gera prompt text-to-image adaptado para sua marca/produto"
+        - "Validar ângulo emocional: o hook do swipe ressoa com seu avatar específico?"
+      output: swipe-analysis-and-prompts.md
+
+    rota_novo_conceito:
+      fonte: "Beliefs Doc — qual crença precisa ser plantada para o avatar comprar?"
+      hook_types:
+        transformacao_completa:
+          descricao: "Antes (pesadelo) → Depois (sonho) — máximo contraste emocional"
+          exemplo: "Passei 2 anos com diastase grau 3. Hoje minha barriga está plana sem cirurgia."
+        pesadelo_only:
+          descricao: "Só o estado de pesadelo — mais versátil mas sem o contraste completo"
+          exemplo: "Você faz abdominais todo dia mas a diastase só piora. Aqui está o porquê."
+        discrediting:
+          descricao: "Stages 4-5 — discreditar a solução comum com autoridade"
+          exemplo: "Por que médicos param de recomendar abdominais para diastase (e o que funciona)"
+        native_static_hook:
+          descricao: "Para native statics: creative é o scroll-stopper, COPY PRIMÁRIA é que vende"
+          regra: "Imagem deve blend-in no feed MAS criar contraste visual imediato (cor discordante, imagem inesperada)"
+          exemplo_copy_primaria: "Por favor, pare de fazer esses exercícios se você tem diastase"
+
+    sophistication_calibration:
+      stage_1_2: "Hook direto na dor. 'Você tem [dor]? Aqui está o que funciona.'"
+      stage_3: "Revelar mecanismo. 'A razão pela qual [solução comum] não funciona para [problema específico]'"
+      stage_4: "Contraste de mecanismo. 'Sem [coisa que todo mundo faz]. Sem [outra coisa]. Em [tempo específico].'"
+      stage_5: "Mecanismo único + prova irrefutável. 'O método que [resultado específico em número] sem [crença limitante central do mercado]'"
+
+    tasks:
+      - "Gerar 3 hooks baseados no sophistication_stage e beliefs doc (com distinção por tipo)"
+      - "Para rota swipe: incluir análise do porquê o ad swiped funciona + como o twist se aplica"
+      - "Para native statics: separar hook visual do hook na copy primária"
+      - "Documentar qual crença o hook está atacando (do Beliefs Doc)"
+
+    skill_gate: hook-diagnostic
+    skill_gate_threshold: 55
+    output: hooks-options.md
+    approval: true
+    approval_message: |
+      Hooks gerados e diagnosticados (score mínimo 55/80).
+      Para rota swipe: análise do ad original + twist incluída.
+      Selecionar 1 hook principal + 1 alternativo + prompts AI para produção.
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # FASE 3 — DIREÇÃO VISUAL + ESPECIFICAÇÃO DE PRODUÇÃO AI
+  # ──────────────────────────────────────────────────────────────────────────
+  - id: 3-visual
+    name: "Direção Visual & Spec de Produção"
+    chief: visual-designer
+    agents: [visual-designer, creative-director]
+    depends_on: [2-hook]
+    tasks:
+      - "Definir tipo de hook visual: transformação completa / pesadelo-only / native static blend-in"
+      - "Especificar composição: posição do texto, hierarquia visual, ponto focal"
+      - "Definir paleta: extrair do DESIGN.md do squad ou brand library"
+      - "Especificar tipografia: fonte do hook, tamanho, peso"
+      - "Definir proporções por plataforma (1:1 feed, 9:16 stories/tiktok, 4:5 feed vertical)"
+
+    ai_production_spec:
+      description: "Especificação completa para produção com AI — não deixar para improviso"
+      primary_tool: "Higgsfield → Nano Banana Pro (geração de imagem)"
+      secondary_tool: "Canva Magic Layer (ajustes pós-geração sem voltar pro Higgsfield)"
+      prompt_source: "Usar prompt gerado pelo Claude na Fase 2 (nunca escrever prompt manualmente)"
+      variations: "4 variações por batch no Higgsfield (9:16 padrão)"
+      product_reference: "Upload do PNG do produto em fundo branco como referência obrigatória"
+      canva_edits: "Se qualquer elemento não ficou como esperado → Canva Magic Layer → editar sem re-gerar"
+
+    checklist:
+      - "[ ] Sem bento grid com bordas brilhantes"
+      - "[ ] Sem cores neon ou glassmorphism"
+      - "[ ] Hook legível em 3 segundos a distância de 1 metro"
+      - "[ ] Contraste mínimo 4.5:1 texto/fundo"
+      - "[ ] CTA visualmente separado do corpo"
+      - "[ ] Prompt AI validado antes de gerar (não improvisar)"
+      - "[ ] PNG do produto em fundo branco disponível para referência"
+      - "[ ] Native statics: imagem cria contraste no feed, copy primária faz o selling"
+
+    skill_gate: design-aware-ui
+    knowledge_refs:
+      - .aiox-core/knowledge/design-systems/brands/_INDEX.md
+      - squads/low-ticket/app/DESIGN.md
+    output: visual-direction-and-production-spec.md
+    approval: true
+    approval_message: "Direção visual + spec de produção AI aprovadas. Pronto para gerar os criativos."
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # FASE 4 — COPY DO AD
+  # ──────────────────────────────────────────────────────────────────────────
+  - id: 4-copy
+    name: "Copy do Ad"
+    chief: copywriter
+    agents: [copywriter, copy-chief]
+    depends_on: [2-hook, 3-visual]
+    skill_gate: humanized-copy
+    description: |
+      Copy gerada a partir dos Foundational Docs — não de intuição.
+      Para stages 4-5: usar "without" como alavanca (como conseguir X SEM a solução comum).
+      Para native statics: a copy primária (texto acima do criativo) É o gancho de venda.
+    tasks:
+      - "Escrever headline principal (baseada no hook aprovado)"
+      - "Escrever copy primária para meta feed (125 chars antes do corte) — usar voz do cliente verbatim do Research Doc"
+      - "Escrever CTA específico e orientado à ação"
+      - "Para stages 4-5: incluir 'without' ou equivalente em português ('sem fazer X', 'sem precisar de Y')"
+      - "Para native statics: copy primária é o principal gatilho de venda — tratar como headline"
+      - "Adaptar por formato (feed vs. stories vs. carrossel)"
+
+    copy_rules:
+      - "Usar linguagem verbatim do Research Doc — não parafrasear, usar as palavras exatas do avatar"
+      - "Sem jargão de marketing ('alavancar', 'potencializar', 'otimizar')"
+      - "Sem adjetivos genéricos sem prova ('incrível', 'único', 'revolucionário')"
+      - "CTA deve completar a frase implícita do hook"
+      - "Body deve intensificar tensão, não aliviar prematuramente"
+      - "Stages 4-5: discreditar alternativa ANTES de apresentar o mecanismo"
+
+    output: copy-final.md
+    approval: false
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # FASE 5 — GATE DE REVISÃO
+  # ──────────────────────────────────────────────────────────────────────────
+  - id: 5-review
+    name: "Review Gate"
+    chief: copy-chief
+    agents: [copy-chief, creative-director]
+    depends_on: [4-copy]
+    gate_criteria:
+      - id: scroll-stop
+        label: "Scroll-stop force"
+        question: "O hook pararia o scroll de alguém que NÃO está procurando o produto?"
+        weight: critical
+      - id: clarity
+        label: "Clareza da proposta"
+        question: "Em 3 segundos fica claro o que é, para quem é e qual resultado promete?"
+        weight: critical
+      - id: sophistication-match
+        label: "Alinhamento com sophistication stage"
+        question: "O hook e a copy estão calibrados para o estágio de sofisticação declarado? (stage 4-5 tem mecanismo único?)"
+        weight: critical
+      - id: desire
+        label: "Geração de desejo"
+        question: "O ad faz o avatar querer saber mais imediatamente?"
+        weight: high
+      - id: proof
+        label: "Credibilidade mínima"
+        question: "Existe algum elemento que torna a promessa crível (número, prova, mecanismo)?"
+        weight: high
+      - id: cta
+        label: "CTA específico"
+        question: "O CTA diz exatamente o que a pessoa vai obter ao clicar?"
+        weight: high
+      - id: customer-voice
+        label: "Voz do cliente"
+        question: "A copy usa a linguagem exata do avatar (do Research Doc) ou soa como marketing genérico?"
+        weight: high
+      - id: coherence
+        label: "Coerência visual-copy"
+        question: "Visual e copy contam a mesma história?"
+        weight: medium
+      - id: unique_angle
+        label: "Ângulo único"
+        question: "Este ad poderia ser de qualquer concorrente ou é inconfundivelmente seu?"
+        weight: medium
+
+    verdicts:
+      APROVADO: "Todos os critérios críticos e 3+ dos altos aprovados"
+      REVISAR_COPY: "Critérios de copy falharam, visual ok — volta para Fase 4"
+      REVISAR_VISUAL: "Critérios visuais falharam, copy ok — volta para Fase 3"
+      REFAZER_HOOK: "Critério scroll-stop ou sophistication-match falhou — volta para Fase 2"
+
+    output: review-verdict.md
+    approval: true
+    approval_message: "Review gate concluído. Veredicto e feedback por critério prontos."
+    max_review_cycles: 2
+
+completion:
+  message: |
+    ✅ Ad estático aprovado — pronto para produção!
+
+    Artefatos gerados:
+    - Foundational Docs verificados (Research, Avatar, Offer, Beliefs)
+    - Brief de guerra com sophistication stage calibrado
+    - Hooks com análise de ângulo + prompts AI para geração
+    - Direção visual + spec de produção (Higgsfield/Nano Banana Pro)
+    - Copy final com voz do cliente (Research Doc verbatim)
+    - Veredicto de review com 9 critérios
+
+    Produção (referência rápida):
+    → Higgsfield → Nano Banana Pro → PNG do produto em fundo branco → 4 variações 9:16
+    → Se precisar ajustar: Canva Magic Layer (não re-gerar no Higgsfield)
+
+    Teste (80/20):
+    → 80% do budget: variações de hooks e ângulos do winner existente
+    → 20% do budget: conceitos completamente novos baseados no Beliefs Doc
+    → Threshold de fadiga: não preocupar com criativo específico até $300-1500 de spend
+
+    Próximos passos:
+    → Se CTR < 1% em 48h → hook problema → /hook-diagnostic
+    → Se CPA alto mas CTR ok → funil/copy problema → /metrics-review
+    → Se ad converte bem → transmuta a Winning Sales Message para *video-ads

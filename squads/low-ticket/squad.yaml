@@ -1,5 +1,5 @@
 name: low-ticket
-version: 2.0.1
+version: 2.1.0
 description: "Equipe hierárquica de agentes focada em criar, testar e escalar ofertas de baixo custo (low-ticket). 18 agentes em 6 departamentos com pipeline completo do zero à escala, incluindo email marketing, otimização contínua e monitoramento diário."
 author: Graziano
 license: MIT
@@ -93,6 +93,9 @@ components:
     - email-nurture-pipeline.yaml     # v2.0.0: Pipeline de email marketing
     - scaling-pipeline.yaml           # v2.0.0: Otimização contínua semanal
     - daily-monitor-pipeline.yaml     # v2.0.0: Monitoramento diário de campanhas
+    - static-ads.yaml                 # v2.1.0: Foundational Docs Gate, WSM, Schwartz stages, AI production spec
+    - video-ads.yaml                  # v2.1.0: WSM-first, image→video workflow, Kling/Veo/Seedance
+    - ad-intake.yaml                  # v2.1.0: Intake de material existente + quality gate + gap report
   checklists:
     - copy-review-checklist.md
     - campaign-launch-checklist.md
@@ -135,6 +138,14 @@ tags:
   - a-b-testing        # v2.0.0
 
 changelog:
+  v2.1.0:
+    date: "2026-05-04"
+    changes:
+      - "static-ads.yaml v2.0: Foundational Docs Gate (Fase 0), Schwartz sophistication stages, WSM field, native-static format, AI production spec (Higgsfield/Nano Banana Pro), customer voice verbatim, 80/20 testing guidance"
+      - "video-ads.yaml v2.0: WSM validation gate (Fase 0), sophistication calibration por hook tipo, 2 novos frameworks (EU_ERA_VOCE_MAS_PIOR + IDENTITY_REPROGRAMMING), AI tool stack spec (Kling 3.0/Veo 3.1/Seedance 2.0/Higgsfield), image-to-video workflow, funnel note"
+      - "ad-intake.yaml v1.0: NOVO — intake de material existente + foundational docs assessment + creative quality gate + performance analysis + gap report com action plan priorizado"
+      - "knowledge_context atualizado em static-ads e video-ads: mark-builds-brands + hard-copy adicionados"
+      - "squad.yaml atualizado para registrar os 3 workflows de ads"
   v2.0.1:
     date: "2026-03-04"
     changes:
