@@ -17,7 +17,6 @@ import {
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
-import { PulseDot } from '@/components/ui/motion'
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard, badge: null },
@@ -45,81 +44,67 @@ export function Sidebar() {
       initial={{ x: -20, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-      className="w-60 min-h-screen bg-brand-teal flex flex-col"
+      className="w-60 min-h-screen bg-neutral-mist border-r border-neutral-border flex flex-col"
     >
       {/* Logo */}
-      <div className="px-6 py-6 border-b border-white/10">
+      <div className="px-6 py-5 border-b border-neutral-border">
         <motion.span
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-          className="font-serif text-xl text-white tracking-tight block"
+          transition={{ delay: 0.15, duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+          className="font-serif text-xl text-brand-teal tracking-tight block"
         >
           Vínculo
         </motion.span>
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 px-3 py-4 space-y-0.5">
+      <nav className="flex-1 px-3 py-4 space-y-0.5" aria-label="Navegação principal">
         {navItems.map(({ href, label, icon: Icon, badge }, i) => {
           const active = pathname === href || pathname.startsWith(href + '/')
           return (
             <motion.div
               key={href}
-              initial={{ opacity: 0, x: -12 }}
+              initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.15 + i * 0.05, duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+              transition={{ delay: 0.1 + i * 0.04, duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             >
               <Link
                 href={href}
+                aria-current={active ? 'page' : undefined}
                 className={`
                   relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium
-                  transition-all duration-[200ms] ease-out
+                  transition-all duration-200 ease-out
                   ${active
-                    ? 'text-white'
-                    : 'text-white/65 hover:text-white hover:bg-white/8'
+                    ? 'text-brand-teal bg-[#E8F3F6]'
+                    : 'text-neutral-secondary hover:text-neutral-charcoal hover:bg-[#E8E8E6]'
                   }
                 `}
               >
-                {/* Active background */}
+                {/* Active left indicator */}
                 <AnimatePresence>
                   {active && (
                     <motion.span
                       layoutId="sidebar-active"
-                      className="absolute inset-0 rounded-xl bg-white/15"
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ type: 'spring', stiffness: 340, damping: 28 }}
+                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full bg-brand-teal"
+                      initial={{ scaleY: 0, opacity: 0 }}
+                      animate={{ scaleY: 1, opacity: 1 }}
+                      exit={{ scaleY: 0, opacity: 0 }}
+                      transition={{ duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
                     />
                   )}
                 </AnimatePresence>
 
-                {/* Active left border */}
-                <AnimatePresence>
-                  {active && (
-                    <motion.span
-                      layoutId="sidebar-border"
-                      className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-5 rounded-r-full bg-brand-sand"
-                      initial={{ scaleY: 0 }}
-                      animate={{ scaleY: 1 }}
-                      exit={{ scaleY: 0 }}
-                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </AnimatePresence>
-
-                <span className="relative">
-                  <Icon size={18} strokeWidth={1.5} />
-                </span>
-                <span className="relative">{label}</span>
+                <Icon size={18} strokeWidth={1.5} aria-hidden="true" />
+                <span>{label}</span>
 
                 {badge != null && (
                   <motion.span
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
-                    transition={{ delay: 0.5, type: 'spring', stiffness: 300 }}
-                    className="relative ml-auto bg-semantic-danger text-white text-[10px] font-bold px-1.5 py-0.5 rounded-badge"
+                    transition={{ delay: 0.45, duration: 0.2, ease: [0.4, 0, 0.2, 1] }}
+                    className="ml-auto bg-semantic-danger text-white text-[10px] font-bold px-1.5 py-0.5 rounded-badge"
+                    aria-label={`${badge} alertas`}
                   >
                     {badge}
                   </motion.span>
@@ -134,28 +119,29 @@ export function Sidebar() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 0.55, duration: 0.4 }}
-        className="px-3 py-4 border-t border-white/10 space-y-0.5"
+        transition={{ delay: 0.45, duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+        className="px-3 py-4 border-t border-neutral-border space-y-0.5"
       >
         <Link
           href="/planos"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/65 hover:bg-white/8 hover:text-white transition-all duration-[200ms]"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-neutral-secondary hover:text-neutral-charcoal hover:bg-[#E8E8E6] transition-all duration-200"
         >
-          <Gem size={18} strokeWidth={1.5} />
+          <Gem size={18} strokeWidth={1.5} aria-hidden="true" />
           Plano
         </Link>
         <Link
           href="/configuracoes"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/65 hover:bg-white/8 hover:text-white transition-all duration-[200ms]"
+          className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-neutral-secondary hover:text-neutral-charcoal hover:bg-[#E8E8E6] transition-all duration-200"
         >
-          <Settings size={18} strokeWidth={1.5} />
+          <Settings size={18} strokeWidth={1.5} aria-hidden="true" />
           Configurações
         </Link>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-white/65 hover:bg-white/8 hover:text-white transition-all duration-[200ms]"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-neutral-secondary hover:text-neutral-charcoal hover:bg-[#E8E8E6] transition-all duration-200"
+          aria-label="Sair da conta"
         >
-          <LogOut size={18} strokeWidth={1.5} />
+          <LogOut size={18} strokeWidth={1.5} aria-hidden="true" />
           Sair
         </button>
       </motion.div>

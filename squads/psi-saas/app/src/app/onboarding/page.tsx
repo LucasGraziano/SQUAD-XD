@@ -3,11 +3,20 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CheckCircle2, ChevronRight, Clock, DollarSign, MessageCircle, X } from 'lucide-react'
+import { AlertCircle, CheckCircle2, ChevronRight, Clock, DollarSign, MessageCircle } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 const DAYS = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
 const DURATIONS = [40, 50, 60, 80, 90]
+
+// Design tokens para Framer Motion (não aceita classes Tailwind)
+const STEP_COLORS = {
+  done:    '#2D7D4F',
+  active:  '#1A4A5A',
+  pending: '#E2E2DE',
+  lineDone:'#2D7D4F',
+  linePend:'#E2E2DE',
+} as const
 
 type Step = 1 | 2 | 3
 
@@ -17,6 +26,7 @@ export default function OnboardingPage() {
 
   const [step, setStep] = useState<Step>(1)
   const [saving, setSaving] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
 
   // Step 1
   const [selectedDays, setSelectedDays] = useState<number[]>([1, 2, 3, 4, 5])
@@ -35,67 +45,107 @@ export default function OnboardingPage() {
   }
 
   async function saveStep1() {
+    setSaveError(null)
     setSaving(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+      setSaveError('Sessão expirada. Faça login novamente.')
+      setSaving(false)
+      return
+    }
 
-    const { data: psy } = await supabase
+    const { data: psy, error: psyError } = await supabase
       .from('psychologists')
       .select('id')
       .eq('user_id', user.id)
       .single()
 
-    if (psy) {
-      // Insert availability slots
-      const slots = selectedDays.map((day) => ({
-        psychologist_id: psy.id,
-        day_of_week: day,
-        start_time: startTime,
-        end_time: endTime,
-        is_recurring: true,
-      }))
-      await supabase.from('availability_slots').upsert(slots, {
-        onConflict: 'psychologist_id,day_of_week',
-      })
-      await supabase
-        .from('psychologists')
-        .update({ onboarding_step: 1 })
-        .eq('id', psy.id)
+    if (psyError || !psy) {
+      setSaveError('Não foi possível carregar seu perfil. Tente novamente.')
+      setSaving(false)
+      return
     }
+
+    const slots = selectedDays.map((day) => ({
+      psychologist_id: psy.id,
+      day_of_week: day,
+      start_time: startTime,
+      end_time: endTime,
+      is_recurring: true,
+    }))
+
+    const { error: slotsError } = await supabase
+      .from('availability_slots')
+      .upsert(slots, { onConflict: 'psychologist_id,day_of_week' })
+
+    if (slotsError) {
+      setSaveError('Erro ao salvar horários. Verifique os dados e tente novamente.')
+      setSaving(false)
+      return
+    }
+
+    await supabase.from('psychologists').update({ onboarding_step: 1 }).eq('id', psy.id)
     setSaving(false)
     setStep(2)
   }
 
   async function saveStep2() {
+    setSaveError(null)
     setSaving(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+      setSaveError('Sessão expirada. Faça login novamente.')
+      setSaving(false)
+      return
+    }
 
-    const priceCents = Math.round(parseFloat(priceInput.replace(',', '.')) * 100)
+    const price = parseFloat(priceInput.replace(',', '.'))
+    if (isNaN(price) || price < 10) {
+      setSaveError('Valor de sessão inválido. Mínimo R$ 10.')
+      setSaving(false)
+      return
+    }
 
-    await supabase
+    const { error } = await supabase
       .from('psychologists')
       .update({
-        session_price_cents: priceCents,
+        session_price_cents: Math.round(price * 100),
         billing_cycle: billingCycle,
         session_duration_minutes: duration,
         onboarding_step: 2,
       })
       .eq('user_id', user.id)
 
+    if (error) {
+      setSaveError('Erro ao salvar valores. Tente novamente.')
+      setSaving(false)
+      return
+    }
+
     setSaving(false)
     setStep(3)
   }
 
   async function finishOnboarding() {
+    setSaveError(null)
     setSaving(true)
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) return
+    const { data: { user }, error: authError } = await supabase.auth.getUser()
+    if (authError || !user) {
+      setSaveError('Sessão expirada. Faça login novamente.')
+      setSaving(false)
+      return
+    }
 
-    await supabase
+    const { error } = await supabase
       .from('psychologists')
       .update({ onboarding_completed: true, onboarding_step: 3 })
       .eq('user_id', user.id)
+
+    if (error) {
+      setSaveError('Algo não funcionou. Tente novamente.')
+      setSaving(false)
+      return
+    }
 
     setSaving(false)
     router.push('/dashboard?welcome=1')
@@ -115,7 +165,7 @@ export default function OnboardingPage() {
             <div key={s} className="flex items-center gap-2 flex-1">
               <motion.div
                 animate={{
-                  backgroundColor: s < step ? '#2D7D4F' : s === step ? '#1A4A5A' : '#E2E2DE',
+                  backgroundColor: s < step ? STEP_COLORS.done : s === step ? STEP_COLORS.active : STEP_COLORS.pending,
                   scale: s === step ? 1.1 : 1,
                 }}
                 transition={{ duration: 0.3 }}
@@ -126,7 +176,7 @@ export default function OnboardingPage() {
               {s < 3 && (
                 <motion.div
                   className="flex-1 h-0.5 rounded-full"
-                  animate={{ backgroundColor: s < step ? '#2D7D4F' : '#E2E2DE' }}
+                  animate={{ backgroundColor: s < step ? STEP_COLORS.lineDone : STEP_COLORS.linePend }}
                   transition={{ duration: 0.4 }}
                 />
               )}
@@ -139,6 +189,21 @@ export default function OnboardingPage() {
           <span>WhatsApp</span>
         </div>
       </div>
+
+      {/* Error global */}
+      <AnimatePresence>
+        {saveError && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="w-full max-w-md mb-3 flex items-start gap-3 bg-semantic-danger-bg border border-semantic-danger/20 text-semantic-danger text-sm px-4 py-3 rounded-input"
+          >
+            <AlertCircle size={16} className="flex-shrink-0 mt-0.5" />
+            {saveError}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Card */}
       <div className="w-full max-w-md">
@@ -333,7 +398,7 @@ export default function OnboardingPage() {
                   disabled={saving}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.97 }}
-                  className="flex-2 bg-brand-teal hover:bg-brand-teal-dark disabled:opacity-60 text-white font-semibold py-3 px-6 rounded-input transition-colors flex items-center gap-2"
+                  className="flex-1 bg-brand-teal hover:bg-brand-teal-dark disabled:opacity-60 text-white font-semibold py-3 px-6 rounded-input transition-colors flex items-center justify-center gap-2"
                 >
                   {saving ? 'Salvando...' : <>Próximo <ChevronRight size={16} /></>}
                 </motion.button>

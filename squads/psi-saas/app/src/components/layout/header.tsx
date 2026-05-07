@@ -14,12 +14,18 @@ export function Header({ title, subtitle }: HeaderProps) {
       </div>
 
       <div className="flex items-center gap-3">
-        <button className="p-2 rounded-lg text-neutral-secondary hover:text-neutral-charcoal hover:bg-neutral-mist transition-all duration-fast">
+        <button
+          aria-label="Buscar"
+          className="p-2 rounded-lg text-neutral-secondary hover:text-neutral-charcoal hover:bg-neutral-mist transition-all duration-fast"
+        >
           <Search size={18} strokeWidth={1.5} />
         </button>
-        <button className="relative p-2 rounded-lg text-neutral-secondary hover:text-neutral-charcoal hover:bg-neutral-mist transition-all duration-fast">
+        <button
+          aria-label="Notificações"
+          className="relative p-2 rounded-lg text-neutral-secondary hover:text-neutral-charcoal hover:bg-neutral-mist transition-all duration-fast"
+        >
           <Bell size={18} strokeWidth={1.5} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-semantic-danger rounded-full" />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-semantic-danger rounded-full" aria-hidden="true" />
         </button>
       </div>
     </header>
