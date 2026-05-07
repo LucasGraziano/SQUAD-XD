@@ -41,7 +41,8 @@ export async function GET(request: Request) {
   let sent = 0
 
   for (const sub of subs ?? []) {
-    const psy = sub.psychologists as { email: string; full_name: string } | null
+    const psyRaw = sub.psychologists as { email: string; full_name: string }[] | { email: string; full_name: string } | null
+    const psy = Array.isArray(psyRaw) ? psyRaw[0] : psyRaw
     if (!psy?.email) continue
 
     const trialEnd = new Date(sub.trial_ends_at)
