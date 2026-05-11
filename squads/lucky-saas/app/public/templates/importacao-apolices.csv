@@ -1,0 +1,4 @@
+cliente_nome,seguradora,ramo,inicio_vigencia,fim_vigencia,premio_total,numero_apolice,cpf_cliente,telefone_cliente,email_cliente,comissao_pct,notas
+João da Silva,Porto Seguro,auto,2025-01-01,2026-01-01,1800.00,AP-001234,12345678901,11999990001,joao@email.com,10,Carro Honda Civic
+Maria Souza,Bradesco Seguros,vida,2025-03-15,2026-03-15,2400.00,,98765432100,11999990002,maria@email.com,15,
+Carlos Pereira,SulAmérica,saude,2025-02-01,2026-02-01,5600.00,S-99887,,11999990003,,12,Familia com 3 dependentes
