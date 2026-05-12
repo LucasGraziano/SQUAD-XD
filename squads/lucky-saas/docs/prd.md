@@ -399,6 +399,18 @@ Componente reutilizável que detecta propensão a upgrade no momento da dor.
 - Extrato de comissões simplificado (Carlos precisa antes de decidir pagar mais)
 - Essas mudanças aumentam perceived value do trial e melhoram trial→paid conversion
 
+### Trial
+
+| Parâmetro | Valor |
+|-----------|-------|
+| Duração | **14 dias** (variante A nos testes) |
+| Plano de trial | **Profissional** (expõe o plano âncora completo) |
+| Cartão na entrada | **Não** — reduz fricção de onboarding |
+| Expiração | Hard block — dados preservados por 30 dias, depois anonimizados |
+| Lembretes | In-app + e-mail no dia 7 e dia 13 |
+
+*Especificação completa de billing, lifecycle de assinatura e webhooks Stripe:* `docs/billing-spec.md`
+
 ### Testes de Pricing Planejados
 
 | Teste | Variante A | Variante B | Métrica |
@@ -488,5 +500,71 @@ Mês 13–18: 500 pagantes (KR O3) · Enterprise · Multicorretagem
 
 ---
 
+## 8. Analytics & Tracking Plan
+
+**Ferramenta:** PostHog (LGPD-friendly, SDK Next.js nativo, funnels + feature flags)
+
+### Eventos P0 — Base de Medição dos OKRs
+
+**Funil Aha Moment (O4/KR1 — < 15 min):**
+```
+signup_completed → csv_import_completed → first_alert_viewed
+```
+Medir: `time_since_signup_ms` em `first_alert_viewed` < 900.000ms
+
+**Funil Trial→Paid (O1/KR2 — ≥ 20%):**
+```
+trial_started → onboarding_completed → plan_gate_shown → checkout_completed
+```
+
+**Upsell (O3 — Expansão):**
+```
+plan_gate_shown → upgrade_clicked → upgrade_completed
+```
+Meta por gate: Portal 15%, E-mail automático 12%, 2º usuário 25%
+
+### Eventos Críticos de Produto
+
+| Evento | O que mede |
+|--------|-----------|
+| `csv_import_completed` | Adoção de onboarding |
+| `plan_gate_shown` + `upgrade_completed` | Eficácia do upsell contextual |
+| `portal_viewed_by_client` | Valor entregue ao cliente final |
+| `policy_renewed` (`via: email_campaign`) | ROI do e-mail automático |
+| `nps_submitted` | Satisfação (OKR O2/KR3) |
+
+### Regra LGPD
+Nunca enviar ao PostHog dados pessoais de clientes do corretor (nome, CPF, número de apólice). Apenas IDs anonimizados, contagens e timestamps.
+
+*Tracking plan completo, funnels, dashboards OKR e roadmap de implementação:* `docs/analytics-plan.md`
+
+---
+
+## 9. Go-To-Market & Lançamento
+
+**Tese:** Referral orgânico → Authority → Performance Ads. Não escalar ads antes de provar cohort M1 retention ≥ 75%.
+
+### 3 Fases
+
+| Fase | Período | Meta | Canal Principal |
+|------|---------|------|----------------|
+| **Fase 0** Beta fechado | Meses -2 a 0 | 30–50 beta users · NPS ≥ 60 | Indicação pessoal + onboarding assistido |
+| **Fase 1** Soft launch | Meses 1–3 | 100 pagantes · trial→paid ≥ 20% | Referral program + grupos WhatsApp/SINCOR |
+| **Fase 2** Lançamento público | Meses 4–6 | 200 pagantes | Meta Ads + conteúdo Instagram |
+| **Fase 3** Escala | Meses 7–18 | 500 pagantes (KR O3) | Performance + parcerias seguradoras |
+
+### Referral Program
+- Indicador ganha: **1 mês grátis** por cada indicado que converte
+- Indicado ganha: **trial de 21 dias** (vs. 14 dias padrão)
+- Ativação: banner no dashboard pós-aha moment + e-mail dia 3 do trial
+
+### Gates de Saída entre Fases
+- **Beta → Fase 1:** NPS ≥ 60 · aha moment < 15 min validado · zero bugs P0
+- **Fase 1 → Fase 2:** Cohort M1 retention ≥ 75% · trial→paid ≥ 20% em 3 cohorts
+
+*Playbook completo com Meta Ads, SEO, parceria com seguradoras e spec do referral program:* `docs/gtm-playbook.md`
+
+---
+
 *PRD v2.0 — Premia · Morgan @pm · 2026-05-11*
-*Referências: docs/market-research.md · docs/project-brief.md · docs/architecture.md*
+*Referências: docs/market-research.md · docs/billing-spec.md · docs/analytics-plan.md · docs/gtm-playbook.md · docs/architecture.md*
