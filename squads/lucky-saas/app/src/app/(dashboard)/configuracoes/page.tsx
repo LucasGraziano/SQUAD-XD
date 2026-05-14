@@ -2,6 +2,9 @@ import { createClient } from '@/lib/supabase/server'
 import { PageHeader } from '@/components/layout/page-header'
 import { ConfiguracoesClient } from '@/components/configuracoes/ConfiguracoesClient'
 import { RenewalEmailSection } from '@/components/configuracoes/RenewalEmailSection'
+import { PlanGate } from '@/components/shared/PlanGate'
+import { PushNotificationsSection } from '@/components/configuracoes/PushNotificationsSection'
+import { RelatorioCarteiraButton } from '@/components/configuracoes/RelatorioCarteiraButton'
 import { getGoogleCalendarInfo } from '@/lib/google-calendar'
 
 type BrokerData = {
@@ -53,11 +56,20 @@ export default async function ConfiguracoesPage() {
               googleCalendar={googleCalendar}
             />
             <div className="mt-6">
-              <RenewalEmailSection
-                initialEnabled={broker.renewal_emails_enabled ?? false}
-                initialCustomText={broker.renewal_email_custom_text ?? ''}
-                plan={broker.plan}
-              />
+              <PlanGate requiredPlan="pro" feature="email-automatico">
+                <RenewalEmailSection
+                  initialEnabled={broker.renewal_emails_enabled ?? false}
+                  initialCustomText={broker.renewal_email_custom_text ?? ''}
+                />
+              </PlanGate>
+            </div>
+            <div className="mt-6">
+              <PushNotificationsSection />
+            </div>
+            <div className="mt-6 bg-white rounded-[8px] border border-[#E5E5E5] p-6">
+              <p className="text-[14px] font-semibold text-[#0D0D0D] mb-1">Relatório de Carteira</p>
+              <p className="text-[13px] text-[#6B7280] mb-4">PDF profissional com resumo executivo da sua carteira para compartilhar com clientes corporativos.</p>
+              <RelatorioCarteiraButton />
             </div>
           </>
         ) : (
