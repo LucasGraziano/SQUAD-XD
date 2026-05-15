@@ -32,23 +32,27 @@ export default async function ConfiguracoesPage() {
   if (user) {
     const result = await supabase
       .from('brokers')
-      .select('id, name, creci, phone, susep, email, logo_url, plan, subscription_status, trial_ends_at')
+      .select('*')
       .eq('user_id', user.id)
       .single()
 
-    const coreData = result.data as Omit<BrokerData, 'renewal_emails_enabled' | 'renewal_email_custom_text'> | null
-    if (coreData) {
-      brokerId = coreData.id
-      // Fetch optional columns separately — they may not exist in all envs
-      const ext = await supabase
-        .from('brokers')
-        .select('renewal_emails_enabled, renewal_email_custom_text')
-        .eq('id', brokerId)
-        .single()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const raw = result.data as any
+    if (raw) {
+      brokerId = raw.id
       broker = {
-        ...coreData,
-        renewal_emails_enabled: (ext.data as { renewal_emails_enabled?: boolean } | null)?.renewal_emails_enabled ?? false,
-        renewal_email_custom_text: (ext.data as { renewal_email_custom_text?: string | null } | null)?.renewal_email_custom_text ?? null,
+        id: raw.id,
+        name: raw.name ?? '',
+        creci: raw.creci ?? null,
+        phone: raw.phone ?? null,
+        susep: raw.susep ?? null,
+        email: raw.email ?? '',
+        logo_url: raw.logo_url ?? null,
+        plan: raw.plan ?? 'starter',
+        subscription_status: raw.subscription_status ?? null,
+        trial_ends_at: raw.trial_ends_at ?? null,
+        renewal_emails_enabled: raw.renewal_emails_enabled ?? false,
+        renewal_email_custom_text: raw.renewal_email_custom_text ?? null,
       }
     }
   }
