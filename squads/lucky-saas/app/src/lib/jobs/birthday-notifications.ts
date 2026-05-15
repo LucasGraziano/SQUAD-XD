@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 import { getAgeFromBirthDate, getCrossSellSuggestionByAge } from '@/lib/clients/birthday-crosssell'
-import { buildBirthdayEmailHtml } from '@/app/actions/email-campaigns'
+import { buildBirthdayEmailHtml } from '@/lib/email/templates'
 
 type SupabaseClient = Awaited<ReturnType<typeof import('@/lib/supabase/server').createClient>>
 

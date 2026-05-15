@@ -9,7 +9,7 @@ import { QuoteStatusActions } from './QuoteStatusActions'
 import { QuoteStatusFilter } from './QuoteStatusFilter'
 import { addQuoteItem, deleteQuoteItem, deleteQuoteRequest, updateQuoteItem } from '@/app/(dashboard)/cotacoes/actions'
 import type { QuoteRequest, QuoteItem, QuoteStatus } from '@/types/quote'
-import type { DocClient } from '@/app/(dashboard)/documentos/page'
+import type { DocClient } from '@/types/client'
 import { RAMO_LABELS, PAYMENT_LABELS, type PaymentFrequency } from '@/types/policy'
 import { EmptyState, FilterEmptyState } from '@/components/ui/EmptyState'
 

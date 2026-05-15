@@ -54,6 +54,7 @@ export interface Policy {
   commission_pct: number
   commission_expected: number
   status: PolicyStatus
+  franquia?: number | null
   notes?: string | null
   metadata: Record<string, string>
   created_at: string

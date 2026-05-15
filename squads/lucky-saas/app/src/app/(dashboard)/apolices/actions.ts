@@ -216,7 +216,10 @@ export async function deleteClient(id: string) {
   return { success: true }
 }
 
-export async function bulkImportClients(rows: { name: string; phone: string; email?: string; cpf_cnpj?: string }[]) {
+export async function bulkImportClients(rows: {
+  name: string; phone: string; email?: string; cpf_cnpj?: string
+  birth_date?: string; cep?: string; tipo_pessoa?: string; notes?: string
+}[]) {
   const { supabase, brokerId } = await getAuth()
   if (!brokerId) return { error: 'Não autenticado', imported: 0, skipped: 0 }
 
@@ -225,14 +228,18 @@ export async function bulkImportClients(rows: { name: string; phone: string; ema
   let skipped = 0
 
   for (const row of rows) {
-    if (!row.name?.trim() || !row.phone?.trim()) { skipped++; continue }
+    if (!row.name?.trim()) { skipped++; continue }
+    const cpf = row.cpf_cnpj?.replace(/\D/g, '') || null
     const { error } = await sb.from('clients').insert({
       broker_id: brokerId,
       name: row.name.trim(),
-      phone: row.phone.replace(/\D/g, ''),
+      phone: row.phone?.replace(/\D/g, '') || null,
       email: row.email?.trim() || null,
-      cpf_cnpj: row.cpf_cnpj?.replace(/\D/g, '') || null,
-      tipo_pessoa: 'pf',
+      cpf_cnpj: cpf,
+      birth_date: row.birth_date || null,
+      cep: row.cep?.replace(/\D/g, '') || null,
+      tipo_pessoa: row.tipo_pessoa?.toLowerCase() === 'pj' ? 'pj' : 'pf',
+      notes: row.notes?.trim() || null,
     })
     if (error) skipped++
     else imported++
@@ -243,9 +250,11 @@ export async function bulkImportClients(rows: { name: string; phone: string; ema
 }
 
 export async function bulkImportPolicies(rows: {
-  client_name: string; client_phone?: string; ramo: string; seguradora: string
-  policy_number?: string; start_date: string; end_date: string
-  premium_total: number; commission_pct: number; payment_frequency: string
+  client_name: string; client_phone?: string; client_cpf?: string
+  ramo: string; seguradora: string; policy_number?: string
+  start_date: string; end_date: string; premium_total: number
+  commission_pct: number; payment_frequency: string
+  franquia?: number; status?: string; notes?: string
 }[]) {
   const { supabase, brokerId } = await getAuth()
   if (!brokerId) return { error: 'Não autenticado', imported: 0, skipped: 0 }
@@ -254,30 +263,53 @@ export async function bulkImportPolicies(rows: {
   let imported = 0
   let skipped = 0
 
+  const VALID_STATUSES = ['ativa', 'cancelada', 'suspensa', 'nao_cliente', 'inativa', 'arquivada']
+
   for (const row of rows) {
-    if (!row.client_name?.trim() || !row.ramo || !row.seguradora) { skipped++; continue }
+    if (!row.ramo || !row.seguradora || !row.start_date || !row.end_date) { skipped++; continue }
 
-    // Upsert cliente pelo nome (simplificado)
     let clientId: string | null = null
-    const { data: existing } = await supabase
-      .from('clients')
-      .select('id')
-      .eq('broker_id', brokerId)
-      .ilike('name', row.client_name.trim())
-      .maybeSingle()
+    const cpfNorm = row.client_cpf?.replace(/\D/g, '') || null
 
-    if (existing) {
-      clientId = (existing as { id: string }).id
-    } else {
+    if (cpfNorm) {
+      // Prefer CPF/CNPJ lookup (precise)
+      const { data: byCpf } = await supabase
+        .from('clients')
+        .select('id')
+        .eq('broker_id', brokerId)
+        .eq('cpf_cnpj', cpfNorm)
+        .maybeSingle()
+      if (byCpf) clientId = (byCpf as { id: string }).id
+    }
+
+    if (!clientId && row.client_name?.trim()) {
+      // Fallback: name lookup
+      const { data: byName } = await supabase
+        .from('clients')
+        .select('id')
+        .eq('broker_id', brokerId)
+        .ilike('name', row.client_name.trim())
+        .maybeSingle()
+      if (byName) clientId = (byName as { id: string }).id
+    }
+
+    if (!clientId && row.client_name?.trim()) {
+      // Create new client
       const { data: newClient } = await sb.from('clients').insert({
         broker_id: brokerId,
         name: row.client_name.trim(),
-        phone: row.client_phone?.replace(/\D/g, '') || '00000000000',
+        phone: row.client_phone?.replace(/\D/g, '') || null,
+        cpf_cnpj: cpfNorm,
+        tipo_pessoa: 'pf',
       }).select('id').single()
       clientId = newClient?.id ?? null
     }
 
     if (!clientId) { skipped++; continue }
+
+    const policyStatus = row.status && VALID_STATUSES.includes(row.status.toLowerCase())
+      ? row.status.toLowerCase()
+      : 'ativa'
 
     const { error } = await sb.from('policies').insert({
       broker_id: brokerId,
@@ -290,7 +322,9 @@ export async function bulkImportPolicies(rows: {
       premium_total: row.premium_total,
       payment_frequency: row.payment_frequency || 'anual',
       commission_pct: row.commission_pct || 0,
-      status: 'ativa',
+      franquia: row.franquia ?? null,
+      status: policyStatus,
+      notes: row.notes?.trim() || null,
       metadata: {},
     })
     if (error) skipped++

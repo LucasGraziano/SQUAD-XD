@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { Resend } from 'resend'
-import { buildRenewalEmailHtml } from '@/app/actions/email-campaigns'
+import { buildRenewalEmailHtml } from '@/lib/email/templates'
 import { SignJWT } from 'jose'
 
 const TARGETS = [60, 30, 15] as const

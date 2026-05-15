@@ -53,13 +53,13 @@ function parseDate(s: string): string {
   return s
 }
 
-const CLIENT_TEMPLATE = `nome,telefone,email,cpf_cnpj
-João da Silva,11999887766,joao@email.com,123.456.789-00
-Maria Souza,21988776655,maria@email.com,`
+const CLIENT_TEMPLATE = `nome,cpf_cnpj,email,telefone,cep,data_nascimento,tipo_pessoa,observacoes
+João da Silva,123.456.789-00,joao@email.com,11999887766,01310-100,15/03/1985,PF,Cliente antigo
+Maria Souza LTDA,12.345.678/0001-90,maria@empresa.com,21988776655,20040-020,,PJ,`
 
-const POLICY_TEMPLATE = `nome_cliente,telefone_cliente,ramo,seguradora,numero_apolice,inicio_vigencia,fim_vigencia,premio_total,comissao_pct,periodicidade
-João da Silva,11999887766,auto,Porto Seguro,123456,01/01/2025,01/01/2026,2500.00,15,anual
-Maria Souza,21988776655,vida,Bradesco,789012,01/03/2025,01/03/2026,1800.00,20,mensal`
+const POLICY_TEMPLATE = `seguradora,ramo,cpf_cliente,nome_cliente,telefone_cliente,numero_apolice,inicio_vigencia,fim_vigencia,status,premio_total,valor_franquia,comissao_pct,periodicidade,observacoes
+Porto Seguro,auto,123.456.789-00,João da Silva,11999887766,123456,01/01/2025,01/01/2026,ativa,2500.00,1000.00,15,anual,
+Bradesco,vida,,Maria Souza,,789012,01/03/2025,01/03/2026,ativa,1800.00,,20,mensal,`
 
 const RAMO_ALIASES: Record<string, string> = {
   'automóvel': 'auto', 'automovel': 'auto', 'carro': 'auto', 'veículo': 'auto', 'veiculo': 'auto',
@@ -111,13 +111,20 @@ export function CsvImportModal({ open, onOpenChange, mode, onDone }: Props) {
         phone: r['telefone'] || r['phone'] || r['celular'] || r['fone'] || '',
         email: r['email'] || r['e-mail'] || '',
         cpf_cnpj: r['cpf_cnpj'] || r['cpf'] || r['cnpj'] || '',
+        birth_date: parseDate(r['data_nascimento'] || r['nascimento'] || r['birth_date'] || ''),
+        cep: r['cep'] || r['zip'] || '',
+        tipo_pessoa: r['tipo_pessoa'] || r['tipo'] || 'PF',
+        notes: r['observacoes'] || r['obs'] || r['notes'] || r['observações'] || '',
       }))
       res = await bulkImportClients(rows)
     } else {
       const rows = preview.rows.map(r => {
         const ramoRaw = (r['ramo'] || '').toLowerCase().trim()
         const ramo = RAMO_ALIASES[ramoRaw] || (Object.keys(RAMO_LABELS).includes(ramoRaw) ? ramoRaw : 'outros')
+        const franquiaRaw = r['valor_franquia'] || r['franquia'] || r['deductible'] || ''
+        const franquia = franquiaRaw ? parseFloat(franquiaRaw.replace(/\./g, '').replace(',', '.')) : undefined
         return {
+          client_cpf: r['cpf_cliente'] || r['cpf'] || r['cnpj'] || r['cpf_cnpj'] || '',
           client_name: r['nome_cliente'] || r['cliente'] || r['nome'] || '',
           client_phone: r['telefone_cliente'] || r['telefone'] || r['phone'] || '',
           ramo,
@@ -125,9 +132,12 @@ export function CsvImportModal({ open, onOpenChange, mode, onDone }: Props) {
           policy_number: r['numero_apolice'] || r['numero'] || r['n_apolice'] || r['apolice'] || '',
           start_date: parseDate(r['inicio_vigencia'] || r['inicio'] || r['start_date'] || r['data_inicio'] || ''),
           end_date: parseDate(r['fim_vigencia'] || r['fim'] || r['end_date'] || r['data_fim'] || r['vencimento'] || ''),
-          premium_total: parseFloat((r['premio_total'] || r['premio'] || r['premium'] || '0').replace(',', '.')),
+          status: r['status'] || '',
+          premium_total: parseFloat((r['premio_total'] || r['premio'] || r['premium'] || '0').replace(/\./g, '').replace(',', '.')),
+          franquia: isNaN(franquia as number) ? undefined : franquia,
           commission_pct: parseFloat((r['comissao_pct'] || r['comissao'] || r['commission_pct'] || '0').replace(',', '.')),
           payment_frequency: r['periodicidade'] || r['payment_frequency'] || r['frequencia'] || 'anual',
+          notes: r['observacoes'] || r['obs'] || r['notes'] || r['observações'] || '',
         }
       })
       res = await bulkImportPolicies(rows)

@@ -5,7 +5,7 @@ import { FileText, Link2, Copy, Trash2, Check, Search, ExternalLink } from 'luci
 import { generateClientToken, revokeClientToken } from '@/app/actions/portal'
 import { RAMO_LABELS } from '@/types/policy'
 import { cn } from '@/lib/utils/cn'
-import type { DocPolicy, DocClient, DocToken } from '@/app/(dashboard)/documentos/page'
+import type { DocPolicy, DocClient, DocToken } from '@/types/client'
 
 const PLAN_GATE = (plan: string) => plan === 'starter'
 

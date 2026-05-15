@@ -64,7 +64,6 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
   const [isPending, startTransition] = useTransition()
 
   const [policies, setPolicies] = useState<Policy[]>(initialPolicies)
-  const [newModalOpen, setNewModalOpen] = useState(false)
   const [pdfPolicy, setPdfPolicy] = useState<Policy | null>(null)
   const [pdfValidity, setPdfValidity] = useState<7 | 15 | 30>(15)
 
@@ -374,12 +373,6 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
       )}
 
       <ApolicaModal
-        open={newModalOpen}
-        onOpenChange={setNewModalOpen}
-        onCreated={(p) => setPolicies(prev => [p, ...prev])}
-      />
-
-      <ApolicaModal
         open={!!editingPolicy}
         onOpenChange={(v) => { if (!v) setEditingPolicy(null) }}
         editingPolicy={editingPolicy}
@@ -400,8 +393,6 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
         onClose={() => setRenovacaoPolicy(null)}
       />
 
-      {/* Botão "Nova Apólice" acessível via ref do PageHeader */}
-      <button id="nova-apolice-btn" onClick={() => setNewModalOpen(true)} className="hidden" />
     </>
   )
 }

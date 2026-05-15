@@ -6,6 +6,7 @@ import { PageHeader } from '@/components/layout/page-header'
 import { Button } from '@/components/ui/button'
 import { ApolicesTable } from '@/components/apolices/ApolicesTable'
 import { ImportPoliciesModal } from '@/components/apolices/ImportPoliciesModal'
+import { ApolicaModal } from '@/components/apolices/ApolicaModal'
 import { fetchPolicies } from './actions'
 import type { Policy } from '@/types/policy'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -21,6 +22,7 @@ function ApolicesPageInner() {
   const [count, setCount] = useState(0)
   const [loading, setLoading] = useState(true)
   const [csvOpen, setCsvOpen] = useState(false)
+  const [newModalOpen, setNewModalOpen] = useState(false)
 
   useEffect(() => {
     setLoading(true)
@@ -35,10 +37,6 @@ function ApolicesPageInner() {
       })
       .finally(() => setLoading(false))
   }, [tab, search, ramo, page])
-
-  function openModal() {
-    document.getElementById('nova-apolice-btn')?.click()
-  }
 
   function reloadPolicies() {
     setLoading(true)
@@ -55,11 +53,16 @@ function ApolicesPageInner() {
         actions={
           <div className="flex gap-2">
             <Button variant="secondary" size="sm" onClick={() => setCsvOpen(true)}>Importar CSV</Button>
-            <Button size="sm" onClick={openModal}>Nova Apólice</Button>
+            <Button size="sm" onClick={() => setNewModalOpen(true)}>Nova Apólice</Button>
           </div>
         }
       />
       <ImportPoliciesModal open={csvOpen} onOpenChange={setCsvOpen} onDone={reloadPolicies} />
+      <ApolicaModal
+        open={newModalOpen}
+        onOpenChange={setNewModalOpen}
+        onCreated={(p) => { setPolicies(prev => [p, ...prev]); setCount(c => c + 1) }}
+      />
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
           <p className="text-[13px] text-[#9CA3AF]">Carregando...</p>
@@ -71,7 +74,7 @@ function ApolicesPageInner() {
             title="Nenhuma apólice cadastrada"
             description="Importe suas apólices em massa ou cadastre a primeira manualmente."
             primaryCta={{ label: 'Importar CSV', onClick: () => setCsvOpen(true) }}
-            secondaryCta={{ label: 'Nova apólice', onClick: openModal }}
+            secondaryCta={{ label: 'Nova apólice', onClick: () => setNewModalOpen(true) }}
           />
         </div>
       ) : (

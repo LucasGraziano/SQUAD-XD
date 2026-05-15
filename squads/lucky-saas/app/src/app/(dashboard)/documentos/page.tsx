@@ -1,20 +1,9 @@
 import { createClient } from '@/lib/supabase/server'
 import { PageHeader } from '@/components/layout/page-header'
 import { DocumentosClient } from '@/components/documentos/DocumentosClient'
+import type { DocPolicy, DocClient, DocToken } from '@/types/client'
 
-export type DocPolicy = {
-  id: string; ramo: string; seguradora: string; policy_number: string | null
-  start_date: string; end_date: string; premium_total: number; status: string
-  clients: { name: string } | null
-}
-
-export type DocClient = {
-  id: string; name: string; phone: string | null; email: string | null
-}
-
-export type DocToken = {
-  id: string; client_id: string; token: string; expires_at: string | null; created_at: string
-}
+export type { DocPolicy, DocClient, DocToken }
 
 export default async function DocumentosPage() {
   const supabase = await createClient()

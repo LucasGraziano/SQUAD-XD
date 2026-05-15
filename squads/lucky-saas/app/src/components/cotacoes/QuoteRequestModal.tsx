@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { createQuoteRequest, updateQuoteRequest } from '@/app/(dashboard)/cotacoes/actions'
 import type { QuoteRequest } from '@/types/quote'
-import type { DocClient } from '@/app/(dashboard)/documentos/page'
+import type { DocClient } from '@/types/client'
 import { RAMO_LABELS } from '@/types/policy'
 
 const selectCls = "h-[42px] w-full rounded-[6px] border border-[#D1D1D1] bg-white px-3 text-[14px] text-[#0D0D0D] outline-none focus:border-[#0BD904] focus:shadow-[0_0_0_3px_rgba(11,217,4,0.12)] transition-colors"
