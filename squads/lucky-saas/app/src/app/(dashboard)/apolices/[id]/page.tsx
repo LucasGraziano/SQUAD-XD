@@ -33,13 +33,12 @@ export default function ApoliceDetailPage() {
   useEffect(() => {
     const supabase = createClient()
     Promise.all([
-      supabase.from('policies').select('*, clients(id, name, phone)').eq('id', id).single(),
+      supabase.from('policies').select('*, clients(id, name, phone)').eq('id', id).maybeSingle(),
       getPendencies({ policyId: id }),
     ]).then(([{ data: p }, pends]) => {
       setPolicy(p as (Policy & { clients?: { name: string; phone?: string | null } | null }) | null)
       setPendencies(pends)
-      setLoading(false)
-    })
+    }).catch(() => {}).finally(() => setLoading(false))
   }, [id])
 
   if (loading) {

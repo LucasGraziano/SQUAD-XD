@@ -13,8 +13,9 @@ async function getBrokerId(supabase: Awaited<ReturnType<typeof createClient>>, u
     .from('brokers')
     .select('id')
     .eq('user_id', userId)
-    .single()
-  const broker = result.data as { id: string } | null
+    .order('created_at', { ascending: false })
+    .limit(1)
+  const broker = (result.data as { id: string }[] | null)?.[0] ?? null
   return broker?.id ?? null
 }
 
@@ -75,6 +76,7 @@ export async function moveLead(leadId: string, newStatus: LeadStatus, previousSt
       closed_at: newStatus === 'fechado' ? now : null,
     })
     .eq('id', leadId)
+    .eq('broker_id', brokerId)
 
   if (error) return { error: error.message }
 
@@ -216,11 +218,17 @@ export async function fetchRecoveryLeads(): Promise<{ data: import('@/types/lead
 
 export async function fetchLeadActivities(leadId: string) {
   const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { error: 'Não autenticado' }
+
+  const brokerId = await getBrokerId(supabase, user.id)
+  if (!brokerId) return { error: 'Corretor não encontrado' }
 
   const { data, error } = await supabase
     .from('lead_activities')
     .select('*')
     .eq('lead_id', leadId)
+    .eq('broker_id', brokerId)
     .order('created_at', { ascending: false })
 
   if (error) return { error: error.message }

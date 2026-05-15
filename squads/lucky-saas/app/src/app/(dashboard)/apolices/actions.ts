@@ -195,7 +195,7 @@ export async function deletePolicy(id: string) {
   if (!brokerId) return { error: 'Não autenticado' }
 
   const sb: AnySupabase = supabase
-  await sb.from('alerts').delete().eq('policy_id', id)
+  await sb.from('alerts').delete().eq('policy_id', id).eq('broker_id', brokerId)
   const { error } = await sb.from('policies').delete().eq('id', id).eq('broker_id', brokerId)
 
   if (error) return { error: error.message }

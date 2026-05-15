@@ -41,8 +41,8 @@ export default async function DashboardPage() {
   const now = new Date().toISOString()
   const in7Days = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
   const [upcomingEventsResult, healthScore] = await Promise.all([
-    getCalendarEvents({ from: now, to: in7Days, includeDone: false }),
-    user ? getPortfolioHealthScore() : Promise.resolve(null),
+    getCalendarEvents({ from: now, to: in7Days, includeDone: false }).catch(() => [] as Awaited<ReturnType<typeof getCalendarEvents>>),
+    user ? getPortfolioHealthScore().catch(() => null) : Promise.resolve(null),
   ])
   // Cross-sell opportunities (needs brokerId — fetched inside if(user) block)
   // Deferred to after broker fetch below
@@ -53,9 +53,10 @@ export default async function DashboardPage() {
       .from('brokers')
       .select('id, onboarding_progress, first_alert_fired_at, first_win_seen_at')
       .eq('user_id', user.id)
-      .single()
+      .order('created_at', { ascending: false })
+      .limit(1)
 
-    const broker = brokerResult.data as { id: string; onboarding_progress?: Record<string, boolean | string | null>; first_alert_fired_at?: string | null; first_win_seen_at?: string | null } | null
+    const broker = (brokerResult.data as { id: string; onboarding_progress?: Record<string, boolean | string | null>; first_alert_fired_at?: string | null; first_win_seen_at?: string | null }[] | null)?.[0] ?? null
     if (broker?.onboarding_progress) onboardingProgress = broker.onboarding_progress
     if (broker?.first_alert_fired_at && !broker?.first_win_seen_at) {
       const firedAt = new Date(broker.first_alert_fired_at).getTime()

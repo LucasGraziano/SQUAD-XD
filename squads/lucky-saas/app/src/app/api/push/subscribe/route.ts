@@ -9,8 +9,9 @@ async function getBroker(supabase: AnySupabase, userId: string) {
     .from('brokers')
     .select('id')
     .eq('user_id', userId)
-    .single()
-  return result.data as { id: string } | null
+    .order('created_at', { ascending: false })
+    .limit(1)
+  return (result.data as { id: string }[] | null)?.[0] ?? null
 }
 
 export async function POST(req: NextRequest) {
@@ -51,13 +52,13 @@ export async function DELETE(req: NextRequest) {
   const body = await req.json()
   const { endpoint } = body as { endpoint: string }
 
-  const sb: AnySupabase = supabase
-  if (endpoint) {
-    await sb.from('push_subscriptions').delete()
-      .eq('broker_id', broker.id).eq('endpoint', endpoint)
-  } else {
-    await sb.from('push_subscriptions').delete().eq('broker_id', broker.id)
+  if (!endpoint) {
+    return NextResponse.json({ error: 'Missing endpoint' }, { status: 400 })
   }
+
+  const sb: AnySupabase = supabase
+  await sb.from('push_subscriptions').delete()
+    .eq('broker_id', broker.id).eq('endpoint', endpoint)
 
   return NextResponse.json({ ok: true })
 }

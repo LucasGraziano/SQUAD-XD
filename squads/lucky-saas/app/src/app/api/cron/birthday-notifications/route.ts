@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { runBirthdayNotificationsJob } from '@/lib/jobs/birthday-notifications'
 
 export async function POST(req: NextRequest) {
@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const supabase = await createClient()
+  const supabase = createAdminClient()
   const result = await runBirthdayNotificationsJob(supabase)
 
   return NextResponse.json({ ok: true, ...result })

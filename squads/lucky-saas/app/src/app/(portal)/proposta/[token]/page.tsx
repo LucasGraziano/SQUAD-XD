@@ -18,10 +18,11 @@ export default async function PropostaPage({ params }: Props) {
     notFound()
   }
 
-  // Increment view count
+  // Increment view count and record view timestamp
+  await supabase.rpc('increment_view_count', { quote_token: token })
   await supabase
     .from('quote_requests')
-    .update({ view_count: supabase.rpc('increment_view_count', { quote_token: token }), last_viewed_at: new Date().toISOString() })
+    .update({ last_viewed_at: new Date().toISOString() })
     .eq('share_token', token)
 
   const { data: quote, error } = await supabase

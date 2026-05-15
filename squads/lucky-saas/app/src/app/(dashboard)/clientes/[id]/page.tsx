@@ -40,17 +40,18 @@ export default function ClienteProfilePage() {
   useEffect(() => {
     const supabase = createClient()
     Promise.all([
-      supabase.from('clients').select('*').eq('id', id).single(),
+      supabase.from('clients').select('*').eq('id', id).maybeSingle(),
       supabase.from('policies').select('*').eq('client_id', id).order('end_date', { ascending: false }),
-      supabase.auth.getUser().then(({ data: { user } }) =>
-        user ? supabase.from('brokers').select('plan').eq('user_id', user.id).single() : Promise.resolve({ data: null })
-      ),
+      supabase.auth.getUser().then(async ({ data: { user } }) => {
+        if (!user) return { data: null }
+        const r = await supabase.from('brokers').select('plan').eq('user_id', user.id).order('created_at', { ascending: false }).limit(1)
+        return { data: (r.data as { plan: string }[] | null)?.[0] ?? null }
+      }),
     ]).then(([{ data: c }, { data: p }, { data: b }]) => {
       setClient(c as unknown as Client | null)
       setPolicies((p as unknown as Policy[]) ?? [])
       setBrokerPlan((b as { plan?: string } | null)?.plan ?? 'starter')
-      setLoading(false)
-    })
+    }).catch(() => {}).finally(() => setLoading(false))
   }, [id])
 
   if (loading) return <div className="flex-1 flex items-center justify-center"><p className="text-[13px] text-[#9CA3AF]">Carregando...</p></div>

@@ -7,7 +7,9 @@ import { SignJWT } from 'jose'
 const TARGETS = [60, 30, 15] as const
 
 async function generateOptOutToken(clientId: string) {
-  const secret = new TextEncoder().encode(process.env.NEXTAUTH_SECRET ?? 'secret')
+  const secretValue = process.env.NEXTAUTH_SECRET
+  if (!secretValue) throw new Error('NEXTAUTH_SECRET is not configured')
+  const secret = new TextEncoder().encode(secretValue)
   return new SignJWT({ clientId })
     .setProtectedHeader({ alg: 'HS256' })
     .setExpirationTime('1y')
