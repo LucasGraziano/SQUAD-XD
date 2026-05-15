@@ -18,9 +18,10 @@ export async function GET(_req: NextRequest) {
     .from('brokers')
     .select('id, name, susep, logo_url, plan')
     .eq('user_id', user.id)
-    .single()
+    .order('created_at', { ascending: false })
+    .limit(1)
 
-  const broker = brokerResult.data as { id: string; name: string; susep: string | null; logo_url: string | null; plan: string } | null
+  const broker = (brokerResult.data as { id: string; name: string; susep: string | null; logo_url: string | null; plan: string }[] | null)?.[0] ?? null
   if (!broker) {
     return NextResponse.json({ error: 'Corretor não encontrado' }, { status: 404 })
   }

@@ -35,13 +35,14 @@ export default function ClientesPage() {
     supabase.auth.getUser()
       .then(async ({ data: { user } }) => {
         if (!user) return
-        const brokerResult = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-        const broker = brokerResult.data as { id: string } | null
-        if (!broker) return
+        const brokerResult = await supabase.from('brokers').select('id').eq('user_id', user.id)
+          .order('created_at', { ascending: false }).limit(1)
+        const brokerId = (brokerResult.data as { id: string }[] | null)?.[0]?.id
+        if (!brokerId) return
         const { data } = await supabase
           .from('clients')
           .select('*')
-          .eq('broker_id', broker.id)
+          .eq('broker_id', brokerId)
           .order('name')
         setClients((data as Client[]) ?? [])
       })
@@ -210,10 +211,11 @@ export default function ClientesPage() {
           const supabase = createClient()
           supabase.auth.getUser().then(async ({ data: { user } }) => {
             if (!user) return
-            const brokerResult = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-            const broker = brokerResult.data as { id: string } | null
-            if (!broker) return
-            const { data } = await supabase.from('clients').select('*').eq('broker_id', broker.id).order('name')
+            const brokerResult = await supabase.from('brokers').select('id').eq('user_id', user.id)
+              .order('created_at', { ascending: false }).limit(1)
+            const brokerId = (brokerResult.data as { id: string }[] | null)?.[0]?.id
+            if (!brokerId) return
+            const { data } = await supabase.from('clients').select('*').eq('broker_id', brokerId).order('name')
             setClients((data as Client[]) ?? [])
           })
         }}

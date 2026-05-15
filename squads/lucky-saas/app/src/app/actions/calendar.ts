@@ -29,9 +29,10 @@ async function getAuth() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { supabase, user: null, brokerId: null as string | null }
-  const { data } = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-  const broker = data as { id: string } | null
-  return { supabase, user, brokerId: broker?.id ?? null }
+  const { data } = await supabase.from('brokers').select('id').eq('user_id', user.id)
+    .order('created_at', { ascending: false }).limit(1)
+  const brokerId = (data as { id: string }[] | null)?.[0]?.id ?? null
+  return { supabase, user, brokerId }
 }
 
 export async function getCalendarEvents(params: {

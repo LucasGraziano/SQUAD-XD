@@ -13,16 +13,18 @@ async function getAuth() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { supabase, brokerId: null as string | null, broker: null as null }
 
-  const { data: broker } = await supabase
+  const { data: brokerRows } = await supabase
     .from('brokers')
     .select('id, name, plan, renewal_emails_enabled, renewal_email_custom_text')
     .eq('user_id', user.id)
-    .single()
+    .order('created_at', { ascending: false })
+    .limit(1)
 
+  const broker = (brokerRows as { id: string; name: string; plan: string; renewal_emails_enabled: boolean; renewal_email_custom_text: string | null }[] | null)?.[0] ?? null
   return {
     supabase,
-    brokerId: (broker as { id: string } | null)?.id ?? null,
-    broker: broker as { id: string; name: string; plan: string; renewal_emails_enabled: boolean; renewal_email_custom_text: string | null } | null,
+    brokerId: broker?.id ?? null,
+    broker,
   }
 }
 

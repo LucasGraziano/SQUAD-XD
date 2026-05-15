@@ -11,9 +11,10 @@ async function getAuth() {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return { supabase, brokerId: null as string | null }
 
-  const { data: broker } = await supabase
-    .from('brokers').select('id').eq('user_id', user.id).single()
-  return { supabase, brokerId: (broker as { id: string } | null)?.id ?? null }
+  const { data: brokerRows } = await supabase
+    .from('brokers').select('id').eq('user_id', user.id)
+    .order('created_at', { ascending: false }).limit(1)
+  return { supabase, brokerId: (brokerRows as { id: string }[] | null)?.[0]?.id ?? null }
 }
 
 export type ProposalStatus = 'rascunho' | 'enviada' | 'em_analise' | 'emitida' | 'recusada' | 'cancelada'

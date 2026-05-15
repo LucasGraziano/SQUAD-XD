@@ -48,8 +48,9 @@ export async function GET(request: NextRequest) {
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return NextResponse.redirect(new URL('/login', request.url))
 
-  const { data: broker } = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-  const brokerId = (broker as { id: string } | null)?.id
+  const { data: brokerRows } = await supabase.from('brokers').select('id').eq('user_id', user.id)
+    .order('created_at', { ascending: false }).limit(1)
+  const brokerId = (brokerRows as { id: string }[] | null)?.[0]?.id
   if (!brokerId) return NextResponse.redirect(new URL('/configuracoes?google=error', request.url))
 
   // Upsert tokens

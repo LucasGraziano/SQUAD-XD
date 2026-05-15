@@ -15,8 +15,9 @@ async function getBrokerId(): Promise<string | null> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
-  const { data } = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-  return (data as { id: string } | null)?.id ?? null
+  const { data } = await supabase.from('brokers').select('id').eq('user_id', user.id)
+    .order('created_at', { ascending: false }).limit(1)
+  return (data as { id: string }[] | null)?.[0]?.id ?? null
 }
 
 export async function getGoogleToken(brokerId: string): Promise<string | null> {

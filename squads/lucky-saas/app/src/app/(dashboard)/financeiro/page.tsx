@@ -43,13 +43,15 @@ export default function FinanceiroPage() {
     const supabase = createClient()
     supabase.auth.getUser().then(async ({ data: { user } }) => {
       if (!user) { setLoading(false); return }
-      const { data: broker } = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-      if (!broker) { setLoading(false); return }
+      const { data: brokerRows } = await supabase.from('brokers').select('id').eq('user_id', user.id)
+        .order('created_at', { ascending: false }).limit(1)
+      const brokerId = (brokerRows as { id: string }[] | null)?.[0]?.id
+      if (!brokerId) { setLoading(false); return }
       const today = new Date().toISOString().split('T')[0]
       const { data } = await supabase
         .from('policies')
         .select('id, ramo, seguradora, end_date, premium_total, commission_pct, commission_expected, status, clients(name)')
-        .eq('broker_id', (broker as { id: string }).id)
+        .eq('broker_id', brokerId)
         .gte('end_date', today)
         .eq('status', 'ativa')
         .order('end_date', { ascending: true })

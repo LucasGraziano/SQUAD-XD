@@ -9,12 +9,14 @@ export async function getPortfolioHealthScore(): Promise<PortfolioHealthScore | 
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) return null
 
-  const { data: broker } = await (supabase as any)
+  const { data: brokerRows } = await (supabase as any)
     .from('brokers')
     .select('id')
     .eq('user_id', user.id)
-    .single()
+    .order('created_at', { ascending: false })
+    .limit(1)
 
-  if (!broker?.id) return null
-  return calculateHealthScore(broker.id)
+  const brokerId = (brokerRows as { id: string }[] | null)?.[0]?.id
+  if (!brokerId) return null
+  return calculateHealthScore(brokerId)
 }

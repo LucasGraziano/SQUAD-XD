@@ -10,8 +10,9 @@ export default async function AgendaPage() {
 
   let brokerId: string | null = null
   if (user) {
-    const { data } = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-    brokerId = (data as { id: string } | null)?.id ?? null
+    const { data } = await supabase.from('brokers').select('id').eq('user_id', user.id)
+      .order('created_at', { ascending: false }).limit(1)
+    brokerId = (data as { id: string }[] | null)?.[0]?.id ?? null
   }
 
   const [events, googleInfo] = await Promise.all([
