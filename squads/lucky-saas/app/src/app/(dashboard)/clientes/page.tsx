@@ -32,26 +32,28 @@ export default function ClientesPage() {
 
   useEffect(() => {
     const supabase = createClient()
-    supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) return
-      const brokerResult = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
-      const broker = brokerResult.data as { id: string } | null
-      if (!broker) return
-      const { data } = await supabase
-        .from('clients')
-        .select('*')
-        .eq('broker_id', broker.id)
-        .order('name')
-      setClients((data as Client[]) ?? [])
-      setLoading(false)
-    })
+    supabase.auth.getUser()
+      .then(async ({ data: { user } }) => {
+        if (!user) return
+        const brokerResult = await supabase.from('brokers').select('id').eq('user_id', user.id).single()
+        const broker = brokerResult.data as { id: string } | null
+        if (!broker) return
+        const { data } = await supabase
+          .from('clients')
+          .select('*')
+          .eq('broker_id', broker.id)
+          .order('name')
+        setClients((data as Client[]) ?? [])
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
   const filtered = clients.filter((c) => {
     if (search) {
       const s = search.toLowerCase()
       const matchesName = c.name.toLowerCase().includes(s)
-      const matchesPhone = c.phone.includes(search.replace(/\D/g, ''))
+      const matchesPhone = c.phone?.includes(search.replace(/\D/g, '')) ?? false
       const matchesEmail = c.email?.toLowerCase().includes(s) ?? false
       const matchesCpf = c.cpf_cnpj?.replace(/\D/g, '').includes(search.replace(/\D/g, '')) ?? false
       if (!matchesName && !matchesPhone && !matchesEmail && !matchesCpf) return false

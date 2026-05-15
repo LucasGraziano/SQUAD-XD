@@ -32,12 +32,25 @@ export default async function ConfiguracoesPage() {
   if (user) {
     const result = await supabase
       .from('brokers')
-      .select('id, name, creci, phone, susep, email, logo_url, plan, subscription_status, trial_ends_at, renewal_emails_enabled, renewal_email_custom_text')
+      .select('id, name, creci, phone, susep, email, logo_url, plan, subscription_status, trial_ends_at')
       .eq('user_id', user.id)
       .single()
 
-    broker = result.data as BrokerData | null
-    brokerId = broker?.id ?? null
+    const coreData = result.data as Omit<BrokerData, 'renewal_emails_enabled' | 'renewal_email_custom_text'> | null
+    if (coreData) {
+      brokerId = coreData.id
+      // Fetch optional columns separately — they may not exist in all envs
+      const ext = await supabase
+        .from('brokers')
+        .select('renewal_emails_enabled, renewal_email_custom_text')
+        .eq('id', brokerId)
+        .single()
+      broker = {
+        ...coreData,
+        renewal_emails_enabled: (ext.data as { renewal_emails_enabled?: boolean } | null)?.renewal_emails_enabled ?? false,
+        renewal_email_custom_text: (ext.data as { renewal_email_custom_text?: string | null } | null)?.renewal_email_custom_text ?? null,
+      }
+    }
   }
 
   const googleCalendar = brokerId
@@ -73,7 +86,7 @@ export default async function ConfiguracoesPage() {
             </div>
           </>
         ) : (
-          <p className="text-[13px] text-[#9CA3AF]">Carregando...</p>
+          <p className="text-[13px] text-[#9CA3AF]">Não foi possível carregar os dados. Recarregue a página.</p>
         )}
       </div>
     </>
