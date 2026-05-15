@@ -28,6 +28,7 @@ export default async function ConfiguracoesPage() {
 
   let broker: BrokerData | null = null
   let brokerId: string | null = null
+  let debugError: string | null = null
 
   if (user) {
     const result = await supabase
@@ -36,6 +37,10 @@ export default async function ConfiguracoesPage() {
       .eq('user_id', user.id)
       .single()
 
+    if (result.error) {
+      console.error('[configuracoes] broker query error:', result.error)
+      debugError = `${result.error.code}: ${result.error.message}`
+    }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const raw = result.data as any
     if (raw) {
@@ -90,7 +95,11 @@ export default async function ConfiguracoesPage() {
             </div>
           </>
         ) : (
-          <p className="text-[13px] text-[#9CA3AF]">Não foi possível carregar os dados. Recarregue a página.</p>
+          <div className="space-y-2">
+            <p className="text-[13px] text-[#9CA3AF]">Não foi possível carregar os dados. Recarregue a página.</p>
+            {debugError && <p className="text-[12px] text-[#DC2626] font-mono bg-[#FEF2F2] px-3 py-2 rounded">{debugError}</p>}
+            {!user && <p className="text-[12px] text-[#DC2626] font-mono bg-[#FEF2F2] px-3 py-2 rounded">user: null</p>}
+          </div>
         )}
       </div>
     </>
