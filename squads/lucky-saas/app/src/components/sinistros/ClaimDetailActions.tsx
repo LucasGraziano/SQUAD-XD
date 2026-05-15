@@ -22,6 +22,7 @@ export function ClaimDetailActions({ claimId, currentStatus }: Props) {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState<string | null>(null)
+  const [confirmDeny, setConfirmDeny] = useState(false)
 
   const isTerminal = TERMINAL_STATUSES.includes(currentStatus)
 
@@ -90,13 +91,31 @@ export function ClaimDetailActions({ claimId, currentStatus }: Props) {
             >
               Encerrar
             </button>
-            <button
-              disabled={saving}
-              onClick={() => handleStatusUpdate('denied')}
-              className="py-1.5 rounded-[6px] text-[12px] font-medium bg-[#FEF2F2] text-[#EF4444] hover:bg-[#FEE2E2] transition-colors"
-            >
-              Negar
-            </button>
+            {confirmDeny ? (
+              <div className="flex gap-1">
+                <button
+                  disabled={saving}
+                  onClick={() => { setConfirmDeny(false); handleStatusUpdate('denied') }}
+                  className="flex-1 py-1.5 rounded-[6px] text-[12px] font-semibold bg-[#EF4444] text-white hover:bg-[#DC2626] transition-colors"
+                >
+                  Confirmar
+                </button>
+                <button
+                  onClick={() => setConfirmDeny(false)}
+                  className="flex-1 py-1.5 rounded-[6px] text-[12px] font-medium border border-[#E5E5E5] text-[#6B7280] hover:bg-[#F9FAFB] transition-colors"
+                >
+                  Cancelar
+                </button>
+              </div>
+            ) : (
+              <button
+                disabled={saving}
+                onClick={() => setConfirmDeny(true)}
+                className="py-1.5 rounded-[6px] text-[12px] font-medium bg-[#FEF2F2] text-[#EF4444] hover:bg-[#FEE2E2] transition-colors"
+              >
+                Negar
+              </button>
+            )}
           </div>
         </div>
       )}

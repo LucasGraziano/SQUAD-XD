@@ -46,6 +46,7 @@ function EventRow({ event, onToggle, onDelete, onEdit }: {
   onDelete: (id: string) => void
   onEdit: (event: CalendarEvent) => void
 }) {
+  const [confirmDelete, setConfirmDelete] = useState(false)
   const meta = TYPE_META[event.event_type]
   const Icon = meta.icon
 
@@ -113,13 +114,30 @@ function EventRow({ event, onToggle, onDelete, onEdit }: {
             <Pencil size={13} />
           </button>
         )}
-        <button
-          onClick={() => onDelete(event.id)}
-          className="p-1.5 rounded text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEF2F2] transition-colors"
-          title="Excluir"
-        >
-          <Trash2 size={13} />
-        </button>
+        {confirmDelete ? (
+          <>
+            <button
+              onClick={() => { setConfirmDelete(false); onDelete(event.id) }}
+              className="px-2 py-0.5 rounded text-[11px] font-semibold bg-[#EF4444] text-white hover:bg-[#DC2626] transition-colors"
+            >
+              Confirmar
+            </button>
+            <button
+              onClick={() => setConfirmDelete(false)}
+              className="px-2 py-0.5 rounded text-[11px] text-[#6B7280] hover:text-[#0D0D0D] transition-colors"
+            >
+              Cancelar
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={() => setConfirmDelete(true)}
+            className="p-1.5 rounded text-[#9CA3AF] hover:text-[#EF4444] hover:bg-[#FEF2F2] transition-colors"
+            title="Excluir"
+          >
+            <Trash2 size={13} />
+          </button>
+        )}
       </div>
     </div>
   )
