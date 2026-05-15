@@ -6,6 +6,7 @@ import { X, Upload, CheckCircle, AlertTriangle, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { bulkImportClients, bulkImportPolicies } from '@/app/(dashboard)/apolices/actions'
 import { RAMO_LABELS } from '@/types/policy'
+import * as XLSX from 'xlsx'
 
 type Mode = 'clientes' | 'apolices'
 
@@ -16,30 +17,17 @@ interface Props {
   onDone?: () => void
 }
 
-function parseCsvLine(line: string): string[] {
-  const result: string[] = []
-  let current = ''
-  let inQuotes = false
-  for (let i = 0; i < line.length; i++) {
-    const ch = line[i]
-    if (ch === '"') { inQuotes = !inQuotes; continue }
-    if (ch === ',' && !inQuotes) { result.push(current.trim()); current = ''; continue }
-    current += ch
-  }
-  result.push(current.trim())
-  return result
-}
-
-function parseCsv(text: string): { headers: string[]; rows: Record<string, string>[] } {
-  const lines = text.split(/\r?\n/).filter(l => l.trim())
-  if (lines.length < 2) return { headers: [], rows: [] }
-  const headers = parseCsvLine(lines[0]).map(h => h.toLowerCase().trim())
-  const rows = lines.slice(1).map(line => {
-    const vals = parseCsvLine(line)
-    const row: Record<string, string> = {}
-    headers.forEach((h, i) => { row[h] = vals[i] ?? '' })
-    return row
-  }).filter(row => Object.values(row).some(v => v.trim()))
+function sheetToRows(sheet: XLSX.WorkSheet): { headers: string[]; rows: Record<string, string>[] } {
+  const data = XLSX.utils.sheet_to_json<string[]>(sheet, { header: 1, defval: '' })
+  if (data.length < 2) return { headers: [], rows: [] }
+  const headers = (data[0] as string[]).map(h => String(h).toLowerCase().trim())
+  const rows = (data.slice(1) as string[][])
+    .map(vals => {
+      const row: Record<string, string> = {}
+      headers.forEach((h, i) => { row[h] = String(vals[i] ?? '').trim() })
+      return row
+    })
+    .filter(row => Object.values(row).some(v => v))
   return { headers, rows }
 }
 
@@ -87,16 +75,25 @@ export function CsvImportModal({ open, onOpenChange, mode, onDone }: Props) {
     const file = e.target.files?.[0]
     if (!file) return
     e.target.value = ''
-    if (!file.name.endsWith('.csv')) { setFileError('Selecione um arquivo .csv'); return }
+    const isXlsx = /\.(xlsx|xls)$/i.test(file.name)
+    const isCsv = /\.csv$/i.test(file.name)
+    if (!isXlsx && !isCsv) { setFileError('Selecione um arquivo .xlsx, .xls ou .csv'); return }
     setFileError(null)
     const reader = new FileReader()
     reader.onload = (ev) => {
-      const text = ev.target?.result as string
-      const parsed = parseCsv(text)
-      if (!parsed.rows.length) { setFileError('CSV vazio ou sem dados válidos'); return }
-      setPreview({ ...parsed, raw: text })
+      try {
+        const data = ev.target?.result
+        const wb = XLSX.read(data, { type: isCsv ? 'string' : 'array', raw: false, dateNF: 'dd/mm/yyyy' })
+        const sheet = wb.Sheets[wb.SheetNames[0]]
+        const parsed = sheetToRows(sheet)
+        if (!parsed.rows.length) { setFileError('Arquivo vazio ou sem dados válidos'); return }
+        setPreview({ ...parsed, raw: '' })
+      } catch {
+        setFileError('Erro ao ler o arquivo. Verifique se não está corrompido.')
+      }
     }
-    reader.readAsText(file, 'UTF-8')
+    if (isCsv) reader.readAsText(file, 'UTF-8')
+    else reader.readAsArrayBuffer(file)
   }
 
   async function handleImport() {
@@ -165,7 +162,7 @@ export function CsvImportModal({ open, onOpenChange, mode, onDone }: Props) {
         <Dialog.Overlay className="fixed inset-0 bg-black/40 z-40" />
         <Dialog.Content className="fixed left-[50%] top-[50%] z-50 w-full max-w-[560px] max-h-[85vh] translate-x-[-50%] translate-y-[-50%] bg-white rounded-[12px] border border-[#E5E5E5] shadow-xl flex flex-col focus:outline-none">
           <div className="flex items-center justify-between px-6 py-4 border-b border-[#E5E5E5] flex-shrink-0">
-            <Dialog.Title className="text-[17px] font-semibold text-[#0D0D0D]">Importar {label} via CSV</Dialog.Title>
+            <Dialog.Title className="text-[17px] font-semibold text-[#0D0D0D]">Importar {label}</Dialog.Title>
             <Dialog.Close asChild>
               <button className="p-1.5 rounded-[6px] text-[#6B7280] hover:bg-[#F4F4F4] transition-colors"><X size={16} /></button>
             </Dialog.Close>
@@ -177,8 +174,8 @@ export function CsvImportModal({ open, onOpenChange, mode, onDone }: Props) {
                 {/* Download template */}
                 <div className="flex items-center justify-between p-3 rounded-[8px] bg-[#F9FFF9] border border-[rgba(11,217,4,0.2)]">
                   <div>
-                    <p className="text-[13px] font-medium text-[#0D0D0D]">Use nosso modelo CSV</p>
-                    <p className="text-[12px] text-[#6B7280]">Colunas já no formato correto</p>
+                    <p className="text-[13px] font-medium text-[#0D0D0D]">Baixar modelo CSV</p>
+                    <p className="text-[12px] text-[#6B7280]">Também aceita .xlsx e .xls</p>
                   </div>
                   <button
                     onClick={downloadTemplate}
@@ -191,13 +188,13 @@ export function CsvImportModal({ open, onOpenChange, mode, onDone }: Props) {
 
                 {/* Upload area */}
                 <div>
-                  <input ref={fileRef} type="file" accept=".csv" className="hidden" onChange={handleFile} />
+                  <input ref={fileRef} type="file" accept=".csv,.xlsx,.xls" className="hidden" onChange={handleFile} />
                   <button
                     onClick={() => { reset(); fileRef.current?.click() }}
                     className="w-full border-2 border-dashed border-[#D1D1D1] rounded-[8px] py-8 flex flex-col items-center gap-2 hover:border-[#0BD904] hover:bg-[#F9FFF9] transition-colors group"
                   >
                     <Upload size={24} className="text-[#9CA3AF] group-hover:text-[#0BD904] transition-colors" />
-                    <p className="text-[13px] font-medium text-[#6B7280] group-hover:text-[#0D0D0D]">Clique para selecionar o arquivo CSV</p>
+                    <p className="text-[13px] font-medium text-[#6B7280] group-hover:text-[#0D0D0D]">Clique para selecionar o arquivo <span className="font-semibold">.xlsx</span> ou <span className="font-semibold">.csv</span></p>
                   </button>
                   {fileError && <p className="mt-2 text-[12px] text-[#DC2626]">{fileError}</p>}
                 </div>
