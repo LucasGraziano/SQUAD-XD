@@ -56,9 +56,9 @@ function DownloadButton() {
   )
 }
 
-export function RelatorioCarteiraButton() {
+export function RelatorioCarteiraButton({ currentPlan }: { currentPlan?: string }) {
   return (
-    <PlanGate requiredPlan="pro" feature="relatorio-carteira">
+    <PlanGate requiredPlan="pro" feature="relatorio-carteira" currentPlan={currentPlan}>
       <DownloadButton />
     </PlanGate>
   )

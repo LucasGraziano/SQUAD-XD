@@ -35,6 +35,7 @@ export default async function ConfiguracoesPage() {
       .from('brokers')
       .select('*')
       .eq('user_id', user.id)
+      .order('created_at', { ascending: false })
       .limit(1)
 
     if (result.error) {
@@ -78,7 +79,7 @@ export default async function ConfiguracoesPage() {
               googleCalendar={googleCalendar}
             />
             <div className="mt-6">
-              <PlanGate requiredPlan="pro" feature="email-automatico">
+              <PlanGate requiredPlan="pro" feature="email-automatico" currentPlan={broker.plan}>
                 <RenewalEmailSection
                   initialEnabled={broker.renewal_emails_enabled ?? false}
                   initialCustomText={broker.renewal_email_custom_text ?? ''}
@@ -91,7 +92,7 @@ export default async function ConfiguracoesPage() {
             <div className="mt-6 bg-white rounded-[8px] border border-[#E5E5E5] p-6">
               <p className="text-[14px] font-semibold text-[#0D0D0D] mb-1">Relatório de Carteira</p>
               <p className="text-[13px] text-[#6B7280] mb-4">PDF profissional com resumo executivo da sua carteira para compartilhar com clientes corporativos.</p>
-              <RelatorioCarteiraButton />
+              <RelatorioCarteiraButton currentPlan={broker.plan} />
             </div>
           </>
         ) : (
