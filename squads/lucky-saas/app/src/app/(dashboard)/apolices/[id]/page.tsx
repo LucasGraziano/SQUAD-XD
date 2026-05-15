@@ -3,9 +3,11 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, MessageCircle } from 'lucide-react'
+import { ArrowLeft, MessageCircle, Pencil } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 import { createClient } from '@/lib/supabase/client'
 import { PendencyList } from '@/components/pendencies/PendencyList'
+import { ApolicaModal } from '@/components/apolices/ApolicaModal'
 import { getPendencies } from '@/app/actions/pendencies'
 import type { Pendency } from '@/app/actions/pendencies'
 import type { Policy } from '@/types/policy'
@@ -23,14 +25,15 @@ function daysTo(s: string) {
 
 export default function ApoliceDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const [policy, setPolicy] = useState<Policy & { clients?: { name: string; phone?: string | null } | null } | null>(null)
+  const [policy, setPolicy] = useState<Policy & { clients?: { name: string; phone?: string | null; id?: string } | null } | null>(null)
   const [pendencies, setPendencies] = useState<Pendency[]>([])
   const [loading, setLoading] = useState(true)
+  const [editOpen, setEditOpen] = useState(false)
 
   useEffect(() => {
     const supabase = createClient()
     Promise.all([
-      supabase.from('policies').select('*, clients(name, phone)').eq('id', id).single(),
+      supabase.from('policies').select('*, clients(id, name, phone)').eq('id', id).single(),
       getPendencies({ policyId: id }),
     ]).then(([{ data: p }, pends]) => {
       setPolicy(p as (Policy & { clients?: { name: string; phone?: string | null } | null }) | null)
@@ -69,7 +72,13 @@ export default function ApoliceDetailPage() {
             </div>
             {policy.clients && (
               <div className="flex items-center gap-3 text-[13px] text-[#6B7280]">
-                <span>{policy.clients.name}</span>
+                {policy.clients.id ? (
+                  <Link href={`/clientes/${policy.clients.id}`} className="hover:text-[#0BD904] transition-colors">
+                    {policy.clients.name}
+                  </Link>
+                ) : (
+                  <span>{policy.clients.name}</span>
+                )}
                 {policy.clients.phone && (
                   <a
                     href={`https://wa.me/55${policy.clients.phone.replace(/\D/g, '')}`}
@@ -84,12 +93,18 @@ export default function ApoliceDetailPage() {
               </div>
             )}
           </div>
-          <div className={`px-3 py-1 rounded-[6px] text-[12px] font-bold ${
-            days < 0 ? 'bg-[#FEE2E2] text-[#DC2626]' :
-            days <= 30 ? 'bg-[#FEF3C7] text-[#D97706]' :
-            'bg-[#DCFCE7] text-[#16A34A]'
-          }`}>
-            {days < 0 ? 'Vencida' : days <= 30 ? `Vence em ${days}d` : 'Ativa'}
+          <div className="flex items-center gap-2">
+            <div className={`px-3 py-1 rounded-[6px] text-[12px] font-bold ${
+              days < 0 ? 'bg-[#FEE2E2] text-[#DC2626]' :
+              days <= 30 ? 'bg-[#FEF3C7] text-[#D97706]' :
+              'bg-[#DCFCE7] text-[#16A34A]'
+            }`}>
+              {days < 0 ? 'Vencida' : days <= 30 ? `Vence em ${days}d` : 'Ativa'}
+            </div>
+            <Button variant="secondary" size="sm" onClick={() => setEditOpen(true)}>
+              <Pencil size={14} />
+              Editar
+            </Button>
           </div>
         </div>
       </div>
@@ -124,6 +139,14 @@ export default function ApoliceDetailPage() {
           policyId={id}
         />
       </div>
+
+      <ApolicaModal
+        open={editOpen}
+        onOpenChange={setEditOpen}
+        editingPolicy={policy}
+        onCreated={() => {}}
+        onUpdated={(updated) => setPolicy((prev) => prev ? { ...prev, ...updated } : prev)}
+      />
     </>
   )
 }

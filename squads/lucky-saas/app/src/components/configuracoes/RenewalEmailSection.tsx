@@ -25,10 +25,9 @@ const CAMPAIGN_LABELS: Record<string, string> = {
 interface Props {
   initialEnabled: boolean
   initialCustomText: string
-  plan: string
 }
 
-export function RenewalEmailSection({ initialEnabled, initialCustomText, plan }: Props) {
+export function RenewalEmailSection({ initialEnabled, initialCustomText }: Props) {
   const [enabled, setEnabled] = useState(initialEnabled)
   const [customText, setCustomText] = useState(initialCustomText)
   const [logs, setLogs] = useState<LogEntry[]>([])
@@ -37,10 +36,7 @@ export function RenewalEmailSection({ initialEnabled, initialCustomText, plan }:
   const [savedText, setSavedText] = useState(false)
   const [, startTransition] = useTransition()
 
-  const isBlocked = plan === 'starter'
-
   function handleToggle() {
-    if (isBlocked) return
     const next = !enabled
     setEnabled(next)
     startTransition(() => { toggleRenewalEmails(next) })
@@ -82,24 +78,17 @@ export function RenewalEmailSection({ initialEnabled, initialCustomText, plan }:
           </div>
         </div>
         <div className="flex items-center gap-3">
-          {isBlocked && (
-            <span className="px-2 py-0.5 rounded-[4px] bg-[#FEF3C7] text-[#D97706] text-[11px] font-semibold">
-              Plano Pro
-            </span>
-          )}
           <button
             onClick={handleToggle}
-            disabled={isBlocked}
             className={cn(
-              'relative w-10 h-5.5 rounded-full transition-colors flex-shrink-0',
-              enabled && !isBlocked ? 'bg-[#0BD904]' : 'bg-[#D1D1D1]',
-              isBlocked && 'opacity-40 cursor-not-allowed'
+              'relative rounded-full transition-colors flex-shrink-0',
+              enabled ? 'bg-[#0BD904]' : 'bg-[#D1D1D1]'
             )}
             style={{ height: '22px', width: '40px' }}
           >
             <span className={cn(
               'absolute top-[3px] w-4 h-4 bg-white rounded-full shadow transition-transform',
-              enabled && !isBlocked ? 'translate-x-[20px]' : 'translate-x-[3px]'
+              enabled ? 'translate-x-[20px]' : 'translate-x-[3px]'
             )} />
           </button>
         </div>
@@ -120,8 +109,7 @@ export function RenewalEmailSection({ initialEnabled, initialCustomText, plan }:
       </div>
 
       {/* Custom text */}
-      {!isBlocked && (
-        <div className="mb-5">
+      <div className="mb-5">
           <label className="block text-[12px] font-semibold text-[#6B7280] uppercase tracking-wide mb-1.5">
             Texto personalizado (abertura do e-mail)
           </label>
@@ -141,7 +129,6 @@ export function RenewalEmailSection({ initialEnabled, initialCustomText, plan }:
             </Button>
           </div>
         </div>
-      )}
 
       {/* Logs */}
       <div className="border-t border-[#E5E5E5] pt-4">

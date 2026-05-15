@@ -36,7 +36,28 @@ export function ImportPoliciesModal({ open, onOpenChange, onDone }: Props) {
     onOpenChange(false)
   }
 
-  function handleFile(file: File) {
+  async function handleFile(file: File) {
+    const isXlsx = file.name.endsWith('.xlsx') || file.name.endsWith('.xls')
+
+    if (isXlsx) {
+      const { read, utils } = await import('xlsx')
+      const buffer = await file.arrayBuffer()
+      const wb = read(buffer)
+      const ws = wb.Sheets[wb.SheetNames[0]]
+      // Convert sheet to CSV string, then use existing parser
+      const csvContent = utils.sheet_to_csv(ws)
+      const { rows: parsed, errors } = parseCsvContent(csvContent)
+      if (parsed.length > MAX_ROWS) {
+        setParseErrors([{ line: 0, message: `Máximo de ${MAX_ROWS} linhas. Arquivo tem ${parsed.length} linhas.`, raw: {} }])
+        setRows([])
+      } else {
+        setRows(parsed)
+        setParseErrors(errors)
+      }
+      setStep('preview')
+      return
+    }
+
     const reader = new FileReader()
     reader.onload = e => {
       const content = e.target?.result as string
@@ -56,7 +77,7 @@ export function ImportPoliciesModal({ open, onOpenChange, onDone }: Props) {
   function handleDrop(e: React.DragEvent) {
     e.preventDefault()
     const file = e.dataTransfer.files[0]
-    if (file && (file.name.endsWith('.csv') || file.name.endsWith('.txt'))) handleFile(file)
+    if (file && (file.name.endsWith('.csv') || file.name.endsWith('.txt') || file.name.endsWith('.xlsx') || file.name.endsWith('.xls'))) handleFile(file)
   }
 
   function handleImport() {
@@ -111,9 +132,9 @@ export function ImportPoliciesModal({ open, onOpenChange, onDone }: Props) {
                 className="border-2 border-dashed border-[#D1D1D1] rounded-[8px] p-10 text-center cursor-pointer hover:border-[#0BD904] transition-colors"
               >
                 <Upload size={32} className="mx-auto text-[#9CA3AF] mb-3" />
-                <p className="text-[14px] font-medium text-[#0D0D0D] mb-1">Arraste o arquivo CSV aqui</p>
-                <p className="text-[12px] text-[#9CA3AF]">ou clique para selecionar</p>
-                <input ref={fileRef} type="file" accept=".csv,.txt" className="hidden" onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])} />
+                <p className="text-[14px] font-medium text-[#0D0D0D] mb-1">Arraste o arquivo aqui</p>
+                <p className="text-[12px] text-[#9CA3AF]">ou clique para selecionar — CSV ou XLSX</p>
+                <input ref={fileRef} type="file" accept=".csv,.txt,.xlsx,.xls" className="hidden" onChange={e => e.target.files?.[0] && handleFile(e.target.files[0])} />
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-4">

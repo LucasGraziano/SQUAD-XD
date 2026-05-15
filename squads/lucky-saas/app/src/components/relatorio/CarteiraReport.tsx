@@ -47,8 +47,16 @@ const styles = StyleSheet.create({
     marginTop: 22,
   },
 
-  statRow: { flexDirection: 'row', gap: 10, marginBottom: 4 },
+  statRow: { flexDirection: 'row', marginBottom: 4 },
   statBox: {
+    flex: 1,
+    backgroundColor: C.gray100,
+    borderRadius: 6,
+    border: `1 solid ${C.gray200}`,
+    padding: 14,
+    marginRight: 10,
+  },
+  statBoxLast: {
     flex: 1,
     backgroundColor: C.gray100,
     borderRadius: 6,
@@ -61,7 +69,7 @@ const styles = StyleSheet.create({
 
   row: { flexDirection: 'row', marginBottom: 8, alignItems: 'center' },
   ramoLabel: { fontSize: 10, color: C.gray900, width: 90 },
-  barBg: { flex: 1, height: 8, backgroundColor: C.gray200, borderRadius: 4, overflow: 'hidden' },
+  barBg: { flex: 1, height: 8, backgroundColor: C.gray200, borderRadius: 4 },
   barFill: { height: 8, backgroundColor: C.green, borderRadius: 4 },
   barPct: { fontSize: 9, color: C.gray600, width: 36, textAlign: 'right', fontFamily: 'Helvetica-Bold' },
   barCount: { fontSize: 9, color: C.gray400, width: 40, textAlign: 'right' },
@@ -141,7 +149,7 @@ export function CarteiraReport({ data }: { data: CarteiraSummary }) {
               <Text style={styles.statLabel}>APÓLICES ATIVAS</Text>
               <Text style={styles.statValue}>{totalApolices}</Text>
             </View>
-            <View style={styles.statBox}>
+            <View style={styles.statBoxLast}>
               <Text style={styles.statLabel}>PRÊMIO SOB GESTÃO</Text>
               <Text style={styles.statValueGreen}>{formatBRL(premioAnualTotal)}</Text>
             </View>

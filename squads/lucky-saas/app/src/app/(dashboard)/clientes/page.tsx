@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Search, Plus, Trash2 } from 'lucide-react'
+import { Search, Plus, Trash2, Pencil } from 'lucide-react'
 import { PageHeader } from '@/components/layout/page-header'
 import { Button } from '@/components/ui/button'
 import { NovoClienteModal } from '@/components/clientes/NovoClienteModal'
@@ -22,6 +22,7 @@ export default function ClientesPage() {
   const [search, setSearch] = useState('')
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
+  const [editClient, setEditClient] = useState<Client | undefined>(undefined)
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null)
   const [deleting, setDeleting] = useState(false)
   const [csvOpen, setCsvOpen] = useState(false)
@@ -47,7 +48,14 @@ export default function ClientesPage() {
   }, [])
 
   const filtered = clients.filter((c) => {
-    if (search && !c.name.toLowerCase().includes(search.toLowerCase()) && !c.phone.includes(search)) return false
+    if (search) {
+      const s = search.toLowerCase()
+      const matchesName = c.name.toLowerCase().includes(s)
+      const matchesPhone = c.phone.includes(search.replace(/\D/g, ''))
+      const matchesEmail = c.email?.toLowerCase().includes(s) ?? false
+      const matchesCpf = c.cpf_cnpj?.replace(/\D/g, '').includes(search.replace(/\D/g, '')) ?? false
+      if (!matchesName && !matchesPhone && !matchesEmail && !matchesCpf) return false
+    }
     if (birthdayFilter) {
       if (!c.birth_date) return false
       const m = new Date(c.birth_date + 'T00:00:00').getMonth() + 1
@@ -157,10 +165,17 @@ export default function ClientesPage() {
                     <td className="px-5 py-3 text-[13px] text-[#6B7280]">{client.email ?? '—'}</td>
                     <td className="px-5 py-3 text-[13px] text-[#6B7280]">{formatDate(client.created_at)}</td>
                     <td className="px-5 py-3">
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-2">
                         <Link href={`/clientes/${client.id}`} className="text-[12px] text-[#0BD904] font-medium hover:underline">
                           Ver perfil →
                         </Link>
+                        <button
+                          onClick={() => { setEditClient(client); setModalOpen(true) }}
+                          className="p-1 rounded text-[#9CA3AF] hover:text-[#6B7280] hover:bg-[#F3F4F6] transition-colors"
+                          title="Editar cliente"
+                        >
+                          <Pencil size={13} />
+                        </button>
                         <button
                           onClick={() => setDeleteConfirmId(client.id)}
                           className="p-1 rounded text-[#9CA3AF] hover:text-[#DC2626] hover:bg-[#FEF2F2] transition-colors"
@@ -180,8 +195,10 @@ export default function ClientesPage() {
 
       <NovoClienteModal
         open={modalOpen}
-        onOpenChange={setModalOpen}
+        onOpenChange={(v) => { setModalOpen(v); if (!v) setEditClient(undefined) }}
+        client={editClient}
         onCreated={(newClient) => setClients((prev) => [newClient, ...prev].sort((a, b) => a.name.localeCompare(b.name)))}
+        onUpdated={(updated) => setClients((prev) => prev.map(c => c.id === updated.id ? updated : c).sort((a, b) => a.name.localeCompare(b.name)))}
       />
       <CsvImportModal
         open={csvOpen}

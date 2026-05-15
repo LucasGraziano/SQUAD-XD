@@ -1,0 +1,403 @@
+'use server'
+
+import { createClient as createSupabase } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
+import type { Client, CreateClientInput } from '@/types/client'
+import type { CreatePolicyInput, Policy } from '@/types/policy'
+
+// Supabase v2 strict mode resolves Insert/Update types as never for several tables.
+// We cast the client to any for mutation operations only — reads use the typed client.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type AnySupabase = any
+
+async function getAuth() {
+  const supabase = await createSupabase()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) return { supabase, user: null, brokerId: null as string | null }
+
+  const result = await supabase
+    .from('brokers')
+    .select('id')
+    .eq('user_id', user.id)
+    .single()
+
+  const broker = result.data as { id: string } | null
+  return { supabase, user, brokerId: broker?.id ?? null }
+}
+
+// ── Clients ──────────────────────────────────────────────────────────────────
+
+export async function findClientByCpf(cpf: string): Promise<Client | null> {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return null
+
+  const normalized = cpf.replace(/\D/g, '')
+  const { data } = await supabase
+    .from('clients')
+    .select('*')
+    .eq('broker_id', brokerId)
+    .eq('cpf_cnpj', normalized)
+    .maybeSingle()
+
+  return (data as Client | null)
+}
+
+export async function searchClients(query: string): Promise<Client[]> {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return []
+
+  const { data } = await supabase
+    .from('clients')
+    .select('*')
+    .eq('broker_id', brokerId)
+    .or(`name.ilike.%${query}%,phone.ilike.%${query}%,email.ilike.%${query}%`)
+    .order('name')
+    .limit(8)
+
+  return (data as Client[]) ?? []
+}
+
+export async function createClientAction(input: CreateClientInput) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { data, error } = await sb
+    .from('clients')
+    .insert({
+      broker_id: brokerId,
+      name: input.name,
+      phone: input.phone,
+      email: input.email || null,
+      cpf_cnpj: input.cpf_cnpj ? input.cpf_cnpj.replace(/\D/g, '') : null,
+      birth_date: input.birth_date || null,
+      cep: input.cep ? input.cep.replace(/\D/g, '') : null,
+      tipo_pessoa: input.tipo_pessoa || 'pf',
+      notes: input.notes || null,
+    })
+    .select()
+    .single()
+
+  if (error) return { error: error.message }
+  revalidatePath('/clientes')
+  return { data: data as Client }
+}
+
+export async function updateClientAction(id: string, input: Partial<CreateClientInput>) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { data, error } = await sb
+    .from('clients')
+    .update({
+      name: input.name,
+      phone: input.phone,
+      email: input.email ?? null,
+      cpf_cnpj: input.cpf_cnpj ? input.cpf_cnpj.replace(/\D/g, '') : null,
+      birth_date: input.birth_date ?? null,
+      cep: input.cep ? input.cep.replace(/\D/g, '') : null,
+      tipo_pessoa: input.tipo_pessoa ?? 'pf',
+      notes: input.notes ?? null,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', id)
+    .eq('broker_id', brokerId)
+    .select()
+    .single()
+
+  if (error) return { error: error.message }
+  revalidatePath('/clientes')
+  revalidatePath(`/clientes/${id}`)
+  return { data: data as Client }
+}
+
+// ── Policies ─────────────────────────────────────────────────────────────────
+
+export async function createPolicy(input: CreatePolicyInput) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { data: policy, error } = await sb
+    .from('policies')
+    .insert({
+      broker_id: brokerId,
+      client_id: input.client_id,
+      policy_number: input.policy_number || null,
+      ramo: input.ramo,
+      seguradora: input.seguradora,
+      start_date: input.start_date,
+      end_date: input.end_date,
+      premium_total: input.premium_total,
+      payment_frequency: input.payment_frequency,
+      commission_pct: input.commission_pct,
+      notes: input.notes || null,
+      metadata: input.metadata ?? {},
+      status: 'ativa',
+    })
+    .select('*, clients(*)')
+    .single()
+
+  if (error) return { error: error.message }
+
+  await scheduleRenewalAlerts(supabase, brokerId, policy.id, input.end_date)
+
+  revalidatePath('/apolices')
+  return { data: policy as Policy }
+}
+
+export async function updatePolicy(id: string, input: Partial<CreatePolicyInput>) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { data: policy, error } = await sb
+    .from('policies')
+    .update({
+      ...input,
+      policy_number: input.policy_number || null,
+      updated_at: new Date().toISOString(),
+    })
+    .eq('id', id)
+    .select('*, clients(*)')
+    .single()
+
+  if (error) return { error: error.message }
+
+  if (input.end_date) {
+    await sb.from('alerts').delete().eq('policy_id', id).in('type', ['renewal_90d', 'renewal_60d', 'renewal_30d'])
+    await scheduleRenewalAlerts(supabase, brokerId, id, input.end_date)
+  }
+
+  revalidatePath('/apolices')
+  return { data: policy as Policy }
+}
+
+export async function archivePolicy(id: string) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { error } = await sb
+    .from('policies')
+    .update({ status: 'cancelada', updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .eq('broker_id', brokerId)
+
+  if (error) return { error: error.message }
+  revalidatePath('/apolices')
+  return { success: true }
+}
+
+export async function deletePolicy(id: string) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  await sb.from('alerts').delete().eq('policy_id', id)
+  const { error } = await sb.from('policies').delete().eq('id', id).eq('broker_id', brokerId)
+
+  if (error) return { error: error.message }
+  revalidatePath('/apolices')
+  revalidatePath('/clientes')
+  return { success: true }
+}
+
+export async function deleteClient(id: string) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { error } = await sb.from('clients').delete().eq('id', id).eq('broker_id', brokerId)
+
+  if (error) return { error: error.message }
+  revalidatePath('/clientes')
+  return { success: true }
+}
+
+export async function bulkImportClients(rows: { name: string; phone: string; email?: string; cpf_cnpj?: string }[]) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado', imported: 0, skipped: 0 }
+
+  const sb: AnySupabase = supabase
+  let imported = 0
+  let skipped = 0
+
+  for (const row of rows) {
+    if (!row.name?.trim() || !row.phone?.trim()) { skipped++; continue }
+    const { error } = await sb.from('clients').insert({
+      broker_id: brokerId,
+      name: row.name.trim(),
+      phone: row.phone.replace(/\D/g, ''),
+      email: row.email?.trim() || null,
+      cpf_cnpj: row.cpf_cnpj?.replace(/\D/g, '') || null,
+      tipo_pessoa: 'pf',
+    })
+    if (error) skipped++
+    else imported++
+  }
+
+  revalidatePath('/clientes')
+  return { imported, skipped }
+}
+
+export async function bulkImportPolicies(rows: {
+  client_name: string; client_phone?: string; ramo: string; seguradora: string
+  policy_number?: string; start_date: string; end_date: string
+  premium_total: number; commission_pct: number; payment_frequency: string
+}[]) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado', imported: 0, skipped: 0 }
+
+  const sb: AnySupabase = supabase
+  let imported = 0
+  let skipped = 0
+
+  for (const row of rows) {
+    if (!row.client_name?.trim() || !row.ramo || !row.seguradora) { skipped++; continue }
+
+    // Upsert cliente pelo nome (simplificado)
+    let clientId: string | null = null
+    const { data: existing } = await supabase
+      .from('clients')
+      .select('id')
+      .eq('broker_id', brokerId)
+      .ilike('name', row.client_name.trim())
+      .maybeSingle()
+
+    if (existing) {
+      clientId = (existing as { id: string }).id
+    } else {
+      const { data: newClient } = await sb.from('clients').insert({
+        broker_id: brokerId,
+        name: row.client_name.trim(),
+        phone: row.client_phone?.replace(/\D/g, '') || '00000000000',
+      }).select('id').single()
+      clientId = newClient?.id ?? null
+    }
+
+    if (!clientId) { skipped++; continue }
+
+    const { error } = await sb.from('policies').insert({
+      broker_id: brokerId,
+      client_id: clientId,
+      ramo: row.ramo,
+      seguradora: row.seguradora,
+      policy_number: row.policy_number || null,
+      start_date: row.start_date,
+      end_date: row.end_date,
+      premium_total: row.premium_total,
+      payment_frequency: row.payment_frequency || 'anual',
+      commission_pct: row.commission_pct || 0,
+      status: 'ativa',
+      metadata: {},
+    })
+    if (error) skipped++
+    else imported++
+  }
+
+  revalidatePath('/apolices')
+  revalidatePath('/clientes')
+  return { imported, skipped }
+}
+
+// ── Alerts ───────────────────────────────────────────────────────────────────
+
+async function scheduleRenewalAlerts(
+  supabase: Awaited<ReturnType<typeof createSupabase>>,
+  brokerId: string,
+  policyId: string,
+  endDate: string
+) {
+  const end = new Date(endDate)
+  const alertDefs = [
+    { type: 'renewal_90d', days: 90, title: 'Renovação em 90 dias' },
+    { type: 'renewal_60d', days: 60, title: 'Renovação em 60 dias' },
+    { type: 'renewal_30d', days: 30, title: 'Renovação em 30 dias' },
+  ]
+
+  const alerts = alertDefs.map(({ type, days, title }) => {
+    const scheduled = new Date(end)
+    scheduled.setDate(scheduled.getDate() - days)
+    return {
+      broker_id: brokerId,
+      policy_id: policyId,
+      type,
+      title,
+      scheduled_for: scheduled.toISOString().split('T')[0],
+      status: 'pending',
+    }
+  })
+
+  const sb: AnySupabase = supabase
+  const { error: insertError } = await sb.from('alerts').insert(alerts)
+
+  // Story 7.9: First Win — set first_alert_fired_at if this is the broker's first alert
+  if (!insertError) {
+    const { data: broker } = await sb
+      .from('brokers')
+      .select('first_alert_fired_at')
+      .eq('id', brokerId)
+      .single()
+
+    if (broker && !broker.first_alert_fired_at) {
+      await sb
+        .from('brokers')
+        .update({ first_alert_fired_at: new Date().toISOString() })
+        .eq('id', brokerId)
+    }
+  }
+}
+
+export async function fetchPolicies({
+  tab = 'todas',
+  search = '',
+  ramo = '',
+  page = 1,
+  perPage = 25,
+}: {
+  tab?: string
+  search?: string
+  ramo?: string
+  page?: number
+  perPage?: number
+}) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { data: [], count: 0 }
+
+  const today = new Date().toISOString().split('T')[0]
+  const in30Days = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+
+  let query = supabase
+    .from('policies')
+    .select('*, clients(id, name, phone, email)', { count: 'exact' })
+    .eq('broker_id', brokerId)
+
+  // Tab filters
+  if (tab === 'ativas') {
+    query = query.eq('status', 'ativa').gte('end_date', today)
+  } else if (tab === 'vencendo') {
+    query = query.eq('status', 'ativa').gte('end_date', today).lte('end_date', in30Days)
+  } else if (tab === 'vencidas') {
+    query = query.lt('end_date', today)
+  } else if (tab === 'arquivadas') {
+    query = query.in('status', ['cancelada', 'suspensa'])
+  }
+
+  // Search
+  if (search) {
+    query = query.or(`policy_number.ilike.%${search}%,clients.name.ilike.%${search}%`)
+  }
+
+  // Ramo filter
+  if (ramo) query = query.eq('ramo', ramo)
+
+  const from = (page - 1) * perPage
+  const { data, count, error } = await query
+    .order('end_date', { ascending: true })
+    .range(from, from + perPage - 1)
+
+  if (error) return { data: [], count: 0 }
+  return { data: (data as Policy[]) ?? [], count: count ?? 0 }
+}

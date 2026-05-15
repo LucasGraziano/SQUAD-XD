@@ -1,4 +1,6 @@
+import { Resend } from 'resend'
 import { getAgeFromBirthDate, getCrossSellSuggestionByAge } from '@/lib/clients/birthday-crosssell'
+import { buildBirthdayEmailHtml } from '@/app/actions/email-campaigns'
 
 type SupabaseClient = Awaited<ReturnType<typeof import('@/lib/supabase/server').createClient>>
 
@@ -6,6 +8,7 @@ interface BirthdayClient {
   id: string
   name: string
   phone: string | null
+  email: string | null
   birth_date: string
   broker_id: string
 }
@@ -21,7 +24,7 @@ export async function runBirthdayNotificationsJob(supabase: SupabaseClient): Pro
   // Find clients with birthday today
   const { data: clients, error } = await sb
     .from('clients')
-    .select('id, name, phone, birth_date, broker_id')
+    .select('id, name, phone, email, birth_date, broker_id')
     .not('birth_date', 'is', null)
     .filter('birth_date', 'not.is', null)
 
@@ -36,6 +39,19 @@ export async function runBirthdayNotificationsJob(supabase: SupabaseClient): Pro
 
   let sent = 0
   let errors = 0
+
+  // Fetch unique brokers for birthday clients (to get broker name/phone)
+  const brokerIds = [...new Set(birthdayClients.map((c) => c.broker_id))]
+  const { data: brokersData } = await sb
+    .from('brokers')
+    .select('id, name, phone')
+    .in('id', brokerIds)
+  const brokersMap: Record<string, { name: string; phone: string | null }> = {}
+  for (const b of (brokersData ?? []) as { id: string; name: string; phone: string | null }[]) {
+    brokersMap[b.id] = b
+  }
+
+  const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
   for (const client of birthdayClients) {
     // Check if already notified this year
@@ -66,6 +82,24 @@ export async function runBirthdayNotificationsJob(supabase: SupabaseClient): Pro
     if (alertError) {
       errors++
       continue
+    }
+
+    // Send birthday email if client has email and Resend is configured
+    if (resend && client.email) {
+      const broker = brokersMap[client.broker_id]
+      const html = buildBirthdayEmailHtml({
+        clientName: client.name,
+        age,
+        brokerName: broker?.name ?? 'Seu corretor',
+        brokerPhone: broker?.phone ?? undefined,
+        suggestion,
+      })
+      await resend.emails.send({
+        from: process.env.RESEND_FROM_EMAIL ?? 'noreply@premia.app',
+        to: client.email,
+        subject: `🎂 Feliz Aniversário, ${client.name}!`,
+        html,
+      }).catch(() => { /* silently ignore email errors — alert was already created */ })
     }
 
     // Mark as notified this year

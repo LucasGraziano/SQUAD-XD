@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, MessageCircle, Shield } from 'lucide-react'
+import { ArrowLeft, MessageCircle, Shield, Pencil } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { ApolicaModal } from '@/components/apolices/ApolicaModal'
+import { NovoClienteModal } from '@/components/clientes/NovoClienteModal'
 import { ClientPortalSection } from '@/components/clientes/ClientPortalSection'
 import { createClient } from '@/lib/supabase/client'
 import type { Client } from '@/types/client'
@@ -32,6 +33,7 @@ export default function ClienteProfilePage() {
   const [policies, setPolicies] = useState<Policy[]>([])
   const [loading, setLoading] = useState(true)
   const [modalOpen, setModalOpen] = useState(false)
+  const [editModalOpen, setEditModalOpen] = useState(false)
   const [brokerPlan, setBrokerPlan] = useState('starter')
   const [activeTab, setActiveTab] = useState<'apolices' | 'historico'>('apolices')
 
@@ -86,10 +88,16 @@ export default function ClienteProfilePage() {
               </div>
             </div>
           </div>
-          <Button size="sm" onClick={() => setModalOpen(true)}>
-            <Shield size={14} />
-            Nova Apólice
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button variant="secondary" size="sm" onClick={() => setEditModalOpen(true)}>
+              <Pencil size={14} />
+              Editar
+            </Button>
+            <Button size="sm" onClick={() => setModalOpen(true)}>
+              <Shield size={14} />
+              Nova Apólice
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -192,6 +200,12 @@ export default function ClienteProfilePage() {
         onOpenChange={setModalOpen}
         preselectedClient={client}
         onCreated={(p) => setPolicies(prev => [p, ...prev])}
+      />
+      <NovoClienteModal
+        open={editModalOpen}
+        onOpenChange={setEditModalOpen}
+        client={client}
+        onUpdated={(updated) => setClient(updated)}
       />
     </>
   )

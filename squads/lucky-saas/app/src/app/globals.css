@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Fonts — Atyp Display fallback until woff2 files are added to public/fonts/ ── */
+    --font-atyp: "Helvetica Neue", sans-serif;
+
+    /* ── Sidebar ── */
+    --sidebar-bg: #0D0D0D;
+    --sidebar-border: #1A1A1A;
+    --sidebar-text: #8B8C81;
+    --sidebar-text-hover: #F0F2DF;
+    --sidebar-text-active: #FFFFFF;
+    --sidebar-item-hover: rgba(255, 255, 255, 0.04);
+    --sidebar-item-active-bg: rgba(11, 217, 4, 0.08);
+    --sidebar-item-active-border: #0BD904;
+
+    /* ── Content Area ── */
+    --canvas: #F8F8F8;
+    --surface: #FFFFFF;
+    --border: #E5E5E5;
+    --border-strong: #D1D1D1;
+    --line: rgba(0, 0, 0, 0.06);
+
+    /* ── Text ── */
+    --text-primary: #0D0D0D;
+    --text-secondary: #6B7280;
+    --text-muted: #9CA3AF;
+    --text-inverse: #FFFFFF;
+
+    /* ── Premia Brand ── */
+    --lucky-green: #0BD904;
+    --lucky-green-dark: #034001;
+    --lucky-green-subtle: rgba(11, 217, 4, 0.10);
+    --lucky-green-border: rgba(11, 217, 4, 0.25);
+    --lucky-offwhite: #F0F2DF;
+    --lucky-gray: #8B8C81;
+
+    /* ── Semantic ── */
+    --color-success: #16A34A;
+    --color-warning: #D97706;
+    --color-danger: #DC2626;
+    --color-info: #2563EB;
+
+    /* ── Spacing ── */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    --space-2xl: 24px;
+    --space-3xl: 32px;
+    --space-4xl: 48px;
+
+    /* ── Sidebar width ── */
+    --sidebar-width: 240px;
+    --page-header-height: 56px;
+  }
+
+  * {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html,
+  body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    background-color: var(--canvas);
+    color: var(--text-primary);
+  }
+
+  body {
+    font-family: var(--font-poppins), system-ui, -apple-system, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Scrollbar ocultada no sidebar */
+  .sidebar-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .sidebar-scroll {
+    scrollbar-width: none;
+  }
+
+  /* Skeleton animation */
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .skeleton {
+    background: linear-gradient(90deg, #F0F0F0 25%, #E8E8E8 50%, #F0F0F0 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 4px;
+  }
+
+  /* Monetary values */
+  .mono {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Focus visible padrão */
+  .focus-ring {
+    @apply outline-none focus-visible:ring-2 focus-visible:ring-[#0BD904] focus-visible:ring-offset-2;
+  }
+}
+
+/* ── Marketing Page Animations ── */
+@keyframes mkt-fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes mkt-fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes mkt-slideLeft {
+  from { opacity: 0; transform: translateX(-36px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes mkt-slideRight {
+  from { opacity: 0; transform: translateX(36px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes mkt-scaleIn {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes mkt-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes mkt-pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(11,217,4,0); }
+  50%       { box-shadow: 0 0 0 14px rgba(11,217,4,0.12); }
+}
+@keyframes mkt-count {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mkt-fade-up    { animation: mkt-fadeUp    0.65s cubic-bezier(0.16,1,0.3,1) both; }
+.mkt-fade-in    { animation: mkt-fadeIn    0.55s ease-out both; }
+.mkt-slide-left { animation: mkt-slideLeft 0.65s cubic-bezier(0.16,1,0.3,1) both; }
+.mkt-slide-right{ animation: mkt-slideRight 0.65s cubic-bezier(0.16,1,0.3,1) both; }
+.mkt-scale-in   { animation: mkt-scaleIn  0.55s cubic-bezier(0.16,1,0.3,1) both; }
+.mkt-float      { animation: mkt-float    5s ease-in-out infinite; }
+.mkt-pulse-green{ animation: mkt-pulse-green 2.8s ease-in-out infinite; }
+.mkt-count      { animation: mkt-count    0.5s cubic-bezier(0.16,1,0.3,1) both; }
+
+.mkt-d-100 { animation-delay: 100ms; }
+.mkt-d-150 { animation-delay: 150ms; }
+.mkt-d-200 { animation-delay: 200ms; }
+.mkt-d-300 { animation-delay: 300ms; }
+.mkt-d-400 { animation-delay: 400ms; }
+.mkt-d-500 { animation-delay: 500ms; }
+.mkt-d-600 { animation-delay: 600ms; }
+.mkt-d-700 { animation-delay: 700ms; }
+
+/* Dot grid background */
+.mkt-dot-grid {
+  background-image: radial-gradient(circle, #E2E2E2 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Hero green ambient glow */
+.mkt-hero-glow {
+  background: radial-gradient(ellipse 55% 45% at 80% -5%, rgba(11,217,4,0.07) 0%, transparent 70%);
+}
