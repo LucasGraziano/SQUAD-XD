@@ -25,8 +25,9 @@ export default async function DashboardLayout({
       .from('brokers')
       .select('id, name, plan, first_alert_fired_at, first_win_seen_at')
       .eq('user_id', user.id)
-      .single()
-    const broker = brokerResult.data as { id: string; name: string; plan: string; first_alert_fired_at: string | null; first_win_seen_at: string | null } | null
+      .limit(1)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const broker = (brokerResult.data as any)?.[0] as { id: string; name: string; plan: string; first_alert_fired_at: string | null; first_win_seen_at: string | null } | null
     if (broker) {
       brokerName = broker.name
       brokerPlan = broker.plan

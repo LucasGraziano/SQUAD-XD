@@ -15,10 +15,30 @@ export const PLAN_DISPLAY: Record<PlanKey, { name: string; price: string }> = {
   enterprise: { name: 'Enterprise', price: 'Sob consulta' },
 }
 
+const PLAN_ALIASES: Record<string, PlanKey> = {
+  // canonical keys (identity)
+  starter: 'starter',
+  pro: 'pro',
+  broker: 'broker',
+  enterprise: 'enterprise',
+  // display-name aliases that may be stored in the DB
+  solo: 'starter',
+  profissional: 'pro',
+  professional: 'pro',
+  equipe: 'broker',
+  team: 'broker',
+  // billing states
+  trialing: 'pro',
+  trial: 'pro',
+  active: 'starter',
+}
+
+export function normalizePlan(plan: string): PlanKey {
+  return PLAN_ALIASES[plan?.toLowerCase()] ?? 'starter'
+}
+
 export function meetsRequirement(currentPlan: string, requiredPlan: RequiredPlan): boolean {
-  // trialing users get Profissional-level access
-  const normalized = currentPlan === 'trialing' ? 'pro' : currentPlan
-  const currentLevel = PLAN_HIERARCHY[normalized as PlanKey] ?? 0
+  const currentLevel = PLAN_HIERARCHY[normalizePlan(currentPlan)]
   const requiredLevel = PLAN_HIERARCHY[requiredPlan]
   return currentLevel >= requiredLevel
 }
