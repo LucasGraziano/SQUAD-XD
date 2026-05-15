@@ -2,6 +2,7 @@ import { PageHeader } from '@/components/layout/page-header'
 import { AlertasList } from '@/components/alertas/AlertasList'
 import { fetchAllAlerts } from './actions'
 import { getPendencies } from '@/app/actions/pendencies'
+import { OnboardingAlertasTracker } from '@/components/alertas/OnboardingAlertasTracker'
 
 export default async function AlertasPage() {
   const [{ pending, pendingCount, dismissed }, overduePendencies] = await Promise.all([
@@ -16,6 +17,7 @@ export default async function AlertasPage() {
 
   return (
     <>
+      <OnboardingAlertasTracker />
       <PageHeader
         title="Alertas"
         subtitle={totalCount > 0

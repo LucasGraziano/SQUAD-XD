@@ -4,6 +4,7 @@ import { createClient as createSupabase } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import type { Client, CreateClientInput } from '@/types/client'
 import type { CreatePolicyInput, Policy } from '@/types/policy'
+import { updateOnboardingStep } from '@/app/actions/onboarding'
 
 // Supabase v2 strict mode resolves Insert/Update types as never for several tables.
 // We cast the client to any for mutation operations only — reads use the typed client.
@@ -80,6 +81,7 @@ export async function createClientAction(input: CreateClientInput) {
     .single()
 
   if (error) return { error: error.message }
+  updateOnboardingStep('first_client').catch(() => {})
   revalidatePath('/clientes')
   return { data: data as Client }
 }
@@ -143,6 +145,7 @@ export async function createPolicy(input: CreatePolicyInput) {
   if (error) return { error: error.message }
 
   await scheduleRenewalAlerts(supabase, brokerId, policy.id, input.end_date)
+  updateOnboardingStep('first_apolice').catch(() => {})
 
   revalidatePath('/apolices')
   return { data: policy as Policy }

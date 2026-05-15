@@ -13,6 +13,7 @@ import { CrossSellWidget } from '@/components/dashboard/CrossSellWidget'
 import { BirthdayNotificationCard } from '@/components/dashboard/BirthdayNotificationCard'
 import { getPortfolioHealthScore } from '@/app/actions/portfolio'
 import { detectCrossSellOpportunities } from '@/lib/portfolio/cross-sell'
+import { bootstrapOnboardingSteps } from '@/app/actions/onboarding'
 
 function hoursAgo(iso: string) {
   return (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60)
@@ -65,6 +66,11 @@ export default async function DashboardPage() {
     if (broker) {
       const today = new Date().toISOString().split('T')[0]
       const in30Days = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+
+      // AC-8: Bootstrap onboarding for brokers with pre-existing data
+      if (onboardingProgress && !onboardingProgress.dismissed) {
+        bootstrapOnboardingSteps(broker.id).catch(() => {})
+      }
 
       const [leadsRes, policiesRes, renewalsRes, alertsRes, claimsRes] = await Promise.all([
         supabase

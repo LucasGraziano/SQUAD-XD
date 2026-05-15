@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import type { ImportRow, ImportError } from '@/lib/import/parse-csv'
+import { updateOnboardingStep } from '@/app/actions/onboarding'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnySupabase = any
@@ -101,6 +102,8 @@ export async function importPolicies(rows: ImportRow[]): Promise<ImportResult> {
   }
 
   if (success > 0) {
+    updateOnboardingStep('first_apolice').catch(() => {})
+    updateOnboardingStep('first_client').catch(() => {})
     revalidatePath('/apolices')
     revalidatePath('/clientes')
   }

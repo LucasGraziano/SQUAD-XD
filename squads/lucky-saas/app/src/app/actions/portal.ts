@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { updateOnboardingStep } from '@/app/actions/onboarding'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type AnySupabase = any
@@ -48,6 +49,7 @@ export async function generateClientToken(
 
   if (error) return { token: null, error: error.message }
 
+  updateOnboardingStep('shared_portal').catch(() => {})
   revalidatePath(`/clientes/${clientId}`)
   return { token: (data as { token: string }).token, error: null }
 }

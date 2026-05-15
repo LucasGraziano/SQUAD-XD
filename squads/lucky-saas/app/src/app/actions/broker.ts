@@ -2,6 +2,7 @@
 
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
+import { updateOnboardingStep } from '@/app/actions/onboarding'
 
 // ── Story 7.9: First Win ──────────────────────────────────────────────────────
 
@@ -48,6 +49,7 @@ export async function updateBrokerProfile(input: UpdateBrokerInput): Promise<{ e
 
   if (error) return { error: error.message }
 
+  if (input.susep?.trim()) updateOnboardingStep('profile').catch(() => {})
   revalidatePath('/configuracoes')
   return { error: null }
 }
