@@ -35,14 +35,14 @@ export default async function ConfiguracoesPage() {
       .from('brokers')
       .select('*')
       .eq('user_id', user.id)
-      .single()
+      .limit(1)
 
     if (result.error) {
       console.error('[configuracoes] broker query error:', result.error)
       debugError = `${result.error.code}: ${result.error.message}`
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const raw = result.data as any
+    const raw = (result.data as any)?.[0]
     if (raw) {
       brokerId = raw.id
       broker = {
