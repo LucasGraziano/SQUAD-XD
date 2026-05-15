@@ -52,7 +52,7 @@ function ApolicesPageInner() {
         title="Apólices"
         actions={
           <div className="flex gap-2">
-            <Button variant="secondary" size="sm" onClick={() => setCsvOpen(true)}>Importar CSV</Button>
+            <Button variant="secondary" size="sm" onClick={() => setCsvOpen(true)}>Importar Apólices</Button>
             <Button size="sm" onClick={() => setNewModalOpen(true)}>Nova Apólice</Button>
           </div>
         }
@@ -73,7 +73,7 @@ function ApolicesPageInner() {
             illustration="apolices"
             title="Nenhuma apólice cadastrada"
             description="Importe suas apólices em massa ou cadastre a primeira manualmente."
-            primaryCta={{ label: 'Importar CSV', onClick: () => setCsvOpen(true) }}
+            primaryCta={{ label: 'Importar Apólices', onClick: () => setCsvOpen(true) }}
             secondaryCta={{ label: 'Nova apólice', onClick: () => setNewModalOpen(true) }}
           />
         </div>

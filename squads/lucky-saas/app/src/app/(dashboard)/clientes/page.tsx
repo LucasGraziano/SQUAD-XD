@@ -94,7 +94,7 @@ export default function ClientesPage() {
         title="Clientes"
         actions={
             <div className="flex gap-2">
-            <Button variant="secondary" size="sm" onClick={() => setCsvOpen(true)}>Importar CSV</Button>
+            <Button variant="secondary" size="sm" onClick={() => setCsvOpen(true)}>Importar Clientes</Button>
             <Button size="sm" onClick={() => setModalOpen(true)}>
               <Plus size={14} />
               Novo Cliente
