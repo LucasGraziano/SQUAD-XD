@@ -38,6 +38,7 @@ export default function OnboardingPage() {
 
   const [step, setStep] = useState<Step>(1)
   const [loading, setLoading] = useState(false)
+  const [saveError, setSaveError] = useState<string | null>(null)
   const [tourSlide, setTourSlide] = useState(0)
 
   // Step 1
@@ -58,18 +59,25 @@ export default function OnboardingPage() {
 
   async function handleComplete() {
     setLoading(true)
+    setSaveError(null)
 
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { router.push('/login'); return }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (supabase as any).from('brokers').upsert({
+    const { error } = await (supabase as any).from('brokers').upsert({
       user_id: user.id,
       name,
       susep: susep || null,
       email: user.email!,
       settings: { ramos: selectedRamos, cart_size: cartSize },
     })
+
+    if (error) {
+      setSaveError('Erro ao salvar perfil. Tente novamente.')
+      setLoading(false)
+      return
+    }
 
     router.push('/dashboard')
     router.refresh()
@@ -240,9 +248,12 @@ export default function OnboardingPage() {
                     Próximo
                   </Button>
                 ) : (
-                  <Button className="w-full" loading={loading} onClick={handleComplete}>
-                    Começar a usar
-                  </Button>
+                  <>
+                    {saveError && <p className="text-[12px] text-red-500 text-center">{saveError}</p>}
+                    <Button className="w-full" loading={loading} onClick={handleComplete}>
+                      Começar a usar
+                    </Button>
+                  </>
                 )}
               </div>
             </div>

@@ -130,9 +130,9 @@ export default function SignupPage() {
             placeholder="Repita a senha"
             required
             autoComplete="new-password"
-            error={error ?? undefined}
           />
 
+          {error && <p className="text-[12px] text-red-500">{error}</p>}
           <Button type="submit" loading={loading} className="w-full">
             Criar conta
           </Button>

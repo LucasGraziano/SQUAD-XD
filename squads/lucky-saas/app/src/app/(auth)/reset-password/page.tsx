@@ -11,14 +11,22 @@ export default function ResetPasswordPage() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     setLoading(true)
+    setError(null)
 
-    await supabase.auth.resetPasswordForEmail(email, {
+    const { error: err } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth/callback?next=/nova-senha`,
     })
+
+    if (err) {
+      setError('Erro ao enviar o link. Tente novamente.')
+      setLoading(false)
+      return
+    }
 
     setSent(true)
     setLoading(false)
@@ -54,6 +62,7 @@ export default function ResetPasswordPage() {
                 placeholder="seu@email.com"
                 required
               />
+              {error && <p className="text-[12px] text-red-500">{error}</p>}
               <Button type="submit" loading={loading} className="w-full">
                 Enviar link
               </Button>

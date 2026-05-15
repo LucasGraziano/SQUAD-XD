@@ -35,6 +35,7 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
   const [loadingTokenId, setLoadingTokenId] = useState<string | null>(null)
   const [copiedId, setCopiedId] = useState<string | null>(null)
   const [confirmRevokeId, setConfirmRevokeId] = useState<string | null>(null)
+  const [actionError, setActionError] = useState<string | null>(null)
 
   const isGated = PLAN_GATE(plan)
   const portalOrigin = typeof window !== 'undefined' ? window.location.origin : ''
@@ -56,9 +57,13 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
 
   async function handleGenerateToken(clientId: string) {
     setLoadingTokenId(clientId)
+    setActionError(null)
     const { token, error } = await generateClientToken(clientId)
     setLoadingTokenId(null)
-    if (error || !token) return
+    if (error || !token) {
+      setActionError('Erro ao gerar link do portal. Tente novamente.')
+      return
+    }
     const newToken: DocToken = {
       id: crypto.randomUUID(),
       client_id: clientId,
@@ -72,8 +77,13 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
   async function handleRevokeToken(tokenId: string, clientId: string) {
     setLoadingTokenId(clientId)
     setConfirmRevokeId(null)
-    await revokeClientToken(tokenId, clientId)
+    setActionError(null)
+    const result = await revokeClientToken(tokenId, clientId)
     setLoadingTokenId(null)
+    if (result?.error) {
+      setActionError('Erro ao revogar acesso. Tente novamente.')
+      return
+    }
     setLocalTokens(prev => prev.filter(t => t.id !== tokenId))
   }
 
@@ -85,6 +95,11 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
 
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
+      {actionError && (
+        <div className="mx-8 mt-4 px-4 py-2 rounded-[6px] bg-[#FEF2F2] border border-[#FECACA] text-[12px] text-[#DC2626]">
+          {actionError}
+        </div>
+      )}
       {/* Tabs */}
       <div className="flex gap-0 border-b border-[#E5E5E5] px-8">
         {([
