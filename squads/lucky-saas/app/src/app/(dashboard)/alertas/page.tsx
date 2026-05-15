@@ -1,12 +1,11 @@
 import { PageHeader } from '@/components/layout/page-header'
 import { AlertasList } from '@/components/alertas/AlertasList'
-import { fetchAlerts } from './actions'
+import { fetchAllAlerts } from './actions'
 import { getPendencies } from '@/app/actions/pendencies'
 
 export default async function AlertasPage() {
-  const [{ data: pending, count: pendingCount }, { data: dismissed }, overduePendencies] = await Promise.all([
-    fetchAlerts('pending'),
-    fetchAlerts('dismissed'),
+  const [{ pending, pendingCount, dismissed }, overduePendencies] = await Promise.all([
+    fetchAllAlerts(),
     getPendencies({ status: 'open' }),
   ])
 

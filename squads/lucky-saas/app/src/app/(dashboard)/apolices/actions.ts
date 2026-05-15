@@ -19,9 +19,10 @@ async function getAuth() {
     .from('brokers')
     .select('id')
     .eq('user_id', user.id)
-    .single()
+    .order('created_at', { ascending: false })
+    .limit(1)
 
-  const broker = result.data as { id: string } | null
+  const broker = (result.data as { id: string }[] | null)?.[0] ?? null
   return { supabase, user, brokerId: broker?.id ?? null }
 }
 
@@ -419,9 +420,21 @@ export async function fetchPolicies({
     query = query.in('status', ['cancelada', 'suspensa'])
   }
 
-  // Search
+  // Search — two-step to avoid unreliable embedded-resource or() in PostgREST
   if (search) {
-    query = query.or(`policy_number.ilike.%${search}%,clients.name.ilike.%${search}%`)
+    const term = `%${search}%`
+    const { data: clientMatches } = await supabase
+      .from('clients')
+      .select('id')
+      .eq('broker_id', brokerId)
+      .ilike('name', term)
+    const clientIds = (clientMatches as { id: string }[] | null)?.map(c => c.id) ?? []
+
+    if (clientIds.length > 0) {
+      query = query.or(`policy_number.ilike.${term},client_id.in.(${clientIds.join(',')})`)
+    } else {
+      query = query.ilike('policy_number', term)
+    }
   }
 
   // Ramo filter

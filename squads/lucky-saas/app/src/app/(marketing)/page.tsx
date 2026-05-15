@@ -14,6 +14,20 @@ import { Footer } from '@/components/marketing/Footer'
 export const metadata = {
   title: 'Premia — Nunca perca uma renovação',
   description: 'O sistema de gestão para corretores SUSEP. Pipeline de leads, alertas de renovação e controle de comissões. Comece grátis.',
+  openGraph: {
+    title: 'Premia — Nunca perca uma renovação',
+    description: 'O sistema de gestão para corretores SUSEP. Pipeline de leads, alertas de renovação e controle de comissões. Comece grátis.',
+    type: 'website',
+    siteName: 'Premia',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Premia — Nunca perca uma renovação',
+    description: 'O sistema de gestão para corretores SUSEP. Pipeline de leads, alertas de renovação e controle de comissões. Comece grátis.',
+  },
+  alternates: {
+    canonical: '/',
+  },
 }
 
 export default function LandingPage() {

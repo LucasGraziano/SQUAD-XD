@@ -11,6 +11,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'https://premiasaas.com.br'),
   title: 'Premia — Gestão para Corretores de Seguros',
   description: 'O sistema feito por corretor para corretor. Nunca perca uma renovação, sempre saiba quanto vai receber.',
   manifest: '/manifest.json',

@@ -12,9 +12,10 @@ async function getBrokerId() {
     .from('brokers')
     .select('id')
     .eq('user_id', user.id)
-    .single()
+    .order('created_at', { ascending: false })
+    .limit(1)
 
-  const broker = result.data as { id: string } | null
+  const broker = (result.data as { id: string }[] | null)?.[0] ?? null
   return { supabase, brokerId: broker?.id ?? null }
 }
 
@@ -63,4 +64,27 @@ export async function fetchAlerts(status: 'pending' | 'dismissed' | 'all' = 'pen
 
   if (error) return { data: [], count: 0 }
   return { data: data ?? [], count: count ?? 0 }
+}
+
+export async function fetchAllAlerts() {
+  const { supabase, brokerId } = await getBrokerId()
+  if (!brokerId) return { pending: [], pendingCount: 0, dismissed: [] }
+
+  const { data, error } = await supabase
+    .from('alerts')
+    .select(`
+      id, type, title, description, scheduled_for, status, created_at,
+      policies ( id, ramo, seguradora, end_date, clients ( id, name, phone ) ),
+      leads ( id, name, phone )
+    `)
+    .eq('broker_id', brokerId)
+    .in('status', ['pending', 'dismissed'])
+    .order('scheduled_for', { ascending: true })
+    .limit(100)
+
+  if (error) return { pending: [], pendingCount: 0, dismissed: [] }
+
+  const pending = (data ?? []).filter((a: { status: string }) => a.status === 'pending')
+  const dismissed = (data ?? []).filter((a: { status: string }) => a.status === 'dismissed')
+  return { pending, pendingCount: pending.length, dismissed }
 }
