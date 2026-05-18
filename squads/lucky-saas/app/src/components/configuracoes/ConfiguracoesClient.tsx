@@ -1,11 +1,12 @@
 'use client'
 
-import { useState } from 'react'
-import { Check, Eye, EyeOff, Calendar, Unlink } from 'lucide-react'
+import { useState, useTransition } from 'react'
+import { Check, Eye, EyeOff, Calendar, Unlink, ExternalLink } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PlanGateModal } from '@/components/shared/PlanGateModal'
 import { updateBrokerProfile } from '@/app/actions/broker'
 import { disconnectGoogleCalendar } from '@/app/actions/calendar'
+import { createPortalSession } from '@/app/actions/billing'
 import { createClient as createBrowserClient } from '@/lib/supabase/client'
 import { meetsRequirement } from '@/lib/constants/plan-gates'
 
@@ -26,6 +27,7 @@ interface BrokerData {
   plan: string
   subscription_status: string | null
   trial_ends_at: string | null
+  stripeCustomerId?: string | null
 }
 
 interface GoogleCalendarState {
@@ -121,12 +123,16 @@ export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props
   )
   const [disconnecting, setDisconnecting] = useState(false)
   const [showCalendarGate, setShowCalendarGate] = useState(false)
+  const [portalPending, startPortalTransition] = useTransition()
 
   const canUseCalendar = meetsRequirement(broker.plan, 'broker')
 
   const planInfo = PLAN_LABELS[broker.plan] ?? { name: broker.plan, price: '—', color: '#6B7280' }
 
-  const isTrial = broker.subscription_status === 'trialing'
+  const isTrial = broker.subscription_status === 'trial'
+  const daysRemaining = broker.trial_ends_at
+    ? Math.max(0, Math.ceil((new Date(broker.trial_ends_at).getTime() - Date.now()) / 86400000))
+    : null
   const trialEnd = broker.trial_ends_at
     ? new Intl.DateTimeFormat('pt-BR').format(new Date(broker.trial_ends_at))
     : null
@@ -242,9 +248,9 @@ export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props
               </span>
               <span className="text-[13px] text-[#6B7280]">{planInfo.price}</span>
             </div>
-            {isTrial && trialEnd && (
+            {isTrial && daysRemaining !== null && (
               <p className="text-[12px] text-[#D97706] mt-1">
-                Trial ativo — expira em {trialEnd}
+                Trial ativo — {daysRemaining > 0 ? `${daysRemaining} dia${daysRemaining !== 1 ? 's' : ''} restante${daysRemaining !== 1 ? 's' : ''}` : `expira hoje (${trialEnd})`}
               </p>
             )}
             {!isTrial && broker.subscription_status === 'active' && (
@@ -303,9 +309,23 @@ export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props
               <p className="text-[13px] font-medium text-[#0D0D0D]">Stripe Billing</p>
               <p className="text-[12px] text-[#9CA3AF]">Pagamentos e gestão de assinatura</p>
             </div>
-            <span className="inline-flex items-center px-2 py-0.5 rounded-[4px] text-[11px] font-medium bg-[#F3F4F6] text-[#9CA3AF]">
-              Em breve
-            </span>
+            {broker.stripeCustomerId ? (
+              <button
+                onClick={() => startPortalTransition(() => createPortalSession())}
+                disabled={portalPending}
+                className="inline-flex items-center gap-1.5 h-8 px-3 rounded-[6px] border border-[#D1D1D1] bg-white text-[#0D0D0D] text-[12px] font-semibold hover:bg-[#F4F4F4] transition-colors disabled:opacity-60"
+              >
+                <ExternalLink size={12} />
+                {portalPending ? 'Abrindo...' : 'Gerenciar assinatura'}
+              </button>
+            ) : (
+              <a
+                href="/pricing"
+                className="inline-flex items-center h-8 px-3 rounded-[6px] bg-[#0BD904] text-[#0D0D0D] text-[12px] font-semibold hover:bg-[#09c203] transition-colors"
+              >
+                Assinar agora
+              </a>
+            )}
           </div>
 
           {/* Resend */}

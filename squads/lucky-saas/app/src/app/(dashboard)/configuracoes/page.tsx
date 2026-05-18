@@ -5,7 +5,6 @@ import { RenewalEmailSection } from '@/components/configuracoes/RenewalEmailSect
 import { PlanGate } from '@/components/shared/PlanGate'
 import { PushNotificationsSection } from '@/components/configuracoes/PushNotificationsSection'
 import { RelatorioCarteiraButton } from '@/components/configuracoes/RelatorioCarteiraButton'
-import { BillingSection } from '@/components/configuracoes/BillingSection'
 import { getGoogleCalendarInfo } from '@/lib/google-calendar'
 
 type BrokerData = {
@@ -19,6 +18,7 @@ type BrokerData = {
   plan: string
   subscription_status: string | null
   trial_ends_at: string | null
+  stripeCustomerId?: string | null
   renewal_emails_enabled?: boolean
   renewal_email_custom_text?: string | null
 }
@@ -58,6 +58,7 @@ export default async function ConfiguracoesPage() {
         plan: raw.plan ?? 'starter',
         subscription_status: raw.subscription_status ?? null,
         trial_ends_at: raw.trial_ends_at ?? null,
+        stripeCustomerId: raw.stripe_customer_id ?? null,
         renewal_emails_enabled: raw.renewal_emails_enabled ?? false,
         renewal_email_custom_text: raw.renewal_email_custom_text ?? null,
       }
@@ -89,14 +90,6 @@ export default async function ConfiguracoesPage() {
             </div>
             <div className="mt-6">
               <PushNotificationsSection />
-            </div>
-            <div className="mt-6">
-              <BillingSection
-                plan={broker.plan}
-                subscriptionStatus={broker.subscription_status}
-                trialEndsAt={broker.trial_ends_at}
-                stripeCustomerId={(broker as any).stripe_customer_id ?? null}
-              />
             </div>
             <div className="mt-6 bg-white rounded-[8px] border border-[#E5E5E5] p-6">
               <p className="text-[14px] font-semibold text-[#0D0D0D] mb-1">Relatório de Carteira</p>
