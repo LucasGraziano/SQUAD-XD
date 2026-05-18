@@ -129,7 +129,7 @@ export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props
 
   const planInfo = PLAN_LABELS[broker.plan] ?? { name: broker.plan, price: '—', color: '#6B7280' }
 
-  const isTrial = broker.subscription_status === 'trial'
+  const isTrial = broker.subscription_status === 'trial' || broker.subscription_status === 'trialing'
   const daysRemaining = broker.trial_ends_at
     ? Math.max(0, Math.ceil((new Date(broker.trial_ends_at).getTime() - Date.now()) / 86400000))
     : null

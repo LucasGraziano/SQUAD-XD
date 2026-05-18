@@ -89,7 +89,7 @@ export async function middleware(request: NextRequest) {
       if (broker) {
         const now = new Date()
         const isTrialExpired =
-          broker.subscription_status === 'trial' &&
+          (broker.subscription_status === 'trial' || broker.subscription_status === 'trialing') &&
           broker.trial_ends_at &&
           new Date(broker.trial_ends_at) < now
 
