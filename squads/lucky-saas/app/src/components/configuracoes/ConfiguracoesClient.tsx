@@ -1,14 +1,22 @@
 'use client'
 
 import { useState, useTransition } from 'react'
-import { Check, Eye, EyeOff, Calendar, Unlink, ExternalLink } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { Check, Eye, EyeOff, Calendar, Unlink, ExternalLink, AlertTriangle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { PlanGateModal } from '@/components/shared/PlanGateModal'
 import { updateBrokerProfile } from '@/app/actions/broker'
 import { disconnectGoogleCalendar } from '@/app/actions/calendar'
-import { createPortalSession } from '@/app/actions/billing'
+import {
+  createPortalSession,
+  createCheckoutSession,
+  cancelTrial,
+  cancelSubscription,
+  reactivateSubscription,
+} from '@/app/actions/billing'
 import { createClient as createBrowserClient } from '@/lib/supabase/client'
 import { meetsRequirement } from '@/lib/constants/plan-gates'
+import type { Plan } from '@/lib/stripe'
 
 const PLAN_LABELS: Record<string, { name: string; price: string; color: string }> = {
   starter: { name: 'Solo', price: 'R$47/mês', color: '#6B7280' },
@@ -27,6 +35,9 @@ interface BrokerData {
   plan: string
   subscription_status: string | null
   trial_ends_at: string | null
+  current_period_end?: string | null
+  cancel_at_period_end?: boolean | null
+  subscription_id?: string | null
   stripeCustomerId?: string | null
 }
 
@@ -109,7 +120,20 @@ function PasswordSection() {
   )
 }
 
+// Plans that can upgrade: map old→new and define available upgrades
+function getUpgradePlans(plan: string): Plan[] {
+  if (plan === 'starter' || plan === 'solo') return ['profissional', 'equipe']
+  if (plan === 'pro' || plan === 'profissional') return ['equipe']
+  return []
+}
+const UPGRADE_LABELS: Record<Plan, string> = {
+  solo: 'Solo — R$47/mês',
+  profissional: 'Pro — R$97/mês',
+  equipe: 'Equipe — R$197/mês',
+}
+
 export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props) {
+  const router = useRouter()
   const [name, setName] = useState(broker.name)
   const [creci, setCreci] = useState(broker.creci ?? '')
   const [phone, setPhone] = useState(broker.phone ?? '')
@@ -124,6 +148,10 @@ export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props
   const [disconnecting, setDisconnecting] = useState(false)
   const [showCalendarGate, setShowCalendarGate] = useState(false)
   const [portalPending, startPortalTransition] = useTransition()
+
+  const [confirmModal, setConfirmModal] = useState<'cancelTrial' | 'cancelSub' | null>(null)
+  const [billingPending, startBillingTransition] = useTransition()
+  const [billingError, setBillingError] = useState<string | null>(null)
 
   const canUseCalendar = meetsRequirement(broker.plan, 'broker')
 
@@ -257,13 +285,10 @@ export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props
               <p className="text-[12px] text-[#059669] mt-1">Assinatura ativa</p>
             )}
           </div>
-          {broker.plan === 'starter' && (
-            <a
-              href="mailto:contato@premia.app?subject=Upgrade Premia"
-              className="inline-flex items-center justify-center h-9 px-4 rounded-[6px] bg-[#0BD904] text-[#0D0D0D] text-[13px] font-bold hover:bg-[#09c203] transition-colors shrink-0"
-            >
-              Fazer upgrade
-            </a>
+          {broker.cancel_at_period_end && broker.current_period_end && (
+            <span className="inline-flex items-center px-2.5 py-1 rounded-[6px] text-[11px] font-semibold bg-[#FEF3C7] text-[#D97706]">
+              Cancela em {new Intl.DateTimeFormat('pt-BR').format(new Date(broker.current_period_end))}
+            </span>
           )}
         </div>
 
@@ -295,7 +320,105 @@ export function ConfiguracoesClient({ broker, userEmail, googleCalendar }: Props
             ))}
           </div>
         </div>
+
+        {/* Billing actions */}
+        <div className="mt-4 pt-4 border-t border-[#F3F4F6] space-y-2">
+          {billingError && (
+            <p className="text-[12px] text-[#DC2626] bg-[#FEF2F2] rounded-[6px] px-3 py-2">{billingError}</p>
+          )}
+
+          {/* Upgrade buttons */}
+          {getUpgradePlans(broker.plan).map(targetPlan => (
+            <button
+              key={targetPlan}
+              onClick={() => startBillingTransition(() => createCheckoutSession(targetPlan))}
+              disabled={billingPending}
+              className="w-full h-9 rounded-[6px] bg-[#0BD904] text-[#0D0D0D] text-[13px] font-bold hover:bg-[#09c203] transition-colors disabled:opacity-60"
+            >
+              {billingPending ? 'Aguarde...' : `Upgrade para ${UPGRADE_LABELS[targetPlan]}`}
+            </button>
+          ))}
+
+          {/* Cancel at period end → reactivate */}
+          {broker.cancel_at_period_end ? (
+            <button
+              onClick={() => startBillingTransition(async () => {
+                const { error } = await reactivateSubscription()
+                if (error) { setBillingError(error); return }
+                router.refresh()
+              })}
+              disabled={billingPending}
+              className="w-full h-9 rounded-[6px] border border-[#0BD904] text-[#0BD904] text-[13px] font-semibold hover:bg-[rgba(11,217,4,0.06)] transition-colors disabled:opacity-60"
+            >
+              Reativar assinatura
+            </button>
+          ) : (
+            <>
+              {/* Cancel trial */}
+              {isTrial && (
+                <button
+                  onClick={() => setConfirmModal('cancelTrial')}
+                  className="w-full h-9 rounded-[6px] border border-[#E5E5E5] text-[#9CA3AF] text-[12px] hover:border-[#DC2626] hover:text-[#DC2626] transition-colors"
+                >
+                  Cancelar trial
+                </button>
+              )}
+
+              {/* Cancel subscription */}
+              {broker.subscription_status === 'active' && broker.subscription_id && (
+                <button
+                  onClick={() => setConfirmModal('cancelSub')}
+                  className="w-full h-9 rounded-[6px] border border-[#E5E5E5] text-[#9CA3AF] text-[12px] hover:border-[#DC2626] hover:text-[#DC2626] transition-colors"
+                >
+                  Cancelar assinatura
+                </button>
+              )}
+            </>
+          )}
+        </div>
       </SectionCard>
+
+      {/* Confirmation modal */}
+      {confirmModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-[12px] border border-[#E5E5E5] p-6 w-[360px] shadow-xl">
+            <div className="flex items-center gap-3 mb-3">
+              <AlertTriangle size={18} className="text-[#DC2626] shrink-0" />
+              <p className="text-[15px] font-semibold text-[#0D0D0D]">
+                {confirmModal === 'cancelTrial' ? 'Cancelar trial?' : 'Cancelar assinatura?'}
+              </p>
+            </div>
+            <p className="text-[13px] text-[#6B7280] mb-5">
+              {confirmModal === 'cancelTrial'
+                ? 'Seu acesso será encerrado imediatamente. Você pode criar uma nova conta com trial a qualquer momento.'
+                : 'Sua assinatura continuará ativa até o fim do período pago. Após isso, o acesso será suspenso.'}
+            </p>
+            <div className="flex gap-2">
+              <button
+                onClick={() => setConfirmModal(null)}
+                className="flex-1 h-9 rounded-[6px] border border-[#D1D1D1] text-[#6B7280] text-[13px] font-semibold hover:bg-[#F4F4F4] transition-colors"
+              >
+                Voltar
+              </button>
+              <button
+                onClick={() => {
+                  setConfirmModal(null)
+                  startBillingTransition(async () => {
+                    const fn = confirmModal === 'cancelTrial' ? cancelTrial : cancelSubscription
+                    const { error } = await fn()
+                    if (error) { setBillingError(error); return }
+                    router.refresh()
+                  })
+                }}
+                disabled={billingPending}
+                className="flex-1 h-9 rounded-[6px] bg-[#DC2626] text-white text-[13px] font-semibold hover:bg-[#B91C1C] transition-colors disabled:opacity-60"
+              >
+                Confirmar cancelamento
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Segurança */}
       <PasswordSection />

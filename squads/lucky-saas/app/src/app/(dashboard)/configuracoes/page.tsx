@@ -19,6 +19,9 @@ type BrokerData = {
   subscription_status: string | null
   trial_ends_at: string | null
   stripeCustomerId?: string | null
+  cancel_at_period_end?: boolean | null
+  subscription_id?: string | null
+  current_period_end?: string | null
   renewal_emails_enabled?: boolean
   renewal_email_custom_text?: string | null
 }
@@ -59,6 +62,9 @@ export default async function ConfiguracoesPage() {
         subscription_status: raw.subscription_status ?? null,
         trial_ends_at: raw.trial_ends_at ?? null,
         stripeCustomerId: raw.stripe_customer_id ?? null,
+        cancel_at_period_end: raw.cancel_at_period_end ?? false,
+        subscription_id: raw.subscription_id ?? null,
+        current_period_end: raw.current_period_end ?? null,
         renewal_emails_enabled: raw.renewal_emails_enabled ?? false,
         renewal_email_custom_text: raw.renewal_email_custom_text ?? null,
       }

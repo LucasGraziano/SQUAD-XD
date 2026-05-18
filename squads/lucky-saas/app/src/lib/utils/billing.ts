@@ -46,6 +46,7 @@ export async function syncSubscription(subscription: Stripe.Subscription) {
       current_period_end: (subscription as any).current_period_end
         ? new Date((subscription as any).current_period_end * 1000).toISOString()
         : null,
+      cancel_at_period_end: subscription.cancel_at_period_end ?? false,
     })
     .eq('id', brokerId)
 }
