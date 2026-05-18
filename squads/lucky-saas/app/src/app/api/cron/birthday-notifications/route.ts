@@ -8,7 +8,8 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
-  const supabase = createAdminClient()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const supabase = createAdminClient() as any
   const result = await runBirthdayNotificationsJob(supabase)
 
   return NextResponse.json({ ok: true, ...result })

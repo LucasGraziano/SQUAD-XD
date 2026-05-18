@@ -5,6 +5,7 @@ import { RenewalEmailSection } from '@/components/configuracoes/RenewalEmailSect
 import { PlanGate } from '@/components/shared/PlanGate'
 import { PushNotificationsSection } from '@/components/configuracoes/PushNotificationsSection'
 import { RelatorioCarteiraButton } from '@/components/configuracoes/RelatorioCarteiraButton'
+import { BillingSection } from '@/components/configuracoes/BillingSection'
 import { getGoogleCalendarInfo } from '@/lib/google-calendar'
 
 type BrokerData = {
@@ -88,6 +89,14 @@ export default async function ConfiguracoesPage() {
             </div>
             <div className="mt-6">
               <PushNotificationsSection />
+            </div>
+            <div className="mt-6">
+              <BillingSection
+                plan={broker.plan}
+                subscriptionStatus={broker.subscription_status}
+                trialEndsAt={broker.trial_ends_at}
+                stripeCustomerId={(broker as any).stripe_customer_id ?? null}
+              />
             </div>
             <div className="mt-6 bg-white rounded-[8px] border border-[#E5E5E5] p-6">
               <p className="text-[14px] font-semibold text-[#0D0D0D] mb-1">Relatório de Carteira</p>

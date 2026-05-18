@@ -8,6 +8,15 @@ const PUBLIC_ROUTES = [
   '/reset-password',
   '/auth/callback',
   '/portal',
+  '/pricing',
+]
+
+// Rotas permitidas mesmo com trial expirado / assinatura inativa
+const BILLING_EXEMPT_ROUTES = [
+  '/pricing',
+  '/configuracoes',
+  '/account',
+  '/api',
 ]
 
 export async function middleware(request: NextRequest) {
@@ -64,6 +73,45 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard'
     return NextResponse.redirect(url)
+  }
+
+  // Billing gate: bloqueia acesso ao dashboard se assinatura expirou
+  if (user && !isPublicRoute) {
+    const isBillingExempt = BILLING_EXEMPT_ROUTES.some(r => pathname.startsWith(r))
+    if (!isBillingExempt) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: broker } = await (supabase as any)
+        .from('brokers')
+        .select('subscription_status, trial_ends_at, current_period_end')
+        .eq('user_id', user.id)
+        .single()
+
+      if (broker) {
+        const now = new Date()
+        const isTrialExpired =
+          broker.subscription_status === 'trial' &&
+          broker.trial_ends_at &&
+          new Date(broker.trial_ends_at) < now
+
+        const gracePeriodDays = 30
+        const isCanceledExpired =
+          broker.subscription_status === 'canceled' &&
+          broker.current_period_end &&
+          new Date(new Date(broker.current_period_end).getTime() + gracePeriodDays * 86400000) < now
+
+        const pastDueDays = 14
+        const isPastDueExpired =
+          broker.subscription_status === 'past_due' &&
+          broker.current_period_end &&
+          new Date(new Date(broker.current_period_end).getTime() + pastDueDays * 86400000) < now
+
+        if (isTrialExpired || isCanceledExpired || isPastDueExpired) {
+          const url = request.nextUrl.clone()
+          url.pathname = '/pricing'
+          return NextResponse.redirect(url)
+        }
+      }
+    }
   }
 
   return supabaseResponse

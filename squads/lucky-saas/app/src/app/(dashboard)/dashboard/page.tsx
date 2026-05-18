@@ -8,6 +8,7 @@ import { getCalendarEvents } from '@/app/actions/calendar'
 import { UpcomingEventsWidget } from '@/components/agenda/UpcomingEventsWidget'
 import { OnboardingChecklist } from '@/components/onboarding/OnboardingChecklist'
 import { FirstWinBanner } from '@/components/dashboard/FirstWinBanner'
+import { CheckoutSuccessBanner } from '@/components/dashboard/CheckoutSuccessBanner'
 import { PortfolioHealthWidget } from '@/components/dashboard/PortfolioHealthWidget'
 import { CrossSellWidget } from '@/components/dashboard/CrossSellWidget'
 import { BirthdayNotificationCard } from '@/components/dashboard/BirthdayNotificationCard'
@@ -162,6 +163,9 @@ export default async function DashboardPage() {
     <>
       <PageHeader title="Dashboard" />
       <div className="flex-1 p-8">
+
+        {/* Checkout Success Banner — Story 6.3 */}
+        <CheckoutSuccessBanner />
 
         {/* First Win Banner — Story 7.9 */}
         <FirstWinBanner visible={showFirstWinBanner} />
