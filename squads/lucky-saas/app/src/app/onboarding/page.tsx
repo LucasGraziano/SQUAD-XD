@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
+import { createBrokerAndReferral } from '@/app/actions/referral'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { RAMOS } from '@/lib/constants/ramos'
@@ -64,19 +65,31 @@ export default function OnboardingPage() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { router.push('/login'); return }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (supabase as any).from('brokers').upsert({
-      user_id: user.id,
+    // Read referral cookie set by /ref/[code]
+    const referralCode = document.cookie
+      .split('; ')
+      .find(r => r.startsWith('premia_referral='))
+      ?.split('=')[1] ?? null
+
+    const { error } = await createBrokerAndReferral({
       name,
       susep: susep || null,
       email: user.email!,
-      settings: { ramos: selectedRamos, cart_size: cartSize },
+      userId: user.id,
+      ramos: selectedRamos,
+      cartSize,
+      referralCode,
     })
 
     if (error) {
       setSaveError('Erro ao salvar perfil. Tente novamente.')
       setLoading(false)
       return
+    }
+
+    // Clear referral cookie after use
+    if (referralCode) {
+      document.cookie = 'premia_referral=; path=/; max-age=0'
     }
 
     router.push('/dashboard')

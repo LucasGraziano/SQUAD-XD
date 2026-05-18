@@ -15,6 +15,8 @@ import { BirthdayNotificationCard } from '@/components/dashboard/BirthdayNotific
 import { getPortfolioHealthScore } from '@/app/actions/portfolio'
 import { detectCrossSellOpportunities } from '@/lib/portfolio/cross-sell'
 import { bootstrapOnboardingSteps } from '@/app/actions/onboarding'
+import { getReferralStats } from '@/app/actions/referral'
+import { ReferralSection } from '@/components/dashboard/ReferralSection'
 
 function hoursAgo(iso: string) {
   return (Date.now() - new Date(iso).getTime()) / (1000 * 60 * 60)
@@ -38,6 +40,7 @@ export default async function DashboardPage() {
   let onboardingProgress: Record<string, boolean | string | null> | null = null
   let showFirstWinBanner = false
   let crossSellOpportunities: Awaited<ReturnType<typeof detectCrossSellOpportunities>> = []
+  let referralStats: Awaited<ReturnType<typeof getReferralStats>> = null
 
   // Próximas atividades da agenda (próximos 7 dias, não concluídas, max 3)
   const now = new Date().toISOString()
@@ -46,6 +49,9 @@ export default async function DashboardPage() {
     getCalendarEvents({ from: now, to: in7Days, includeDone: false }).catch(() => [] as Awaited<ReturnType<typeof getCalendarEvents>>),
     user ? getPortfolioHealthScore().catch(() => null) : Promise.resolve(null),
   ])
+  if (user) {
+    referralStats = await getReferralStats().catch(() => null)
+  }
   // Cross-sell opportunities (needs brokerId — fetched inside if(user) block)
   // Deferred to after broker fetch below
   const nextEvents = upcomingEventsResult.slice(0, 3)
@@ -322,6 +328,18 @@ export default async function DashboardPage() {
         <div className="mt-4">
           <BirthdayNotificationCard />
         </div>
+
+        {/* Indique e Ganhe — Story 6.7 */}
+        {referralStats && (
+          <div className="mt-4">
+            <ReferralSection
+              referralLink={referralStats.referralLink}
+              total={referralStats.total}
+              converted={referralStats.converted}
+              credits={referralStats.credits}
+            />
+          </div>
+        )}
 
         {/* Próximas Atividades */}
         <div className="mt-4">

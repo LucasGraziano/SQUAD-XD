@@ -7,6 +7,8 @@ import {
   handlePaymentFailed,
   sendTrialEndingEmail,
 } from '@/lib/utils/billing'
+import { registerReferralConversion } from '@/app/actions/referral'
+import { createAdminClient } from '@/lib/supabase/admin'
 
 export async function POST(req: NextRequest) {
   const body = await req.text()
@@ -48,6 +50,25 @@ export async function POST(req: NextRequest) {
         if (subId) {
           const sub = await stripe.subscriptions.retrieve(subId)
           await syncSubscription(sub)
+        }
+        break
+      }
+      case 'checkout.session.completed': {
+        const session = event.data.object as Stripe.Checkout.Session
+        const customerId = typeof session.customer === 'string'
+          ? session.customer
+          : session.customer?.id
+        if (customerId) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const supabase = createAdminClient() as any
+          const { data: broker } = await supabase
+            .from('brokers')
+            .select('id, referral_code_id')
+            .eq('stripe_customer_id', customerId)
+            .single()
+          if (broker?.referral_code_id) {
+            await registerReferralConversion(broker.id)
+          }
         }
         break
       }

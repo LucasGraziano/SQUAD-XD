@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -9,6 +9,8 @@ import { Input } from '@/components/ui/input'
 
 export default function SignupPage() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const isReferred = searchParams.get('referred') === '1'
   const supabase = createClient()
 
   const [email, setEmail] = useState('')
@@ -98,8 +100,14 @@ export default function SignupPage() {
           <span className="font-display text-[18px] font-bold text-[#0D0D0D]">Premia</span>
         </div>
 
+        {isReferred && (
+          <div className="mb-5 px-4 py-3 rounded-[8px] bg-[rgba(11,217,4,0.08)] border border-[rgba(11,217,4,0.25)]">
+            <p className="text-[13px] font-semibold text-[#034001]">🎁 Você foi indicado por um corretor</p>
+            <p className="text-[12px] text-[#166534] mt-0.5">Seu trial é de <strong>21 dias</strong> — 7 dias extras!</p>
+          </div>
+        )}
         <h1 className="text-[22px] font-semibold text-[#0D0D0D] mb-1">
-          Comece grátis por 14 dias
+          Comece grátis por {isReferred ? '21' : '14'} dias
         </h1>
         <p className="text-[13px] text-[#6B7280] mb-6">Sem cartão de crédito.</p>
 
