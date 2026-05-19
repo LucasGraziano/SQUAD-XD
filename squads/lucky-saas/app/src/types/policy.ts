@@ -11,17 +11,73 @@ export const PAYMENT_LABELS: Record<PaymentFrequency, string> = {
 }
 
 export const POLICY_RAMOS = [
-  'auto', 'vida', 'saude', 'residencial', 'empresarial', 'viagem', 'consorcio',
+  'acidentes_pessoais',
+  'aeronautico',
+  'agricola',
+  'ambiental',
+  'auto',
+  'bike',
+  'celular',
+  'condominio',
+  'consorcio',
+  'credito',
+  'cyber',
+  'dao',
+  'dental',
+  'educacional',
+  'empresarial',
+  'engenharia',
+  'fianca_locaticia',
+  'funeral',
+  'garantia',
+  'maritimo',
+  'pet',
+  'prestamista',
+  'rc_geral',
+  'rc_produtos',
+  'rc_profissional',
+  'residencial',
+  'riscos_operacionais',
+  'saude',
+  'transporte',
+  'vida',
+  'vida_grupo',
+  'viagem',
 ] as const
 
 export const RAMO_LABELS: Record<string, string> = {
-  auto: 'Auto',
-  vida: 'Vida',
-  saude: 'Saúde',
-  residencial: 'Residencial',
-  empresarial: 'Empresarial',
-  viagem: 'Viagem',
-  consorcio: 'Consórcio',
+  acidentes_pessoais:  'Acidentes Pessoais',
+  aeronautico:         'Aeronáutico',
+  agricola:            'Agrícola / Rural',
+  ambiental:           'Ambiental',
+  auto:                'Auto',
+  bike:                'Bicicleta',
+  celular:             'Celular',
+  condominio:          'Condomínio',
+  consorcio:           'Consórcio',
+  credito:             'Crédito',
+  cyber:               'Cyber',
+  dao:                 'D&O',
+  dental:              'Dental',
+  educacional:         'Educacional',
+  empresarial:         'Empresarial',
+  engenharia:          'Engenharia',
+  fianca_locaticia:    'Fiança Locatícia',
+  funeral:             'Funeral',
+  garantia:            'Garantia',
+  maritimo:            'Marítimo',
+  pet:                 'Pet',
+  prestamista:         'Prestamista',
+  rc_geral:            'RC Geral',
+  rc_produtos:         'RC Produtos',
+  rc_profissional:     'RC Profissional',
+  residencial:         'Residencial',
+  riscos_operacionais: 'Riscos Operacionais',
+  saude:               'Saúde',
+  transporte:          'Transporte',
+  vida:                'Vida',
+  vida_grupo:          'Vida em Grupo',
+  viagem:              'Viagem',
 }
 
 export type PolicyTab = 'todas' | 'ativas' | 'vencendo' | 'vencidas' | 'arquivadas'
@@ -56,7 +112,7 @@ export interface Policy {
   status: PolicyStatus
   franquia?: number | null
   notes?: string | null
-  metadata: Record<string, string>
+  metadata: Record<string, string> | null
   created_at: string
   updated_at: string
   // Joined

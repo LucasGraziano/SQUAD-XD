@@ -194,6 +194,22 @@ export async function archivePolicy(id: string) {
   return { success: true }
 }
 
+export async function unarchivePolicy(id: string) {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { error } = await sb
+    .from('policies')
+    .update({ status: 'ativa', updated_at: new Date().toISOString() })
+    .eq('id', id)
+    .eq('broker_id', brokerId)
+
+  if (error) return { error: error.message }
+  revalidatePath('/apolices')
+  return { success: true }
+}
+
 export async function deletePolicy(id: string) {
   const { supabase, brokerId } = await getAuth()
   if (!brokerId) return { error: 'Não autenticado' }
@@ -418,9 +434,12 @@ export async function fetchPolicies({
   } else if (tab === 'vencendo') {
     query = query.eq('status', 'ativa').gte('end_date', today).lte('end_date', in30Days)
   } else if (tab === 'vencidas') {
-    query = query.lt('end_date', today)
+    query = query.lt('end_date', today).not('status', 'in', '(cancelada,suspensa)')
   } else if (tab === 'arquivadas') {
     query = query.in('status', ['cancelada', 'suspensa'])
+  } else {
+    // "todas": exclui arquivadas
+    query = query.not('status', 'in', '(cancelada,suspensa)')
   }
 
   // Search — two-step to avoid unreliable embedded-resource or() in PostgREST
@@ -450,4 +469,75 @@ export async function fetchPolicies({
 
   if (error) return { data: [], count: 0 }
   return { data: (data as Policy[]) ?? [], count: count ?? 0 }
+}
+
+// ── updatePolicyMetadata ─────────────────────────────────────────────────────
+
+export async function updatePolicyMetadata(
+  policyId: string,
+  metadata: Record<string, string>
+): Promise<{ error?: string }> {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const sb: AnySupabase = supabase
+  const { error } = await sb
+    .from('policies')
+    .update({ metadata, updated_at: new Date().toISOString() })
+    .eq('id', policyId)
+    .eq('broker_id', brokerId)
+
+  if (error) return { error: error.message }
+  revalidatePath(`/apolices/${policyId}`)
+  return {}
+}
+
+// ── uploadPolicyDocument ─────────────────────────────────────────────────────
+
+export async function uploadPolicyDocument(
+  policyId: string,
+  formData: FormData
+): Promise<{ url?: string; error?: string }> {
+  const { supabase, brokerId } = await getAuth()
+  if (!brokerId) return { error: 'Não autenticado' }
+
+  const file = formData.get('file') as File | null
+  if (!file) return { error: 'Nenhum arquivo enviado' }
+  if (file.size > 10 * 1024 * 1024) return { error: 'Arquivo muito grande (máx. 10 MB)' }
+
+  const ext = file.name.split('.').pop()?.toLowerCase() ?? 'pdf'
+  const path = `${brokerId}/${policyId}/apolice-${Date.now()}.${ext}`
+
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = new Uint8Array(arrayBuffer)
+
+  const { error: uploadErr } = await supabase.storage
+    .from('policy-documents')
+    .upload(path, buffer, { contentType: file.type, upsert: true })
+
+  if (uploadErr) return { error: uploadErr.message }
+
+  const { data: urlData } = supabase.storage
+    .from('policy-documents')
+    .getPublicUrl(path)
+
+  const url = urlData.publicUrl
+
+  // Persist URL in metadata
+  const sb: AnySupabase = supabase
+  const { data: current } = await sb
+    .from('policies')
+    .select('metadata')
+    .eq('id', policyId)
+    .eq('broker_id', brokerId)
+    .single()
+
+  const merged = { ...(current?.metadata ?? {}), pdf_url: url, pdf_name: file.name }
+  await sb.from('policies')
+    .update({ metadata: merged, updated_at: new Date().toISOString() })
+    .eq('id', policyId)
+    .eq('broker_id', brokerId)
+
+  revalidatePath(`/apolices/${policyId}`)
+  return { url }
 }

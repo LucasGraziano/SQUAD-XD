@@ -2,12 +2,12 @@
 
 import { useState, useTransition, useCallback, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { MoreHorizontal, Search, MessageCircle, ChevronLeft, ChevronRight, FileText, RefreshCw, Trash2 } from 'lucide-react'
+import { MoreHorizontal, Search, MessageCircle, ChevronLeft, ChevronRight, FileText, RefreshCw, Trash2, ExternalLink } from 'lucide-react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { ApolicaModal } from './ApolicaModal'
 import { RenovacaoModal } from './RenovacaoModal'
-import { archivePolicy, deletePolicy } from '@/app/(dashboard)/apolices/actions'
+import { archivePolicy, unarchivePolicy, deletePolicy } from '@/app/(dashboard)/apolices/actions'
 import type { Policy, PolicyTab } from '@/types/policy'
 import { RAMO_LABELS } from '@/types/policy'
 import { cn } from '@/lib/utils/cn'
@@ -92,7 +92,12 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
 
   async function handleArchive(id: string) {
     await archivePolicy(id)
-    setPolicies(prev => prev.map(p => p.id === id ? { ...p, status: 'cancelada' } : p))
+    setPolicies(prev => prev.filter(p => p.id !== id))
+  }
+
+  async function handleUnarchive(id: string) {
+    await unarchivePolicy(id)
+    setPolicies(prev => prev.filter(p => p.id !== id))
   }
 
   async function handleDelete(id: string) {
@@ -155,7 +160,7 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#E5E5E5]">
-              {['Cliente', 'Ramo', 'Seguradora', 'Vigência', 'Prêmio', 'Comissão', 'Status', ''].map((h) => (
+              {['Cliente', 'Ramo', 'Seguradora', 'Objeto Segurado', 'Vigência', 'Prêmio', 'Comissão', 'Status', ''].map((h) => (
                 <th key={h} className={cn(
                   'px-4 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left',
                   ['Prêmio', 'Comissão'].includes(h) && 'text-right'
@@ -166,7 +171,7 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
           <tbody>
             {policies.length === 0 && (
               <tr>
-                <td colSpan={8} className="px-4 py-12 text-center text-[13px] text-[#9CA3AF]">
+                <td colSpan={9} className="px-4 py-12 text-center text-[13px] text-[#9CA3AF]">
                   Nenhuma apólice encontrada.
                 </td>
               </tr>
@@ -175,7 +180,11 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
               const days = daysUntil(policy.end_date)
               const rowBg = days < 0 ? 'bg-[#FFF5F5]' : days <= 30 ? 'bg-[#FFFBEB]' : ''
               return (
-                <tr key={policy.id} className={cn('border-b border-[#F3F4F6] hover:bg-[#FAFAFA] transition-colors', rowBg)}>
+                <tr
+                  key={policy.id}
+                  onClick={() => router.push(`/apolices/${policy.id}`)}
+                  className={cn('border-b border-[#F3F4F6] hover:bg-[#FAFAFA] transition-colors cursor-pointer', rowBg)}
+                >
                   <td className="px-4 py-3 text-[13px] font-medium text-[#0D0D0D]">
                     {policy.clients?.name ?? '—'}
                   </td>
@@ -185,6 +194,14 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
                     </span>
                   </td>
                   <td className="px-4 py-3 text-[13px] text-[#6B7280]">{policy.seguradora}</td>
+                  <td className="px-4 py-3 text-[13px] text-[#6B7280] max-w-[160px]">
+                    {(policy.metadata as Record<string, string> | null)?.objeto_segurado
+                      ? <span className="truncate block" title={(policy.metadata as Record<string, string>).objeto_segurado}>
+                          {(policy.metadata as Record<string, string>).objeto_segurado}
+                        </span>
+                      : <span className="text-[#D1D1D1]">—</span>
+                    }
+                  </td>
                   <td className="px-4 py-3 text-[13px] text-[#6B7280] whitespace-nowrap">
                     {formatDate(policy.start_date)} → {formatDate(policy.end_date)}
                   </td>
@@ -197,7 +214,7 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
                   <td className="px-4 py-3">
                     <StatusBadge policy={policy} />
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                     <div className="flex items-center gap-1">
                       {days >= 0 && days <= 30 && (
                         <button
@@ -229,6 +246,14 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
                             className="z-50 min-w-[160px] bg-white border border-[#E5E5E5] rounded-[8px] shadow-lg py-1"
                           >
                             <DropdownMenu.Item
+                              onSelect={() => router.push(`/apolices/${policy.id}`)}
+                              className="flex items-center gap-2 px-3 py-2 text-[13px] cursor-pointer outline-none text-[#0D0D0D] hover:bg-[#F8F8F8]"
+                            >
+                              <ExternalLink size={12} className="text-[#6B7280]" />
+                              Ver detalhes
+                            </DropdownMenu.Item>
+                            <DropdownMenu.Separator className="my-1 h-px bg-[#F3F4F6]" />
+                            <DropdownMenu.Item
                               onSelect={() => setEditingPolicy(policy)}
                               className="flex items-center px-3 py-2 text-[13px] cursor-pointer outline-none text-[#0D0D0D] hover:bg-[#F8F8F8]"
                             >
@@ -249,12 +274,21 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
                               Gerar PDF
                             </DropdownMenu.Item>
                             <DropdownMenu.Separator className="my-1 h-px bg-[#F3F4F6]" />
-                            <DropdownMenu.Item
-                              onSelect={() => handleArchive(policy.id)}
-                              className="flex items-center px-3 py-2 text-[13px] cursor-pointer outline-none text-[#6B7280] hover:bg-[#F8F8F8]"
-                            >
-                              Arquivar
-                            </DropdownMenu.Item>
+                            {policy.status === 'cancelada' || policy.status === 'suspensa' ? (
+                              <DropdownMenu.Item
+                                onSelect={() => handleUnarchive(policy.id)}
+                                className="flex items-center px-3 py-2 text-[13px] cursor-pointer outline-none text-[#16A34A] hover:bg-[#F0FDF4]"
+                              >
+                                Desarquivar
+                              </DropdownMenu.Item>
+                            ) : (
+                              <DropdownMenu.Item
+                                onSelect={() => handleArchive(policy.id)}
+                                className="flex items-center px-3 py-2 text-[13px] cursor-pointer outline-none text-[#6B7280] hover:bg-[#F8F8F8]"
+                              >
+                                Arquivar
+                              </DropdownMenu.Item>
+                            )}
                             <DropdownMenu.Item
                               onSelect={() => setDeleteConfirmId(policy.id)}
                               className="flex items-center gap-2 px-3 py-2 text-[13px] cursor-pointer outline-none text-[#DC2626] hover:bg-[#FEF2F2]"

@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { ClienteAutocomplete } from './ClienteAutocomplete'
 import type { ClientePrefill } from './ClienteAutocomplete'
-import { createPolicy, updatePolicy, findClientByCpf } from '@/app/(dashboard)/apolices/actions'
+import { createPolicy, updatePolicy, findClientByCpf, searchClients } from '@/app/(dashboard)/apolices/actions'
 import { extractPolicyFromPDF } from '@/app/(dashboard)/apolices/pdf-extract'
 import type { Client } from '@/types/client'
 import type { Policy, PaymentFrequency } from '@/types/policy'
@@ -163,19 +163,43 @@ export function ApolicaModal({ open, onOpenChange, onCreated, onUpdated, presele
     if (d.objeto_segurado) { newMeta.objeto_segurado = d.objeto_segurado; filled.add('objeto_segurado') }
     if (Object.keys(newMeta).length > 0) setMetadata(prev => ({ ...prev, ...newMeta }))
 
-    // Tenta auto-selecionar cliente por CPF; se não achar, pré-preenche o formulário de criação
-    if (d.cpf_cnpj) {
-      const found = await findClientByCpf(d.cpf_cnpj)
+    // Detecta PF vs PJ: CNPJ tem 14 dígitos
+    const cpfDigits = d.cpf_cnpj ? d.cpf_cnpj.replace(/\D/g, '') : null
+    const tipoPessoa = cpfDigits && cpfDigits.length === 14 ? 'pj' : 'pf'
+
+    // Tenta auto-selecionar cliente por CPF/CNPJ; se não achar, pré-preenche criação
+    if (cpfDigits) {
+      const found = await findClientByCpf(d.cpf_cnpj!)
       if (found) {
         setSelectedClient(found)
       } else {
         setClientPrefill({
           name: d.nome_cliente ?? undefined,
-          cpf_cnpj: d.cpf_cnpj,
+          cpf_cnpj: d.cpf_cnpj ?? undefined,
+          phone: d.telefone_cliente ?? undefined,
+          email: d.email_cliente ?? undefined,
+          birth_date: d.data_nascimento_cliente ?? undefined,
+          cep: d.cep_cliente ?? undefined,
+          tipo_pessoa: tipoPessoa,
         })
       }
     } else if (d.nome_cliente) {
-      setClientPrefill({ name: d.nome_cliente })
+      // Sem CPF: busca por nome exato no banco; se achar, auto-seleciona
+      const results = await searchClients(d.nome_cliente)
+      const exactMatch = results.find(
+        c => c.name.toLowerCase() === d.nome_cliente!.toLowerCase()
+      )
+      if (exactMatch) {
+        setSelectedClient(exactMatch)
+      } else {
+        setClientPrefill({
+          name: d.nome_cliente,
+          phone: d.telefone_cliente ?? undefined,
+          email: d.email_cliente ?? undefined,
+          birth_date: d.data_nascimento_cliente ?? undefined,
+          cep: d.cep_cliente ?? undefined,
+        })
+      }
     }
 
     setAiFields(filled)

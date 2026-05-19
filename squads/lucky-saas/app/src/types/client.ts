@@ -33,7 +33,16 @@ export type DocPolicy = {
   end_date: string
   premium_total: number
   status: string
+  metadata: Record<string, string> | null
   clients: { name: string } | null
+}
+
+export type DocDeal = {
+  id: string
+  ramo: string
+  created_at: string
+  clients: { name: string } | null
+  quote_items: { seguradora: string; premium_total: number; is_recommended: boolean }[]
 }
 
 export type DocToken = {

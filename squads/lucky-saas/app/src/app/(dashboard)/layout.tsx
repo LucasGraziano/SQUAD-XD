@@ -17,7 +17,6 @@ export default async function DashboardLayout({
   let brokerPlan = ''
   let pendingAlertsCount = 0
   let expiringPoliciesCount = 0
-  let overduePendenciesCount = 0
   let showFirstWin = false
 
   if (user) {
@@ -54,13 +53,13 @@ export default async function DashboardLayout({
 
       pendingAlertsCount = alertsResult.count ?? 0
       expiringPoliciesCount = expiringResult.count ?? 0
-      overduePendenciesCount = await getOverduePendenciesCount()
+      await getOverduePendenciesCount() // kept for other consumers
     }
   }
 
   return (
     <div className="flex min-h-screen bg-[#F8F8F8]">
-      <Sidebar brokerName={brokerName} brokerPlan={brokerPlan} pendingAlertsCount={pendingAlertsCount} expiringPoliciesCount={expiringPoliciesCount} overduePendenciesCount={overduePendenciesCount} />
+      <Sidebar brokerName={brokerName} brokerPlan={brokerPlan} pendingAlertsCount={pendingAlertsCount} expiringPoliciesCount={expiringPoliciesCount} />
       <main className="flex-1 ml-[240px] flex flex-col min-h-screen">
         <BrokerPlanProvider plan={brokerPlan}>
           <ServiceWorkerRegistrar />

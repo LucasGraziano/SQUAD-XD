@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useTransition } from 'react'
+import { useState } from 'react'
 import { Mail, Send, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { toggleRenewalEmails, updateRenewalEmailText, getEmailCampaignLogs } from '@/app/actions/email-campaigns'
@@ -34,21 +34,28 @@ export function RenewalEmailSection({ initialEnabled, initialCustomText }: Props
   const [showLogs, setShowLogs] = useState(false)
   const [logsLoading, setLogsLoading] = useState(false)
   const [savedText, setSavedText] = useState(false)
-  const [, startTransition] = useTransition()
+  const [toggleSaving, setToggleSaving] = useState(false)
+  const [toggleError, setToggleError] = useState<string | null>(null)
 
-  function handleToggle() {
+  async function handleToggle() {
     const next = !enabled
     setEnabled(next)
-    startTransition(() => { toggleRenewalEmails(next) })
+    setToggleSaving(true)
+    setToggleError(null)
+    const result = await toggleRenewalEmails(next)
+    setToggleSaving(false)
+    if (result?.error) {
+      setEnabled(!next) // revert optimistic update
+      setToggleError(result.error)
+      setTimeout(() => setToggleError(null), 4000)
+    }
   }
 
-  function handleSaveText() {
+  async function handleSaveText() {
     setSavedText(false)
-    startTransition(async () => {
-      await updateRenewalEmailText(customText)
-      setSavedText(true)
-      setTimeout(() => setSavedText(false), 2000)
-    })
+    await updateRenewalEmailText(customText)
+    setSavedText(true)
+    setTimeout(() => setSavedText(false), 2000)
   }
 
   async function handleShowLogs() {
@@ -80,19 +87,26 @@ export function RenewalEmailSection({ initialEnabled, initialCustomText }: Props
         <div className="flex items-center gap-3">
           <button
             onClick={handleToggle}
+            disabled={toggleSaving}
             className={cn(
-              'relative rounded-full transition-colors flex-shrink-0',
+              'relative overflow-hidden rounded-full transition-colors flex-shrink-0 disabled:opacity-60',
               enabled ? 'bg-[#0BD904]' : 'bg-[#D1D1D1]'
             )}
             style={{ height: '22px', width: '40px' }}
           >
             <span className={cn(
-              'absolute top-[3px] w-4 h-4 bg-white rounded-full shadow transition-transform',
+              'absolute top-[3px] left-0 w-4 h-4 bg-white rounded-full transition-transform',
               enabled ? 'translate-x-[20px]' : 'translate-x-[3px]'
             )} />
           </button>
         </div>
       </div>
+
+      {toggleError && (
+        <p className="mb-3 text-[12px] text-[#DC2626] bg-[#FEF2F2] rounded-[6px] px-3 py-2">
+          {toggleError}
+        </p>
+      )}
 
       {/* Info blocks */}
       <div className="grid grid-cols-3 gap-3 mb-5">

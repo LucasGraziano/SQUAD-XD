@@ -1,5 +1,9 @@
 'use server'
 
+// @deprecated — Epic 8 Deal Room: esta tabela foi substituída por quote_requests (deals).
+// Use src/app/actions/deals.ts para toda lógica de negociações.
+// Mantido apenas para rollback safety durante a transição. Remover após Epic 8 estabilizar.
+
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 

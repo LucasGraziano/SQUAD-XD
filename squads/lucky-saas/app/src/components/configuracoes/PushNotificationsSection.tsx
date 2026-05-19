@@ -20,6 +20,7 @@ export function PushNotificationsSection() {
   const [permission, setPermission] = useState<NotificationPermission>('default')
   const [subscribed, setSubscribed] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     if (!('serviceWorker' in navigator) || !('Notification' in window)) return
@@ -34,23 +35,33 @@ export function PushNotificationsSection() {
 
   const handleEnable = useCallback(async () => {
     setLoading(true)
+    setError(null)
+
+    const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+    if (!publicKey) {
+      setError('Notificações push não estão configuradas nesta instalação.')
+      setLoading(false)
+      return
+    }
+
     const perm = await Notification.requestPermission()
     setPermission(perm)
 
-    if (perm !== 'granted') { setLoading(false); return }
-
-    const reg = await navigator.serviceWorker.ready
-    const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
-    if (!publicKey) { setLoading(false); return }
+    if (perm !== 'granted') {
+      if (perm === 'denied') setError('Permissão negada no navegador. Habilite manualmente nas configurações do site.')
+      setLoading(false)
+      return
+    }
 
     try {
+      const reg = await navigator.serviceWorker.ready
       const sub = await reg.pushManager.subscribe({
         userVisibleOnly: true,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         applicationServerKey: urlBase64ToUint8Array(publicKey) as any,
       })
 
-      await fetch('/api/push/subscribe', {
+      const res = await fetch('/api/push/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -61,9 +72,11 @@ export function PushNotificationsSection() {
           },
         }),
       })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
       setSubscribed(true)
     } catch (err) {
       console.error('[push] subscribe error:', err)
+      setError('Não foi possível ativar as notificações. Tente novamente.')
     } finally {
       setLoading(false)
     }
@@ -71,22 +84,31 @@ export function PushNotificationsSection() {
 
   const handleDisable = useCallback(async () => {
     setLoading(true)
-    const reg = await navigator.serviceWorker.ready
-    const sub = await reg.pushManager.getSubscription()
+    setError(null)
+    try {
+      const reg = await navigator.serviceWorker.ready
+      const sub = await reg.pushManager.getSubscription()
 
-    if (sub) {
-      await sub.unsubscribe()
-      await fetch('/api/push/subscribe', {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ endpoint: sub.endpoint }),
-      })
+      if (sub) {
+        await sub.unsubscribe()
+        await fetch('/api/push/subscribe', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ endpoint: sub.endpoint }),
+        })
+      }
+      setSubscribed(false)
+    } catch (err) {
+      console.error('[push] unsubscribe error:', err)
+      setError('Não foi possível desativar as notificações. Tente novamente.')
+    } finally {
+      setLoading(false)
     }
-    setSubscribed(false)
-    setLoading(false)
   }, [])
 
-  if (!supported) return null
+  // Esconde a seção inteira se VAPID key não estiver configurada (feature não disponível)
+  const isConfigured = !!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY
+  if (!supported || !isConfigured) return null
 
   const isEnabled = subscribed && permission === 'granted'
   const isDenied = permission === 'denied'
@@ -110,21 +132,26 @@ export function PushNotificationsSection() {
             onClick={isEnabled ? handleDisable : handleEnable}
             disabled={loading}
             className={cn(
-              'relative rounded-full transition-colors flex-shrink-0 disabled:opacity-60',
+              'relative overflow-hidden rounded-full transition-colors flex-shrink-0 disabled:opacity-60',
               isEnabled ? 'bg-[#0BD904]' : 'bg-[#D1D1D1]'
             )}
             style={{ height: '22px', width: '40px' }}
           >
             <span className={cn(
-              'absolute top-[3px] w-4 h-4 bg-white rounded-full shadow transition-transform',
+              'absolute top-[3px] left-0 w-4 h-4 bg-white rounded-full transition-transform',
               isEnabled ? 'translate-x-[20px]' : 'translate-x-[3px]'
             )} />
           </button>
         )}
       </div>
-      {isEnabled && (
+      {isEnabled && !error && (
         <p className="mt-3 text-[12px] text-[#059669]">
           ✓ Você receberá alertas 24h antes de cada apólice vencer.
+        </p>
+      )}
+      {error && (
+        <p className="mt-3 text-[12px] text-[#DC2626] bg-[#FEF2F2] rounded-[6px] px-3 py-2">
+          {error}
         </p>
       )}
     </div>

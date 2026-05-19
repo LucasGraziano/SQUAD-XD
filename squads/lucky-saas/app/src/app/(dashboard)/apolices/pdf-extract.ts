@@ -4,8 +4,14 @@ import Groq from 'groq-sdk'
 import { extractText } from 'unpdf'
 
 export interface ExtractedPolicy {
+  // Dados do cliente
   nome_cliente: string | null
   cpf_cnpj: string | null
+  telefone_cliente: string | null
+  email_cliente: string | null
+  data_nascimento_cliente: string | null
+  cep_cliente: string | null
+  // Dados da apólice
   seguradora: string | null
   ramo: string | null
   numero_apolice: string | null
@@ -29,6 +35,10 @@ Campos esperados (use null se não encontrar):
 {
   "nome_cliente": string | null,
   "cpf_cnpj": string | null,
+  "telefone_cliente": string | null,
+  "email_cliente": string | null,
+  "data_nascimento_cliente": "YYYY-MM-DD" | null,
+  "cep_cliente": string | null,
   "seguradora": string | null,
   "ramo": "auto" | "vida" | "residencial" | "empresarial" | "saude" | "rural" | "viagem" | "outros" | null,
   "numero_apolice": string | null,
@@ -47,12 +57,18 @@ Campos esperados (use null se não encontrar):
 
 Regras:
 - Datas: converta "01/06/2025" → "2025-06-01". Se só tiver mês/ano, use o primeiro dia.
+- nome_cliente: nome completo do segurado/tomador/contratante (pessoa física ou razão social).
+- cpf_cnpj: CPF (000.000.000-00) ou CNPJ (00.000.000/0001-00) do segurado/contratante. Retorne apenas dígitos e pontuação padrão.
+- telefone_cliente: telefone do segurado/contratante (não o da seguradora). Formato: "(11) 99999-9999".
+- email_cliente: e-mail do segurado/contratante (não o da seguradora).
+- data_nascimento_cliente: data de nascimento do segurado, no formato YYYY-MM-DD.
+- cep_cliente: CEP do endereço do segurado/contratante, apenas dígitos (ex: "01310100").
 - premium_total: valor numérico total do prêmio (ex: 1500.00). Ignore parcelas.
 - commission_pct: percentual de comissão do corretor se aparecer (ex: 15 para 15%).
 - valor_franquia: valor da franquia em reais (número, sem símbolo).
 - coberturas: liste as coberturas separadas por vírgula (ex: "Colisão, Roubo/Furto, Incêndio, Danos a Terceiros").
-- sinistro_tel: telefone de sinistro/SAC 24h (ex: "0800 727 4636").
-- sinistro_zap: número WhatsApp de sinistro se houver.
+- sinistro_tel: telefone de sinistro/SAC 24h da SEGURADORA (ex: "0800 727 4636").
+- sinistro_zap: número WhatsApp de sinistro da SEGURADORA se houver.
 - placa: placa do veículo se for apólice auto (ex: "ABC1D23").
 - objeto_segurado: descrição do bem segurado (ex: "Honda Civic 2022", "Apartamento Rua X 123").
 - periodicidade: frequência de pagamento do prêmio.
@@ -81,10 +97,10 @@ export async function extractPolicyFromPDF(formData: FormData): Promise<
     return { error: 'PDF sem texto legível. Pode ser um documento escaneado — tente um PDF gerado digitalmente.' }
   }
 
-  // Truncate: 3000 chars cobre 99% das apólices sem desperdiçar tokens
-  const truncated = pdfText.slice(0, 3000)
+  // Truncate: 5000 chars cobre páginas 1-2 de qualquer apólice (dados do cliente + apólice)
+  const truncated = pdfText.slice(0, 5000)
 
-  // ── Step 2: send text to Groq (free: 6000 req/dia, llama-3.1-8b) ──────────
+  // ── Step 2: send text to Groq ──────────────────────────────────────────────
   const apiKey = process.env.GROQ_API_KEY
   if (!apiKey) return { error: 'Chave da API de IA não configurada (GROQ_API_KEY).' }
 
@@ -92,8 +108,8 @@ export async function extractPolicyFromPDF(formData: FormData): Promise<
     const groq = new Groq({ apiKey })
 
     const response = await groq.chat.completions.create({
-      model: 'llama-3.1-8b-instant',  // grátis, rápido, suficiente para extração
-      max_tokens: 512,
+      model: 'llama-3.3-70b-versatile',  // melhor qualidade para extração estruturada
+      max_tokens: 800,
       temperature: 0,
       messages: [{ role: 'user', content: `${PROMPT}\n\n${truncated}` }],
     })

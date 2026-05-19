@@ -19,6 +19,9 @@ export interface ClientePrefill {
   phone?: string
   cpf_cnpj?: string
   tipo_pessoa?: TipoPessoa
+  email?: string
+  birth_date?: string
+  cep?: string
 }
 
 interface Props {
@@ -93,11 +96,11 @@ export function ClienteAutocomplete({ value, onChange, error, prefill }: Props) 
   function openInlineCreate() {
     setNewName(prefill?.name ?? query)
     setNewPhone(prefill?.phone ?? '')
-    setNewEmail('')
+    setNewEmail(prefill?.email ?? '')
     setNewCpf(prefill?.cpf_cnpj ?? '')
     setNewTipo(prefill?.tipo_pessoa ?? 'pf')
-    setNewBirthDate('')
-    setNewCep('')
+    setNewBirthDate(prefill?.birth_date ?? '')
+    setNewCep(prefill?.cep ?? '')
     setCreateError(null)
     setShowInlineCreate(true)
     setOpen(false)

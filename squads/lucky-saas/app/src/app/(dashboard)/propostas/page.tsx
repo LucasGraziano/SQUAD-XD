@@ -8,6 +8,7 @@ import { NewProposalModal } from '@/components/propostas/NewProposalModal'
 import { getProposals } from '@/app/actions/proposals'
 import type { Proposal, ProposalStatus } from '@/app/actions/proposals'
 import { cn } from '@/lib/utils/cn'
+import Link from 'next/link'
 
 const STATUS_TABS: { id: ProposalStatus | 'todas'; label: string }[] = [
   { id: 'todas', label: 'Todas' },
@@ -49,6 +50,21 @@ export default function PropostasPage() {
           <Button size="sm" onClick={() => setModalOpen(true)}>Nova Proposta</Button>
         }
       />
+
+      {/* Deprecation banner */}
+      <div className="mx-8 mt-4 flex items-center justify-between gap-4 rounded-[8px] bg-[#FEF9C3] border border-[#FDE047] px-4 py-3">
+        <p className="text-[13px] text-[#713F12]">
+          <span className="font-semibold">Esta página será removida em breve.</span>{' '}
+          O fluxo de propostas agora faz parte das{' '}
+          <Link href="/pipeline" className="underline font-medium">Negociações</Link>.
+        </p>
+        <Link
+          href="/pipeline"
+          className="shrink-0 h-8 px-3 rounded-[6px] bg-[#0BD904] text-[#034001] text-[12px] font-semibold hover:bg-[#09C003] transition-colors"
+        >
+          Ir para Negociações →
+        </Link>
+      </div>
 
       <div className="flex-1 p-8">
         {/* Tab bar */}

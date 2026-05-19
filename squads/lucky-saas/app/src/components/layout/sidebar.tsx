@@ -13,9 +13,9 @@ import {
   Users,
   Settings,
   AlertCircle,
-  Scale,
+  LayoutList,
   CalendarDays,
-  ClipboardList,
+  Zap,
 } from 'lucide-react'
 import { cn } from '@/lib/utils/cn'
 
@@ -36,14 +36,9 @@ const NAV_ITEMS = [
     label: 'Apólices',
   },
   {
-    href: '/propostas',
-    icon: ClipboardList,
-    label: 'Propostas',
-  },
-  {
-    href: '/cotacoes',
-    icon: Scale,
-    label: 'Cotações',
+    href: '/deals',
+    icon: LayoutList,
+    label: 'Negociações',
   },
   {
     href: '/agenda',
@@ -83,6 +78,12 @@ const NAV_ITEMS = [
     icon: Users,
     label: 'Clientes',
   },
+  {
+    href: '/crosssell',
+    icon: Zap,
+    label: 'Cross-sell',
+    emBreve: true,
+  },
 ] as const
 
 interface NavItem {
@@ -91,6 +92,7 @@ interface NavItem {
   icon: React.ElementType<any>
   label: string
   badge?: boolean
+  emBreve?: boolean
 }
 
 function NavLink({ item, pathname, showBadge, badgeCount }: { item: NavItem; pathname: string; showBadge?: boolean; badgeCount?: number }) {
@@ -118,6 +120,11 @@ function NavLink({ item, pathname, showBadge, badgeCount }: { item: NavItem; pat
       {item.badge && showBadge && !badgeCount && (
         <span className="h-2 w-2 rounded-full bg-[#0BD904] flex-shrink-0" />
       )}
+      {item.emBreve && (
+        <span className="px-1.5 py-0.5 rounded-[3px] bg-[rgba(255,255,255,0.08)] text-[#8B8C81] text-[9px] font-semibold uppercase tracking-wide flex-shrink-0">
+          Em breve
+        </span>
+      )}
       {badgeCount && badgeCount > 0 ? (
         <span className="min-w-[18px] h-[18px] px-1 rounded-full bg-[#D97706] text-white text-[10px] font-bold flex items-center justify-center flex-shrink-0">
           {badgeCount > 99 ? '99+' : badgeCount}
@@ -138,10 +145,9 @@ interface SidebarProps {
   brokerPlan?: string
   pendingAlertsCount?: number
   expiringPoliciesCount?: number
-  overduePendenciesCount?: number
 }
 
-export function Sidebar({ brokerName, brokerPlan, pendingAlertsCount = 0, expiringPoliciesCount = 0, overduePendenciesCount = 0 }: SidebarProps) {
+export function Sidebar({ brokerName, brokerPlan, pendingAlertsCount = 0, expiringPoliciesCount = 0 }: SidebarProps) {
   const pathname = usePathname()
   const initial = brokerName ? brokerName[0].toUpperCase() : 'C'
   const displayName = brokerName || 'Corretor'
@@ -185,18 +191,13 @@ export function Sidebar({ brokerName, brokerPlan, pendingAlertsCount = 0, expiri
           }
           const isApolices = item.href === '/apolices'
           const isAlertas = 'badge' in item && item.badge
-          const isPropostas = item.href === '/propostas'
           return (
             <NavLink
               key={item.href}
               item={item}
               pathname={pathname}
               showBadge={isAlertas ? pendingAlertsCount > 0 : false}
-              badgeCount={
-                isApolices && expiringPoliciesCount > 0 ? expiringPoliciesCount :
-                isPropostas && overduePendenciesCount > 0 ? overduePendenciesCount :
-                undefined
-              }
+              badgeCount={isApolices && expiringPoliciesCount > 0 ? expiringPoliciesCount : undefined}
             />
           )
         })}

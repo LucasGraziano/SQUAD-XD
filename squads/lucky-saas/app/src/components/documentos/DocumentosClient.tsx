@@ -1,16 +1,20 @@
 'use client'
 
 import { useState } from 'react'
-import { FileText, Link2, Copy, Trash2, Check, Search, ExternalLink } from 'lucide-react'
+import { FileText, Link2, Copy, Trash2, Check, Search, ExternalLink, FileDown, FilePlus } from 'lucide-react'
 import { generateClientToken, revokeClientToken } from '@/app/actions/portal'
 import { RAMO_LABELS } from '@/types/policy'
 import { cn } from '@/lib/utils/cn'
-import type { DocPolicy, DocClient, DocToken } from '@/types/client'
+import type { DocPolicy, DocClient, DocToken, DocDeal } from '@/types/client'
 
 const PLAN_GATE = (plan: string) => plan === 'starter'
 
 function formatDate(s: string) {
   return new Intl.DateTimeFormat('pt-BR').format(new Date(s + 'T00:00:00'))
+}
+
+function formatDatetime(s: string) {
+  return new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: '2-digit' }).format(new Date(s))
 }
 
 function formatBRL(n: number) {
@@ -21,16 +25,15 @@ interface Props {
   policies: DocPolicy[]
   clients: DocClient[]
   tokens: DocToken[]
+  deals: DocDeal[]
   plan: string
 }
 
-type Tab = 'propostas' | 'portais'
+type Tab = 'apolices' | 'cotacoes' | 'portais'
 
-export function DocumentosClient({ policies, clients, tokens: initialTokens, plan }: Props) {
-  const [tab, setTab] = useState<Tab>('propostas')
+export function DocumentosClient({ policies, clients, tokens: initialTokens, deals, plan }: Props) {
+  const [tab, setTab] = useState<Tab>('apolices')
   const [search, setSearch] = useState('')
-  const [pdfPolicy, setPdfPolicy] = useState<DocPolicy | null>(null)
-  const [pdfValidity, setPdfValidity] = useState<7 | 15 | 30>(15)
   const [localTokens, setLocalTokens] = useState<DocToken[]>(initialTokens)
   const [loadingTokenId, setLoadingTokenId] = useState<string | null>(null)
   const [copiedId, setCopiedId] = useState<string | null>(null)
@@ -45,13 +48,27 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
     return acc
   }, {})
 
-  const filteredPolicies = policies.filter(p =>
-    !search || (p.clients?.name ?? '').toLowerCase().includes(search.toLowerCase()) ||
+  // Apólices com PDF anexado
+  const policiesWithPdf = policies.filter(p => (p.metadata as Record<string, string> | null)?.pdf_url)
+
+  // Cotações com ao menos 1 item
+  const dealsWithItems = deals.filter(d => d.quote_items && d.quote_items.length > 0)
+
+  const filteredPolicies = policiesWithPdf.filter(p =>
+    !search ||
+    (p.clients?.name ?? '').toLowerCase().includes(search.toLowerCase()) ||
     (p.seguradora ?? '').toLowerCase().includes(search.toLowerCase())
   )
 
+  const filteredDeals = dealsWithItems.filter(d =>
+    !search ||
+    (d.clients?.name ?? '').toLowerCase().includes(search.toLowerCase()) ||
+    (RAMO_LABELS[d.ramo] ?? d.ramo).toLowerCase().includes(search.toLowerCase())
+  )
+
   const filteredClients = clients.filter(c =>
-    !search || c.name.toLowerCase().includes(search.toLowerCase()) ||
+    !search ||
+    c.name.toLowerCase().includes(search.toLowerCase()) ||
     (c.phone ?? '').includes(search)
   )
 
@@ -93,6 +110,12 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
     setTimeout(() => setCopiedId(null), 2000)
   }
 
+  const tabDefs: { id: Tab; label: string }[] = [
+    { id: 'apolices',  label: `Apólices (${policiesWithPdf.length})` },
+    { id: 'cotacoes',  label: `Cotações (${dealsWithItems.length})` },
+    { id: 'portais',   label: `Portais (${localTokens.length} de ${clients.length})` },
+  ]
+
   return (
     <div className="flex flex-col flex-1 overflow-hidden">
       {actionError && (
@@ -100,12 +123,10 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
           {actionError}
         </div>
       )}
+
       {/* Tabs */}
       <div className="flex gap-0 border-b border-[#E5E5E5] px-8">
-        {([
-          { id: 'propostas', label: `Propostas PDF (${policies.length})` },
-          { id: 'portais', label: `Portais Ativos (${localTokens.length} de ${clients.length})` },
-        ] as { id: Tab; label: string }[]).map(t => (
+        {tabDefs.map(t => (
           <button
             key={t.id}
             onClick={() => { setTab(t.id); setSearch('') }}
@@ -129,7 +150,11 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
             type="text"
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder={tab === 'propostas' ? 'Buscar por cliente ou seguradora...' : 'Buscar cliente...'}
+            placeholder={
+              tab === 'apolices' ? 'Buscar por cliente ou seguradora...' :
+              tab === 'cotacoes' ? 'Buscar por cliente ou ramo...' :
+              'Buscar cliente...'
+            }
             className="h-9 w-full rounded-[6px] border border-[#D1D1D1] bg-white pl-8 pr-3 text-[13px] placeholder:text-[#9CA3AF] outline-none focus:border-[#0BD904] transition-colors"
           />
         </div>
@@ -140,7 +165,7 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
         <div className="mx-8 mt-6 rounded-[8px] border border-[#E5E5E5] bg-white p-8 text-center">
           <FileText size={32} className="mx-auto text-[#D1D1D1] mb-3" strokeWidth={1.5} />
           <p className="text-[15px] font-semibold text-[#0D0D0D] mb-1">Disponível no plano Profissional</p>
-          <p className="text-[13px] text-[#6B7280] mb-4">Gere propostas em PDF e compartilhe portais com seus clientes.</p>
+          <p className="text-[13px] text-[#6B7280] mb-4">Acesse documentos de apólices, cotações e portais de clientes.</p>
           <a
             href="mailto:contato@premia.app?subject=Upgrade Premia"
             className="inline-flex items-center justify-center h-9 px-5 rounded-[6px] bg-[#0BD904] text-[#0D0D0D] text-[13px] font-bold hover:bg-[#09c203] transition-colors"
@@ -150,67 +175,138 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
         </div>
       )}
 
-      {/* Tab: Propostas */}
-      {!isGated && tab === 'propostas' && (
+      {/* ── Tab: Apólices ─────────────────────────────────────────────────── */}
+      {!isGated && tab === 'apolices' && (
         <div className="flex-1 overflow-auto">
           {filteredPolicies.length === 0 ? (
             <div className="py-16 text-center">
-              <FileText size={36} className="mx-auto text-[#D1D1D1] mb-3" strokeWidth={1.5} />
+              <FilePlus size={36} className="mx-auto text-[#D1D1D1] mb-3" strokeWidth={1.5} />
               <p className="text-[14px] font-semibold text-[#0D0D0D]">
-                {search ? `Nenhum resultado para "${search}"` : 'Nenhuma apólice ativa'}
+                {search ? `Nenhum resultado para "${search}"` : 'Nenhum documento anexado'}
               </p>
-              <p className="text-[13px] text-[#6B7280] mt-1">
-                {search ? 'Tente outro termo.' : 'Cadastre apólices para gerar propostas em PDF.'}
+              <p className="text-[13px] text-[#6B7280] mt-1 max-w-[280px] mx-auto">
+                {search
+                  ? 'Tente outro termo.'
+                  : 'Acesse uma apólice e faça upload do PDF para ele aparecer aqui.'}
               </p>
             </div>
           ) : (
             <table className="w-full">
               <thead>
                 <tr className="border-b border-[#E5E5E5]">
-                  {['Cliente', 'Ramo', 'Seguradora', 'Vigência', 'Prêmio', ''].map(h => (
-                    <th key={h} className={cn(
-                      'px-6 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left',
-                      h === 'Prêmio' && 'text-right'
-                    )}>{h}</th>
+                  {['Cliente', 'Ramo', 'Seguradora', 'Nº Apólice', 'Vigência', ''].map(h => (
+                    <th key={h} className="px-6 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left">{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
-                {filteredPolicies.map(p => (
-                  <tr key={p.id} className="border-b border-[#F3F4F6] hover:bg-[#FAFAFA] transition-colors">
-                    <td className="px-6 py-3 text-[13px] font-medium text-[#0D0D0D]">
-                      {p.clients?.name ?? '—'}
-                    </td>
-                    <td className="px-6 py-3">
-                      <span className="px-2 py-0.5 rounded-[4px] bg-[rgba(11,217,4,0.08)] text-[#034001] text-[11px] font-medium">
-                        {RAMO_LABELS[p.ramo] ?? p.ramo}
-                      </span>
-                    </td>
-                    <td className="px-6 py-3 text-[13px] text-[#6B7280]">{p.seguradora}</td>
-                    <td className="px-6 py-3 text-[13px] text-[#6B7280] whitespace-nowrap">
-                      {formatDate(p.start_date)} → {formatDate(p.end_date)}
-                    </td>
-                    <td className="px-6 py-3 text-[13px] font-mono text-right text-[#0D0D0D]">
-                      {formatBRL(p.premium_total)}
-                    </td>
-                    <td className="px-6 py-3">
-                      <button
-                        onClick={() => { setPdfPolicy(p); setPdfValidity(15) }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[6px] border border-[#D1D1D1] text-[12px] text-[#0D0D0D] font-medium hover:border-[#0BD904] hover:text-[#034001] transition-colors"
-                      >
-                        <FileText size={12} />
-                        Gerar PDF
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {filteredPolicies.map(p => {
+                  const meta = (p.metadata ?? {}) as Record<string, string>
+                  const pdfUrl = meta.pdf_url
+                  const pdfName = meta.pdf_name ?? 'Apólice.pdf'
+                  return (
+                    <tr key={p.id} className="border-b border-[#F3F4F6] hover:bg-[#FAFAFA] transition-colors">
+                      <td className="px-6 py-3 text-[13px] font-medium text-[#0D0D0D]">
+                        {p.clients?.name ?? '—'}
+                      </td>
+                      <td className="px-6 py-3">
+                        <span className="px-2 py-0.5 rounded-[4px] bg-[rgba(11,217,4,0.08)] text-[#034001] text-[11px] font-medium">
+                          {RAMO_LABELS[p.ramo] ?? p.ramo}
+                        </span>
+                      </td>
+                      <td className="px-6 py-3 text-[13px] text-[#6B7280]">{p.seguradora}</td>
+                      <td className="px-6 py-3 text-[13px] font-mono text-[#6B7280]">
+                        {p.policy_number ? `#${p.policy_number}` : <span className="text-[#D1D1D1]">—</span>}
+                      </td>
+                      <td className="px-6 py-3 text-[13px] text-[#6B7280] whitespace-nowrap">
+                        {formatDate(p.start_date)} → {formatDate(p.end_date)}
+                      </td>
+                      <td className="px-6 py-3">
+                        <a
+                          href={pdfUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-[6px] bg-[rgba(11,217,4,0.06)] border border-[rgba(11,217,4,0.3)] text-[12px] font-medium text-[#034001] hover:bg-[rgba(11,217,4,0.12)] transition-colors"
+                          title={pdfName}
+                        >
+                          <FileText size={12} />
+                          Abrir PDF
+                          <ExternalLink size={10} className="ml-0.5 opacity-60" />
+                        </a>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           )}
         </div>
       )}
 
-      {/* Tab: Portais */}
+      {/* ── Tab: Cotações ─────────────────────────────────────────────────── */}
+      {!isGated && tab === 'cotacoes' && (
+        <div className="flex-1 overflow-auto">
+          {filteredDeals.length === 0 ? (
+            <div className="py-16 text-center">
+              <FileDown size={36} className="mx-auto text-[#D1D1D1] mb-3" strokeWidth={1.5} />
+              <p className="text-[14px] font-semibold text-[#0D0D0D]">
+                {search ? `Nenhum resultado para "${search}"` : 'Nenhuma cotação encontrada'}
+              </p>
+              <p className="text-[13px] text-[#6B7280] mt-1 max-w-[280px] mx-auto">
+                {search
+                  ? 'Tente outro termo.'
+                  : 'Crie cotações no Pipeline para comparar propostas e gerar PDFs.'}
+              </p>
+            </div>
+          ) : (
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-[#E5E5E5]">
+                  {['Cliente', 'Ramo', 'Seguradoras', 'Data', ''].map(h => (
+                    <th key={h} className="px-6 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filteredDeals.map(d => {
+                  const seguradoras = [...new Set(d.quote_items.map(i => i.seguradora))].join(', ')
+                  return (
+                    <tr key={d.id} className="border-b border-[#F3F4F6] hover:bg-[#FAFAFA] transition-colors">
+                      <td className="px-6 py-3 text-[13px] font-medium text-[#0D0D0D]">
+                        {d.clients?.name ?? '—'}
+                      </td>
+                      <td className="px-6 py-3">
+                        <span className="px-2 py-0.5 rounded-[4px] bg-[rgba(11,217,4,0.08)] text-[#034001] text-[11px] font-medium">
+                          {RAMO_LABELS[d.ramo] ?? d.ramo}
+                        </span>
+                      </td>
+                      <td className="px-6 py-3 text-[13px] text-[#6B7280] max-w-[200px] truncate" title={seguradoras}>
+                        {seguradoras || '—'}
+                      </td>
+                      <td className="px-6 py-3 text-[13px] text-[#6B7280] whitespace-nowrap">
+                        {formatDatetime(d.created_at)}
+                      </td>
+                      <td className="px-6 py-3">
+                        <a
+                          href={`/api/pdf/quote/${d.id}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 h-8 px-3 rounded-[6px] bg-[#0BD904] text-[#034001] text-[12px] font-semibold hover:bg-[#09C003] transition-colors"
+                        >
+                          <FileDown size={12} />
+                          Gerar PDF
+                        </a>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          )}
+        </div>
+      )}
+
+      {/* ── Tab: Portais ──────────────────────────────────────────────────── */}
       {!isGated && tab === 'portais' && (
         <div className="flex-1 overflow-auto">
           {filteredClients.length === 0 ? (
@@ -337,51 +433,6 @@ export function DocumentosClient({ policies, clients, tokens: initialTokens, pla
               </tbody>
             </table>
           )}
-        </div>
-      )}
-
-      {/* Modal validade PDF */}
-      {pdfPolicy && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-[10px] border border-[#E5E5E5] shadow-xl p-6 w-[320px]">
-            <p className="text-[14px] font-semibold text-[#0D0D0D] mb-1">Gerar Proposta PDF</p>
-            <p className="text-[12px] text-[#6B7280] mb-4">
-              {pdfPolicy.clients?.name ?? 'Cliente'} · {RAMO_LABELS[pdfPolicy.ramo] ?? pdfPolicy.ramo}
-            </p>
-            <label className="block text-[12px] font-medium text-[#6B7280] mb-1.5">Validade da proposta</label>
-            <div className="flex gap-2 mb-5">
-              {([7, 15, 30] as const).map(d => (
-                <button
-                  key={d}
-                  onClick={() => setPdfValidity(d)}
-                  className={`flex-1 h-9 rounded-[6px] text-[13px] font-medium border transition-colors ${
-                    pdfValidity === d
-                      ? 'border-[#0BD904] bg-[rgba(11,217,4,0.08)] text-[#034001]'
-                      : 'border-[#D1D1D1] text-[#6B7280] hover:border-[#9CA3AF]'
-                  }`}
-                >
-                  {d} dias
-                </button>
-              ))}
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setPdfPolicy(null)}
-                className="flex-1 h-9 rounded-[6px] border border-[#D1D1D1] text-[13px] text-[#6B7280] hover:bg-[#F8F8F8] transition-colors"
-              >
-                Cancelar
-              </button>
-              <button
-                onClick={() => {
-                  window.open(`/api/pdf/proposal/${pdfPolicy.id}?validity=${pdfValidity}`, '_blank')
-                  setPdfPolicy(null)
-                }}
-                className="flex-1 h-9 rounded-[6px] bg-[#0BD904] text-[#0D0D0D] text-[13px] font-semibold hover:bg-[#09c203] transition-colors"
-              >
-                Baixar PDF
-              </button>
-            </div>
-          </div>
         </div>
       )}
     </div>

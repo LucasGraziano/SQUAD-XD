@@ -7,8 +7,9 @@ import { RAMO_LABELS } from '@/types/policy'
 import type { PolicyRow } from '@/types/policy'
 import { exportToCsv } from '@/lib/export-csv'
 import { DesempenhoTab } from './DesempenhoTab'
+import { FunilTab } from './FunilTab'
 
-type Tab = 'carteira' | 'comissoes' | 'retencao' | 'seguradora' | 'desempenho'
+type Tab = 'carteira' | 'comissoes' | 'retencao' | 'seguradora' | 'desempenho' | 'funil'
 type Period = '3m' | '6m' | '12m'
 
 function formatBRL(n: number) {
@@ -208,6 +209,7 @@ export function RelatoriosClient({ policies }: Props) {
     { id: 'retencao', label: 'Retenção' },
     { id: 'seguradora', label: 'Seguradora' },
     { id: 'desempenho', label: 'Desempenho' },
+    { id: 'funil', label: 'Funil' },
   ]
 
   const periods: { id: Period; label: string }[] = [
@@ -521,6 +523,8 @@ export function RelatoriosClient({ policies }: Props) {
       )}
 
       {tab === 'desempenho' && <DesempenhoTab />}
+
+      {tab === 'funil' && <FunilTab />}
     </div>
   )
 }

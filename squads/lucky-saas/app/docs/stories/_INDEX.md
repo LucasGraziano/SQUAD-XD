@@ -1,7 +1,8 @@
 # Stories Index — Premia SaaS
 
-**Gerado em:** 2026-05-14
+**Gerado em:** 2026-05-18 (atualizado por @sm)
 **Total de Stories:** 46
+**Stories Done:** 39
 **Épicos ativos:** 0, 2, 5, 6, 7
 
 ---
@@ -22,7 +23,7 @@
 | Story | Título | Status | Pontos | Prioridade |
 |-------|--------|--------|--------|-----------|
 | 0.4 | Landing Page: Pricing v2 + Copy Improvements | ✅ Done | — | P1 |
-| 0.5 | Billing Management: Upgrade e Cancelamento de Plano | 📝 Draft | — | P2 |
+| 0.5 | Billing Management: Upgrade e Cancelamento de Plano | ✅ Done | — | P2 |
 
 **Nota:** Epic 0 cobre setup inicial da plataforma, landing page e infraestrutura de billing.
 
@@ -79,12 +80,12 @@
 | 6.4 | Stripe Billing Lifecycle (Webhooks + Subscription Management) | 🟡 Ready | L | P1 |
 | 6.5 | Calculadora de ROI na Landing Page | ✅ Done | S | P2 |
 | 6.6 | PWA: Push Notifications Nativas | ✅ Done | M | P2 |
-| 6.7 | Programa de Referral | 🟡 Ready | M | P3 |
-| 6.8 | Google Calendar Sync (Vencimentos) | 🟡 Ready | M | P2 |
+| 6.7 | Programa de Referral | ✅ Done | M | P3 |
+| 6.8 | Google Calendar Sync (Vencimentos) | ✅ Done | M | P2 |
 | 6.9 | WhatsApp API (Templates de Renovação) | 🟡 Ready | L | P2 |
 | 6.10 | Multicálculo (Multi-Seguradora por Ramo) | 📝 Draft | XL | P3 |
 
-**Stories concluídas:** 4/10 | **Stories prontas para dev:** 5 | **Pendentes:** 1
+**Stories concluídas:** 6/10 (+ 6.3 e 6.4 prontas para dev) | **Stories prontas para dev:** 3 | **Pendentes:** 1
 
 ---
 
@@ -94,23 +95,45 @@
 
 | Story | Título | Status | T-Shirt | Pontos | Prioridade |
 |-------|--------|--------|---------|--------|-----------|
-| 7.1 | Onboarding Checklist Gamificado | 📝 Draft | M | 3 | P1 |
-| 7.2 | Importação CSV de Apólices | 📝 Draft | M | 4 | P1 |
-| 7.3 | Status Flow de Propostas | 📝 Draft | S | 2 | P1 |
-| 7.4 | Converter Proposta Aprovada em Apólice (1 Clique) | 📝 Draft | S | 2 | P1 |
-| 7.5 | Renovar Apólice com 1 Clique (Gera Proposta de Renovação) | 📝 Draft | M | 3 | P1 |
-| 7.6 | Pipeline Lead → Criar Cotação Direto do Card | 📝 Draft | S | 2 | P2 |
-| 7.7 | Histórico de Versões de Proposta | 📝 Draft | M | 3 | P2 |
-| 7.8 | Link de Proposta Enviável ao Cliente (sem login) | 📝 Draft | M | 3 | P2 |
-| 7.9 | "First Win" Notification (Primeiro Alerta Disparado) | 📝 Draft | S | 2 | P2 |
-| 7.10 | Empty States Inteligentes com CTA Guiado | 📝 Draft | S | 2 | P2 |
-| 7.11 | Score de Saúde da Carteira | 📝 Draft | M | 3 | P2 |
-| 7.12 | Cross-sell Automático ("Clientes sem Seguro Auto") | 📝 Draft | M | 4 | P2 |
-| 7.13 | Histórico de Renovações por Cliente | 🔍 Ready for Review | S | 2 | P2 |
-| 7.14 | Relatório de Carteira Compartilhável (PDF de Portfólio) | 🔍 Ready for Review | M | 5 | P3 |
-| 7.15 | Notificação de Aniversário com Cross-sell Sugerido | 🔍 Ready for Review | M | 4 | P3 |
+| 7.1 | Onboarding Checklist Gamificado | ✅ Done | M | 3 | P1 |
+| 7.2 | Importação CSV de Apólices | ✅ Done | M | 4 | P1 |
+| 7.3 | Status Flow de Propostas | ✅ Done | S | 2 | P1 |
+| 7.4 | Converter Proposta Aprovada em Apólice (1 Clique) | ✅ Done | S | 2 | P1 |
+| 7.5 | Renovar Apólice com 1 Clique (Gera Proposta de Renovação) | ✅ Done | M | 3 | P1 |
+| 7.6 | Pipeline Lead → Criar Cotação Direto do Card | ✅ Done | S | 2 | P2 |
+| 7.7 | Histórico de Versões de Proposta | ✅ Done | M | 3 | P2 |
+| 7.8 | Link de Proposta Enviável ao Cliente (sem login) | ✅ Done | M | 3 | P2 |
+| 7.9 | "First Win" Notification (Primeiro Alerta Disparado) | ✅ Done | S | 2 | P2 |
+| 7.10 | Empty States Inteligentes com CTA Guiado | ✅ Done | S | 2 | P2 |
+| 7.11 | Score de Saúde da Carteira | ✅ Done | M | 3 | P2 |
+| 7.12 | Cross-sell Automático ("Clientes sem Seguro Auto") | ✅ Done | M | 4 | P2 |
+| 7.13 | Histórico de Renovações por Cliente | ✅ Done | S | 2 | P2 |
+| 7.14 | Relatório de Carteira Compartilhável (PDF de Portfólio) | ✅ Done | M | 5 | P3 |
+| 7.15 | Notificação de Aniversário com Cross-sell Sugerido | ✅ Done | M | 4 | P3 |
 
-**Stories entregues:** 3/15 (7.13–7.15, Ready for Review) | **Implementadas (sem status atualizado):** 12 | **Total Epic 7:** 15
+**Stories concluídas:** 15/15 | **Total Epic 7:** 15
+
+---
+
+## Epic 8 — Deal Room: Fluxo Unificado de Negociações
+
+**Tema:** Unificar Pipeline, Cotações e Propostas em um único fluxo de deal — do primeiro contato à apólice emitida.  
+**ADR:** `docs/architecture/adrs/ADR-006-deal-room.md`
+
+| Story | Título | Status | T-Shirt | Prioridade |
+|-------|--------|--------|---------|-----------|
+| 8.1 | Schema Evolution (deals + deal_stage_history) | 🔍 Ready for Review | M | P0 |
+| 8.2 | Server Actions Unificadas | 🔍 Ready for Review | M | P0 |
+| 8.3 | Pipeline Rebuild (Kanban de Deals) | 🔍 Ready for Review | L | P0 |
+| 8.4 | Deal Workspace (/deals/[id]) | 🔍 Ready for Review | L | P0 |
+| 8.5 | Timeline + Deprecar /propostas | 🔍 Ready for Review | S | P1 |
+| 8.6 | Auto-triggers por Transição de Estágio | 🔍 Ready for Review | M | P1 |
+| 8.7 | /apolices com Origem + Deals Listagem | 🔍 Ready for Review | S | P2 |
+| 8.8 | Analytics de Funil | 🔍 Ready for Review | M | P2 |
+
+**Fase 1 (blocker):** 8.1 → 8.2 → 8.3 + 8.4 (paralelo)  
+**Fase 2:** 8.5 + 8.6 (paralelo, depende de 8.2)  
+**Fase 3:** 8.7 + 8.8 (paralelo, depende de 8.4)
 
 ---
 
@@ -118,50 +141,54 @@
 
 | Épico | Total | Done | Ready for Review | Ready | Draft |
 |-------|-------|------|-----------------|-------|-------|
-| Epic 0 | 2 | 1 | 0 | 0 | 1 |
+| Epic 0 | 2 | 2 | 0 | 0 | 0 |
 | Epic 2 | 1 | 1 | 0 | 0 | 0 |
 | Epic 5 | 18 | 15 | 0 | 0 | 3 |
-| Epic 6 | 10 | 4 | 0 | 5 | 1 |
-| Epic 7 | 15 | 0 | 3 | 0 | 12 |
-| **Total** | **46** | **21** | **3** | **5** | **17** |
+| Epic 6 | 10 | 6 | 0 | 3 | 1 |
+| Epic 7 | 15 | 15 | 0 | 0 | 0 |
+| Epic 8 | 8 | 0 | 8 | 0 | 0 |
+| **Total** | **54** | **39** | **8** | **3** | **4** |
 
 ---
 
-## Backlog Prioritário — Próximas Stories
+## Sprint 8 — Backlog Prioritário
 
-### Imediato (Sprint 8)
-1. **6.3** — Pricing Page + Stripe Checkout (P1, blocker para monetização real)
-2. **6.4** — Stripe Billing Lifecycle (P1, webhook de pagamento)
-3. **0.5** — Billing Management (upgrade/cancel via portal do cliente)
+### P0 — Deal Room (sequência obrigatória)
+1. **8.1** — Schema Evolution (foundation de tudo)
+2. **8.2** — Server Actions Unificadas
+3. **8.3** — Pipeline Rebuild
+4. **8.4** — Deal Workspace
 
-### Próximo Trimestre
-1. **5.4** — E-mails Automáticos de Renovação (Resend)
-2. **6.8** — Google Calendar Sync (Broker plan)
-3. **6.9** — WhatsApp API Templates
-4. **6.1** — ZapSign Assinatura Digital
-5. **6.7** — Programa de Referral
+### P1 — Deal Room (após P0)
+5. **8.5** — Timeline + Deprecar /propostas
+6. **8.6** — Auto-triggers
+
+### P2 — Deal Room + Pendentes
+7. **8.7** — /apolices com Origem
+8. **8.8** — Analytics de Funil
+9. **5.4** — E-mails Automáticos de Renovação (Resend)
+10. **6.9** — WhatsApp API Templates
 
 ### Backlog de Pesquisa
-1. **5.10/6.10** — Multicálculo Real via API de Seguradoras (viabilidade técnica pendente)
-2. **5.7** — WhatsApp Z-API (análise de custo/benefício)
+1. **5.10/6.10** — Multicálculo Real via API de Seguradoras
+2. **5.7** — WhatsApp Z-API
 
 ---
 
 ## Dependências Críticas
 
 ```
-6.3 (Stripe Checkout) → 6.4 (Billing Lifecycle) → 0.5 (Billing Management)
+8.1 (Schema) → 8.2 (Actions) → 8.3 (Pipeline) ─┐
+                             ↓                    ├→ 8.5 (Timeline)
+                           8.4 (Workspace) ───────┘    ↓
+                                                    8.6 (Auto-triggers)
+                                                    8.7 (Apolices origem)
+                                                    8.8 (Analytics)
 
-5.13 (Proposta → Apólice) → 7.5 (Renovação 1 Clique)
-       ↓
-5.9 (Multicálculo) → 7.8 (Link Compartilhável)
-                  → 7.7 (Histórico de Versões)
-
-7.5 (Renovação) → 7.13 (Histórico de Renovações) ✅
-
-6.2 (PlanGate) → 7.14 (Relatório PDF) ✅
+[Epic 7 — todos Done ✅]
+6.3 (Stripe Checkout) → 6.4 (Billing Lifecycle) [Ready]
 ```
 
 ---
 
-*Índice gerado por @master (Orion) em 2026-05-14. Atualizar manualmente a cada sprint ou usar `*stories-index` via @po.*
+*Atualizado por @master (Orion) em 2026-05-18 — Epic 8 Deal Room adicionado.*

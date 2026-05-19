@@ -13,6 +13,7 @@ import type { Client } from '@/types/client'
 import type { Policy } from '@/types/policy'
 import { RAMO_LABELS } from '@/types/policy'
 import { ClientApoliceHistory } from '@/components/clientes/ClientApoliceHistory'
+import { EmptyState } from '@/components/ui/EmptyState'
 
 function formatDate(s: string) {
   return new Intl.DateTimeFormat('pt-BR').format(new Date(s + 'T00:00:00'))
@@ -144,9 +145,12 @@ export default function ClienteProfilePage() {
           {activeTab === 'apolices' && (
             <div className="bg-white rounded-[8px] border border-[#E5E5E5] overflow-hidden">
               {policies.length === 0 ? (
-                <div className="py-10 text-center">
-                  <p className="text-[13px] text-[#9CA3AF]">Nenhuma apólice cadastrada.</p>
-                </div>
+                <EmptyState
+                  compact
+                  illustration="apolices"
+                  title="Nenhuma apólice cadastrada"
+                  description="Adicione uma apólice para este cliente."
+                />
               ) : (
                 <table className="w-full">
                   <thead>
