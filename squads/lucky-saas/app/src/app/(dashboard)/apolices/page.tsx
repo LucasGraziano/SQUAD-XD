@@ -17,6 +17,8 @@ function ApolicesPageInner() {
   const search = searchParams.get('search') ?? ''
   const ramo = searchParams.get('ramo') ?? ''
   const page = parseInt(searchParams.get('page') ?? '1', 10)
+  const sortBy = searchParams.get('sort') ?? 'end_date'
+  const sortDir = (searchParams.get('dir') ?? 'asc') as 'asc' | 'desc'
 
   const [policies, setPolicies] = useState<Policy[]>([])
   const [count, setCount] = useState(0)
@@ -26,7 +28,7 @@ function ApolicesPageInner() {
 
   useEffect(() => {
     setLoading(true)
-    fetchPolicies({ tab, search, ramo, page })
+    fetchPolicies({ tab, search, ramo, page, sortBy, sortDir })
       .then(({ data, count: c }) => {
         setPolicies(data)
         setCount(c)
@@ -36,11 +38,11 @@ function ApolicesPageInner() {
         setCount(0)
       })
       .finally(() => setLoading(false))
-  }, [tab, search, ramo, page])
+  }, [tab, search, ramo, page, sortBy, sortDir])
 
   function reloadPolicies() {
     setLoading(true)
-    fetchPolicies({ tab, search, ramo, page })
+    fetchPolicies({ tab, search, ramo, page, sortBy, sortDir })
       .then(({ data, count: c }) => { setPolicies(data); setCount(c) })
       .catch(() => { setPolicies([]); setCount(0) })
       .finally(() => setLoading(false))
@@ -83,6 +85,8 @@ function ApolicesPageInner() {
           totalCount={count}
           currentPage={page}
           brokerName="Corretor"
+          sortBy={sortBy}
+          sortDir={sortDir}
         />
       )}
     </>

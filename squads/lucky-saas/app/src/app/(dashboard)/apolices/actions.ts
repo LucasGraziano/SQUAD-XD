@@ -410,12 +410,16 @@ export async function fetchPolicies({
   ramo = '',
   page = 1,
   perPage = 25,
+  sortBy = 'end_date',
+  sortDir = 'asc',
 }: {
   tab?: string
   search?: string
   ramo?: string
   page?: number
   perPage?: number
+  sortBy?: string
+  sortDir?: 'asc' | 'desc'
 }) {
   const { supabase, brokerId } = await getAuth()
   if (!brokerId) return { data: [], count: 0 }
@@ -462,9 +466,13 @@ export async function fetchPolicies({
   // Ramo filter
   if (ramo) query = query.eq('ramo', ramo)
 
+  const SORTABLE = ['end_date', 'premium_total', 'commission_expected', 'created_at']
+  const column = SORTABLE.includes(sortBy) ? sortBy : 'end_date'
+  const ascending = sortDir !== 'desc'
+
   const from = (page - 1) * perPage
   const { data, count, error } = await query
-    .order('end_date', { ascending: true })
+    .order(column, { ascending })
     .range(from, from + perPage - 1)
 
   if (error) return { data: [], count: 0 }

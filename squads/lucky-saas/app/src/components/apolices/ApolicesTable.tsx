@@ -2,7 +2,7 @@
 
 import { useState, useTransition, useCallback, useEffect } from 'react'
 import { useRouter, useSearchParams, usePathname } from 'next/navigation'
-import { MoreHorizontal, Search, MessageCircle, ChevronLeft, ChevronRight, FileText, RefreshCw, Trash2, ExternalLink } from 'lucide-react'
+import { MoreHorizontal, Search, MessageCircle, ChevronLeft, ChevronRight, FileText, RefreshCw, Trash2, ExternalLink, ChevronUp, ChevronDown, ChevronsUpDown } from 'lucide-react'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 import { Button } from '@/components/ui/button'
 import { ApolicaModal } from './ApolicaModal'
@@ -55,9 +55,11 @@ interface Props {
   totalCount: number
   currentPage: number
   brokerName: string
+  sortBy?: string
+  sortDir?: 'asc' | 'desc'
 }
 
-export function ApolicesTable({ initialPolicies, totalCount, currentPage, brokerName }: Props) {
+export function ApolicesTable({ initialPolicies, totalCount, currentPage, brokerName, sortBy = 'end_date', sortDir = 'asc' }: Props) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -89,6 +91,21 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
     if (updates.tab || updates.search || updates.ramo) params.set('page', '1')
     startTransition(() => router.push(`${pathname}?${params.toString()}`))
   }, [searchParams, pathname, router])
+
+  function handleSort(column: string) {
+    if (sortBy === column) {
+      updateParams({ sort: column, dir: sortDir === 'asc' ? 'desc' : 'asc', page: '1' })
+    } else {
+      updateParams({ sort: column, dir: 'asc', page: '1' })
+    }
+  }
+
+  function SortIcon({ column }: { column: string }) {
+    if (sortBy !== column) return <ChevronsUpDown size={12} className="text-[#D1D1D1]" />
+    return sortDir === 'asc'
+      ? <ChevronUp size={12} className="text-[#0BD904]" />
+      : <ChevronDown size={12} className="text-[#0BD904]" />
+  }
 
   async function handleArchive(id: string) {
     await archivePolicy(id)
@@ -160,12 +177,26 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#E5E5E5]">
-              {['Cliente', 'Ramo', 'Seguradora', 'Objeto Segurado', 'Vigência', 'Prêmio', 'Comissão', 'Status', ''].map((h) => (
-                <th key={h} className={cn(
-                  'px-4 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left',
-                  ['Prêmio', 'Comissão'].includes(h) && 'text-right'
-                )}>{h}</th>
+              {(['Cliente', 'Ramo', 'Seguradora', 'Objeto Segurado'] as const).map((h) => (
+                <th key={h} className="px-4 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left">{h}</th>
               ))}
+              <th className="px-4 py-3 text-left">
+                <button onClick={() => handleSort('end_date')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider hover:text-[#374151] transition-colors">
+                  Vigência <SortIcon column="end_date" />
+                </button>
+              </th>
+              <th className="px-4 py-3 text-right">
+                <button onClick={() => handleSort('premium_total')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider hover:text-[#374151] transition-colors ml-auto">
+                  Prêmio <SortIcon column="premium_total" />
+                </button>
+              </th>
+              <th className="px-4 py-3 text-right">
+                <button onClick={() => handleSort('commission_expected')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider hover:text-[#374151] transition-colors ml-auto">
+                  Comissão <SortIcon column="commission_expected" />
+                </button>
+              </th>
+              <th className="px-4 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left">Status</th>
+              <th className="px-4 py-3"></th>
             </tr>
           </thead>
           <tbody>
