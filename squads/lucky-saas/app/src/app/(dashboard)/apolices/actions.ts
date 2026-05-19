@@ -468,24 +468,36 @@ export async function fetchPolicies({
   // Ramo filter
   if (ramo) query = query.eq('ramo', ramo)
 
-  const SORT_MAP: Record<string, { column: string; foreignTable?: string }> = {
-    end_date:             { column: 'end_date' },
-    premium_total:        { column: 'premium_total' },
-    commission_expected:  { column: 'commission_expected' },
-    created_at:           { column: 'created_at' },
-    ramo:                 { column: 'ramo' },
-    seguradora:           { column: 'seguradora' },
-    cliente:              { column: 'name', foreignTable: 'clients' },
-  }
-  const sortConfig = SORT_MAP[sortBy] ?? SORT_MAP['end_date']
   const ascending = sortDir !== 'desc'
-
   const from = (page - 1) * perPage
+
+  // Sort by client name: PostgREST foreignTable ordering is unreliable —
+  // fetch all matching rows and sort in JS, then paginate manually.
+  if (sortBy === 'cliente') {
+    const { data: allData, error } = await query.order('end_date', { ascending: true })
+    if (error || !allData) return { data: [], count: 0 }
+
+    const sorted = (allData as Policy[]).sort((a, b) => {
+      const na = ((a as { clients?: { name?: string } }).clients?.name ?? '').toLowerCase()
+      const nb = ((b as { clients?: { name?: string } }).clients?.name ?? '').toLowerCase()
+      return ascending ? na.localeCompare(nb, 'pt-BR') : nb.localeCompare(na, 'pt-BR')
+    })
+
+    return { data: sorted.slice(from, from + perPage), count: sorted.length }
+  }
+
+  const SORT_MAP: Record<string, string> = {
+    end_date:            'end_date',
+    premium_total:       'premium_total',
+    commission_expected: 'commission_expected',
+    created_at:          'created_at',
+    ramo:                'ramo',
+    seguradora:          'seguradora',
+  }
+  const column = SORT_MAP[sortBy] ?? 'end_date'
+
   const { data, count, error } = await query
-    .order(sortConfig.column, sortConfig.foreignTable
-      ? { foreignTable: sortConfig.foreignTable, ascending }
-      : { ascending }
-    )
+    .order(column, { ascending })
     .range(from, from + perPage - 1)
 
   if (error) return { data: [], count: 0 }
