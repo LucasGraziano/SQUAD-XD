@@ -446,33 +446,46 @@ export async function fetchPolicies({
     query = query.not('status', 'in', '(cancelada,suspensa)')
   }
 
-  // Search — two-step to avoid unreliable embedded-resource or() in PostgREST
+  // Search — multi-step to cover: nº apólice, cliente, objeto segurado
   if (search) {
     const term = `%${search}%`
-    const { data: clientMatches } = await supabase
-      .from('clients')
-      .select('id')
-      .eq('broker_id', brokerId)
-      .ilike('name', term)
-    const clientIds = (clientMatches as { id: string }[] | null)?.map(c => c.id) ?? []
 
-    if (clientIds.length > 0) {
-      query = query.or(`policy_number.ilike.${term},client_id.in.(${clientIds.join(',')})`)
-    } else {
-      query = query.ilike('policy_number', term)
-    }
+    const [{ data: clientMatches }, { data: objMatches }] = await Promise.all([
+      supabase.from('clients').select('id').eq('broker_id', brokerId).ilike('name', term),
+      supabase.from('policies').select('id').eq('broker_id', brokerId).ilike('metadata->>objeto_segurado', term),
+    ])
+
+    const clientIds = (clientMatches as { id: string }[] | null)?.map(c => c.id) ?? []
+    const objIds = (objMatches as { id: string }[] | null)?.map(p => p.id) ?? []
+
+    const orParts: string[] = [`policy_number.ilike.${term}`]
+    if (clientIds.length > 0) orParts.push(`client_id.in.(${clientIds.join(',')})`)
+    if (objIds.length > 0) orParts.push(`id.in.(${objIds.join(',')})`)
+
+    query = query.or(orParts.join(','))
   }
 
   // Ramo filter
   if (ramo) query = query.eq('ramo', ramo)
 
-  const SORTABLE = ['end_date', 'premium_total', 'commission_expected', 'created_at']
-  const column = SORTABLE.includes(sortBy) ? sortBy : 'end_date'
+  const SORT_MAP: Record<string, { column: string; foreignTable?: string }> = {
+    end_date:             { column: 'end_date' },
+    premium_total:        { column: 'premium_total' },
+    commission_expected:  { column: 'commission_expected' },
+    created_at:           { column: 'created_at' },
+    ramo:                 { column: 'ramo' },
+    seguradora:           { column: 'seguradora' },
+    cliente:              { column: 'name', foreignTable: 'clients' },
+  }
+  const sortConfig = SORT_MAP[sortBy] ?? SORT_MAP['end_date']
   const ascending = sortDir !== 'desc'
 
   const from = (page - 1) * perPage
   const { data, count, error } = await query
-    .order(column, { ascending })
+    .order(sortConfig.column, sortConfig.foreignTable
+      ? { foreignTable: sortConfig.foreignTable, ascending }
+      : { ascending }
+    )
     .range(from, from + perPage - 1)
 
   if (error) return { data: [], count: 0 }

@@ -152,7 +152,7 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
           <input
             type="text"
             defaultValue={search}
-            placeholder="Buscar cliente ou nº da apólice..."
+            placeholder="Buscar cliente, nº apólice ou objeto segurado..."
             onKeyDown={(e) => { if (e.key === 'Enter') updateParams({ search: (e.target as HTMLInputElement).value }) }}
             onBlur={(e) => updateParams({ search: e.target.value })}
             className="h-9 w-full rounded-[6px] border border-[#D1D1D1] bg-white pl-8 pr-3 text-[13px] text-[#0D0D0D] placeholder:text-[#9CA3AF] outline-none focus:border-[#0BD904] transition-colors"
@@ -177,9 +177,22 @@ export function ApolicesTable({ initialPolicies, totalCount, currentPage, broker
         <table className="w-full">
           <thead>
             <tr className="border-b border-[#E5E5E5]">
-              {(['Cliente', 'Ramo', 'Seguradora', 'Objeto Segurado'] as const).map((h) => (
-                <th key={h} className="px-4 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left">{h}</th>
-              ))}
+              <th className="px-4 py-3 text-left">
+                <button onClick={() => handleSort('cliente')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider hover:text-[#374151] transition-colors">
+                  Cliente <SortIcon column="cliente" />
+                </button>
+              </th>
+              <th className="px-4 py-3 text-left">
+                <button onClick={() => handleSort('ramo')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider hover:text-[#374151] transition-colors">
+                  Ramo <SortIcon column="ramo" />
+                </button>
+              </th>
+              <th className="px-4 py-3 text-left">
+                <button onClick={() => handleSort('seguradora')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider hover:text-[#374151] transition-colors">
+                  Seguradora <SortIcon column="seguradora" />
+                </button>
+              </th>
+              <th className="px-4 py-3 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider text-left">Objeto Segurado</th>
               <th className="px-4 py-3 text-left">
                 <button onClick={() => handleSort('end_date')} className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#9CA3AF] uppercase tracking-wider hover:text-[#374151] transition-colors">
                   Vigência <SortIcon column="end_date" />
