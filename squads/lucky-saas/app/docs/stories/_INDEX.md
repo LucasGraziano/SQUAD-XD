@@ -122,14 +122,14 @@
 
 | Story | Título | Status | T-Shirt | Prioridade |
 |-------|--------|--------|---------|-----------|
-| 8.1 | Schema Evolution (deals + deal_stage_history) | 🔍 Ready for Review | M | P0 |
-| 8.2 | Server Actions Unificadas | 🔍 Ready for Review | M | P0 |
-| 8.3 | Pipeline Rebuild (Kanban de Deals) | 🔍 Ready for Review | L | P0 |
-| 8.4 | Deal Workspace (/deals/[id]) | 🔍 Ready for Review | L | P0 |
-| 8.5 | Timeline + Deprecar /propostas | 🔍 Ready for Review | S | P1 |
-| 8.6 | Auto-triggers por Transição de Estágio | 🔍 Ready for Review | M | P1 |
-| 8.7 | /apolices com Origem + Deals Listagem | 🔍 Ready for Review | S | P2 |
-| 8.8 | Analytics de Funil | 🔍 Ready for Review | M | P2 |
+| 8.1 | Schema Evolution (deals + deal_stage_history) | ✅ Done | M | P0 |
+| 8.2 | Server Actions Unificadas | ✅ Done | M | P0 |
+| 8.3 | Pipeline Rebuild (Kanban de Deals) | ✅ Done | L | P0 |
+| 8.4 | Deal Workspace (/deals/[id]) | ✅ Done | L | P0 |
+| 8.5 | Timeline + Deprecar /propostas | ✅ Done | S | P1 |
+| 8.6 | Auto-triggers por Transição de Estágio | ✅ Done | M | P1 |
+| 8.7 | /apolices com Origem + Deals Listagem | ✅ Done | S | P2 |
+| 8.8 | Analytics de Funil | ✅ Done | M | P2 |
 
 **Fase 1 (blocker):** 8.1 → 8.2 → 8.3 + 8.4 (paralelo)  
 **Fase 2:** 8.5 + 8.6 (paralelo, depende de 8.2)  
@@ -146,8 +146,8 @@
 | Epic 5 | 18 | 15 | 0 | 0 | 3 |
 | Epic 6 | 10 | 6 | 0 | 3 | 1 |
 | Epic 7 | 15 | 15 | 0 | 0 | 0 |
-| Epic 8 | 8 | 0 | 8 | 0 | 0 |
-| **Total** | **54** | **39** | **8** | **3** | **4** |
+| Epic 8 | 8 | 8 | 0 | 0 | 0 |
+| **Total** | **54** | **47** | **0** | **3** | **4** |
 
 ---
 
